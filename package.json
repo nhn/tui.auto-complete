@@ -1,0 +1,16 @@
+{
+"name": "application-name",
+"version": "0.0.1",
+"private": true,
+"devDependencies": {
+"jasmine-jquery": "^1.3.3",
+"jsdoc-fe": "http://fetech.nhnent.com/resource/tools/jsdoc-fe-3.3.0-dev.tgz",
+"karma": "^0.12.16",
+"karma-chrome-launcher": "^0.1.4",
+"karma-coverage": "^0.2.4",
+"karma-firefox-launcher": "^0.1.3",
+"karma-htmlfile-reporter": "^0.1.2",
+"karma-ie-launcher": "^0.1.5",
+"karma-jasmine": "^0.1.5"
+}
+}

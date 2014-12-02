@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>자동완성</title>
+    <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<!-- 폼태그 -->
+<form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
+        <!-- 검색창 -->
+        <div class="inputBox">
+			<input class="inputBorder" id="ac_input1" type="text" name="query">
+        </div>
+
+        <!-- 자동완성 검색결과 영역 -->
+        <div class="suggestBox" id="ac_view1" style="width:400px; background-color:#ffffff;">
+            <div class="baseBox">
+                <ul class="_resultBox" style="display:none; background-color:#ffffff;">
+                    <li style="background-color:#efefef;"><a href="#" onclick="return false;" title="">@txt@</a><span style="display:none" id="rank@rank@">@in_txt@</span></li>
+                </ul>
+            </div>
+        </div>
+</form>
+</body>
+
+<!-- include js -->
+<script type="text/javascript" src="js/autoConfig.js"></script>
+
+<script type="text/javascript" src="js/AutoComplete.js"></script>
+<script type="text/javascript" src="js/DataManager.js"></script>
+<script type="text/javascript" src="js/InputManager.js"></script>
+<script type="text/javascript" src="js/ResultManager.js"></script>
+
+<!-- 자동완성 생성 -->
+<script>
+   new atcp.AutoComplete({"configId" : "Config2"});
+</script>
+
+
+</html>
