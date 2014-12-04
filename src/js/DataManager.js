@@ -46,16 +46,15 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
                 r_format: 'json',
                 _callback: 'dataCallback'
             },
-            requestParam = $.extend(this.options.searchApi, defaultParam);
+            requestParam = ne.util.extend(this.options.searchApi, defaultParam);
 
-        $.ajax({
-            type: 'get',
-            //url: this.options['searchApi']['url'],
-            url: this.options.searchApi.url,
-            data: requestParam,
-            dataType: 'jsonp',
-            jsonpCallback: 'dataCallback',
-            success: function(dataObj) {
+
+        ne.util.ajax.request(this.options.searchApi.url, {
+            'dataType': 'jsonp',
+            'jsonpCallback': 'dataCallback',
+            'data': requestParam,
+            'type': 'get',
+            'success': function(dataObj) {
                 try {
                     var itemLen = dataObj.items.length,
                         i,
