@@ -1,22 +1,41 @@
-
 {
-    "tags": {
-        "allowUnknownTags": true
-    },
     "source": {
-        "include": ["js"],
+        "include": ["js", "README.md"],
+        "exclude": [],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
-    "plugins": [],
+    "plugins": ["plugins/markdown"],
     "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": false,
+        "cleverLinks": true,
+        "monospaceLinks": true,
         "default": {
-            "outputSourceFiles": true
-        }
+            "outputSourceFiles" : true
+        },
+        "applicationName": "AutoComplete",
+        "disqus": "",
+        "googleAnalytics": "",
+        "openGraph": {
+            "title": "",
+            "type": "website",
+            "image": "",
+            "site_name": "",
+            "url": ""
+        },
+        "meta": {
+            "title": "",
+            "description": "",
+            "keyword": ""
+        },
+        "linenums": false
+    },
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
     },
     "opts": {
-        "destination": "./doc/"
+        "recurse": true,
+        "private": true,
+        "destination": "doc"
     }
 }

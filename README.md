@@ -1,10 +1,11 @@
 Component-AutoComplete
 ======================
 
-(깃헙테스트용) 자동완성 컴포넌트
+자동완성 컴포넌트
 
 ## 개발날짜
-2014-09
+최초개발 : 2014.08
+깃헙이전 : 2014.12
 
 ## 담당자
 FE 개발팀 이기현 <kihyun.lee@nhnent.com>
@@ -19,9 +20,14 @@ FE 개발팀 이기현 <kihyun.lee@nhnent.com>
 - 4. 결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색할 수 있다.
 - 5. 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.
 
+## 샘플 페이지
+??
+
 ## 다운로드
 - http://fetech.nhnent.com/svnrun/fetech/components/download/AutoComplete/autocomplete.zip
 
+## API문서
+??
 
 
 

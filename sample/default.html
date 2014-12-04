@@ -4,10 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
     <title>자동완성 - 검색창만 있는 기본 유형</title>
-    <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../src/common/common.js"></script>
 </head>
 <body>
 <!-- 폼태그 -->
@@ -31,16 +32,16 @@
 </body>
 
 <!-- include js -->
-<script type="text/javascript" src="js/autoConfig.js"></script>
+<script type="text/javascript" src="../src/js/autoConfig.js"></script>
+<script type="text/javascript" src="../src/js/AutoComplete.js"></script>
+<script type="text/javascript" src="../src/js/DataManager.js"></script>
+<script type="text/javascript" src="../src/js/InputManager.js"></script>
+<script type="text/javascript" src="../src/js/ResultManager.js"></script>
 
-<script type="text/javascript" src="js/AutoComplete.js"></script>
-<script type="text/javascript" src="js/DataManager.js"></script>
-<script type="text/javascript" src="js/InputManager.js"></script>
-<script type="text/javascript" src="js/ResultManager.js"></script>
 
 <!-- 자동완성 생성 -->
 <script>
-    new ne.autoComplete.AutoComplete({"configId" : "Default2"});
+    new ne.component.AutoComplete({"configId" : "Default2"});
 </script>
 
 
