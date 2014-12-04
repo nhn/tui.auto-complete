@@ -4,10 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
     <title>자동완성 - 자동완성 끄기,켜기 기능 있는 유형</title>
-    <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../src/common/common.js"></script>
 </head>
 <body>
 <!-- 폼태그 -->
@@ -15,7 +16,7 @@
         <!-- 검색창 -->
         <div class="inputBox">
 			<input class="inputBorder" id="ac_input1" type="text" name="query" autocomplete="off">
-            <img class="onoff" id="onoffBtn" src="img/btn_on.jpg" width="21" height="21">
+            <img class="onoff" id="onoffBtn" src="../img/btn_on2.jpg" width="21" height="21">
             <input type="hidden" id="org_query" name="org_query">
         </div>
 
@@ -32,16 +33,16 @@
 </body>
 
 <!-- include js -->
-<script type="text/javascript" src="js/autoConfig.js"></script>
+<script type="text/javascript" src="../src/js/autoConfig.js"></script>
 
-<script type="text/javascript" src="js/AutoComplete.js"></script>
-<script type="text/javascript" src="js/DataManager.js"></script>
-<script type="text/javascript" src="js/InputManager.js"></script>
-<script type="text/javascript" src="js/ResultManager.js"></script>
+<script type="text/javascript" src="../src/js/AutoComplete.js"></script>
+<script type="text/javascript" src="../src/js/DataManager.js"></script>
+<script type="text/javascript" src="../src/js/InputManager.js"></script>
+<script type="text/javascript" src="../src/js/ResultManager.js"></script>
 
 <!-- 자동완성 생성 -->
 <script>
-   new ne.autoComplete.AutoComplete({"configId" : "Default"});
+   new ne.component.AutoComplete({"configId" : "Default"});
 </script>
 
 
