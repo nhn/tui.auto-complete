@@ -33,7 +33,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
     });
 
 
-
+    /*
     it('키워드 하이라이팅이 제대로 되는가.', function() {
         var A = new ne.component.AutoComplete({'configId' : 'Default'}),
             resultManager = A.resultManager;
@@ -82,6 +82,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         resultManager._useAutoComplete();
         expect(resultManager.isShowResultList()).toBeFalsy();
     });
+    */
 
     /*
     it('API검색결과가 나오지 않는 검색어 입력시 결과 영역이 보이지 않아야 한다.', function() {
