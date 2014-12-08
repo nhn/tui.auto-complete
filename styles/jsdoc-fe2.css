@@ -1,0 +1,254 @@
+#wrap {
+    position: relative;
+    overflow:hidden;
+}
+
+.header {
+    background-color: #4a95e5;
+    border-bottom: 1px solid #4082c7;
+    height: 50px;
+}
+
+.header a,
+.header small{
+    color: #fff;
+}
+
+.navigation {
+    padding: 20px;
+    float: left;
+    width: 250px;
+    background-color: #f4f7f8;
+    overflow: auto;
+}
+
+.navigation h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3em;
+
+}
+.navigation ul {
+    padding: 7px 0 0 11px;
+    list-style: none;
+}
+
+.navigation ul.list li {
+    padding-bottom: 2px;
+}
+
+.navigation ul.sublist {
+    display: none;
+    margin-top: -5px;
+}
+
+.navigation ul.sublist li a {
+    padding-left: 10px;
+    color: black;
+}
+
+.navigation ul.sublist span {
+    color: darkgray;
+    font-size: 90%
+}
+
+.navigation li span.icon.static {
+    float: right;
+    padding: 0 2px;
+}
+
+
+.main {
+    padding: 20px;
+    margin-left: 250px;
+    overflow: auto;
+}
+
+.main h1,
+.main h2,
+.main h3,
+.main h4,
+.main h5,
+.main h6
+{
+    margin-top: 0 !important;
+}
+
+.main section header {
+    border-bottom: 1px solid #999;
+}
+
+.main section header h2 {
+    border-left: 5px solid #4a95e5;
+    padding-left : 5px;
+}
+
+.main section article {
+    padding: 10px;
+}
+
+.main {
+    padding: 20px;
+    margin-left: 250px;
+}
+
+.main section header {
+    padding-top: 20px;
+    border-bottom: 1px solid #999;
+}
+
+.main section header h2 {
+    border-left: 5px solid #4a95e5;
+    padding-left : 5px;
+}
+
+.main section article {
+    padding: 10px;
+}
+
+.main section article .readme h2 {
+    padding: 0 15px;
+    font-size: 15pt;
+}
+
+.main section article .readme p {
+    padding: 0 45px;
+}
+
+.main section article .container-overview {
+    padding: 15px 15px 0 15px;
+    border: 1px solid #dedede;
+    border-radius: 7px;
+}
+
+.main section article li {
+    list-style: none;
+}
+
+.main section article h3.subsection-title {
+    color: #4a95e5;
+    padding:35px 0 0 5px;
+    border-bottom: 1px solid #dedede;
+}
+
+.main section article dl h4 {
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.main section article dl h4 .signature {
+    font-size: 10pt;
+}
+
+.main section article dl h4 .type-signature {
+    font-size: 10pt;
+    color: #31708f;
+    font-weight: normal;
+}
+
+.main section article dl dt .name {
+    padding: 3px 10px;
+    background-color: #f4f7f8;
+}
+
+.main section article dl dd {
+    padding: 0 30px;
+}
+
+.main section article dl dd h5{
+    font-weight: bold;
+}
+
+.main section article .container-source {
+    margin: -15px -15px 3px 0;
+    font-weight: normal;
+    font-size: 8pt;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.main section article .container-returns,
+.main section article .container-params {
+    padding: 7px 0;
+}
+
+.main section article .container-properties div.properties,
+.main section article .container-returns div.returns,
+.main section article .container-params div.params {
+    padding-left: 6px;
+    border-left: 3px solid #f4f7f8;
+}
+
+.main section article .container-properties div.properties {
+    margin-top: -3px;
+}
+.main section article .container-returns div.details {
+    margin-top: -6px;
+}
+
+.main section article .container-properties h5,
+.main section article .container-returns h5,
+.main section article table th,
+.main section article table td.type,
+.main section article table td.attributes {
+    font-family: Verdana, sans-serif;
+    font-size: 90%;
+}
+
+.main section article table,
+.main section article table th,
+.main section article table td {
+    font-family: Verdana, sans-serif;
+    vertical-align: top;
+    border: 0;
+    padding: 1px 3px;
+}
+
+.main section article table td.name,
+.main section article table td.type,
+.main section article table td.attributes,
+.main section article table td.default {
+    width: 100px;
+    word-break: break-all;
+}
+
+.main section article table td.type,
+.main section article table td.attributes {
+    color: #aaa;
+}
+
+.main section article table td p {
+    padding: 0;
+    margin: 0;
+}
+
+.main section article table td h6 {
+    padding: 10px 0 0 3px;
+    margin: 0;
+}
+
+span.icon {
+    font-size: 8pt;
+    border-radius: 3px;
+    padding: 1px 2px;
+}
+span.icon.green {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+span.icon.blue {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+span.icon.yellow {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+span.icon.red {
+    color: #A94443;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

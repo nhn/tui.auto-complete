@@ -1,0 +1,2468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: ResultManager</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Classes</h3><ul class="list classes"><li class="item"><a href="ne.autoComplete.AutoComplete.html">AutoComplete</a> <span class="icon blue static">static</span><ul class="sublist methods AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.autoComplete.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.autoComplete.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.autoComplete.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.autoComplete.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.autoComplete.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.autoComplete.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.autoComplete.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.autoComplete.AutoComplete.html#moveNextKeyword">moveNextKeyword</a></li><li><a href="ne.autoComplete.AutoComplete.html#movePrevKeyword">movePrevKeyword</a></li><li><a href="ne.autoComplete.AutoComplete.html#request">request</a></li><li><a href="ne.autoComplete.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.autoComplete.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.autoComplete.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.autoComplete.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.autoComplete.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.autoComplete.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item"><a href="ne.autoComplete.DataManager.html">DataManager</a> <span class="icon blue static">static</span><ul class="sublist methods DataManager"><span class="subtitle">Methods</span><li><a href="ne.autoComplete.DataManager.html#request">request</a></li></ul></li><li class="item"><a href="ne.autoComplete.InputManager.html">InputManager</a> <span class="icon blue static">static</span><ul class="sublist methods InputManager"><span class="subtitle">Methods</span><li><a href="ne.autoComplete.InputManager.html#_setOrgQuery">_setOrgQuery</a></li><li><a href="ne.autoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.autoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.autoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item"><a href="ne.autoComplete.ResultManager.html">ResultManager</a> <span class="icon blue static">static</span><ul class="sublist methods ResultManager"><span class="subtitle">Methods</span><li><a href="ne.autoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.autoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.autoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.autoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.autoComplete.ResultManager.html#moveNextKeyword">moveNextKeyword</a></li><li><a href="ne.autoComplete.ResultManager.html#movePrevKeyword">movePrevKeyword</a></li><li><a href="ne.autoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul></div>
+        <div id="main" class="main">
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ResultManager
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+<dt>
+    
+        <h4 class="name" id="ResultManager">
+            <span class="type-signature"></span>new ResultManager<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line20">line 20</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+    <div class="container-methods">
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    
+        <h4 class="name" id="_applyTemplate">
+            <span class="type-signature"><span class="icon green">private</span> </span>_applyTemplate<span class="signature">(sTemplate, htData)</span><span class="type-signature"> &rarr; {String}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line201">line 201</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>sTemplate</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name first"><code>htData</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>htmlString</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_attachEvent">
+            <span class="type-signature"><span class="icon green">private</span> </span>_attachEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line169">line 169</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성켜기, 검색결과 리스트에 이벤트 바인딩</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_getFirst">
+            <span class="type-signature"><span class="icon green">private</span> </span>_getFirst<span class="signature">()</span><span class="type-signature"> &rarr; {Element}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line274">line 274</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 검색 결과중에 가장 처음의 항목을 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">Element</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_getLast">
+            <span class="type-signature"><span class="icon green">private</span> </span>_getLast<span class="signature">()</span><span class="type-signature"> &rarr; {Element}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line286">line 286</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 검색 결과중에 가장 마지막의 항목을 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">Element</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_getNext">
+            <span class="type-signature"><span class="icon green">private</span> </span>_getNext<span class="signature">(welCurrent)</span><span class="type-signature"> &rarr; {Element}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line299">line 299</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 검색 결과중에 현재 포커스된 엘리먼트를 기준으로 다음 엘리먼트를 찾아 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>welCurrent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>현재 엘리먼트</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">Element</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_getPrev">
+            <span class="type-signature"><span class="icon green">private</span> </span>_getPrev<span class="signature">(welCurrent)</span><span class="type-signature"> &rarr; {Element}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line321">line 321</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 검색 결과중에 현재 포커스된 엘리먼트를 기준으로 이전 엘리먼트를 찾아 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>welCurrent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">Element</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_hideBottomArea">
+            <span class="type-signature"><span class="icon green">private</span> </span>_hideBottomArea<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line365">line 365</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 끄기/켜기 영역을 숨김 처리한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_highlight">
+            <span class="type-signature"><span class="icon green">private</span> </span>_highlight<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line225">line 225</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>draw가 실행될 때 호출되며 키워드 하이라이팅 처리를 한다.
+text : 나이키 에어
+query(입력값) : 나이키
+리턴 결과 : <strong>나이키 </strong>에어</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_makeStrong">
+            <span class="type-signature"><span class="icon green">private</span> </span>_makeStrong<span class="signature">(text, query)</span><span class="type-signature"> &rarr; {String}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line241">line 241</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>텍스트에서 쿼리 부분을 strong 태그로 감싼다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>추천검색어 데이터</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name first"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>입력 키워드값</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">String</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_onClick">
+            <span class="type-signature"><span class="icon green">private</span> </span>_onClick<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line399">line 399</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색결과 리스트가 click되었을 때 실행되는 이벤트 핸들러
+키워드를 클릭하여 검색 결과 페이지로 보낸다. (검색 실행)</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_onMouseOver">
+            <span class="type-signature"><span class="icon green">private</span> </span>_onMouseOver<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line377">line 377</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색결과 리스트에 mouseover되었을 때 실행되는 이벤트 핸들러</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_showBottomArea">
+            <span class="type-signature"><span class="icon green">private</span> </span>_showBottomArea<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line355">line 355</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 끄기/켜기 영역을 노출한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_useAutoComplete">
+            <span class="type-signature"><span class="icon green">private</span> </span>_useAutoComplete<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line340">line 340</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성을 사용 여부를 설정하고 켜키,끄기 텍스트를 토글 방식으로 변경한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="changeOnOffText">
+            <span class="type-signature"></span>changeOnOffText<span class="signature">(isShow)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line154">line 154</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 사용여부에 따라 결과 리스트 하단에 [자동완성 끄기 | 자동완성 켜기] 텍스트를 설정한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>isShow</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>true/false 로 on/off 여부</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="draw">
+            <span class="type-signature"></span>draw<span class="signature">(dataArr)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line47">line 47</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>서버로부터 전달받은 자동완성 데이터를 화면에 그린다. AutoComplete의 setServerData함수에 의해 호출.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>dataArr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>서버로부터 받은 자동완성 데이터 배열</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="hideResultList">
+            <span class="type-signature"></span>hideResultList<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line95">line 95</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>결과 영역 숨김 처리</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="isShowResultList">
+            <span class="type-signature"></span>isShowResultList<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line85">line 85</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 검색 결과 영역이 펼쳐진 상태인지 반환한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>검색 결과 영역 펼쳐진 상태 여부</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="moveNextKeyword">
+            <span class="type-signature"></span>moveNextKeyword<span class="signature">(e)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line115">line 115</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색어 리스트에서 키보드 이용해서 아래로 움직일때 실행되는 함수</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="movePrevKeyword">
+            <span class="type-signature"></span>movePrevKeyword<span class="signature">(e)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line136">line 136</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색어 리스트에서 키보드 이용해서 위로 움직일때 실행되는 함수</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="showResultList">
+            <span class="type-signature"></span>showResultList<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="ResultManager.js.html">ResultManager.js</a></code>,
+                    <code><a href="ResultManager.js.html#line103">line 103</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>결과 영역 펼침</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className) {
+	if(document.getElementsByClassName) {
+		return document.getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = document.body.getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var name = fileName.split('.');
+name = name[name.length - 2];
+name = name.split('-');
+name = name[name.length - 1];
+var lnbList = getElementsByClassName(name);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].style.display = 'block';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>

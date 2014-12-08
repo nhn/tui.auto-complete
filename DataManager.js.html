@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DataManager.js</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Classes</h3><ul class="list classes"><li class="item"><a href="ne.component.AutoComplete.html">AutoComplete</a> <span class="icon blue static">static</span><ul class="sublist methods AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.component.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.component.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.component.AutoComplete.html#moveNextKeyword">moveNextKeyword</a></li><li><a href="ne.component.AutoComplete.html#movePrevKeyword">movePrevKeyword</a></li><li><a href="ne.component.AutoComplete.html#request">request</a></li><li><a href="ne.component.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.component.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.component.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.component.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.component.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item"><a href="ne.component.AutoComplete.DataManager.html">DataManager</a> <span class="icon blue static">static</span></li><li class="item"><a href="ne.component.AutoComplete.InputManager.html">InputManager</a> <span class="icon blue static">static</span><ul class="sublist methods InputManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item"><a href="ne.component.AutoComplete.ResultManager.html">ResultManager</a> <span class="icon blue static">static</span><ul class="sublist methods ResultManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#moveNextKeyword">moveNextKeyword</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#movePrevKeyword">movePrevKeyword</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul><h3>Global</h3><ul><li class="item"><a href="global.html#request">request</a> </li></ul></div>
+        <div id="main" class="main">
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview 자동완성 컴포넌트의 DataManager
+ * @author kihyun.lee@nhnent.com
+ */
+
+ne = window.ne || {};
+ne.component = ne.component || {};
+
+
+/**
+ * 자동완성 컴포넌트 중 api와 연동하여 데이터를 받아오는 클래스
+ *
+ * @constructor
+ */
+ne.component.AutoComplete.DataManager = ne.util.defineClass({
+    init: function() {
+        if (arguments.length != 2) {
+            alert('argument length error !');
+        }
+
+        // argument로 넘어온 AutoComplete 클래스와 사용자가 지정한 옵션값을 내부 변수로 저장한다.
+        this.autoCompleteObj = arguments[0];
+        this.options = arguments[1];
+    },
+
+    /**
+     * 검색서버에 입력값을 보내어 자동완성 검색어 리스트를 받아온다.
+     *
+     * @param {String} keyword 검색서버에 요청할 키워드 스트링
+     */
+    request: function(keyword) {
+        //혹시라도 검색용 api가 설정되지 않았다면 request하지 않고 바로 종료한다.
+        if (!this.options.searchApi) {
+            return;
+        }
+
+        //request를 위한 변수 세팅
+        var keyDatas = [],
+            dataArr = [],
+            self = this,
+            dataCallback = function(){},
+            defaultParam = {
+                q: keyword,
+                r_enc: 'UTF-8',
+                q_enc: 'UTF-8',
+                r_format: 'json',
+                _callback: 'dataCallback'
+            },
+            requestParam = ne.util.extend(this.options.searchApi, defaultParam);
+
+
+        ne.util.ajax.request(this.options.searchApi.url, {
+            'dataType': 'jsonp',
+            'jsonpCallback': 'dataCallback',
+            'data': requestParam,
+            'type': 'get',
+            'success': function(dataObj) {
+                try {
+                    var itemLen = dataObj.items.length,
+                        i,
+                        j;
+
+                    for (i = 0; i &lt; itemLen; i++) {
+                        dataArr[i] = [];
+
+                        var slots = dataObj.items[i],
+                            slotLen = slots.length;
+
+                        if (slotLen > 0) {
+                            for (j = 0; j &lt; slots.length; j++) {
+                                dataArr[i][j] = slots[j][0];
+                                keyDatas.push(dataArr[i][j]);
+                            }
+                        }
+                    }
+
+                    //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
+                    self.autoCompleteObj.setServerData(keyDatas);
+                } catch (e) {
+                    throw new Error('서버에서 정보를 받을 수 없습니다.');
+                }
+            }
+        });
+    }
+});</code></pre>
+        </article>
+    </section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className) {
+	if(document.getElementsByClassName) {
+		return document.getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = document.body.getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var name = fileName.split('.');
+name = name[name.length - 2];
+name = name.split('-');
+name = name[name.length - 1];
+var lnbList = getElementsByClassName(name);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].style.display = 'block';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>
