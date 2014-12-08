@@ -213,14 +213,10 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _highlight: function(text, query) {
-        console.log('### text :' , text);
-        console.log('### query :' , query);
-
         var returnStr = this._makeStrong(text, query);
         if ('' !== returnStr) {
             return returnStr;
         }
-        console.log('### return : ' , text);
         return text;
     },
 
