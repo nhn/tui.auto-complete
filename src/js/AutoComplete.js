@@ -56,7 +56,9 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      * @private
      */
     _checkValidation: function(htOptions) {
-        var config = '';
+        var config,
+            configArr = [],
+            key;
 
         //유효한 config인지 체크
         try {
@@ -66,8 +68,11 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             return false;
         }
 
-        var configArr = Object.keys(config),
-            configLen = configArr.length,
+        for (key in config) {
+            configArr.push(key);
+        }
+
+        var configLen = configArr.length,
             i,
             requiredFields = ['resultListElement',  //config요소 중에 필수 입력 항목 필드들
                               'searchBoxElement' ,
