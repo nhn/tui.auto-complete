@@ -1,25 +1,4 @@
 {
-    Popshoes = {
-        'resultListElement': $("._resultBox"),
-        'searchBoxElement': $("#ac_input1"),
-        'orgQueryElement' : '#org_query',
-        'templateElement' : '<li><a href="#" onclick=\"return false;\">@txt@</a></li>',
-        'toggleBtnElement' : $("#onoffBtn"),
-        'viewCount' : 7,
-        'formElement' : $("#ac_form1"),
-        'mouseOverClass' : 'stress',
-        'onoffTextElement' : $(".baseBox .bottom"),
-        'cookieName' : 'usecookie',
-        'searchApi' : {
-            'url' : 'http://119.205.249.132/ac',
-            'st' : 1,
-            'r_lt' : 1
-        },
-        'toggleImg' : {
-            'on' : 'img/p_on.jpg',
-            'off' : 'img/p_off.jpg'
-        }
-    },
     Default = {
         'resultListElement': $("._resultBox"),
         'searchBoxElement': $("#ac_input1"),
