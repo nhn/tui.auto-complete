@@ -50,7 +50,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
     });
     */
 
-
+    //OK
     it('자동완성 기능을 사용안함으로 설정되는가.', function() {
         var A = new ne.component.AutoComplete({'configId' : 'Default'});
 
@@ -60,7 +60,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         A.hideResultList();
     });
 
-    /*
+
     it('(검색어 결과가 있는 경우)검색어 입력 후, 검색 결과가 있는가.', function() {
         autoComplete.setCookieValue(true);
         autoComplete.setValue('운동화');
@@ -86,7 +86,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         resultManager._useAutoComplete();
         expect(resultManager.isShowResultList()).toBeFalsy();
     });
-    */
+
 
     /*
     it('API검색결과가 나오지 않는 검색어 입력시 결과 영역이 보이지 않아야 한다.', function() {
