@@ -215,7 +215,6 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * resultManager의 movePrevKeyword함수를 호출하여 자동완성 검색어 리스트중에서 이전 항목으로 이동한다.
-     * @param e
      */
     movePrevKeyword: function() {
         this.resultManager.movePrevKeyword();
