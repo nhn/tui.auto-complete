@@ -48,7 +48,6 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
             },
             requestParam = ne.util.extend(this.options.searchApi, defaultParam);
 
-
         $.ajax({
             type: 'get',
             url: this.options.searchApi.url,
@@ -78,7 +77,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
                     //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
                     self.autoCompleteObj.setServerData(keyDatas);
                 } catch (e) {
-                    throw new Error('서버에서 정보를 받을 수 없습니다.');
+                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다 : '  + keyword, e);
                 }
             }
         });
