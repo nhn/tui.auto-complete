@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <title>JSDoc: Global</title>
     <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
@@ -26,76 +26,13 @@
 
 
 
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    <section>
-        <article><div class="readme"><h1>Component-AutoComplete</h1><p>자동완성 컴포넌트</p>
-<h2>개발날짜</h2><p>최초개발 : 2014.08 <br/>
-깃헙이전 : 2014.12</p>
-<h2>담당자</h2><p>FE 개발팀 이기현 <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#107;&#105;&#104;&#121;&#x75;&#110;&#x2e;&#x6c;&#x65;&#x65;&#x40;&#x6e;&#x68;&#110;&#x65;&#110;&#116;&#46;&#99;&#x6f;&#109;">&#107;&#105;&#104;&#121;&#x75;&#110;&#x2e;&#x6c;&#x65;&#x65;&#x40;&#x6e;&#x68;&#110;&#x65;&#110;&#116;&#46;&#99;&#x6f;&#109;</a></p>
-<h2>설명</h2><ul>
-<li>검색어의 자동완성 컴포넌트입니다.</li>
-</ul>
-<h2>기능정의</h2><ul>
-<li><ol>
-<li>입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어에 뿌려준다.</li>
-</ol>
-</li>
-<li><ol>
-<li>자동완성 기능을 끄고 켤 수 있다.</li>
-</ol>
-</li>
-<li><ol>
-<li>TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회할 수 있다.</li>
-</ol>
-</li>
-<li><ol>
-<li>결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색할 수 있다.</li>
-</ol>
-</li>
-<li><ol>
-<li>결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.</li>
-</ol>
-</li>
-</ul>
-<h2>샘플 페이지</h2><p>??</p>
-<h2>다운로드</h2><ul>
-<li>http://fetech.nhnent.com/svnrun/fetech/components/download/AutoComplete/autocomplete.zip</li>
-</ul>
-<h2>API문서</h2><p>??</p></div></article>
-    </section>
-
-
-
-
-
-
-
-
 
 <section>
 
 <header>
     
         <h2>
-        AutoComplete.js
+        
         </h2>
         
     
@@ -104,8 +41,6 @@
 <article>
     <div class="container-overview">
     
-        
-            <div class="description"><p>자동완성 컴포넌트</p></div>
         
 
         
@@ -128,13 +63,6 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>kihyun.lee@nhnent.com</li>
-        </ul>
-    </dd>
-    
 
     
 
@@ -142,11 +70,6 @@
 
     
 
-    
-    <dt class="tag-source">Source:</dt>
-        <dd class="tag-source"><ul class="dummy"><li>
-            <a href="AutoComplete.js.html">AutoComplete.js</a>, <a href="AutoComplete.js.html#line1">line 1</a>
-        </li></ul></dd>
     
 
     
@@ -175,39 +98,96 @@
     
 
     
+    <div class="container-methods">
+        <h3 class="subsection-title">Methods</h3>
 
+        <dl>
+            
+<dt>
     
+        <h4 class="name" id="request">
+            <span class="type-signature"></span>request<span class="signature">(keyword)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="DataManager.js.html">DataManager.js</a></code>,
+                    <code><a href="DataManager.js.html#line31">line 31</a></code>
+                </div>
+            
+        </h4>
 
-    
-</article>
-
-</section>
 
 
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        DataManager.js
-        </h2>
         
     
-</header>
+</dt>
+<dd>
 
-<article>
-    <div class="container-overview">
     
+    <div class="description">
+        <p>검색서버에 입력값을 보내어 자동완성 검색어 리스트를 받아온다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
         
-            <div class="description"><p>자동완성 컴포넌트의 DataManager</p></div>
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
         
 
         
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>keyword</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>검색서버에 요청할 키워드 스트링</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
 
 
 <dl class="details">
@@ -227,25 +207,11 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>kihyun.lee@nhnent.com</li>
-        </ul>
-    </dd>
-    
 
     
 
     
 
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-        <dd class="tag-source"><ul class="dummy"><li>
-            <a href="DataManager.js.html">DataManager.js</a>, <a href="DataManager.js.html#line1">line 1</a>
-        </li></ul></dd>
     
 
     
@@ -257,220 +223,21 @@
 
 
 
-        
     
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
     </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        InputManager.js
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description"><p>자동완성 컴포넌트의 InputManager</p></div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>kihyun.lee@nhnent.com</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-        <dd class="tag-source"><ul class="dummy"><li>
-            <a href="InputManager.js.html">InputManager.js</a>, <a href="InputManager.js.html#line1">line 1</a>
-        </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        ResultManager.js
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description"><p>자동완성 컴포넌트의 ResultManager</p></div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>kihyun.lee@nhnent.com</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-        <dd class="tag-source"><ul class="dummy"><li>
-            <a href="ResultManager.js.html">ResultManager.js</a>, <a href="ResultManager.js.html#line1">line 1</a>
-        </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
     
 
     
