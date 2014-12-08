@@ -26,7 +26,7 @@ module.exports = function(config) {
         //'src/common/common.js',
 
         // dependencies
-        {pattern: 'src/lib/*.js', watched: false, served: true, included: true},
+        {pattern: 'src/libs/*.js', watched: false, served: true, included: true},
         {pattern: 'src/common/*.js', watched: false, served: true, included: true},
         {pattern: 'src/js/*.js', watched: false, served: true, included: true},
         {pattern: 'test/*.js', watched: false, served: true, included: true},

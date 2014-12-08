@@ -205,6 +205,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**
      * 검색창 keydown event 처리 핸들러
+     * @param {Event} keyDown 이벤트 객체
      * @private
      */
     _onKeyDown: function(e) {
