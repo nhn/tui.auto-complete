@@ -213,13 +213,14 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _highlight: function(text, query) {
-        alert('### text :' , text);
-        alert('### query :' , query);
+        console.log('### text :' , text);
+        console.log('### query :' , query);
 
         var returnStr = this._makeStrong(text, query);
         if ('' !== returnStr) {
             return returnStr;
         }
+        console.log('### return : ' , text);
         return text;
     },
 
@@ -231,7 +232,9 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _makeStrong: function (text, query) {
-        alert('query : ' , query);
+        if (!query || query.length < 1) {
+            return text;
+        }
         var escRegExp = new RegExp("[.*+?|()\\[\\]{}\\\\]", "g"),
             tmpStr = query.replace(/()/g, " ").replace(/^\s+|\s+$/g, ""),
             tmpCharacters = tmpStr.match(/\S/g),
