@@ -89,7 +89,6 @@ module.exports = function(config) {
           'IE8',
           'IE9',
           'IE10',
-          'IE11',
           'Chrome-WebDriver',
           'Firefox-WebDriver'
       ],
