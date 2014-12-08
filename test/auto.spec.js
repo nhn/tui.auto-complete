@@ -32,24 +32,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         expect(resultManager).toBeTruthy();
     });
 
-    /*
-    it('AutoComplete 기능 테스트', function() {
-        //객체 생성
-        var A = new ne.component.AutoComplete({'configId' : 'Default'});
 
-        expect($('#ac_input')).toBe('운동화');
-        //검색어 입력
-        A.setValue('운동화');
-        A.request('운동화');
-
-         var resultManager = A.resultManager;
-        var inputManager = A.inputManager;
-
-        //객체 생성 판단
-        expect(inputManager).toBeTruthy();
-        expect(resultManager).toBeTruthy();
-    });
-    */
 
     it('키워드 하이라이팅이 제대로 되는가.', function() {
         var A = new ne.component.AutoComplete({'configId' : 'Default'}),
@@ -99,6 +82,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         resultManager._useAutoComplete();
         expect(resultManager.isShowResultList()).toBeFalsy();
     });
+
 
     it('API검색결과가 나오지 않는 검색어 입력시 결과 영역이 보이지 않아야 한다.', function() {
         autoComplete.setValue('소녀시대');
