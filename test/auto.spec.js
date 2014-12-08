@@ -45,9 +45,6 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         A.request('운동화');
 
         //키워드 하이라이트 처리 테스트
-        var txt1 = resultManager._highlight('나이키 에어', '나이키');
-        var txt2 = resultManager._highlight('나이키 에어', 'TEST');
-
         //expect(resultManager._highlight('나이키 에어', '나이키')).toBe('<strong>나이키 </strong>에어');
         expect(resultManager._highlight('나이키 에어', 'TEST')).toBe('나이키 에어');
     });
