@@ -81,13 +81,12 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
     it('자동완성 끄기/켜기 기능이 제대로 동작하는가.' , function() {
         resultManager.showResultList();
         resultManager.changeOnOffText(true);
-        expect($("#onofftext").text()).toEqual("자동완성 켜기");
+        expect($("#onofftext").text()).toEqual("자동완성 끄기");
         resultManager.changeOnOffText(false);
 
         var $onOffTxt = $(".baseBox .bottom");
         resultManager._hideBottomArea();
         expect($onOffTxt.css('display')).toEqual('none');
-        expect($onOffTxt.text()).toEqual('자동완성 끄기');
 
         resultManager._useAutoComplete();
         expect(resultManager.isShowResultList()).toBeFalsy();
