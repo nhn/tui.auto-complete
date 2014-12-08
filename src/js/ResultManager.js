@@ -234,7 +234,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             tmpCharLen = tmpCharacters.length,
             tmpArr = [],
             returnStr = '',
-            regQuery = '',
+            regQuery,
             i;
 
         for (i = 0, cnt = tmpCharLen; i < cnt; i++) {
