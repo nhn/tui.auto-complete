@@ -83,7 +83,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         expect(resultManager.isShowResultList()).toBeFalsy();
     });
 
-
+    /*
     it('API검색결과가 나오지 않는 검색어 입력시 결과 영역이 보이지 않아야 한다.', function() {
         autoComplete.setValue('소녀시대');
         autoComplete.request('소녀시대');
@@ -91,4 +91,5 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         var $onOffTxt = $(".baseBox .bottom");
         expect($onOffTxt.css('display')).toEqual('none');
     });
+    */
 });
