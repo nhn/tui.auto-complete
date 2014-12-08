@@ -1,5 +1,538 @@
-This is my Page
- a
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Index</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Classes</h3><ul class="list classes"><li class="item"><a href="ne.component.AutoComplete.html">AutoComplete</a> <span class="icon blue static">static</span><ul class="sublist methods AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.component.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.component.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.component.AutoComplete.html#moveNextKeyword">moveNextKeyword</a></li><li><a href="ne.component.AutoComplete.html#movePrevKeyword">movePrevKeyword</a></li><li><a href="ne.component.AutoComplete.html#request">request</a></li><li><a href="ne.component.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.component.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.component.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.component.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.component.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item"><a href="ne.component.AutoComplete.DataManager.html">DataManager</a> <span class="icon blue static">static</span></li><li class="item"><a href="ne.component.AutoComplete.InputManager.html">InputManager</a> <span class="icon blue static">static</span><ul class="sublist methods InputManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item"><a href="ne.component.AutoComplete.ResultManager.html">ResultManager</a> <span class="icon blue static">static</span><ul class="sublist methods ResultManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#moveNextKeyword">moveNextKeyword</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#movePrevKeyword">movePrevKeyword</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul><h3>Global</h3><ul><li class="item"><a href="global.html#request">request</a> </li></ul></div>
+        <div id="main" class="main">
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><div class="readme"><h1>Component-AutoComplete</h1><p>자동완성 컴포넌트</p>
+<h2>개발날짜</h2><p>최초개발 : 2014.08 <br/>
+깃헙이전 : 2014.12</p>
+<h2>담당자</h2><p>FE 개발팀 이기현 <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#107;&#105;&#104;&#121;&#x75;&#110;&#x2e;&#x6c;&#x65;&#x65;&#x40;&#x6e;&#x68;&#110;&#x65;&#110;&#116;&#46;&#99;&#x6f;&#109;">&#107;&#105;&#104;&#121;&#x75;&#110;&#x2e;&#x6c;&#x65;&#x65;&#x40;&#x6e;&#x68;&#110;&#x65;&#110;&#116;&#46;&#99;&#x6f;&#109;</a></p>
+<h2>설명</h2><ul>
+<li>검색어의 자동완성 컴포넌트입니다.</li>
+</ul>
+<h2>기능정의</h2><ul>
+<li><ol>
+<li>입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어에 뿌려준다.</li>
+</ol>
+</li>
+<li><ol>
+<li>자동완성 기능을 끄고 켤 수 있다.</li>
+</ol>
+</li>
+<li><ol>
+<li>TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회할 수 있다.</li>
+</ol>
+</li>
+<li><ol>
+<li>결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색할 수 있다.</li>
+</ol>
+</li>
+<li><ol>
+<li>결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.</li>
+</ol>
+</li>
+</ul>
+<h2>샘플 페이지</h2><p>??</p>
+<h2>다운로드</h2><ul>
+<li>http://fetech.nhnent.com/svnrun/fetech/components/download/AutoComplete/autocomplete.zip</li>
+</ul>
+<h2>API문서</h2><p>??</p></div></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        AutoComplete.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>kihyun.lee@nhnent.com</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="AutoComplete.js.html">AutoComplete.js</a>, <a href="AutoComplete.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
 
 
         
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        DataManager.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트의 DataManager</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>kihyun.lee@nhnent.com</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="DataManager.js.html">DataManager.js</a>, <a href="DataManager.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        InputManager.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트의 InputManager</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>kihyun.lee@nhnent.com</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="InputManager.js.html">InputManager.js</a>, <a href="InputManager.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ResultManager.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트의 ResultManager</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>kihyun.lee@nhnent.com</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="ResultManager.js.html">ResultManager.js</a>, <a href="ResultManager.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className) {
+	if(document.getElementsByClassName) {
+		return document.getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = document.body.getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var name = fileName.split('.');
+name = name[name.length - 2];
+name = name.split('-');
+name = name[name.length - 1];
+var lnbList = getElementsByClassName(name);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].style.display = 'block';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>
