@@ -47,8 +47,8 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         var txt1 = resultManager._highlight('나이키 에어', '나이키');
         var txt2 = resultManager._highlight('나이키 에어', 'TEST');
 
-        alert(txt1);
-        alert(txt2);
+        //alert(txt1);    //<strong>나이키 </strong>에어
+        //alert(txt2);    //나이키 에어
         //expect(resultManager._highlight('나이키 에어', '나이키')).toBe('<strong>나이키 </strong>에어');
         expect(resultManager._highlight('나이키 에어', 'TEST')).toBe('나이키 에어');
     });
