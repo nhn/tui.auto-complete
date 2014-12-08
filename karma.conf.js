@@ -21,11 +21,13 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'lib/jquery-1.9.1.min.js',
-        'lib/jquery.cookie.js',
-        'src/common/common.js',
+        //'src/lib/jquery-1.9.1.min.js',
+        //'src/lib/jquery.cookie.js',
+        //'src/common/common.js',
 
         // dependencies
+        {pattern: 'src/lib/*.js', watched: false, served: true, included: true},
+        {pattern: 'src/common/*.js', watched: false, served: true, included: true},
         {pattern: 'src/js/*.js', watched: false, served: true, included: true},
         {pattern: 'test/*.js', watched: false, served: true, included: true},
         {pattern: 'node_modules/jasmine-jquery/lib/jasmine-jquery.js', watched: false, served: true, included: true},
@@ -89,6 +91,7 @@ module.exports = function(config) {
           'IE8',
           'IE9',
           'IE10',
+          'IE11',
           'Chrome-WebDriver',
           'Firefox-WebDriver'
       ],
