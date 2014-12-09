@@ -1,5 +1,5 @@
 /**
- * @fileoverview 자동완성 컴포넌트
+ * @fileoverview 자동완성 컴포넌트의 모든 구성요소들을 총괄하는 최상위 클래스
  * @author kihyun.lee@nhnent.com
 */
 
@@ -8,8 +8,17 @@ ne.component = ne.component || {};
 
 /**
  @constructor
+ @param {Object} htOptions
+ @example
+    var autoCompleteObj = new ne.component.AutoComplete({
+       "configId" : "Default"    // autoConfig.js에서 사용할 데이터 셋 키값
+    });
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
+    /**
+     * 초기화 함수
+     * @param {Object} htOptions 함수의 argument. autoConfig의 키값 정보가 들어온다.
+     */
     init: function(htOptions) {
         this.options = {};
 
@@ -51,8 +60,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 자동완성 컴포넌트 사용을 위해 설정하는 설정 파일 내용을 검증 및 필수 항목을 체크한다.
-     * @param {Object} htOptions 설정 내용
-     * @returns {boolean} 설정 파일의 유효성 여부
+     * @param {Object} htOptions config의 설정 내용
+     * @returns {Boolean} 설정 파일의 유효성 여부
      * @private
      */
     _checkValidation: function(htOptions) {
@@ -80,7 +89,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
                               'templateElement',
                               'formElement',
                               'searchApi'],
-            checkedFields = [];   //필수체크 항목 저장하는 임시 배열
+            checkedFields = [];                     //필수체크 항목 저장하는 임시 배열
 
         for (i = 0; i < configLen; i++) {
             if ($.inArray(configArr[i], requiredFields) >= 0) {
@@ -147,7 +156,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
-     * ajax통신하고 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.
+     * ajax통신하여 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.
      * @param {Array} dataArr ajax통신 후 서버로부터 받은 검색 결과 배열
      */
     setServerData: function(dataArr) {
@@ -156,7 +165,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 자동완성 사용여부에 대한 쿠키값을 세팅하고 토글버튼을 변경한다.
-     * @param isUse {boolean} 자동완성 사용여부
+     * @param isUse {Boolean} 자동완성 사용여부
      */
     setCookieValue: function(isUse) {
         $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
@@ -173,7 +182,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
-     * 결과 리스트 영역이 show상태인지 hide상태인지 여부를 리턴
+     * 결과 리스트 영역이 show상태인지 hide상태인지 여부를 리턴한다.
      * @returns {Boolean} 결과 리스트 영역이 보이는 상태인지에 대한 여부
      */
     isShowResultList : function() {
@@ -222,9 +231,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * '자동완성 끄기 | 자동완성 켜기' 텍스트를 설정하도록 resultManager에 요청한다.
+     * @params {Boolean} true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
      */
-    changeOnOffText: function() {
-        this.resultManager.changeOnOffText();
+    changeOnOffText: function(isUse) {
+        this.resultManager.changeOnOffText(isUse);
     },
 
     /**

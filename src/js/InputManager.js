@@ -1,5 +1,5 @@
 /**
- * @fileOverview 자동완성 컴포넌트의 InputManager
+ * @fileOverview 자동완성 컴포넌트 중에서 입력창에 대한 기능을 제공하는 클래스
  * @author kihyun.lee@nhnent.com
  */
 
@@ -9,7 +9,7 @@ ne.component = ne.component || {};
 
 /**
  * 자동완성 컴포넌트의 구성 요소중 검색어 입력받는 입력창의 동작과 관련된 클래스
- *
+ * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
  * @constructor
  */
 ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.InputManager.prototype */{
@@ -20,14 +20,18 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         'DOWN_ARROW' : 40
     },
 
+    /**
+     * 초기화 함수
+     * @param {Object} arguments
+     */
     init: function() {
         if (arguments.length != 2) {
             alert('argument length error !');
         }
-        this.autoCompleteObj = arguments[0];
-        this.options = arguments[1];
+        this.autoCompleteObj = arguments[0];   //AutoComplete인스턴스를 저장한다.
+        this.options = arguments[1];     //설정 옵션값을 저장한다.
 
-        //Config에서 검색창 부분에서 필요한 엘리먼트 정보 가져옴.
+        //Config에서 검색창 부분에서 필요한 엘리먼트 정보 가져온다.
         this.$searchBox = this.options.searchBoxElement;
         this.$toggleBtn = this.options.toggleBtnElement;
         this.$orgQuery = this.options.orgQueryElement;
@@ -40,7 +44,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
 
     /**
-     * 검색창에 세팅된 키워드값을 리턴
+     * 검색창에 세팅된 키워드값을 리턴한다.
      * @return {String} 검색창에 세팅된 키워드
      */
     getValue: function() {
@@ -48,7 +52,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     },
 
     /**
-     * 검색창에 키워드값 세팅
+     * 검색창에 키워드값을 세팅한다.
      * @param {String} str 검색창에 세팅할 키워드 값
      */
     setValue: function(str) {
@@ -81,7 +85,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //검색창에 focus, keyup, keydown, click 이벤트 바인딩.
         this.$searchBox.bind('focus keyup keydown blur click', $.proxy(function(e) {
             if (e.type === 'focus') {
-                this._onFocus(e);
+                this._onFocus();
             } else if (e.type === 'blur') {
                 this._onBlur(e);
             } else if (e.type === 'keyup') {
@@ -102,7 +106,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**
      * 사용자가 입력했던 원본 쿼리값을 html hidden value로 세팅한다.
-     *
      * @param {String} str 사용자가 검색창에 입력한 검색어 스트링.
      * @private
      */
@@ -112,11 +115,11 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**************************** Event Handlers *****************************/
     /**
-     * 검색창이 click되었을 때 실행되는 이벤트 핸들러 함수
+     * 검색창이 click 되었을 때 실행되는 이벤트 핸들러 함수
      * @private
      */
     _onClick: function() {
-        //입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 무효. 그냥 리턴하고 끝.
+        //입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
         if (!this.autoCompleteObj.getValue() ||
             !this.autoCompleteObj.isUseAutoComplete()) {
             return false;
@@ -135,17 +138,17 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * 검색창에 focus 되었을때 실행되는 이벤트 핸들러 함수
      * @private
      */
-    _onFocus: function(e) {
-        //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
-
+    _onFocus: function() {
         var self = this;
+
+        //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
             self._onWatch();
         }), this, 200);
     },
 
     /**
-     * 검색창의 입력값 변경 여부를 판단.
+     * 주기적으로 호출되면서 검색창의 입력값 변경 여부를 판단한다.
      * @private
      */
     _onWatch: function() {
@@ -156,7 +159,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         }
 
         //입력값에 변경이 생겼다면 ([예] 운 --> 운동 --> 운동화) 서버에 데이터 요청하도록 한다.
-        if (this.inputValue != this.$searchBox.val()) {
+        if (this.inputValue !== this.$searchBox.val()) {
             this.inputValue = this.$searchBox.val();
             this._onChange();
         } else if (!this.autoCompleteObj.getMoved()) {
@@ -172,7 +175,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //입력값에 변경이 생겼다면 ( 소녀 --> 소녀시 --> 소녀시대 )
         //_onChange함수를 통해 서버에 데이터 요청하도록 한다.
 
-        if (this.inputValue != this.$searchBox.val()) {
+        if (this.inputValue !== this.$searchBox.val()) {
             this.inputValue = this.$searchBox.val();
             this._onChange();
         }
@@ -204,7 +207,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     },
 
     /**
-     * 검색창 keydown event 처리 핸들러
+     * 검색창 keydown event 처리 핸들러. 입력키값에 따라서 액션을 정의한다.
      * @param {Event} keyDown 이벤트 객체
      * @private
      */
@@ -217,22 +220,16 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //입력키값(TAB,방향키)에 따른 액션 정의
         if (e.keyCode == this.keyCodeMap.TAB) {
             e.preventDefault();
-
-            if (e.shiftKey) {
-                this.autoCompleteObj.movePrevKeyword(e);
-            } else {
-                this.autoCompleteObj.moveNextKeyword(e);
-            }
-        } else if (e.keyCode == this.keyCodeMap.DOWN_ARROW) {
+            e.shiftKey ? this.autoCompleteObj.movePrevKeyword(e) : this.autoCompleteObj.moveNextKeyword(e);
+        } else if (e.keyCode === this.keyCodeMap.DOWN_ARROW) {
             this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode == this.keyCodeMap.UP_ARROW) {
+        } else if (e.keyCode === this.keyCodeMap.UP_ARROW) {
             this.autoCompleteObj.movePrevKeyword(e);
         }
     },
 
-
     /**
-     * 토글버튼 click event 처리
+     * 토글버튼에 대한 click event를 처리한다.
      * @private
      */
     _onClickToggle: function() {
