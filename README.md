@@ -4,7 +4,7 @@ Component-AutoComplete
 자동완성 컴포넌트
 
 ## 개발날짜
-최초개발 : 2014.09
+최초개발 : 2014.09<br>
 깃헙이전 : 2014.12
 
 ## 담당자
@@ -21,8 +21,8 @@ FE 개발팀 이기현 <kihyun.lee@nhnent.com>
 - 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.
 
 ## 샘플 페이지
-- 기본 예제 (http://fetech.nhnent.com/svnrun/fetech/components/AutoComplete/default.html)
-- 자동완성 기능 끄기, 켜기 가능한 예제 (http://fetech.nhnent.com/svnrun/fetech/components/AutoComplete/expand1.html)
+- 기본 예제 : http://fetech.nhnent.com/svnrun/fetech/components/AutoComplete/default.html
+- 자동완성 기능 끄기, 켜기 가능한 예제 : http://fetech.nhnent.com/svnrun/fetech/components/AutoComplete/expand1.html
 
 ## 다운로드
 - http://fetech.nhnent.com/svnrun/fetech/components/download/AutoComplete/autocomplete.zip
