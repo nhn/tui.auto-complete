@@ -7,7 +7,7 @@ ne = window.ne || {};
 ne.component = ne.component || {};
 
 /**
- * 자동완성 컴포넌트의 구성 요소중 검색어 검색 결과영역에 관련된 클래스
+ * 자동완성 컴포넌트의 구성 요소중 검색어 검색 결과영역에 관련된 클래스. <br>
  * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
  * @constructor
  */
@@ -180,7 +180,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
 
     /**
-     * 검색어 결과에 색상 및 볼드 처리를 위하여 템플릿을 적용한다.(t2)
+     * 검색어 결과에 색상 및 볼드 처리를 위하여 템플릿을 적용한다.
      * @param {String} tmplStr
      * @param {Object} dataObj
      * @returns {String} htmlString 템플릿이 적용된 검색어 결과 부분의 전체 html 스트링
