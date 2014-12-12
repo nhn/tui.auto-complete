@@ -155,11 +155,146 @@
         return keys;
     };
 
+
+    /////////////////
+    /**
+     *
+     * 여러개의 json객체들을 대상으로 그것들이 동일한지 비교하여 리턴한다.
+     * (출처) http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
+     *
+     * @return {boolean} 파라미터로 전달받은 json객체들의 동일 여부
+     * @example
+     *
+     var jsonObj1 = {name:'milk', price: 1000},
+     jsonObj2 = {name:'milk', price: 1000},
+     jsonObj3 = {name:'milk', price: 1000}
+
+     ne.util.compareJSON(jsonObj1, jsonObj2, jsonObj3);
+     => return true
+
+     var jsonObj4 = {name:'milk', price: 1000},
+     jsonObj5 = {name:'beer', price: 3000}
+
+     ne.util.compareJSON(jsonObj4, jsonObj5);
+     => return false
+     */
+    function compareJSON() {
+        var leftChain,
+            rightChain,
+            argsLen = arguments.length,
+            i;
+
+        function isSameObject(x, y) {
+            var p;
+
+            // remember that NaN === NaN returns false
+            // and isNaN(undefined) returns true
+            if (isNaN(x) &&
+                isNaN(y) &&
+                ne.util.isNumber(x) &&
+                ne.util.isNumber(y)) {
+                return true;
+            }
+
+            // Compare primitives and functions.
+            // Check if both arguments link to the same object.
+            // Especially useful on step when comparing prototypes
+            if (x === y) {
+                return true;
+            }
+
+            // Works in case when functions are created in constructor.
+            // Comparing dates is a common scenario. Another built-ins?
+            // We can even handle functions passed across iframes
+            if ((ne.util.isFunction(x) && ne.util.isFunction(y)) ||
+                (x instanceof Date && y instanceof Date) ||
+                (x instanceof RegExp && y instanceof RegExp) ||
+                (x instanceof String && y instanceof String) ||
+                (x instanceof Number && y instanceof Number)) {
+                return x.toString() === y.toString();
+            }
+
+            // At last checking prototypes as good a we can
+            if (!(x instanceof Object && y instanceof Object)) {
+                return false;
+            }
+
+            if (x.isPrototypeOf(y) ||
+                y.isPrototypeOf(x) ||
+                x.constructor !== y.constructor ||
+                x.prototype !== y.prototype) {
+                return false;
+            }
+
+            // check for infinitive linking loops
+            if (ne.util.inArray(x, leftChain) > -1 ||
+                ne.util.inArray(y, rightChain) > -1) {
+                return false;
+            }
+
+            // Quick checking of one object beeing a subset of another.
+            for (p in y) {
+                if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+                    return false;
+                }
+                else if (typeof y[p] !== typeof x[p]) {
+                    return false;
+                }
+            }
+
+            //인풋 데이터 x의 오브젝트 키값으로 값을 순회하면서
+            //hasOwnProperty, typeof 체크를 해서 비교하고 x[prop]값과 y[prop] 가 같은 객체인지 판별한다.
+            for (p in x) {
+                if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+                    return false;
+                }
+                else if (typeof y[p] !== typeof x[p]) {
+                    return false;
+                }
+
+                if (typeof(x[p]) === 'object' || typeof(x[p]) === 'function') {
+                    leftChain.push(x);
+                    rightChain.push(y);
+
+                    if (!isSameObject(x[p], y[p])) {
+                        return false;
+                    }
+
+                    leftChain.pop();
+                    rightChain.pop();
+                } else if (x[p] !== y[p]) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        if (argsLen < 1) {
+            return true;
+        }
+
+        for (i = 1; i < argsLen; i++) {
+            leftChain = [];
+            rightChain = [];
+
+            if (!isSameObject(arguments[0], arguments[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /////////////////
+
+
     ne.util.extend = extend;
     ne.util.stamp = stamp;
     ne.util._resetLastId = resetLastId;
     ne.util.keys = Object.keys || keys;
 
+    ne.util.compareJSON = compareJSON;
 })(window.ne);
 /**
  * @fileoverview 간단한 상속 시뮬레이션
@@ -1056,12 +1191,59 @@
         return arr;
     }
 
+    /**
+     * 배열 내의 값을 찾아서 인덱스를 반환한다. 찾고자 하는 값이 없으면 -1 반환.
+     * @param {*} value 배열 내에서 찾고자 하는 값
+     * @param {array} array 검색 대상 배열
+     * @param {number} fromIndex 검색이 시작될 배열 인덱스. 지정하지 않으면 기본은 0이고 전체 배열 검색.
+     *
+     * @return {number} targetValue가 발견된 array내에서의 index값
+     * @example
+     *
+     *   var arr = ['one', 'two', 'three', 'four'];
+     *   ne.util.inArray('one', arr, 3);
+     *      => return -1;
+     *
+     *   ne.util.inArray('one', arr);
+     *      => return 0
+     */
+    var inArray = function(value, array, fromIndex) {
+        if (!array) {
+            return -1;
+        }
+
+        var i,
+            index,
+            arrLen = array.length;
+
+        //fromIndex를 지정하되 array 길이보다 같거나 큰 숫자로 지정하면 오류이므로 -1을 리턴한다.
+        if (fromIndex && (fromIndex >= arrLen)) {
+            return -1;
+        }
+        if (ne.util.isUndefined(fromIndex)) {
+            fromIndex = 0;
+        }
+
+        //fromIndex값을 참고하여 배열을 순회할 시작index를 정한다.
+        index = (fromIndex > -1) ? fromIndex : 0;
+
+        //array에서 value 탐색하여 index반환
+        for (i = index; i < arrLen; i++) {
+            if (array[i] === value) {
+                return i;
+            }
+        }
+
+        return -1;
+    };
+
     ne.util.forEachOwnProperties = forEachOwnProperties;
     ne.util.forEachArray = forEachArray;
     ne.util.forEach = forEach;
     ne.util.toArray = toArray;
     ne.util.map = map;
     ne.util.reduce = reduce;
+    ne.util.inArray = inArray;
 
 })(window.ne);
 /**
@@ -1153,7 +1335,6 @@
     ajax.request = function(api, options) {
         // Ajax 요청을 할 API 설정
         var url = api;
-
         if (url) {
             // 랜덤 아이디 생성
             var randomId = ajax.util._getRandomId();
@@ -1174,10 +1355,12 @@
             });
 
             // 중복된 요청일 경우 요청 중단
-            var isMatchedURL, isExistJSON;
-            for (var x in this._ajaxRequestData) {
+            var isMatchedURL,
+                isExistJSON,
+                x;
+            for (x in this._ajaxRequestData) {
                 isMatchedURL = options.url === this._ajaxRequestData[x].url;
-                isExistJSON = $.compareJSON(this._ajaxRequestData[x].data, options.data);
+                isExistJSON = ne.util.compareJSON(this._ajaxRequestData[x].data, options.data);
                 if (isMatchedURL && isExistJSON) {
                     return false;
                 }
@@ -1234,13 +1417,11 @@
      */
     ajax._onAjaxSuccess = function(requestKey, responseData, status, jqXHR) {
         var requestData = this._ajaxRequestData[requestKey];
-
         if (requestData) {
             var result = true;
             if (requestData['_success'] && $.isFunction(requestData['_success'])) {
                 result = requestData['_success'](responseData, status, jqXHR);
             }
-
             if (result !== false && responseData && responseData.data) {
                 if (responseData.data.message) {
                     alert(responseData.data.message);
