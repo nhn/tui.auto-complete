@@ -12,7 +12,7 @@ ne.component = ne.component || {};
  * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
  * @constructor
  */
-ne.component.AutoComplete.DataManager = ne.util.defineClass({
+ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.DataManager.prototype */{
     init: function() {
         if (arguments.length != 2) {
             alert('argument length error !');
@@ -58,6 +58,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
                         i,
                         j;
 
+                    //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
                     for (i = 0; i < itemLen; i++) {
                         dataArr[i] = [];
 
@@ -75,7 +76,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
                     //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
                     self.autoCompleteObj.setServerData(keyDatas);
                 } catch (e) {
-                    throw new Error('서버에서 정보를 받을 수 없습니다.');
+                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
             }
         });

@@ -218,7 +218,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         }
 
         //입력키값(TAB,방향키)에 따른 액션 정의
-        if (e.keyCode == this.keyCodeMap.TAB) {
+        if (e.keyCode === this.keyCodeMap.TAB) {
             e.preventDefault();
             e.shiftKey ? this.autoCompleteObj.movePrevKeyword(e) : this.autoCompleteObj.moveNextKeyword(e);
         } else if (e.keyCode === this.keyCodeMap.DOWN_ARROW) {

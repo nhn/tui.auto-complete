@@ -11,7 +11,7 @@ ne.component = ne.component || {};
  @param {Object} htOptions
  @example
     var autoCompleteObj = new ne.component.AutoComplete({
-       "configId" : "Default"    // autoConfig.js에서 사용할 데이터 셋 키값
+       "configId" : "Default"    // autoConfig.js에서 사용할 DataSet의 키값
     });
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
@@ -98,8 +98,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         }
 
         //필수항목 입력했는지 체크
-        $.grep(requiredFields, function(el) {
-            if ($.inArray(el, checkedFields) == -1) {
+        ne.util.forEach(requiredFields, function(el) {
+            if (ne.util.inArray(el, checkedFields, 0) == -1) {
                 alert('설정값이 없습니다 : ' + el);
                 return false;
             }
@@ -114,6 +114,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
                 }
             }
         });
+
 
         //설정값 읽어와서 options변수에 저장
         for (i = 0; i < configLen; i++) {
