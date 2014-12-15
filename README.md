@@ -30,6 +30,9 @@ FE 개발팀 이기현 <kihyun.lee@nhnent.com>
 ## API문서
 - http://github.nhnent.com/pages/FE/Component-AutoComplete/
 
+## CI
+- http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/
+
 ## 개발 가이드
 - http://wiki.nhnent.com/pages/viewpage.action?pageId=241926666
 
