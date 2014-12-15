@@ -15,9 +15,8 @@
 }
 
 .navigation {
-    padding: 20px;
+    padding: 20px 15px;
     float: left;
-    width: 250px;
     background-color: #f4f7f8;
     overflow: auto;
 }
@@ -25,38 +24,67 @@
 .navigation h3 {
     margin: 0;
     padding: 0;
-    font-size: 1.3em;
-
+    font-size: 1.5em;
 }
+
 .navigation ul {
-    padding: 7px 0 0 11px;
+    padding: 7px 0 15px 11px;
     list-style: none;
 }
 
-.navigation ul.list li {
-    padding-bottom: 2px;
+.navigation ul.list li.item {
+    padding: 6px 0 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.navigation ul.list li.item.selected {
+    background-color: #fff;
+    padding: 7px 0;
+}
+
+.navigation ul.list li.item span.title {
+    padding-right: 5px;
+}
+
+.navigation ul.list li.item.selected span.title {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.navigation ul.list li.item .p-item {
+    color: #666;
+    font-size: 85%;
 }
 
 .navigation ul.sublist {
     display: none;
-    margin-top: -5px;
+    padding: 5px 0 0 15px;
+}
+
+.navigation ul.sublist.selected {
+    display: block;
 }
 
 .navigation ul.sublist li a {
-    padding-left: 10px;
-    color: black;
+    padding-left: 15px;
+    color: #000;
 }
 
 .navigation ul.sublist span {
-    color: darkgray;
-    font-size: 90%
+    color: #c7254e;
+    font-size: 90%;
+}
+
+.navigation ul.sublist.division li {
+    border-bottom: 1px dotted #ccc;
 }
 
 .navigation li span.icon.static {
     float: right;
+    margin-top: 1px;
+    margin-right: 2px;
     padding: 0 2px;
 }
-
 
 .main {
     padding: 20px;
@@ -132,16 +160,16 @@
 }
 
 .main section article dl h4 {
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: bold;
 }
 
 .main section article dl h4 .signature {
-    font-size: 10pt;
+    font-size: 9pt;
 }
 
 .main section article dl h4 .type-signature {
-    font-size: 10pt;
+    font-size: 9pt;
     color: #31708f;
     font-weight: normal;
 }
@@ -167,14 +195,16 @@
     padding-right: 10px;
 }
 
+.main section article .container-params,
 .main section article .container-returns,
-.main section article .container-params {
+.main section article .container-inherits {
     padding: 7px 0;
 }
 
 .main section article .container-properties div.properties,
+.main section article .container-params div.params,
 .main section article .container-returns div.returns,
-.main section article .container-params div.params {
+.main section article .container-inherits div.inherits {
     padding-left: 6px;
     border-left: 3px solid #f4f7f8;
 }
@@ -182,12 +212,15 @@
 .main section article .container-properties div.properties {
     margin-top: -3px;
 }
-.main section article .container-returns div.details {
+
+.main section article .container-returns div.details,
+.main section article .container-inherits div.details {
     margin-top: -6px;
 }
 
 .main section article .container-properties h5,
 .main section article .container-returns h5,
+.main section article .container-inherits h5,
 .main section article table th,
 .main section article table td.type,
 .main section article table td.attributes {
@@ -251,4 +284,9 @@ span.icon.red {
     color: #A94443;
     background-color: #f2dede;
     border-color: #ebccd1;
+}
+
+span.arrow {
+    font-size: 8pt;
+    padding-right: 5px;
 }
