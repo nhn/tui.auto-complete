@@ -13,14 +13,15 @@ ne.component = ne.component || {};
  * @constructor
  */
 ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.DataManager.prototype */{
-    init: function() {
+    init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
+            return;
         }
 
         // argument로 넘어온 AutoComplete 클래스와 사용자가 지정한 옵션값을 내부 변수로 저장한다.
-        this.autoCompleteObj = arguments[0];
-        this.options = arguments[1];
+        this.autoCompleteObj = autoCompleteObj;
+        this.options = options;
     },
 
     /**

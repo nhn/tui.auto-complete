@@ -24,12 +24,13 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * 초기화 함수
      * @param {Object} arguments
      */
-    init: function() {
+    init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
+            return;
         }
-        this.autoCompleteObj = arguments[0];   //AutoComplete인스턴스를 저장한다.
-        this.options = arguments[1];     //설정 옵션값을 저장한다.
+        this.autoCompleteObj = autoCompleteObj;   //AutoComplete인스턴스를 저장한다.
+        this.options = options;     //설정 옵션값을 저장한다.
 
         //Config에서 검색창 부분에서 필요한 엘리먼트 정보 가져온다.
         this.$searchBox = this.options.searchBoxElement;
@@ -84,16 +85,24 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     _attachEvent: function() {
         //검색창에 focus, keyup, keydown, click 이벤트 바인딩.
         this.$searchBox.bind('focus keyup keydown blur click', $.proxy(function(e) {
-            if (e.type === 'focus') {
-                this._onFocus();
-            } else if (e.type === 'blur') {
-                this._onBlur(e);
-            } else if (e.type === 'keyup') {
-                this._onKeyUp(e);
-            } else if (e.type === 'keydown') {
-                this._onKeyDown(e);
-            } else if (e.type === 'click') {
-                this._onClick();
+            switch (e.type) {
+                case 'focus' :
+                    this._onFocus();
+                    break;
+                case 'blur' :
+                    this._onBlur(e);
+                    break;
+                case 'keyup' :
+                    this._onKeyUp(e);
+                    break;
+                case 'keydown' :
+                    this._onKeyDown(e);
+                    break;
+                case 'click' :
+                    this._onClick();
+                    break;
+                default :
+                    break;
             }
         }, this));
 
