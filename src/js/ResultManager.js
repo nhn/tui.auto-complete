@@ -1,5 +1,5 @@
 /**
- * @fileoverview 자동완성 컴포넌트의 ResultManager
+ * @fileoverview 자동완성 컴포넌트 중에서 검색 결과 영역에 대한 기능을 제공하는 클래스
  * @author kihyun.lee@nhnent.com
  */
 
@@ -7,14 +7,17 @@ ne = window.ne || {};
 ne.component = ne.component || {};
 
 /**
- *
+ * 자동완성 컴포넌트의 구성 요소중 검색어 검색 결과영역에 관련된 클래스. <br>
+ * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다...
  * @constructor
  */
 ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.component.AutoComplete.ResultManager.prototype */{
-
-    init: function() {
-        this.autoCompleteObj = arguments[0];
-        this.options = arguments[1];
+    /**
+     * 초기화 함수
+     */
+    init: function(autoCompleteObj, options) {
+        this.autoCompleteObj = autoCompleteObj;
+        this.options = options;
 
         //Config.js 에 설정된 element 정보 가져와서 내부 변수로 세팅.
         this.$resultList = this.options.resultListElement;
@@ -33,7 +36,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
-     * 서버로부터 전달받은 자동완성 데이터를 화면에 그린다. AutoComplete의 setServerData함수에 의해 호출.
+     * AutoComplete의 setServerData함수에 의해 호출되어 서버로부터 전달받은 자동완성 데이터를 화면에 그린다.
      * @param {Array} dataArr 서버로부터 받은 자동완성 데이터 배열
      */
     draw: function(dataArr) {
@@ -98,7 +101,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
-     * 검색어 리스트에서 키보드 이용해서 아래로 움직일때 실행되는 함수
+     * 검색어 리스트에서 키보드 이용해서 아래로 움직일때 실행되며, 키보드로 움직여 포커스된 검색어를 검색창에 세팅한다.
      */
     moveNextKeyword: function() {
         this.isMoved = true;
@@ -118,7 +121,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
-     * 검색어 리스트에서 키보드 이용해서 위로 움직일때 실행되는 함수
+     * 검색어 리스트에서 키보드 이용해서 위로 움직일때 실행되며, 키보드로 움직여 포커스된 검색어를 검색창에 세팅한다.
      */
     movePrevKeyword: function() {
         this.isMoved = true;
@@ -126,9 +129,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         if (this.selectedElement) {
             this.selectedElement.removeClass(this.mouseOverClass);
             this.selectedElement = this._getPrev(this.selectedElement);
-        }
 
-        if (this.selectedElement) {
             this.selectedElement.addClass(this.mouseOverClass);
             this.autoCompleteObj.setValue(this.selectedElement.text());
         }
@@ -136,7 +137,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 사용여부에 따라 결과 리스트 하단에 [자동완성 끄기 | 자동완성 켜기] 텍스트를 설정한다.
-     * @param {boolean} isUse on/off 여부
+     * @param {Boolean} isUse on/off 여부
      */
     changeOnOffText: function(isUse) {
         if (isUse) {
@@ -149,7 +150,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
 
     /**
-     * 자동완성켜기, 검색결과 리스트에 이벤트 바인딩
+     * 자동완성켜기, 검색결과 리스트에 이벤트 바인딩한다.
      * @private
      */
     _attachEvent: function() {
@@ -182,7 +183,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * 검색어 결과에 색상 및 볼드 처리를 위하여 템플릿을 적용한다.
      * @param {String} tmplStr
      * @param {Object} dataObj
-     * @returns {String} htmlString 템플릿이 적용된 검색어 결과 부분의 전체 html 스트링
+     * @return {String} htmlString 템플릿이 적용된 검색어 결과 부분의 전체 html 스트링
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
@@ -191,7 +192,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         for (keyStr in dataObj) {
             temp[keyStr] = dataObj[keyStr];
-            if (keyStr == 'txt') {
+            if (keyStr === 'txt') {
                 temp.txt = this._highlight(dataObj.txt, this.autoCompleteObj.getValue());
             }
 
@@ -209,7 +210,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * (text: 나이키 에어  /  query : 나이키 / 리턴 결과 : <strong>나이키 </strong>에어
      * @param {String} text 입력값 스트링
      * @param {String} query 하이라이팅 처리할 스트링
-     * @returns {String} 하이라이팅 처리된 전체 스트링
+     * @return {String} 하이라이팅 처리된 전체 스트링
      * @private
      */
     _highlight: function(text, query) {
@@ -224,17 +225,21 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * 텍스트에서 쿼리 부분을 strong 태그로 감싼다.
      * @param {String} text  추천검색어 데이터
      * @param {String} query 입력 키워드값
-     * @returns {String} <strong>태그 처리된 스트링
+     * @return {String} <strong>태그 처리된 스트링
      * @private
      */
-    _makeStrong: function (text, query) {
+    _makeStrong: function(text, query) {
+        if (!query || query.length < 1) {
+            return text;
+        }
         var escRegExp = new RegExp("[.*+?|()\\[\\]{}\\\\]", "g"),
             tmpStr = query.replace(/()/g, " ").replace(/^\s+|\s+$/g, ""),
             tmpCharacters = tmpStr.match(/\S/g),
             tmpCharLen = tmpCharacters.length,
             tmpArr = [],
             returnStr = '',
-            regQuery = '',
+            regQuery,
+            cnt,
             i;
 
         for (i = 0, cnt = tmpCharLen; i < cnt; i++) {
@@ -243,7 +248,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         tmpStr = "(" + tmpArr.join("") + ")"; // 괄호로 감싸주기
 
-        regQuery = new RegExp(tmpStr); // 정규식 생성
+        regQuery = new RegExp(tmpStr);
         if (regQuery.test(text)) { //정규식에 적합한 문자셋이 있으면 , 치환 처리
             returnStr = text.replace(regQuery, '<strong>' + RegExp.$1 + '</strong>');
         }
@@ -252,7 +257,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 검색 결과중에 가장 처음의 항목을 리턴한다.
-     * @returns {Element} 키워드 엘리먼트
+     * @return {Element} 키워드 엘리먼트
      * @private
      */
     _getFirst: function() {
@@ -266,7 +271,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 검색 결과중에 가장 마지막의 항목을 리턴한다.
-     * @returns {Element} 키워드 엘리먼트
+     * @return {Element} 키워드 엘리먼트
      * @private
      */
     _getLast: function() {
@@ -280,8 +285,9 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 검색 결과중에 현재 포커스된 엘리먼트를 기준으로 다음 엘리먼트를 찾아 리턴한다.
+     * 찾고자 하는 다음 엘리먼트가 없으면 맨 처음 엘리먼트를 리턴한다.
      * @param {Element} element 현재의 엘리먼트
-     * @returns {Element} 현재 포커스된 엘리먼트의 다음 엘리먼트
+     * @return {Element} 현재 포커스된 엘리먼트의 다음 엘리먼트
      * @private
      */
     _getNext: function(element) {
@@ -306,8 +312,9 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 검색 결과중에 현재 포커스된 엘리먼트를 기준으로 이전 엘리먼트를 찾아 리턴한다.
-     * @param {Element} element
-     * @returns {Element} 현재 포커스된 엘리먼트의 이전 엘리먼트
+     * 찾고자 하는 이전 엘리먼트가 없으면 맨 마지막 엘리먼트를 리턴한다.
+     * @param {Element} element 현재의 엘리먼트
+     * @return {Element} 현재 포커스된 엘리먼트의 이전 엘리먼트
      * @private
      */
     _getPrev: function(element) {
@@ -366,7 +373,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /************************* Event Handlers *********************/
     /**
-     * 검색결과 리스트에 mouseover되었을 때 실행되는 이벤트 핸들러
+     * 검색결과 리스트가 mouseover되었을 때 실행되는 이벤트 핸들러
      * @param {Event} e 마우스오버 이벤트 객체
      * @private
      */
@@ -379,7 +386,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             $(val).removeClass(this.mouseOverClass);
         }, this);
 
-        //li 항목에 addClass.
+        //마우스오버된 li 항목에 addClass
         if (selectedItem) {
             selectedItem.addClass(this.mouseOverClass);
         }
@@ -388,9 +395,8 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
-     * 검색결과 리스트가 click되었을 때 실행되는 이벤트 핸들러
+     * 검색결과 리스트가 click되었을 때 실행되는 이벤트 핸들러.
      * 키워드를 클릭하여 검색 결과 페이지로 보낸다.
-     *
      * @param {Event} e 클릭 이벤트 객체
      * @private
      */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview 자동완성 컴포넌트
+ * @fileoverview 자동완성 컴포넌트의 모든 구성요소들을 총괄하는 최상위 클래스
  * @author kihyun.lee@nhnent.com
 */
 
@@ -8,12 +8,22 @@ ne.component = ne.component || {};
 
 /**
  @constructor
+ @param {Object} htOptions
+ @example
+    var autoCompleteObj = new ne.component.AutoComplete({
+       "configId" : "Default"    // autoConfig.js에서 사용할 DataSet의 키값
+    });
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
+    /**
+     * 초기화 함수
+     * @param {Object} htOptions 함수의 argument. autoConfig의 키값 정보가 들어온다.
+     */
     init: function(htOptions) {
         this.options = {};
 
         var cookieValue,
+            autoComplete = ne.component.AutoComplete,
             defaultCookieName = '_atcp_use_cookie';
 
         if (!this._checkValidation(htOptions)) {
@@ -41,9 +51,9 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         }
 
         //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
-        this.dataManager = new ne.component.AutoComplete.DataManager(this, this.options);
-        this.inputManager = new ne.component.AutoComplete.InputManager(this, this.options);
-        this.resultManager = new ne.component.AutoComplete.ResultManager(this, this.options);
+        this.dataManager = new autoComplete.DataManager(this, this.options);
+        this.inputManager = new autoComplete.InputManager(this, this.options);
+        this.resultManager = new autoComplete.ResultManager(this, this.options);
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
@@ -51,12 +61,13 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 자동완성 컴포넌트 사용을 위해 설정하는 설정 파일 내용을 검증 및 필수 항목을 체크한다.
-     * @param {Object} htOptions 설정 내용
-     * @returns {boolean} 설정 파일의 유효성 여부
+     * @param {Object} htOptions config의 설정 내용
+     * @return {Boolean} 설정 파일의 유효성 여부
      * @private
      */
     _checkValidation: function(htOptions) {
-        var config = '';
+        var config,
+            configArr;
 
         //유효한 config인지 체크
         try {
@@ -66,8 +77,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             return false;
         }
 
-        var configArr = Object.keys(config),
-            configLen = configArr.length,
+        configArr = ne.util.keys(config);
+        var configLen = configArr.length,
             i,
             requiredFields = ['resultListElement',  //config요소 중에 필수 입력 항목 필드들
                               'searchBoxElement' ,
@@ -75,17 +86,17 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
                               'templateElement',
                               'formElement',
                               'searchApi'],
-            checkedFields = [];   //필수체크 항목 저장하는 임시 배열
+            checkedFields = [];                     //필수체크 항목 저장하는 임시 배열
 
         for (i = 0; i < configLen; i++) {
-            if ($.inArray(configArr[i], requiredFields) >= 0) {
+            if (ne.util.inArray(configArr[i], requiredFields, 0) >= 0) {
                 checkedFields.push(configArr[i]);
             }
         }
 
         //필수항목 입력했는지 체크
-        $.grep(requiredFields, function(el) {
-            if ($.inArray(el, checkedFields) == -1) {
+        ne.util.forEach(requiredFields, function(el) {
+            if (ne.util.inArray(el, checkedFields, 0) === -1) {
                 alert('설정값이 없습니다 : ' + el);
                 return false;
             }
@@ -101,13 +112,14 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             }
         });
 
+
         //설정값 읽어와서 options변수에 저장
         for (i = 0; i < configLen; i++) {
             var configName = configArr[i],
                 configValue = config[configName];
 
             if (typeof(configValue) === 'string' &&
-               (configValue.charAt(0) == '.' || configValue.charAt(0) == '#')) {
+               (configValue.charAt(0) === '.' || configValue.charAt(0) === '#')) {
                 this.options[configName] = $(configValue);
             } else {
                 this.options[configName] = config[configName];
@@ -127,7 +139,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 검색창에 현재 입력된 키워드 스트링을 반환한다.
-     * @returns {String} 검색창에 입력된 값
+     * @return {String} 검색창에 입력된 값
      */
     getValue: function() {
         return this.inputManager.getValue();
@@ -142,7 +154,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
-     * ajax통신하고 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.
+     * ajax통신하여 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.
      * @param {Array} dataArr ajax통신 후 서버로부터 받은 검색 결과 배열
      */
     setServerData: function(dataArr) {
@@ -151,7 +163,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 자동완성 사용여부에 대한 쿠키값을 세팅하고 토글버튼을 변경한다.
-     * @param isUse {boolean} 자동완성 사용여부
+     * @param {Boolean} isUse 자동완성 사용여부
      */
     setCookieValue: function(isUse) {
         $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
@@ -161,17 +173,17 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      *  자동완성을 사용하고 있는지 여부 리턴
-     *  @returns {Boolean} 자동완성 사용여부
+     *  @return {Boolean} 자동완성 사용여부
      */
     isUseAutoComplete: function() {
         return this.isUse;
     },
 
     /**
-     * 결과 리스트 영역이 show상태인지 hide상태인지 여부를 리턴
-     * @returns {Boolean} 결과 리스트 영역이 보이는 상태인지에 대한 여부
+     * 결과 리스트 영역이 show상태인지 hide상태인지 여부를 리턴한다.
+     * @return {Boolean} 결과 리스트 영역이 보이는 상태인지에 대한 여부
      */
-    isShowResultList : function() {
+    isShowResultList: function() {
         return this.resultManager.isShowResultList();
     },
 
@@ -210,7 +222,6 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * resultManager의 movePrevKeyword함수를 호출하여 자동완성 검색어 리스트중에서 이전 항목으로 이동한다.
-     * @param e
      */
     movePrevKeyword: function() {
         this.resultManager.movePrevKeyword();
@@ -218,14 +229,15 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * '자동완성 끄기 | 자동완성 켜기' 텍스트를 설정하도록 resultManager에 요청한다.
+     * @param {Boolean} true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
      */
-    changeOnOffText: function() {
-        this.resultManager.changeOnOffText();
+    changeOnOffText: function(isUse) {
+        this.resultManager.changeOnOffText(isUse);
     },
 
     /**
      * 자동완성 검색어 리스트의 display상태를 리턴한다.
-     * @returns {Boolean} 자동완성 검색어 리스트의 display상태
+     * @return {Boolean} 자동완성 검색어 리스트의 display상태
      */
     isVisibleResult: function() {
         return this.resultManager.isShowResultList();
@@ -233,7 +245,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * resultManager의 isMoved변수값을 리턴한다.
-     * @returns {Boolean} resultManager의 isMoved값
+     * @return {Boolean} resultManager의 isMoved값
      */
     getMoved: function() {
         return this.resultManager.isMoved;

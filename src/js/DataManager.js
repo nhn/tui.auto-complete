@@ -1,5 +1,5 @@
 /**
- * @fileoverview 자동완성 컴포넌트의 DataManager
+ * @fileoverview 자동완성 컴포넌트 중에서 입력된 값으로 검색 API와 연동하여 자동완성 검색 결과를 받아오는 클래스
  * @author kihyun.lee@nhnent.com
  */
 
@@ -8,24 +8,24 @@ ne.component = ne.component || {};
 
 
 /**
- * 자동완성 컴포넌트 중 api와 연동하여 데이터를 받아오는 클래스
- *
+ * 자동완성 컴포넌트 구성 요소중 검색api와 연동하여 데이터를 받아오는 클래스
+ * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
  * @constructor
  */
-ne.component.AutoComplete.DataManager = ne.util.defineClass({
-    init: function() {
+ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.DataManager.prototype */{
+    init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
+            return;
         }
 
         // argument로 넘어온 AutoComplete 클래스와 사용자가 지정한 옵션값을 내부 변수로 저장한다.
-        this.autoCompleteObj = arguments[0];
-        this.options = arguments[1];
+        this.autoCompleteObj = autoCompleteObj;
+        this.options = options;
     },
 
     /**
-     * 검색서버에 입력값을 보내어 자동완성 검색어 리스트를 받아온다.
-     *
+     * 검색서버에 입력값을 보내어 ajax통신으로 자동완성 검색어 리스트를 받아온다.
      * @param {String} keyword 검색서버에 요청할 키워드 스트링
      */
     request: function(keyword) {
@@ -48,7 +48,6 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
             },
             requestParam = ne.util.extend(this.options.searchApi, defaultParam);
 
-
         ne.util.ajax.request(this.options.searchApi.url, {
             'dataType': 'jsonp',
             'jsonpCallback': 'dataCallback',
@@ -60,6 +59,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
                         i,
                         j;
 
+                    //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
                     for (i = 0; i < itemLen; i++) {
                         dataArr[i] = [];
 
@@ -77,7 +77,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass({
                     //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
                     self.autoCompleteObj.setServerData(keyDatas);
                 } catch (e) {
-                    throw new Error('서버에서 정보를 받을 수 없습니다.');
+                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
             }
         });
