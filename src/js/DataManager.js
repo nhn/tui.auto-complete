@@ -35,10 +35,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
         }
 
         //request를 위한 변수 세팅
-        var keyDatas = [],
-            dataArr = [],
-            self = this,
-            dataCallback = function(){},
+        var dataCallback = function(){},
             defaultParam = {
                 q: keyword,
                 r_enc: 'UTF-8',
@@ -53,33 +50,77 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             'jsonpCallback': 'dataCallback',
             'data': requestParam,
             'type': 'get',
-            'success': function(dataObj) {
-                try {
-                    var itemLen = dataObj.items.length,
-                        i,
-                        j;
+            'success': ne.util.bind(function(dataObj) {
+                //try {
 
-                    //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
-                    for (i = 0; i < itemLen; i++) {
-                        dataArr[i] = [];
+                    var keyDatas;
 
-                        var slots = dataObj.items[i],
-                            slotLen = slots.length;
-
-                        if (slotLen > 0) {
-                            for (j = 0; j < slots.length; j++) {
-                                dataArr[i][j] = slots[j][0];
-                                keyDatas.push(dataArr[i][j]);
-                            }
-                        }
+                    if (ne.util.isExisty(dataObj.collections)) {
+                        keyDatas = this.getCollectionData(dataObj);
+                    } else {
+                        keyDatas = this.getItemData(dataObj);
                     }
 
-                    //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
-                    self.autoCompleteObj.setServerData(keyDatas);
-                } catch (e) {
-                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
+                    this.autoCompleteObj.setServerData(keyDatas);
+
+                //} catch (e) {
+                //    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
+                //}
+            }, this)
+        });
+    },
+    getItemData: function(dataObj) {
+        var keyDatas = [],
+            dataArr = [],
+            itemLen = dataObj.items.length,
+            i,
+            j;
+
+        //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
+        for (i = 0; i < itemLen; i++) {
+            dataArr[i] = [];
+
+            var slots = dataObj.items[i],
+                slotLen = slots.length;
+
+            if (slotLen > 0) {
+                for (j = 0; j < slots.length; j++) {
+                    dataArr[i][j] = slots[j][0];
+                    keyDatas.push(dataArr[i][j]);
                 }
             }
-        });
+        }
+        return keyDatas;
+    },
+    getCollectionData: function(dataObj) {
+        var collection = dataObj.collections,
+            itemDataList = [];
+
+        ne.util.forEach(collection, function(itemSet) {
+
+            var keys = this.getRedirectData(itemSet);
+            itemDataList.push({
+                type: 'title',
+                values: [itemSet.title]
+            });
+            itemDataList = itemDataList.concat(keys);
+
+        }, this);
+
+        return itemDataList;
+    },
+    getRedirectData: function(itemSet) {
+        var type = itemSet.type,
+            index = itemSet.index,
+            items = ne.util.map(itemSet.items, function(item, idx) {
+
+                return {
+                    values: item,
+                    type: type,
+                    index: index
+                }
+
+            });
+        return items;
     }
 });

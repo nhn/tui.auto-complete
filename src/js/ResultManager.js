@@ -47,6 +47,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         var wordList = [],
             tmplStr = this.options.templateElement,
+            tmplAttr = this.options.templateAttribute,
             dataLength = dataArr.length,
             len = (this.viewCount < dataLength) ? this.viewCount : dataLength,
             i;
@@ -56,13 +57,12 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
 
         for (i = 0; i < len; i++) {
-            var tmplVal = {
-                txt: dataArr[i]
-            };
-            wordList.push(this._applyTemplate(tmplStr, tmplVal));
+            var attr = tmplAttr[dataArr[i].type] || tmplAttr['defaults'],
+                str = tmplStr[dataArr[i].type] || tmplStr['defaults'],
+                tmplValue = this._getTmplData(attr, dataArr[i]);
+            wordList.push(this._applyTemplate(str, tmplValue));
         }
         this.$resultList.html(wordList.join(''));
-
 
         //결과 영역을 노출한다.
         this.$resultList.show();
@@ -71,6 +71,34 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         this._showBottomArea();
     },
 
+    /**
+     * 자동완성 데이터를 템플릿화 한다.
+     * @param {array} attr 템플릿 요소들
+     * @param {string|Object} data 텔플릿팅 할 데이터
+     * @return {object} template화 된 데이터
+     * @private
+     */
+    _getTmplData: function(attrs, data) {
+
+        var tmplValue = {},
+            values = data.values || null;
+
+        if (ne.util.isString(data)) {
+
+            tmplValue[attrs[0]] = data;
+
+            return tmplValue;
+        }
+
+
+        ne.util.forEach(attrs, function(attr, idx) {
+
+            tmplValue[attr] = values[idx];
+
+        });
+
+        return tmplValue;
+    },
 
     /**
      * 자동완성 검색 결과 영역이 펼쳐진 상태인지 반환한다.
