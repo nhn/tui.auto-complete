@@ -242,24 +242,38 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     /**
      * 검색창 keydown event 처리 핸들러.
      * 입력키값에 따라서 액션을 정의한다.
-     * @param {Event} keyDown 이벤트 객체
+     * @param {Event} e keyDown 이벤트 객체
      * @private
      */
     _onKeyDown: function(e) {
-        if (!this.autoCompleteObj.isUseAutoComplete() ||
-            !this.autoCompleteObj.isVisibleResult()) {
+
+        var autoCompleteObj = this.autoCompleteObj;
+
+        if (!autoCompleteObj.isUseAutoComplete() ||
+            !autoCompleteObj.isVisibleResult()) {
             return;
         }
 
+        var code = e.keyCode,
+            flow = null,
+            codeMap = this.keyCodeMap,
+            flowMap = autoCompleteObj.flowMap;
+
         //입력키값(TAB,방향키)에 따른 액션 정의
-        if (e.keyCode === this.keyCodeMap.TAB) {
+        if (code === codeMap.TAB) {
             e.preventDefault();
-            e.shiftKey ? this.autoCompleteObj.movePrevKeyword(e) : this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode === this.keyCodeMap.DOWN_ARROW) {
-            this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode === this.keyCodeMap.UP_ARROW) {
-            this.autoCompleteObj.movePrevKeyword(e);
+            flow = e.shiftKey ? flowMap.NEXT : flowMap.PREV;
+        } else if (code === codeMap.DOWN_ARROW) {
+            flow = flowMap.NEXT;
+        } else if (code === codeMap.UP_ARROW) {
+            flow = flowMap.PREV;
+        } else {
+            return;
         }
+
+        autoCompleteObj.moveNextList(flow);
+
+
     },
 
     /**

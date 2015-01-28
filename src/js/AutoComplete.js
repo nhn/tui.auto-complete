@@ -15,6 +15,12 @@ ne.component = ne.component || {};
     });
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
+
+    flowMap: {
+        'NEXT': 'next',
+        'PREV': 'prev'
+    },
+
     /**
      * 초기화 함수
      * @param {Object} htOptions 함수의 argument. autoConfig의 키값 정보가 들어온다.
@@ -236,22 +242,16 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
-     * resultManager의 moveNextKeyword함수를 호출하여 자동완성 검색어 리스트중에서 다음 항목으로 이동한다.
+     * resultManager의 moveNextList함수를 호출하여 자동완성 검색어 리스트중에서 이전 or 다음 항목으로 이동한다.
+     * @param {string} flow 이동한 방향을 정한다.
      */
-    moveNextKeyword: function() {
-        this.resultManager.moveNextKeyword();
-    },
-
-    /**
-     * resultManager의 movePrevKeyword함수를 호출하여 자동완성 검색어 리스트중에서 이전 항목으로 이동한다.
-     */
-    movePrevKeyword: function() {
-        this.resultManager.movePrevKeyword();
+    moveNextList: function(flow) {
+        this.resultManager.moveNextList(flow);
     },
 
     /**
      * '자동완성 끄기 | 자동완성 켜기' 텍스트를 설정하도록 resultManager에 요청한다.
-     * @param {Boolean} true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
+     * @param {Boolean} isUse true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
      */
     changeOnOffText: function(isUse) {
         this.resultManager.changeOnOffText(isUse);

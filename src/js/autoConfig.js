@@ -36,6 +36,7 @@
             'department': ['txt', 'params'],
             'srch_in_department': ['txt', 'department', 'params']
         },
+        'useTitle': false,
         'viewCount' : 12,
         'templateElement' :  {
             'department':   '<li class="department">' +

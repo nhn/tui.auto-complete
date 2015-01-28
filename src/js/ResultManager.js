@@ -48,6 +48,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         var wordList = [],
             tmplStr = this.options.templateElement,
             tmplAttr = this.options.templateAttribute,
+            useTitle = this.options.useTitle,
             dataLength = dataArr.length,
             len = (this.viewCount < dataLength) ? this.viewCount : dataLength,
             i;
@@ -57,6 +58,10 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
 
         for (i = 0; i < len; i++) {
+            // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
+            if (!useTitle && dataArr[i].type === 'title') {
+                continue;
+            }
             var attr = tmplAttr[dataArr[i].type] || tmplAttr['defaults'],
                 str = tmplStr[dataArr[i].type] || tmplStr['defaults'],
                 tmplValue = this._getTmplData(attr, dataArr[i]);
@@ -126,36 +131,37 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 검색어 리스트에서 키보드 이용해서 아래로 움직일때 실행되며, 키보드로 움직여 포커스된 검색어를 검색창에 세팅한다.
+     * @param {string} flow 키보드에 따른 이동 방향(이전, 다음)
      */
-    moveNextKeyword: function() {
+    moveNextList: function(flow) {
+
+        var autoConfigObj = this.autoCompleteObj,
+            flowMap = autoConfigObj.flowMap,
+            selectEl = this.selectedElement,
+            getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
+            getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast;
+
         this.isMoved = true;
 
-        if (this.selectedElement) {
-            this.selectedElement.removeClass(this.mouseOverClass);
-            this.selectedElement = this._getNext(this.selectedElement);
+        // 현재 선택요소가 있는지에 따른, 다음 선택 요소를 설정한다.
+        if (selectEl) {
+            selectEl.removeClass(this.mouseOverClass);
+            selectEl = this.selectedElement = getNext.call(this, selectEl);
         } else {
-            this.selectedElement = this._getFirst();
+            selectEl = this.selectedElement = getBound.call(this);
         }
 
         //addClass 및 검색창에 검색어 세팅
-        if (this.selectedElement && this.selectedElement.text()) {
-            this.selectedElement.addClass(this.mouseOverClass);
-            this.autoCompleteObj.setValue(this.selectedElement.text());
-        }
-    },
+        var keyword = selectEl.find('.keyword-field').text();
 
-    /**
-     * 검색어 리스트에서 키보드 이용해서 위로 움직일때 실행되며, 키보드로 움직여 포커스된 검색어를 검색창에 세팅한다.
-     */
-    movePrevKeyword: function() {
-        this.isMoved = true;
-
-        if (this.selectedElement) {
-            this.selectedElement.removeClass(this.mouseOverClass);
-            this.selectedElement = this._getPrev(this.selectedElement);
-
-            this.selectedElement.addClass(this.mouseOverClass);
-            this.autoCompleteObj.setValue(this.selectedElement.text());
+        if (selectEl && keyword) {
+            selectEl.addClass(this.mouseOverClass);
+            this.autoCompleteObj.setValue(keyword);
+        } else {
+            // 타이틀 부분을 걸러내기 위한 조건문.
+            if(selectEl) {
+                this.moveNextList(flow);
+            }
         }
     },
 
@@ -231,18 +237,24 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * draw가 실행될 때 호출되며 키워드 하이라이팅 처리를 한다.
-     * (text: 나이키 에어  /  query : 나이키 / 리턴 결과 : <strong>나이키 </strong>에어
+     * (text: 나이키 에어  /  query : [나이키] / 리턴 결과 : <strong>나이키 </strong>에어
+     * (0.3 추가) text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 <strong>rhdiddl</strong>와 <strong>고양이</strong>
      * @param {String} text 입력값 스트링
      * @return {String} 하이라이팅 처리된 전체 스트링
      * @private
      */
     _highlight: function(text) {
         var querys = this.autoCompleteObj.querys,
-            returnStr = text;
+            returnStr;
 
         if(querys.length > 1) {
             ne.util.forEach(querys, function(query) {
+
+                if (!returnStr) {
+                    returnStr = text;
+                }
                 returnStr = this._makeStrong(returnStr, query);
+
             }, this);
         }
 
@@ -252,21 +264,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         return text;
     },
-    ///**
-    // * draw가 실행될 때 호출되며 키워드 하이라이팅 처리를 한다.
-    // * (text: 나이키 에어  /  query : 나이키 / 리턴 결과 : <strong>나이키 </strong>에어
-    // * @param {String} text 입력값 스트링
-    // * @param {String} query 하이라이팅 처리할 스트링
-    // * @return {String} 하이라이팅 처리된 전체 스트링
-    // * @private
-    // */
-    //_highlight: function(text, query) {
-    //    var returnStr = this._makeStrong(text, query);
-    //    if ('' !== returnStr) {
-    //        return returnStr;
-    //    }
-    //    return text;
-    //},
 
     /**
      * 텍스트에서 쿼리 부분을 strong 태그로 감싼다.
@@ -294,11 +291,12 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
 
         tmpStr = "(" + tmpArr.join("") + ")"; // 괄호로 감싸주기
-
         regQuery = new RegExp(tmpStr);
+
         if (regQuery.test(text)) { //정규식에 적합한 문자셋이 있으면 , 치환 처리
             returnStr = text.replace(regQuery, '<strong>' + RegExp.$1 + '</strong>');
         }
+
         return returnStr;
     },
 
