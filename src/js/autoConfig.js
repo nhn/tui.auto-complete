@@ -40,14 +40,14 @@
         'viewCount' : 12,
         'templateElement' :  {
             'department':   '<li class="department">' +
-                                '<span class="slot-field">Shop the</span>\n' +
-                                '<span class="keyword-field" data-params="@params@">@txt@</span>\n ' +
+                                '<span class="slot-field">Shop the</span> ' +
+                                '<span class="keyword-field" data-params="@params@">@txt@</span> ' +
                                 '<span class="slot-field">Store</span>' +
                             '</li>',
             'srch': '<li class="srch"><span class="keyword-field">@txt@</span></li>',
             'srch_in_department':   '<li class="inDepartment">' +
-                                        '<span class="keyword-field" data-params="@params@">@txt@</span>\n' +
-                                        '<span class="slot-field">in</span>\n' +
+                                        '<span class="keyword-field" data-params="@params@">@txt@</span> ' +
+                                        '<span class="slot-field">in </span>' +
                                         '<span class="depart-field">@department@</span>' +
                                     '</li>',
             'title': '<li class="title"><strong>@txt@</strong></li>',

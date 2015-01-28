@@ -257,12 +257,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
             }, this);
         }
-
-        if ('' !== returnStr) {
-            return returnStr;
-        }
-
-        return text;
+        return (returnStr || text);
     },
 
     /**
@@ -287,7 +282,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             i;
 
         for (i = 0, cnt = tmpCharLen; i < cnt; i++) {
-            tmpArr.push(tmpCharacters[i].replace(/[\S]+/g, "[" + tmpCharacters[i].toLowerCase().replace(escRegExp, "\\$&") + "|" + tmpCharacters[i].toUpperCase().replace(escRegExp, "\\$&") + "] ").replace(/[\s]+/g, "[\\s]*"));
+            tmpArr.push(tmpCharacters[i].replace(/[\S]+/g, "[" + tmpCharacters[i].toLowerCase().replace(escRegExp, "\\$&") + "|" + tmpCharacters[i].toUpperCase().replace(escRegExp, "\\$&") + "]").replace(/[\s]+/g, "[\\s]*"));
         }
 
         tmpStr = "(" + tmpArr.join("") + ")"; // 괄호로 감싸주기
