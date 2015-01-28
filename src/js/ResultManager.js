@@ -79,17 +79,13 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getTmplData: function(attrs, data) {
-
         var tmplValue = {},
             values = data.values || null;
 
         if (ne.util.isString(data)) {
-
             tmplValue[attrs[0]] = data;
-
             return tmplValue;
         }
-
 
         ne.util.forEach(attrs, function(attr, idx) {
 
@@ -221,8 +217,8 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         for (keyStr in dataObj) {
             temp[keyStr] = dataObj[keyStr];
             if (keyStr === 'txt') {
-                temp.txt = this._highlight(dataObj.txt, this.autoCompleteObj.getValue());
-            }
+                temp.txt = this._highlight(dataObj.txt);
+           }
 
             if (!dataObj.propertyIsEnumerable(keyStr)) {
                 continue;
@@ -237,17 +233,40 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * draw가 실행될 때 호출되며 키워드 하이라이팅 처리를 한다.
      * (text: 나이키 에어  /  query : 나이키 / 리턴 결과 : <strong>나이키 </strong>에어
      * @param {String} text 입력값 스트링
-     * @param {String} query 하이라이팅 처리할 스트링
      * @return {String} 하이라이팅 처리된 전체 스트링
      * @private
      */
-    _highlight: function(text, query) {
-        var returnStr = this._makeStrong(text, query);
+    _highlight: function(text) {
+        var querys = this.autoCompleteObj.querys,
+            returnStr = text;
+
+        if(querys.length > 1) {
+            ne.util.forEach(querys, function(query) {
+                returnStr = this._makeStrong(returnStr, query);
+            }, this);
+        }
+
         if ('' !== returnStr) {
             return returnStr;
         }
+
         return text;
     },
+    ///**
+    // * draw가 실행될 때 호출되며 키워드 하이라이팅 처리를 한다.
+    // * (text: 나이키 에어  /  query : 나이키 / 리턴 결과 : <strong>나이키 </strong>에어
+    // * @param {String} text 입력값 스트링
+    // * @param {String} query 하이라이팅 처리할 스트링
+    // * @return {String} 하이라이팅 처리된 전체 스트링
+    // * @private
+    // */
+    //_highlight: function(text, query) {
+    //    var returnStr = this._makeStrong(text, query);
+    //    if ('' !== returnStr) {
+    //        return returnStr;
+    //    }
+    //    return text;
+    //},
 
     /**
      * 텍스트에서 쿼리 부분을 strong 태그로 감싼다.
@@ -431,11 +450,17 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     _onClick: function(e) {
         var $target = $(e.target),
             formElement = this.options.formElement,
-            selectedKeyword = $target.closest('li').text();
+            $keywordField = $target.closest('li').find('.keyword-field'),
+            selectedKeyword = $keywordField.text(),
+            paramsString;
 
         this.autoCompleteObj.setValue(selectedKeyword);
 
         if (formElement && selectedKeyword) {
+            paramsString = $keywordField.attr('data-params');
+            if (paramsString) {
+                this.autoCompleteObj.setParams(paramsString);
+            }
             formElement.submit();
         }
     }

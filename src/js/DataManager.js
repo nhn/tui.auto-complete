@@ -53,14 +53,9 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             'success': ne.util.bind(function(dataObj) {
                 //try {
 
-                    var keyDatas;
-
-                    if (ne.util.isExisty(dataObj.collections)) {
-                        keyDatas = this.getCollectionData(dataObj);
-                    } else {
-                        keyDatas = this.getItemData(dataObj);
-                    }
-
+                    var keyDatas = this.getCollectionData(dataObj);
+                // @todo 이부분이 추후 highlight 처리시 사용되어야 함
+                    this.autoCompleteObj.setQuerys(dataObj.query);
                     this.autoCompleteObj.setServerData(keyDatas);
 
                 //} catch (e) {
@@ -68,29 +63,6 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                 //}
             }, this)
         });
-    },
-    getItemData: function(dataObj) {
-        var keyDatas = [],
-            dataArr = [],
-            itemLen = dataObj.items.length,
-            i,
-            j;
-
-        //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
-        for (i = 0; i < itemLen; i++) {
-            dataArr[i] = [];
-
-            var slots = dataObj.items[i],
-                slotLen = slots.length;
-
-            if (slotLen > 0) {
-                for (j = 0; j < slots.length; j++) {
-                    dataArr[i][j] = slots[j][0];
-                    keyDatas.push(dataArr[i][j]);
-                }
-            }
-        }
-        return keyDatas;
     },
     getCollectionData: function(dataObj) {
         var collection = dataObj.collections,
@@ -121,6 +93,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                 }
 
             });
+
         return items;
     }
 });

@@ -4,15 +4,9 @@
         'searchBoxElement': $("#ac_input1"),
         'orgQueryElement' : '#org_query',
         'templateAttribute': {
-            'redirect': ['txt', 'url'],
-            'srch_with_opt': ['txt', 'insert', 'option'],
-            'srch': ['txt'],
             'defaults': ['txt']
         },
         'templateElement' :  {
-            'redirect': '<li><a href="@url@" onclick=\"return false;\">@txt@</a></li>',
-            'srch': '<li><a href="#" onclick=\"return false;\">@txt@</a></li>',
-            'srch_with_opt': '<li><a href="#" onclick=\"return false;\">@txt@ @option@ <strong style="color:gold">@insert@</strong></a></li>',
             'defaults': '<li><a href="#" onclick=\"return false;\">@txt@</a></li>'
         },
         'toggleBtnElement' : $("#onoffBtn"),
@@ -38,17 +32,25 @@
         'searchBoxElement':  '#ac_input1',
         'orgQueryElement' : '#org_query',
         'templateAttribute': {
-            'redirect': ['txt', 'url'],
-            'srch_with_opt': ['txt', 'insert', 'option'],
-            'defaults': ['txt']
+            'defaults': ['txt'],
+            'department': ['txt', 'params'],
+            'srch_in_department': ['txt', 'department', 'params']
         },
         'viewCount' : 12,
         'templateElement' :  {
-            'redirect': '<li><a href="@url@" onclick=\"return false;\">@txt@</a></li>',
-            'srch': '<li><a href="#" onclick=\"return false;\">@txt@</a></li>',
-            'srch_with_opt': '<li><a href="#" onclick=\"return false;\">@txt@ @option@ <strong style="color:gold">@insert@</strong></a></li>',
-            'title': '<li><strong>@txt@</strong></li>',
-            'defaults': '<li><a href="#" onclick=\"return false;\">@txt@</a></li>'
+            'department':   '<li class="department">' +
+                                '<span class="slot-field">Shop the</span>\n' +
+                                '<span class="keyword-field" data-params="@params@">@txt@</span>\n ' +
+                                '<span class="slot-field">Store</span>' +
+                            '</li>',
+            'srch': '<li class="srch"><span class="keyword-field">@txt@</span></li>',
+            'srch_in_department':   '<li class="inDepartment">' +
+                                        '<span class="keyword-field" data-params="@params@">@txt@</span>\n' +
+                                        '<span class="slot-field">in</span>\n' +
+                                        '<span class="depart-field">@department@</span>' +
+                                    '</li>',
+            'title': '<li class="title"><strong>@txt@</strong></li>',
+            'defaults': '<li><span class="keyword-field">@txt@</span></li>'
         },
         'formElement' : '#ac_form1',
         'cookieName' : "usecookie",

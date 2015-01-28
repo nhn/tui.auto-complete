@@ -9,6 +9,15 @@
     <script type="text/javascript" src="../src/libs/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="../src/libs/jquery.cookie.js"></script>
     <script type="text/javascript" src="../src/common/common.js"></script>
+    <style type="text/css">
+        .suggestBox .baseBox span { color:#aaa; font-weight: normal; }
+        .suggestBox .baseBox span strong { text-decoration: underline; }
+        .suggestBox .baseBox span.keyword-field { color:#222; }
+        .suggestBox .baseBox span.slot-field { color:gold;  }
+        .suggestBox .baseBox .inDepartment span.slot-field { color:#222;  }
+        .suggestBox .baseBox .inDepartment span.depart-field { color:gold;  }
+
+    </style>
 </head>
 <body>
 <!-- 폼태그 -->
@@ -41,7 +50,7 @@
 
 <!-- 자동완성 생성 -->
 <script>
-    new ne.component.AutoComplete({"configId" : "Default"});
+    new ne.component.AutoComplete({"configId" : "Default2"});
 </script>
 
 

@@ -55,6 +55,12 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         this.inputManager = new autoComplete.InputManager(this, this.options);
         this.resultManager = new autoComplete.ResultManager(this, this.options);
 
+        /**
+         * 사용자가 입력한 쿼리 데이터와, 한글값으로 매칭되는 값이 있을경우 함께 넘어오는 배열을 저장함.
+         * @type {null}
+         */
+        this.querys = null;
+
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
     },
@@ -154,6 +160,14 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
+     * 추가 파라미터로 전달 될 자동완선 파라미터들을 생성하도록 inputManger에 요처어
+     * @param {string} paramStr 함께 넘어갈 파라미터 배열의 문자열 형태(&로 연결되어 있음)
+     */
+    setParams: function(paramStr) {
+        this.inputManager.setParams(paramStr);
+    },
+
+    /**
      * ajax통신하여 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.
      * @param {Array} dataArr ajax통신 후 서버로부터 받은 검색 결과 배열
      */
@@ -169,6 +183,14 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
         this.isUse = isUse;
         this.setToggleBtnImg(isUse);
+    },
+
+    /**
+     * 사용자가 입력한 값과, 매칭되는 한글값을 저장한다.
+     * @param {array} querys 응답받은 쿼리값들
+     */
+    setQuerys: function(querys) {
+        this.querys = [].concat(querys);
     },
 
     /**

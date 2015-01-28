@@ -11,6 +11,7 @@ ne.component = ne.component || {};
  * 자동완성 컴포넌트의 구성 요소중 검색어 입력받는 입력창의 동작과 관련된 클래스. <br>
  * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
  * @constructor
+ * @tutorial
  */
 ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.InputManager.prototype */{
 
@@ -36,6 +37,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         this.$searchBox = this.options.searchBoxElement;
         this.$toggleBtn = this.options.toggleBtnElement;
         this.$orgQuery = this.options.orgQueryElement;
+        // 추가
+        this.$formElement = this.options.formElement;
 
         //입력값 저장해두기
         this.inputValue = this.$searchBox.val();
@@ -59,6 +62,27 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     setValue: function(str) {
         this.inputValue = str;
         this.$searchBox.val(str);
+    },
+
+    setParams: function(str) {
+        var params = str.split('&'),
+            key,
+            value,
+            $input;
+
+        if(ne.util.isEmpty(params)) {
+            return;
+        }
+
+        ne.util.forEach(params, function(param) {
+
+            param = param.split('=');
+            key = param[0];
+            value = param[1];
+            $input = $('<input type="hidden" name="' + key + '" value="' + value + '" />');
+            $(this.$formElement).append($input);
+
+        }, this);
     },
 
     /**
@@ -173,6 +197,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
             this._onChange();
         } else if (!this.autoCompleteObj.getMoved()) {
             this._setOrgQuery(this.$searchBox.val());
+
         }
     },
 
@@ -199,7 +224,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-
         this.autoCompleteObj.request(this.$searchBox.val());
     },
 
@@ -216,7 +240,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     },
 
     /**
-     * 검색창 keydown event 처리 핸들러. 입력키값에 따라서 액션을 정의한다.
+     * 검색창 keydown event 처리 핸들러.
+     * 입력키값에 따라서 액션을 정의한다.
      * @param {Event} keyDown 이벤트 객체
      * @private
      */
