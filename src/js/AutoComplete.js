@@ -92,12 +92,18 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         configArr = ne.util.keys(config);
         var configLen = configArr.length,
             i,
-            requiredFields = ['resultListElement',  //config요소 중에 필수 입력 항목 필드들
-                              'searchBoxElement' ,
-                              'orgQueryElement',
-                              'templateElement',
-                              'formElement',
-                              'searchApi'],
+            requiredFields = [
+                'resultListElement',//config요소 중에 필수 입력 항목 필드들
+                'searchBoxElement' ,
+                'orgQueryElement',
+                'subQuerySet',
+                'templateAttribute',
+                'templateElement',
+                'actions',
+                'formElement',
+                'searchUrl',
+                'searchApi'
+            ],
             checkedFields = [];                     //필수체크 항목 저장하는 임시 배열
 
         for (i = 0; i < configLen; i++) {
@@ -113,9 +119,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
                 return false;
             }
 
+            // Url이 별도로 빠짐
             //searchApi의 경우 필수 파라미터(url, st, r_lt)를 한번 더 체크.
             if (el === 'searchApi' && config['searchApi']) {
-                if (!config.searchApi.url ||
+                if (!config.searchUrl ||
                     !config.searchApi.st ||
                     !config.searchApi.r_lt) {
                     alert('searchApi항목의 필수값이 없습니다.');
@@ -124,13 +131,12 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             }
         });
 
-
         //설정값 읽어와서 options변수에 저장
         for (i = 0; i < configLen; i++) {
             var configName = configArr[i],
                 configValue = config[configName];
 
-            if (typeof(configValue) === 'string' &&
+            if (typeof configValue === 'string' &&
                (configValue.charAt(0) === '.' || configValue.charAt(0) === '#')) {
                 this.options[configName] = $(configValue);
             } else {
@@ -169,8 +175,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      * 추가 파라미터로 전달 될 자동완선 파라미터들을 생성하도록 inputManger에 요처어
      * @param {string} paramStr 함께 넘어갈 파라미터 배열의 문자열 형태(&로 연결되어 있음)
      */
-    setParams: function(paramStr) {
-        this.inputManager.setParams(paramStr);
+    setParams: function(paramStr, type) {
+        this.inputManager.setParams(paramStr, type);
     },
 
     /**

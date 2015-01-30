@@ -45,25 +45,29 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             },
             requestParam = ne.util.extend(this.options.searchApi, defaultParam);
 
-        ne.util.ajax.request(this.options.searchApi.url, {
+        ne.util.ajax.request(this.options.searchUrl, {
             'dataType': 'jsonp',
             'jsonpCallback': 'dataCallback',
             'data': requestParam,
             'type': 'get',
             'success': ne.util.bind(function(dataObj) {
-                //try {
+                try {
 
                     var keyDatas = this.getCollectionData(dataObj);
-                // @todo 이부분이 추후 highlight 처리시 사용되어야 함
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     this.autoCompleteObj.setServerData(keyDatas);
 
-                //} catch (e) {
-                //    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
-                //}
+                } catch (e) {
+                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
+                }
             }, this)
         });
     },
+    /**
+     * 화면에 뿌려질 컬렉션 데이터를 생성한다.
+     * @param dataObj
+     * @returns {Array}
+     */
     getCollectionData: function(dataObj) {
         var collection = dataObj.collections,
             itemDataList = [];
@@ -81,15 +85,22 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
 
         return itemDataList;
     },
+    /**
+     * 화면에 뿌려질 컬렉션의 아이템 데이터를 생성한다.
+     * @param itemSet
+     * @returns {Array}
+     */
     getRedirectData: function(itemSet) {
         var type = itemSet.type,
             index = itemSet.index,
+            dest = itemSet.destination,
             items = ne.util.map(itemSet.items, function(item, idx) {
 
                 return {
                     values: item,
                     type: type,
-                    index: index
+                    index: index,
+                    dest: dest
                 }
 
             });

@@ -31,33 +31,43 @@
         'resultListElement': '._resultBox',
         'searchBoxElement':  '#ac_input1',
         'orgQueryElement' : '#org_query',
-        'templateAttribute': {
-            'defaults': ['txt'],
-            'department': ['txt', 'params'],
-            'srch_in_department': ['txt', 'department', 'params']
+        'viewCount' : 30,
+        'subQuerySet': {
+            'department': ['key1', 'key2', 'key3'],
+            'srch': ['ch1', 'ch2', 'ch3'],
+            'srch_in_department': ['dep1', 'dep2', 'dep3'],
+            'defaults': ['cid']
         },
-        'useTitle': false,
-        'viewCount' : 12,
         'templateElement' :  {
             'department':   '<li class="department">' +
                                 '<span class="slot-field">Shop the</span> ' +
-                                '<span class="keyword-field" data-params="@params@">@txt@</span> ' +
+                                '<a href="#" class="keyword-field">@subject@</a> ' +
                                 '<span class="slot-field">Store</span>' +
                             '</li>',
-            'srch': '<li class="srch"><span class="keyword-field">@txt@</span></li>',
+            'srch': '<li class="srch"><span class="keyword-field">@subject@</span></li>',
             'srch_in_department':   '<li class="inDepartment">' +
-                                        '<span class="keyword-field" data-params="@params@">@txt@</span> ' +
+                                        '<a href="#" class="keyword-field">@subject@</a> ' +
                                         '<span class="slot-field">in </span>' +
                                         '<span class="depart-field">@department@</span>' +
                                     '</li>',
-            'title': '<li class="title"><strong>@txt@</strong></li>',
-            'defaults': '<li><span class="keyword-field">@txt@</span></li>'
+            'title': '<li class="title"><strong>@subject@</strong></li>',
+            'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
         },
+        'templateAttribute': {
+            'defau lts': ['subject'],
+            'department': ['subject'],
+            'srch_in_department': ['subject', 'department']
+        },
+        actions: {
+            'department': "http://www.fashiongo.net/catalog.aspx",
+            'defaults': "http://www.fashiongo.net/search2.aspx"
+        },
+        'useTitle': false,
         'formElement' : '#ac_form1',
         'cookieName' : "usecookie",
         'mouseOverClass' : 'emp',
+        'searchUrl' : 'http://10.24.136.172:20011/ac',
         'searchApi' : {
-            'url' : 'http://119.205.249.132/ac/mock.js',
             'st' : 1,
             'r_lt' : 1,
             'r_enc' : 'UTF-8',

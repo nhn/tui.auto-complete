@@ -3,6 +3,7 @@
  * @author kihyun.lee@nhnent.com
  */
 
+
 ne = window.ne || {};
 ne.component = ne.component || {};
 
@@ -64,25 +65,59 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         this.$searchBox.val(str);
     },
 
-    setParams: function(str) {
-        var params = str.split('&'),
-            key,
-            value,
-            $input;
+    /**
+     * config에 설정되어 있는 param option 을 읽어 온뒤, param 을 설정하게 한다.
+     * @param {array} options 배열로 받은 옵션들을 추가한다.
+     */
+    setParams: function(options, type) {
 
-        if(ne.util.isEmpty(params)) {
+        if(options && ne.util.isString(options)) {
+            options = options.split(',');
+        }
+
+        if(!options || ne.util.isEmpty(options)) {
             return;
         }
 
-        ne.util.forEach(params, function(param) {
+        this._createParamSetByType(options, type);
+    },
 
-            param = param.split('=');
-            key = param[0];
-            value = param[1];
+    /**
+     * 타입에 따른 inputElement 생성
+     * @param {string|undefined} type 선택된 자동완성의 타입
+     * @private
+     */
+    _createParamSetByType: function(options, type) {
+
+        var key,
+            value,
+            $input,
+            conf = this.options.subQuerySet[type] || this.options.subQuerySet['defaults'];
+
+        if(!this.hiddens) {
+            this._createParamContainer();
+        }
+
+        ne.util.forEach(options, function(value, index) {
+
+            key = conf[index];
             $input = $('<input type="hidden" name="' + key + '" value="' + value + '" />');
-            $(this.$formElement).append($input);
+            this.hiddens.append($input);
 
         }, this);
+
+    },
+
+    /**
+     * hidden 요소 엘리먼트 들을 감싸는 래퍼를 생성한다.
+     * @private
+     */
+    _createParamContainer: function() {
+
+        this.hiddens = $('<div class="hidden-inputs"></div>');
+        this.hiddens.hide();
+        this.hiddens.appendTo($(this.$formElement));
+
     },
 
     /**
