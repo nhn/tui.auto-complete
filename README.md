@@ -20,12 +20,8 @@ FE 개발팀 이기현 <kihyun.lee@nhnent.com>
 - 결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색할 수 있다.
 - 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.
 
-## 샘플 페이지
-- 기본 예제 : http://fetech.nhnent.com/svnrun/fetech/components/AutoComplete/default.html
-- 자동완성 기능 끄기, 켜기 가능한 예제 : http://fetech.nhnent.com/svnrun/fetech/components/AutoComplete/expand1.html
-
 ## 다운로드
-- http://fetech.nhnent.com/svnrun/fetech/components/download/AutoComplete/autocomplete.zip
+- https://github.nhnent.com/pages/FE/Component-AutoComplete/dist/
 
 ## API문서
 - http://github.nhnent.com/pages/FE/Component-AutoComplete/
@@ -34,7 +30,7 @@ FE 개발팀 이기현 <kihyun.lee@nhnent.com>
 - http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/
 
 ## 개발 가이드
-- http://wiki.nhnent.com/pages/viewpage.action?pageId=241926666
+- https://github.nhnent.com/FE/Component-AutoComplete/wiki/Component-AutoComplete
 
 
 
