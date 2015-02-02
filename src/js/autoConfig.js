@@ -1,30 +1,36 @@
 {
-    Default = {
-        'resultListElement': $("._resultBox"),
-        'searchBoxElement': $("#ac_input1"),
+    Default1 = {
+        'resultListElement': '._resultBox',
+        'searchBoxElement':  '#ac_input1',
         'orgQueryElement' : '#org_query',
-        'templateAttribute': {
-            'defaults': ['txt']
+        'viewCount' : 30,
+        'subQuerySet': {
+            'department': ['key1', 'key2', 'key3'],
+            'srch_in_department': ['dep1', 'dep2', 'dep3'],
+            'srch': ['ch1', 'ch2', 'ch3'],
+            'defaults': ['cid']
         },
         'templateElement' :  {
-            'defaults': '<li><a href="#" onclick=\"return false;\">@txt@</a></li>'
+            'title': '<li class="title"><strong>@subject@</strong></li>',
+            'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
         },
-        'toggleBtnElement' : $("#onoffBtn"),
-        'viewCount' : 15,
-        'formElement' : $("#ac_form1"),
+        'templateAttribute': {
+            'defaults': ['subject']
+        },
+        actions: {
+            'defaults': "http://www.popshoes.co.kr/app/product/search"
+        },
+        'useTitle': true,
+        'formElement' : '#ac_form1',
+        'cookieName' : "usecookie",
         'mouseOverClass' : 'emp',
-        'onoffTextElement' : $(".baseBox .bottom"),
+        'searchUrl' : 'http://10.24.136.172:20011/ac',
         'searchApi' : {
-            'url' : 'http://119.205.249.132/ac/mock_default.js',
-            'st' : 1,
-            'r_lt' : 1,
+            'st' : 111,
+            'r_lt' : 111,
             'r_enc' : 'UTF-8',
             'q_enc' : 'UTF-8',
             'r_format' : 'json'
-        },
-        'toggleImg' : {
-            'on' : 'img/btn_on.jpg',
-            'off' : 'img/btn_off.jpg'
         }
     },
     Default2 = {
@@ -34,8 +40,8 @@
         'viewCount' : 30,
         'subQuerySet': {
             'department': ['key1', 'key2', 'key3'],
-            'srch': ['ch1', 'ch2', 'ch3'],
             'srch_in_department': ['dep1', 'dep2', 'dep3'],
+            'srch': ['ch1', 'ch2', 'ch3'],
             'defaults': ['cid']
         },
         'templateElement' :  {
@@ -54,7 +60,7 @@
             'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
         },
         'templateAttribute': {
-            'defau lts': ['subject'],
+            'defaults': ['subject'],
             'department': ['subject'],
             'srch_in_department': ['subject', 'department']
         },
@@ -68,8 +74,8 @@
         'mouseOverClass' : 'emp',
         'searchUrl' : 'http://10.24.136.172:20011/ac',
         'searchApi' : {
-            'st' : 1,
-            'r_lt' : 1,
+            'st' : 111,
+            'r_lt' : 111,
             'r_enc' : 'UTF-8',
             'q_enc' : 'UTF-8',
             'r_format' : 'json'

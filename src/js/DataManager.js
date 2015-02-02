@@ -34,6 +34,14 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             return;
         }
 
+        // 공백을 제거한 키워드
+        var rsKeyWrod = keyword.replace(/\s/g, '');
+
+        if (!keyword || !rsKeyWrod) {
+            this.autoCompleteObj.hideResultList();
+            return;
+        }
+
         //request를 위한 변수 세팅
         var dataCallback = function(){},
             defaultParam = {
@@ -54,7 +62,9 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                 try {
 
                     var keyDatas = this.getCollectionData(dataObj);
+                    // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
                     this.autoCompleteObj.setQuerys(dataObj.query);
+                    // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
 
                 } catch (e) {
@@ -74,6 +84,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
 
         ne.util.forEach(collection, function(itemSet) {
 
+            // 컬렉션 아이템 생성
             var keys = this.getRedirectData(itemSet);
             itemDataList.push({
                 type: 'title',
