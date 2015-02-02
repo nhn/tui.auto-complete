@@ -102,7 +102,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         });
 
         if(attrs.length < values.length) {
-            tmplValue.params = values[values.length-1];
+            tmplValue.params = values.slice(attrs.length);
         }
 
         return tmplValue;
@@ -309,12 +309,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getFirst: function() {
-        if (this.$resultList &&
-            this.$resultList.children() &&
-            this.$resultList.children().length) {
-            return this.$resultList.children().first();
-        }
-        return null;
+        return this._orderStage('first');
     },
 
     /**
@@ -323,10 +318,20 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getLast: function() {
+        return this._orderStage('last');
+    },
+
+    /**
+     * 중복 코드 방지를 위한 기능분리, 처음과 끝의 여부를 받아서 돌려준다.
+     * @param {string} type 처음/끝 요소 타입
+     * @returns {*}
+     * @private
+     */
+    _orderStage: function(type) {
         if (this.$resultList &&
             this.$resultList.children() &&
             this.$resultList.children().length) {
-            return this.$resultList.children().last();
+            return this.$resultList.children()[type]();
         }
         return null;
     },
@@ -339,23 +344,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getNext: function(element) {
-        if (!ne.util.isExisty(element)) {
-            return null;
-        }
-
-        var $current = $(element),
-            next;
-
-        if ($current.closest(this.resultSelector)) {
-            next = $current.next();
-            if (next.length) {
-                return next;
-            } else {
-                return this._getFirst();
-            }
-        }
-
-        return null;
+        return this._orderElement('next', element);
     },
 
     /**
@@ -366,19 +355,32 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getPrev: function(element) {
+        return this._orderElement('prev', element);
+    },
+
+    /**
+     * 이전/다음 값 정보를 받아 엘리먼트를 돌려준다.
+     * 이전 다음을 이동시 중복 코드 방지를 위한 orderElement 분리
+     * @param {string} type 받아올 타입 정보
+     * @param {Element} element 현재 포커스된 엘리먼트의 이전/다음 엘리먼트
+     * @returns {*}
+     * @private
+     */
+    _orderElement: function(type, element) {
         if (!ne.util.isExisty(element)) {
             return null;
         }
 
         var $current = $(element),
-            prev;
+            isNext = (type === 'next'),
+            order;
 
         if ($current.closest(this.resultSelector)) {
-            prev = element.prev();
-            if (prev.length) {
-                return prev;
+            order = isNext ? element.next() : element.prev();
+            if (order.length) {
+                return order;
             } else {
-                return this._getLast();
+                return isNext ? this._getFirst() : this._getLast();
             }
         }
     },

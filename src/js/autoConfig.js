@@ -25,6 +25,8 @@
         'cookieName' : "usecookie",
         'mouseOverClass' : 'emp',
         'searchUrl' : 'http://localhost:63342/Component-AutoComplete/server/mock.js',
+
+        //'searchUrl' : 'http://10.24.136.172:20011/ac',
         'searchApi' : {
             'st' : 111,
             'r_lt' : 111,
