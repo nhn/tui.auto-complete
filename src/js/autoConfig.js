@@ -34,6 +34,7 @@
         }
     },
     Default2 = {
+
         'resultListElement': '._resultBox',
         'searchBoxElement':  '#ac_input1',
         'orgQueryElement' : '#org_query',
