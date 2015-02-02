@@ -3,7 +3,7 @@
         'resultListElement': '._resultBox',
         'searchBoxElement':  '#ac_input1',
         'orgQueryElement' : '#org_query',
-        'viewCount' : 30,
+        'viewCount' : 5,
         'subQuerySet': {
             'department': ['key1', 'key2', 'key3'],
             'srch_in_department': ['dep1', 'dep2', 'dep3'],
@@ -24,7 +24,7 @@
         'formElement' : '#ac_form1',
         'cookieName' : "usecookie",
         'mouseOverClass' : 'emp',
-        'searchUrl' : 'http://10.24.136.172:20011/ac',
+        'searchUrl' : 'http://localhost:63342/Component-AutoComplete/server/mock.js',
         'searchApi' : {
             'st' : 111,
             'r_lt' : 111,
@@ -37,7 +37,7 @@
         'resultListElement': '._resultBox',
         'searchBoxElement':  '#ac_input1',
         'orgQueryElement' : '#org_query',
-        'viewCount' : 30,
+        'viewCount' : 10,
         'subQuerySet': {
             'department': ['key1', 'key2', 'key3'],
             'srch_in_department': ['dep1', 'dep2', 'dep3'],

@@ -49,7 +49,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             tmplAttr = this.options.templateAttribute,
             useTitle = this.options.useTitle,
             dataLength = dataArr.length,
-            len = (this.viewCount < dataLength) ? this.viewCount : dataLength,
+            len = dataLength,
             type,
             i;
 
