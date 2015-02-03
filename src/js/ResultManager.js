@@ -424,7 +424,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     /**
      * 폼요소의 action을 변경하고, 선택한 값의 추가값인 input=hidden을 추가하여 넘길 값들을 세팅한다.
      * 이부분은 자동완성 컴포넌트 요소들을 선택할때, (키다운 이벤트 동작 혹은 마우스 클릭) 호출된다.
-     * @param {element|undefined} $target 서브밋 옵션을 설정할 타겟
+     * @param {element} [$target] 서브밋 옵션을 설정할 타겟
      * @private
      */
     _setSubmitOption: function($target) {
