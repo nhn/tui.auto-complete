@@ -1,7 +1,7 @@
 /**
  * @fileoverview 자동완성 컴포넌트의 모든 구성요소들을 총괄하는 최상위 클래스
- * @author FE개발팀 이기현<kihyun.lee@nhnent.com>
- *         수정 - FE개발팀 이제인<jein.yi@nhnent.com>
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
 */
 
 ne = window.ne || {};
@@ -268,7 +268,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
-     * 추가 파라미터로 전달 될 자동완선 파라미터들을 생성하도록 inputManger에 요처어
+     * 추가 파라미터로 전달 될 자동완성 파라미터들을 생성하도록 inputManger에 요청
      * @param {string} paramStr 함께 넘어갈 파라미터 배열의 문자열 형태(&로 연결되어 있음)
      */
     setParams: function(paramStr, type) {

@@ -1,7 +1,7 @@
 /**
  * @fileOverview 자동완성 컴포넌트 중에서 입력창에 대한 기능을 제공하는 클래스
- * @author FE개발팀 이기현<kihyun.lee@nhnent.com>
- *         수정 - FE개발팀 이제인<jein.yi@nhnent.com>
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
 
@@ -90,8 +90,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     _createParamSetByType: function(options, type) {
 
         var key,
-            value,
-            $input,
             conf = this.options.subQuerySet[type] || this.options.subQuerySet['defaults'];
 
         if(!this.hiddens) {
@@ -101,8 +99,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         ne.util.forEach(options, function(value, index) {
 
             key = conf[index];
-            $input = $('<input type="hidden" name="' + key + '" value="' + value + '" />');
-            this.hiddens.append($input);
+            this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
 
         }, this);
 

@@ -1,7 +1,7 @@
 /**
  * @fileoverview 자동완성 컴포넌트 중에서 입력된 값으로 검색 API와 연동하여 자동완성 검색 결과를 받아오는 클래스
- * @author FE개발팀 이기현<kihyun.lee@nhnent.com>
- *         수정 - FE개발팀 이제인<jein.yi@nhnent.com>
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
 ne = window.ne || {};
@@ -52,7 +52,8 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                 r_format: 'json',
                 _callback: 'dataCallback'
             },
-            requestParam = ne.util.extend(this.options.searchApi, defaultParam);
+            requestParam = ne.util.extend(this.options.searchApi, defaultParam),
+            keyDatas;
 
         ne.util.ajax.request(this.options.searchUrl, {
             'dataType': 'jsonp',
@@ -60,17 +61,17 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             'data': requestParam,
             'type': 'get',
             'success': ne.util.bind(function(dataObj) {
-                //try {
+                try {
 
-                    var keyDatas = this._getCollectionData(dataObj);
+                    keyDatas = this._getCollectionData(dataObj);
                     // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
 
-                //} catch (e) {
-                //    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
-                //}
+                } catch (e) {
+                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
+                }
             }, this)
         });
     },
@@ -109,15 +110,17 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             index = itemSet.index,
             dest = itemSet.destination,
             items = ne.util.map(itemSet.items, function(item, idx) {
-                if(idx > (this.options.viewCount - 1)) {
+
+                if (idx > (this.options.viewCount - 1)) {
                     return;
                 }
+
                 return {
                     values: item,
                     type: type,
                     index: index,
                     dest: dest
-                }
+                };
 
             }, this);
 
