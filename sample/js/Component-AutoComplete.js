@@ -1193,6 +1193,48 @@
     }
 
     /**
+     * 파라메터로 전달된 객체나 어레이를 순회하며 콜백을 실행한 리턴값이 참일 경우의 모음을 만들어서 리턴한다.
+     * @param {*} obj 순회할 객체나 배열
+     * @param {Function} iteratee 데이터가 전달될 콜백함수
+     * @param {*} [context] 콜백함수의 컨텍스트
+     * @returns {*}
+     * @example
+     * filter([0,1,2,3], function(value) {
+     *     return (value % 2 === 0);
+     * });
+     *
+     * => [0, 2];
+     * filter({a : 1, b: 2, c: 3}, function(value) {
+     *     return (value % 2 !== 0);
+     * });
+     *
+     * => {a: 1, c: 3};
+     */
+    var filter = function(obj, iteratee, context) {
+        var result = ne.util.isArray(obj) ? [] : {},
+            value,
+            key;
+
+        if (!ne.util.isObject(obj) || !ne.util.isFunction(iteratee)) {
+            throw new Error('wrong parameter');
+        }
+
+        ne.util.forEach(obj, function() {
+            if (iteratee.apply(context || null, arguments)) {
+                value = arguments[0];
+                key = arguments[1];
+                if (ne.util.isArray(obj)) {
+                    result.push(value);
+                } else {
+                    result[key] = value;
+                }
+            }
+        }, context);
+
+        return result;
+    };
+
+    /**
      * 배열 내의 값을 찾아서 인덱스를 반환한다. 찾고자 하는 값이 없으면 -1 반환.
      * @param {*} value 배열 내에서 찾고자 하는 값
      * @param {array} array 검색 대상 배열
@@ -1248,6 +1290,7 @@
     ne.util.map = map;
     ne.util.reduce = reduce;
     ne.util.inArray = inArray;
+    ne.util.filter = filter;
 
 })(window.ne);
 /**
@@ -1558,7 +1601,8 @@
 })(window.ne);
 /**
  * @fileoverview 자동완성 컴포넌트의 모든 구성요소들을 총괄하는 최상위 클래스
- * @author kihyun.lee@nhnent.com
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
 */
 
 ne = window.ne || {};
@@ -1571,8 +1615,109 @@ ne.component = ne.component || {};
     var autoCompleteObj = new ne.component.AutoComplete({
        "configId" : "Default"    // autoConfig.js에서 사용할 DataSet의 키값
     });
+    /**
+    작성되어야 하는 autoConfig.js 의 형식
+    {
+        Default = {
+            // 자동완성 결과를 보여주는 엘리먼트
+            'resultListElement': '._resultBox',
+
+            // 검색어를 입력하는 input 엘리먼트
+            'searchBoxElement':  '#ac_input1',
+
+            // 입력한 검색어를 넘기기 위한 hidden element
+            'orgQueryElement' : '#org_query',
+
+            // on,off 버튼 엘리먼트
+            'toggleBtnElement' : $("#onoffBtn"),
+
+            // on,off 상태를 알리는 엘리먼트
+            'onoffTextElement' : $(".baseBox .bottom"),
+
+            // on, off상태일때 변경 이미지 경로
+            'toggleImg' : {
+                'on' : 'img/btn_on.jpg',
+                'off' : 'img/btn_off.jpg'
+            }
+
+            // 컬렉션아이템별 보여질 리스트 겟수
+            'viewCount' : 5,
+
+            // 서브쿼리로 넘어갈 키 값들의 배열(컬렉션 명 별로 지정 할 수 있다, 따로 지정하지 않으면 defaults가 적용된다.)
+            'subQuerySet': {
+                'department': ['key1', 'key2', 'key3'],
+                'srch_in_department': ['dep1', 'dep2', 'dep3'],
+                'srch': ['ch1', 'ch2', 'ch3'],
+                'defaults': ['cid']
+            },
+
+            // 컬렉션 타입 별로 표시될 마크업, 데이터가 들어갈 부분은 @key@ 형식으로 사용한다.(지정하지 않으면, defaults가 적용된다.)
+            // 형식은 수정 가능하지만, keyword-field는 키워드가 들어가는 부분에 필수로 들어가야함. 단 title에는 들어가면 안됨.
+            'templateElement' :  {
+                'department':   '<li class="department">' +
+                                    '<span class="slot-field">Shop the</span> ' +
+                                    '<a href="#" class="keyword-field">@subject@</a> ' +
+                                    '<span class="slot-field">Store</span>' +
+                                '</li>',
+                'srch': '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+                'srch_in_department':   '<li class="inDepartment">' +
+                                             '<a href="#" class="keyword-field">@subject@</a> ' +
+                                             '<span class="slot-field">in </span>' +
+                                             '<span class="depart-field">@department@</span>' +
+                                         '</li>',
+                'title': '<li class="title"><strong>@subject@</strong></li>',
+                'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
+            },
+
+            // 컬렉션 별 템플릿에서 사용하고 있는 변수들을 나열한다. (지정하지 않으면defaults가 적용된다)
+            'templateAttribute': {
+                'defaults': ['subject'],
+                'department': ['subject'],
+                'srch_in_department': ['subject', 'department']
+            },
+
+            // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
+            actions: {
+                'department': "http://www.fashiongo.net/catalog.aspx",
+                'defaults': "http://www.fashiongo.net/search2.aspx"
+            },
+
+            // 타이틀을 보일지 여부
+            'useTitle': false,
+
+            // 검색창을 감싸고 있는 form앨리먼트
+            'formElement' : '#ac_form1',
+
+            // 자동완성을 끄고 켤때 사용되는 쿠키명
+            'cookieName' : "usecookie",
+
+            // 선택된 엘리먼트에 추가되는 클래스명
+            'mouseOverClass' : 'emp',
+
+            // 자동완성API url
+            'searchUrl' : 'http://10.24.136.172:20011/ac',
+
+            // 자동완성API request 설정
+            'searchApi' : {
+                'st' : 111,
+                'r_lt' : 111,
+                'r_enc' : 'UTF-8',
+                'q_enc' : 'UTF-8',
+                'r_format' : 'json'
+            }
+        }
+    }
+
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
+
+    flowMap: {
+        'NEXT': 'next',
+        'PREV': 'prev',
+        'FIRST': 'first',
+        'LAST': 'last'
+    },
+
     /**
      * 초기화 함수
      * @param {Object} htOptions 함수의 argument. autoConfig의 키값 정보가 들어온다.
@@ -1613,6 +1758,12 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         this.inputManager = new autoComplete.InputManager(this, this.options);
         this.resultManager = new autoComplete.ResultManager(this, this.options);
 
+        /**
+         * 사용자가 입력한 쿼리 데이터와, 한글값으로 매칭되는 값이 있을경우 함께 넘어오는 배열을 저장함.
+         * @type {null}
+         */
+        this.querys = null;
+
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
     },
@@ -1628,22 +1779,29 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             configArr;
 
         //유효한 config인지 체크
-        try {
-            config = eval(htOptions.configId);
-        } catch (e) {
-            alert('유효한 configId가 아닙니다 : ' + config);
+        config = htOptions.config;
+
+        if (!ne.util.isExisty(config)) {
+            alert('유효한 config가 아닙니다 : ' + config);
             return false;
         }
 
         configArr = ne.util.keys(config);
+
         var configLen = configArr.length,
             i,
-            requiredFields = ['resultListElement',  //config요소 중에 필수 입력 항목 필드들
-                              'searchBoxElement' ,
-                              'orgQueryElement',
-                              'templateElement',
-                              'formElement',
-                              'searchApi'],
+            requiredFields = [
+                'resultListElement',//config요소 중에 필수 입력 항목 필드들
+                'searchBoxElement' ,
+                'orgQueryElement',
+                'subQuerySet',
+                'templateAttribute',
+                'templateElement',
+                'actions',
+                'formElement',
+                'searchUrl',
+                'searchApi'
+            ],
             checkedFields = [];                     //필수체크 항목 저장하는 임시 배열
 
         for (i = 0; i < configLen; i++) {
@@ -1659,9 +1817,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
                 return false;
             }
 
+            // Url이 별도로 빠짐
             //searchApi의 경우 필수 파라미터(url, st, r_lt)를 한번 더 체크.
             if (el === 'searchApi' && config['searchApi']) {
-                if (!config.searchApi.url ||
+                if (!config.searchUrl ||
                     !config.searchApi.st ||
                     !config.searchApi.r_lt) {
                     alert('searchApi항목의 필수값이 없습니다.');
@@ -1670,13 +1829,12 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             }
         });
 
-
         //설정값 읽어와서 options변수에 저장
         for (i = 0; i < configLen; i++) {
             var configName = configArr[i],
                 configValue = config[configName];
 
-            if (typeof(configValue) === 'string' &&
+            if (typeof configValue === 'string' &&
                (configValue.charAt(0) === '.' || configValue.charAt(0) === '#')) {
                 this.options[configName] = $(configValue);
             } else {
@@ -1712,6 +1870,14 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
+     * 추가 파라미터로 전달 될 자동완성 파라미터들을 생성하도록 inputManger에 요청
+     * @param {string} paramStr 함께 넘어갈 파라미터 배열의 문자열 형태(&로 연결되어 있음)
+     */
+    setParams: function(paramStr, type) {
+        this.inputManager.setParams(paramStr, type);
+    },
+
+    /**
      * ajax통신하여 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.
      * @param {Array} dataArr ajax통신 후 서버로부터 받은 검색 결과 배열
      */
@@ -1727,6 +1893,14 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
         this.isUse = isUse;
         this.setToggleBtnImg(isUse);
+    },
+
+    /**
+     * 사용자가 입력한 값과, 매칭되는 한글값을 저장한다.
+     * @param {array} querys 응답받은 쿼리값들
+     */
+    setQuerys: function(querys) {
+        this.querys = [].concat(querys);
     },
 
     /**
@@ -1772,22 +1946,16 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     },
 
     /**
-     * resultManager의 moveNextKeyword함수를 호출하여 자동완성 검색어 리스트중에서 다음 항목으로 이동한다.
+     * resultManager의 moveNextList함수를 호출하여 자동완성 검색어 리스트중에서 이전 or 다음 항목으로 이동한다.
+     * @param {string} flow 이동한 방향을 정한다.
      */
-    moveNextKeyword: function() {
-        this.resultManager.moveNextKeyword();
-    },
-
-    /**
-     * resultManager의 movePrevKeyword함수를 호출하여 자동완성 검색어 리스트중에서 이전 항목으로 이동한다.
-     */
-    movePrevKeyword: function() {
-        this.resultManager.movePrevKeyword();
+    moveNextList: function(flow) {
+        this.resultManager.moveNextList(flow);
     },
 
     /**
      * '자동완성 끄기 | 자동완성 켜기' 텍스트를 설정하도록 resultManager에 요청한다.
-     * @param {Boolean} true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
+     * @param {Boolean} isUse true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
      */
     changeOnOffText: function(isUse) {
         this.resultManager.changeOnOffText(isUse);
@@ -1819,7 +1987,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 });
 /**
  * @fileoverview 자동완성 컴포넌트 중에서 입력된 값으로 검색 API와 연동하여 자동완성 검색 결과를 받아오는 클래스
- * @author kihyun.lee@nhnent.com
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
 ne = window.ne || {};
@@ -1853,11 +2022,16 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             return;
         }
 
+        // 공백을 제거한 키워드
+        var rsKeyWrod = keyword.replace(/\s/g, '');
+
+        if (!keyword || !rsKeyWrod) {
+            this.autoCompleteObj.hideResultList();
+            return;
+        }
+
         //request를 위한 변수 세팅
-        var keyDatas = [],
-            dataArr = [],
-            self = this,
-            dataCallback = function(){},
+        var dataCallback = function(){},
             defaultParam = {
                 q: keyword,
                 r_enc: 'UTF-8',
@@ -1865,47 +2039,85 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                 r_format: 'json',
                 _callback: 'dataCallback'
             },
-            requestParam = ne.util.extend(this.options.searchApi, defaultParam);
+            requestParam = ne.util.extend(this.options.searchApi, defaultParam),
+            keyDatas;
 
-        ne.util.ajax.request(this.options.searchApi.url, {
+        ne.util.ajax.request(this.options.searchUrl, {
             'dataType': 'jsonp',
             'jsonpCallback': 'dataCallback',
             'data': requestParam,
             'type': 'get',
-            'success': function(dataObj) {
+            'success': ne.util.bind(function(dataObj) {
                 try {
-                    var itemLen = dataObj.items.length,
-                        i,
-                        j;
-
-                    //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
-                    for (i = 0; i < itemLen; i++) {
-                        dataArr[i] = [];
-
-                        var slots = dataObj.items[i],
-                            slotLen = slots.length;
-
-                        if (slotLen > 0) {
-                            for (j = 0; j < slots.length; j++) {
-                                dataArr[i][j] = slots[j][0];
-                                keyDatas.push(dataArr[i][j]);
-                            }
-                        }
-                    }
-
-                    //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
-                    self.autoCompleteObj.setServerData(keyDatas);
+                    keyDatas = this._getCollectionData(dataObj);
+                    // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
+                    this.autoCompleteObj.setQuerys(dataObj.query);
+                    // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
+                    this.autoCompleteObj.setServerData(keyDatas);
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
-            }
+            }, this)
         });
+    },
+    /**
+     * 화면에 뿌려질 컬렉션 데이터를 생성한다.
+     * @param dataObj
+     * @returns {Array}
+     * @private
+     */
+    _getCollectionData: function(dataObj) {
+        var collection = dataObj.collections,
+            itemDataList = [];
+
+        ne.util.forEach(collection, function(itemSet) {
+
+            // 컬렉션 아이템 생성
+            var keys = this._getRedirectData(itemSet);
+            itemDataList.push({
+                type: 'title',
+                values: [itemSet.title]
+            });
+            itemDataList = itemDataList.concat(keys);
+
+        }, this);
+
+        return itemDataList;
+    },
+    /**
+     * 화면에 뿌려질 컬렉션의 아이템 데이터를 생성한다.
+     * @param itemSet
+     * @private
+     * @returns {Array}
+     */
+    _getRedirectData: function(itemSet) {
+        var type = itemSet.type,
+            index = itemSet.index,
+            dest = itemSet.destination,
+            items = [];
+
+        ne.util.forEachArray(itemSet.items, function(item, idx) {
+
+            if (idx <= (this.options.viewCount - 1)) {
+                items.push({
+                    values: item,
+                    type: type,
+                    index: index,
+                    dest: dest
+                });
+            }
+
+        }, this);
+
+        return items;
     }
 });
 /**
  * @fileOverview 자동완성 컴포넌트 중에서 입력창에 대한 기능을 제공하는 클래스
- * @author kihyun.lee@nhnent.com
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
+
 
 ne = window.ne || {};
 ne.component = ne.component || {};
@@ -1940,6 +2152,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         this.$searchBox = this.options.searchBoxElement;
         this.$toggleBtn = this.options.toggleBtnElement;
         this.$orgQuery = this.options.orgQueryElement;
+        // 추가
+        this.$formElement = this.options.formElement;
 
         //입력값 저장해두기
         this.inputValue = this.$searchBox.val();
@@ -1963,6 +2177,55 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     setValue: function(str) {
         this.inputValue = str;
         this.$searchBox.val(str);
+    },
+
+    /**
+     * config에 설정되어 있는 param option 을 읽어 온뒤, param 을 설정하게 한다.
+     * @param {array} options 배열로 받은 옵션들을 추가한다.
+     */
+    setParams: function(options, type) {
+        if (options && ne.util.isString(options)) {
+            options = options.split(',');
+        }
+
+        if (!options || ne.util.isEmpty(options)) {
+            return;
+        }
+
+        this._createParamSetByType(options, type);
+    },
+
+    /**
+     * 타입에 따른 inputElement 생성
+     * @param {string|undefined} type 선택된 자동완성의 타입
+     * @private
+     */
+    _createParamSetByType: function(options, type) {
+
+        var key,
+            conf = this.options.subQuerySet[type] || this.options.subQuerySet['defaults'];
+
+        if (!this.hiddens) {
+            this._createParamContainer();
+        }
+
+        ne.util.forEach(options, function(value, index) {
+
+            key = conf[index];
+            this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
+
+        }, this);
+
+    },
+
+    /**
+     * hidden 요소 엘리먼트 들을 감싸는 래퍼를 생성한다.
+     * @private
+     */
+    _createParamContainer: function() {
+        this.hiddens = $('<div class="hidden-inputs"></div>');
+        this.hiddens.hide();
+        this.hiddens.appendTo($(this.$formElement));
     },
 
     /**
@@ -2087,7 +2350,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     _onKeyUp: function() {
         //입력값에 변경이 생겼다면 ( 소녀 --> 소녀시 --> 소녀시대 )
         //_onChange함수를 통해 서버에 데이터 요청하도록 한다.
-
         if (this.inputValue !== this.$searchBox.val()) {
             this.inputValue = this.$searchBox.val();
             this._onChange();
@@ -2103,7 +2365,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-
         this.autoCompleteObj.request(this.$searchBox.val());
     },
 
@@ -2120,25 +2381,38 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     },
 
     /**
-     * 검색창 keydown event 처리 핸들러. 입력키값에 따라서 액션을 정의한다.
-     * @param {Event} keyDown 이벤트 객체
+     * 검색창 keydown event 처리 핸들러.
+     * 입력키값에 따라서 액션을 정의한다.
+     * @param {Event} e keyDown 이벤트 객체
      * @private
      */
     _onKeyDown: function(e) {
-        if (!this.autoCompleteObj.isUseAutoComplete() ||
-            !this.autoCompleteObj.isVisibleResult()) {
+        var autoCompleteObj = this.autoCompleteObj;
+
+        if (!autoCompleteObj.isUseAutoComplete() ||
+            !autoCompleteObj.isVisibleResult()) {
             return;
         }
 
+        var code = e.keyCode,
+            flow = null,
+            codeMap = this.keyCodeMap,
+            flowMap = autoCompleteObj.flowMap;
+
         //입력키값(TAB,방향키)에 따른 액션 정의
-        if (e.keyCode === this.keyCodeMap.TAB) {
+        if (code === codeMap.TAB) {
             e.preventDefault();
-            e.shiftKey ? this.autoCompleteObj.movePrevKeyword(e) : this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode === this.keyCodeMap.DOWN_ARROW) {
-            this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode === this.keyCodeMap.UP_ARROW) {
-            this.autoCompleteObj.movePrevKeyword(e);
+            flow = e.shiftKey ? flowMap.NEXT : flowMap.PREV;
+        } else if (code === codeMap.DOWN_ARROW) {
+            flow = flowMap.NEXT;
+        } else if (code === codeMap.UP_ARROW) {
+            flow = flowMap.PREV;
+        } else {
+            return;
         }
+
+        autoCompleteObj.moveNextList(flow);
+
     },
 
     /**
@@ -2170,7 +2444,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 });
 /**
  * @fileoverview 자동완성 컴포넌트 중에서 검색 결과 영역에 대한 기능을 제공하는 클래스
- * @author kihyun.lee@nhnent.com
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
 ne = window.ne || {};
@@ -2195,6 +2470,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         this.viewCount = this.options.viewCount || 10;
         this.$onOffTxt = this.options.onoffTextElement;
         this.mouseOverClass = this.options.mouseOverClass;
+        this.flowMap = this.autoCompleteObj.flowMap;
 
         this._attachEvent();
 
@@ -2215,10 +2491,12 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         this.$resultList.hide();
         this.selectedElement = null;
 
-        var wordList = [],
-            tmplStr = this.options.templateElement,
+        var tmplStr = this.options.templateElement,
+            tmplAttr = this.options.templateAttribute,
+            useTitle = this.options.useTitle,
             dataLength = dataArr.length,
-            len = (this.viewCount < dataLength) ? this.viewCount : dataLength,
+            len = dataLength,
+            type,
             i;
 
         if (dataLength < 1) {
@@ -2226,13 +2504,20 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
 
         for (i = 0; i < len; i++) {
-            var tmplVal = {
-                txt: dataArr[i]
-            };
-            wordList.push(this._applyTemplate(tmplStr, tmplVal));
+            type = dataArr[i].type;
+            // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
+            if (!useTitle && type === 'title') {
+                continue;
+            }
+            var attr = tmplAttr[type] || tmplAttr['defaults'],
+                str = tmplStr[type] || tmplStr['defaults'],
+                tmplValue = this._getTmplData(attr, dataArr[i]),
+                $el = $(this._applyTemplate(str, tmplValue));
+            // 파라미터를 넘기기위한 값들
+            $el.attr('data-params', tmplValue.params);
+            $el.attr('data-type', type);
+            this.$resultList.append($el);
         }
-        this.$resultList.html(wordList.join(''));
-
 
         //결과 영역을 노출한다.
         this.$resultList.show();
@@ -2241,6 +2526,33 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         this._showBottomArea();
     },
 
+    /**
+     * 자동완성 데이터를 템플릿화 한다.
+     * @param {array} attrs 템플릿 요소들
+     * @param {string|Object} data 텔플릿팅 할 데이터
+     * @return {object} template화 된 데이터
+     * @private
+     */
+    _getTmplData: function(attrs, data) {
+        var tmplValue = {},
+            values = data.values || null;
+
+        if (ne.util.isString(data)) {
+            tmplValue[attrs[0]] = data;
+            return tmplValue;
+        }
+        ne.util.forEach(attrs, function(attr, idx) {
+
+            tmplValue[attr] = values[idx];
+
+        });
+
+        if(attrs.length < values.length) {
+            tmplValue.params = values.slice(attrs.length);
+        }
+
+        return tmplValue;
+    },
 
     /**
      * 자동완성 검색 결과 영역이 펼쳐진 상태인지 반환한다.
@@ -2264,7 +2576,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     showResultList: function() {
         var self = this;
         setTimeout(function() {
-           self.$resultList.css('display', 'block');
+            self.$resultList.css('display', 'block');
         }, 0);
 
         this._showBottomArea();
@@ -2272,36 +2584,36 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 검색어 리스트에서 키보드 이용해서 아래로 움직일때 실행되며, 키보드로 움직여 포커스된 검색어를 검색창에 세팅한다.
+     * 자동완성 결과에 따른 옵션값이 있을 경우, 맞게 세팅한다.
+     * @param {string} flow 키보드에 따른 이동 방향(이전, 다음)
      */
-    moveNextKeyword: function() {
+    moveNextList: function(flow) {
+        var flowMap = this.flowMap,
+            selectEl = this.selectedElement,
+            getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
+            getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast;
         this.isMoved = true;
 
-        if (this.selectedElement) {
-            this.selectedElement.removeClass(this.mouseOverClass);
-            this.selectedElement = this._getNext(this.selectedElement);
+        // 현재 선택요소가 있는지에 따른, 다음 선택 요소를 설정한다.
+        if (selectEl) {
+            selectEl.removeClass(this.mouseOverClass);
+            selectEl = this.selectedElement = getNext.call(this, selectEl);
         } else {
-            this.selectedElement = this._getFirst();
+            selectEl = this.selectedElement = getBound.call(this);
         }
 
         //addClass 및 검색창에 검색어 세팅
-        if (this.selectedElement && this.selectedElement.text()) {
-            this.selectedElement.addClass(this.mouseOverClass);
-            this.autoCompleteObj.setValue(this.selectedElement.text());
-        }
-    },
+        var keyword = selectEl.find('.keyword-field').text();
 
-    /**
-     * 검색어 리스트에서 키보드 이용해서 위로 움직일때 실행되며, 키보드로 움직여 포커스된 검색어를 검색창에 세팅한다.
-     */
-    movePrevKeyword: function() {
-        this.isMoved = true;
-
-        if (this.selectedElement) {
-            this.selectedElement.removeClass(this.mouseOverClass);
-            this.selectedElement = this._getPrev(this.selectedElement);
-
-            this.selectedElement.addClass(this.mouseOverClass);
-            this.autoCompleteObj.setValue(this.selectedElement.text());
+        if (selectEl && keyword) {
+            selectEl.addClass(this.mouseOverClass);
+            this.autoCompleteObj.setValue(keyword);
+            this._setSubmitOption();
+        } else {
+            // 타이틀 부분을 걸러내기 위한 조건문.
+            if(selectEl) {
+                this.moveNextList(flow);
+            }
         }
     },
 
@@ -2362,8 +2674,8 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         for (keyStr in dataObj) {
             temp[keyStr] = dataObj[keyStr];
-            if (keyStr === 'txt') {
-                temp.txt = this._highlight(dataObj.txt, this.autoCompleteObj.getValue());
+            if (keyStr === 'subject') {
+                temp.subject = this._highlight(dataObj.subject);
             }
 
             if (!dataObj.propertyIsEnumerable(keyStr)) {
@@ -2377,18 +2689,25 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * draw가 실행될 때 호출되며 키워드 하이라이팅 처리를 한다.
-     * (text: 나이키 에어  /  query : 나이키 / 리턴 결과 : <strong>나이키 </strong>에어
+     * (text: 나이키 에어  /  query : [나이키] / 리턴 결과 : <strong>나이키 </strong>에어
+     * (0.3 추가) text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 <strong>rhdiddl</strong>와 <strong>고양이</strong>
      * @param {String} text 입력값 스트링
-     * @param {String} query 하이라이팅 처리할 스트링
      * @return {String} 하이라이팅 처리된 전체 스트링
      * @private
      */
-    _highlight: function(text, query) {
-        var returnStr = this._makeStrong(text, query);
-        if ('' !== returnStr) {
-            return returnStr;
-        }
-        return text;
+    _highlight: function(text) {
+        var querys = this.autoCompleteObj.querys,
+            returnStr;
+
+        ne.util.forEach(querys, function(query) {
+
+            if (!returnStr) {
+                returnStr = text;
+            }
+            returnStr = this._makeStrong(returnStr, query);
+
+        }, this);
+        return (returnStr || text);
     },
 
     /**
@@ -2417,11 +2736,12 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
 
         tmpStr = "(" + tmpArr.join("") + ")"; // 괄호로 감싸주기
-
         regQuery = new RegExp(tmpStr);
+
         if (regQuery.test(text)) { //정규식에 적합한 문자셋이 있으면 , 치환 처리
             returnStr = text.replace(regQuery, '<strong>' + RegExp.$1 + '</strong>');
         }
+
         return returnStr;
     },
 
@@ -2431,12 +2751,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getFirst: function() {
-        if (this.$resultList &&
-            this.$resultList.children() &&
-            this.$resultList.children().length) {
-            return this.$resultList.children().first();
-        }
-        return null;
+        return this._orderStage(this.flowMap.FIRST);
     },
 
     /**
@@ -2445,10 +2760,22 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getLast: function() {
+        return this._orderStage(this.flowMap.LAST);
+    },
+
+    /**
+     * 처음과 끝의 여부를 받아서 돌려준다.(중복 코드 방지를 위한 기능분리)
+     * @param {string} type 처음/끝 요소 타입
+     * @returns {*}
+     * @private
+     */
+    _orderStage: function(type) {
+        type = (type === this.flowMap.FIRST) ? 'first' : 'last';
+
         if (this.$resultList &&
             this.$resultList.children() &&
             this.$resultList.children().length) {
-            return this.$resultList.children().last();
+            return this.$resultList.children()[type]();
         }
         return null;
     },
@@ -2461,23 +2788,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getNext: function(element) {
-        if (!ne.util.isExisty(element)) {
-            return null;
-        }
-
-        var $current = $(element),
-            next;
-
-        if ($current.closest(this.resultSelector)) {
-            next = $current.next();
-            if (next.length) {
-                return next;
-            } else {
-                return this._getFirst();
-            }
-        }
-
-        return null;
+        return this._orderElement(this.flowMap.NEXT, element);
     },
 
     /**
@@ -2488,19 +2799,32 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getPrev: function(element) {
+        return this._orderElement(this.flowMap.PREV, element);
+    },
+
+    /**
+     * 이전/다음 값 정보를 받아 엘리먼트를 돌려준다.
+     * 이전 다음을 이동시 중복 코드 방지를 위한 orderElement 분리
+     * @param {string} type 받아올 타입 정보
+     * @param {Element} element 현재 포커스된 엘리먼트의 이전/다음 엘리먼트
+     * @returns {*}
+     * @private
+     */
+    _orderElement: function(type, element) {
         if (!ne.util.isExisty(element)) {
             return null;
         }
 
         var $current = $(element),
-            prev;
+            isNext = (type === this.flowMap.NEXT),
+            order;
 
         if ($current.closest(this.resultSelector)) {
-            prev = element.prev();
-            if (prev.length) {
-                return prev;
+            order = isNext ? element.next() : element.prev();
+            if (order.length) {
+                return order;
             } else {
-                return this._getLast();
+                return isNext ? this._getFirst() : this._getLast();
             }
         }
     },
@@ -2540,6 +2864,47 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
     },
 
+    /**
+     * 폼요소의 action을 변경하고, 선택한 값의 추가값인 input=hidden을 추가하여 넘길 값들을 세팅한다.
+     * 이부분은 자동완성 컴포넌트 요소들을 선택할때, (키다운 이벤트 동작 혹은 마우스 클릭) 호출된다.
+     * @param {element} [$target] 서브밋 옵션을 설정할 타겟
+     * @private
+     */
+    _setSubmitOption: function($target) {
+        this._clearSubmitOption();
+
+        var formElement = this.options.formElement,
+            $selectField = $target ? $($target).closest('li') : $(this.selectedElement),
+            actions = this.options.actions,
+            type = $selectField.attr('data-type'),
+            action,
+            paramsString;
+
+        // 타입에 따른 액션설정
+        if(actions[type]) {
+            action = actions[type];
+        } else {
+            action = actions['defaults'];
+        }
+
+        $(formElement).attr('action', action);
+        paramsString = $selectField.attr('data-params');
+
+        this.autoCompleteObj.setParams(paramsString, type);
+
+    },
+
+    /**
+     * 폼요소의 변경된 action및 추가값을 리셋시킨다.
+     * 이부분은 자동완선 컴포넌트가 새로 불려올때와, 새로운 submitOption이 설정될때 호출된다.
+     * @private
+     */
+    _clearSubmitOption: function(e) {
+        var formElement = this.options.formElement,
+            hiddenWrap = $(formElement).find('.hidden-inputs');
+
+        hiddenWrap.html('');
+    },
 
     /************************* Event Handlers *********************/
     /**
@@ -2573,55 +2938,16 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     _onClick: function(e) {
         var $target = $(e.target),
             formElement = this.options.formElement,
-            selectedKeyword = $target.closest('li').text();
+            $selectField = $target.closest('li'),
+            $keywordField = $selectField.find('.keyword-field'),
+            selectedKeyword = $keywordField.text();
 
         this.autoCompleteObj.setValue(selectedKeyword);
 
         if (formElement && selectedKeyword) {
+            this._setSubmitOption($target);
             formElement.submit();
         }
     }
 });
-{
-    Default = {
-        'resultListElement': $("._resultBox"),
-        'searchBoxElement': $("#ac_input1"),
-        'orgQueryElement' : '#org_query',
-        'templateElement' : '<li><a href="#" onclick=\"return false;\">@txt@</a></li>',
-        'toggleBtnElement' : $("#onoffBtn"),
-        'viewCount' : 15,
-        'formElement' : $("#ac_form1"),
-        'mouseOverClass' : 'emp',
-        'onoffTextElement' : $(".baseBox .bottom"),
-        'searchApi' : {
-            'url' : 'http://119.205.249.132/ac',
-            'st' : 1,
-            'r_lt' : 1,
-            'r_enc' : 'UTF-8',
-            'q_enc' : 'UTF-8',
-            'r_format' : 'json'
-        },
-        'toggleImg' : {
-            'on' : 'img/btn_on.jpg',
-            'off' : 'img/btn_off.jpg'
-        }
-    },
-    Default2 = {
-        'resultListElement': '._resultBox',
-        'searchBoxElement':  '#ac_input1',
-        'orgQueryElement' : '#org_query',
-        'templateElement' : '<li><a href="#" onclick="return false;">@txt@</a></li>',
-        'formElement' : '#ac_form1',
-        'cookieName' : "usecookie",
-        'mouseOverClass' : 'emp',
-        'searchApi' : {
-            'url' : 'http://119.205.249.132/ac',
-            'st' : 1,
-            'r_lt' : 1,
-            'r_enc' : 'UTF-8',
-            'q_enc' : 'UTF-8',
-            'r_format' : 'json'
-        }
-    }
-}
 })();
