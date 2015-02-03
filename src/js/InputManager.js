@@ -70,12 +70,11 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * @param {array} options 배열로 받은 옵션들을 추가한다.
      */
     setParams: function(options, type) {
-
-        if(options && ne.util.isString(options)) {
+        if (options && ne.util.isString(options)) {
             options = options.split(',');
         }
 
-        if(!options || ne.util.isEmpty(options)) {
+        if (!options || ne.util.isEmpty(options)) {
             return;
         }
 
@@ -92,7 +91,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         var key,
             conf = this.options.subQuerySet[type] || this.options.subQuerySet['defaults'];
 
-        if(!this.hiddens) {
+        if (!this.hiddens) {
             this._createParamContainer();
         }
 
@@ -110,11 +109,9 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * @private
      */
     _createParamContainer: function() {
-
         this.hiddens = $('<div class="hidden-inputs"></div>');
         this.hiddens.hide();
         this.hiddens.appendTo($(this.$formElement));
-
     },
 
     /**
@@ -239,7 +236,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     _onKeyUp: function() {
         //입력값에 변경이 생겼다면 ( 소녀 --> 소녀시 --> 소녀시대 )
         //_onChange함수를 통해 서버에 데이터 요청하도록 한다.
-
         if (this.inputValue !== this.$searchBox.val()) {
             this.inputValue = this.$searchBox.val();
             this._onChange();
@@ -277,7 +273,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * @private
      */
     _onKeyDown: function(e) {
-
         var autoCompleteObj = this.autoCompleteObj;
 
         if (!autoCompleteObj.isUseAutoComplete() ||
@@ -303,7 +298,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         }
 
         autoCompleteObj.moveNextList(flow);
-
 
     },
 

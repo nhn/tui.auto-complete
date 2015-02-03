@@ -144,7 +144,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @param {string} flow 키보드에 따른 이동 방향(이전, 다음)
      */
     moveNextList: function(flow) {
-
         var flowMap = this.flowMap,
             selectEl = this.selectedElement,
             getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
@@ -329,6 +328,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      */
     _orderStage: function(type) {
         type = (type === this.flowMap.FIRST) ? 'first' : 'last';
+
         if (this.$resultList &&
             this.$resultList.children() &&
             this.$resultList.children().length) {
@@ -428,7 +428,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _setSubmitOption: function($target) {
-
         this._clearSubmitOption();
 
         var formElement = this.options.formElement,
@@ -458,12 +457,10 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _clearSubmitOption: function(e) {
-
         var formElement = this.options.formElement,
             hiddenWrap = $(formElement).find('.hidden-inputs');
 
         hiddenWrap.html('');
-
     },
 
     /************************* Event Handlers *********************/
