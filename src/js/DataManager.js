@@ -62,13 +62,11 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             'type': 'get',
             'success': ne.util.bind(function(dataObj) {
                 try {
-
                     keyDatas = this._getCollectionData(dataObj);
                     // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
-
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
