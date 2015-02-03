@@ -11,13 +11,13 @@ Component-AutoComplete
 * 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.
 
 ## Documentation
-* **API** - <https://github.nhnent.com/pages/FE/Component-AutoComplete/>
-* **Sample** - <http://fe.nhnent.com/etc/sample/Component-AutoComplete/demo/default.html>
-* **CI** - <http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/>
+* **API** <a href="https://github.nhnent.com/pages/FE/Component-AutoComplete/">https://github.nhnent.com/pages/FE/Component-AutoComplete/</a>
+* **Sample** - <a href="http://fe.nhnent.com/etc/sample/Component-AutoComplete/demo/">http://fe.nhnent.com/etc/sample/Component-AutoComplete/demo/</a>
+* **CI** - <a href="http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/">http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/</a>
 
 ## Download/Install
 * Bower: `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/FE/Component-AutoComplete.git#dist"`
-* Download: <http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/>
+* Download: <a href="http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/dist">http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/dist</a>
 
 
 ## History
@@ -25,4 +25,4 @@ Component-AutoComplete
 | ---- | ---- | ---- | ---- |
 | v1.1 | 템프릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | v0.2 | GitHub 이전 | 2015.01 | |
-| v0.1 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.lee@nhnent.com> |
+| v0.1 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.git lee@nhnent.com> |
