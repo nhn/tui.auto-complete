@@ -61,7 +61,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             'success': ne.util.bind(function(dataObj) {
                 //try {
 
-                    var keyDatas = this.getCollectionData(dataObj);
+                    var keyDatas = this._getCollectionData(dataObj);
                     // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
@@ -77,15 +77,16 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
      * 화면에 뿌려질 컬렉션 데이터를 생성한다.
      * @param dataObj
      * @returns {Array}
+     * @private
      */
-    getCollectionData: function(dataObj) {
+    _getCollectionData: function(dataObj) {
         var collection = dataObj.collections,
             itemDataList = [];
 
         ne.util.forEach(collection, function(itemSet) {
 
             // 컬렉션 아이템 생성
-            var keys = this.getRedirectData(itemSet);
+            var keys = this._getRedirectData(itemSet);
             itemDataList.push({
                 type: 'title',
                 values: [itemSet.title]
@@ -99,9 +100,10 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
     /**
      * 화면에 뿌려질 컬렉션의 아이템 데이터를 생성한다.
      * @param itemSet
+     * @private
      * @returns {Array}
      */
-    getRedirectData: function(itemSet) {
+    _getRedirectData: function(itemSet) {
         var type = itemSet.type,
             index = itemSet.index,
             dest = itemSet.destination,

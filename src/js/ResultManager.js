@@ -264,7 +264,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             returnStr = this._makeStrong(returnStr, query);
 
         }, this);
-
         return (returnStr || text);
     },
 
@@ -322,7 +321,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
-     * 중복 코드 방지를 위한 기능분리, 처음과 끝의 여부를 받아서 돌려준다.
+     * 처음과 끝의 여부를 받아서 돌려준다.(중복 코드 방지를 위한 기능분리)
      * @param {string} type 처음/끝 요소 타입
      * @returns {*}
      * @private

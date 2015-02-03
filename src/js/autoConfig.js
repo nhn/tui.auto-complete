@@ -11,10 +11,12 @@
             'defaults': ['cid']
         },
         'templateElement' :  {
+            'srch_in_department': '<li class="department"><a href="#" class="keyword-field">@subject@</a> <span class="slot">@depart@</span></li>',
             'title': '<li class="title"><strong>@subject@</strong></li>',
             'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
         },
         'templateAttribute': {
+            'srch_in_department': ['subject', 'depart'],
             'defaults': ['subject']
         },
         actions: {
@@ -24,9 +26,9 @@
         'formElement' : '#ac_form1',
         'cookieName' : "usecookie",
         'mouseOverClass' : 'emp',
-        'searchUrl' : 'http://localhost:63342/Component-AutoComplete/server/mock.js',
+        //'searchUrl' : 'http://localhost:8000/server/mock.js',
 
-        //'searchUrl' : 'http://10.24.136.172:20011/ac',
+        'searchUrl' : 'http://10.24.136.172:20011/ac',
         'searchApi' : {
             'st' : 111,
             'r_lt' : 111,
