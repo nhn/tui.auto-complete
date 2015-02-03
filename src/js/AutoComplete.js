@@ -178,7 +178,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             configArr;
 
         //유효한 config인지 체크
-        config = eval(htOptions.configId);
+        config = htOptions.configId;
 
         if (!ne.util.isExisty(config)) {
             alert('유효한 configId가 아닙니다 : ' + config);
