@@ -1,6 +1,7 @@
 /**
  * @fileoverview 자동완성 컴포넌트 중에서 검색 결과 영역에 대한 기능을 제공하는 클래스
- * @author kihyun.lee@nhnent.com
+ * @author FE개발팀 이기현<kihyun.lee@nhnent.com>
+ *         수정 - FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
 ne = window.ne || {};

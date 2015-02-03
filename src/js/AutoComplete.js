@@ -1,6 +1,7 @@
 /**
  * @fileoverview 자동완성 컴포넌트의 모든 구성요소들을 총괄하는 최상위 클래스
- * @author kihyun.lee@nhnent.com
+ * @author FE개발팀 이기현<kihyun.lee@nhnent.com>
+ *         수정 - FE개발팀 이제인<jein.yi@nhnent.com>
 */
 
 ne = window.ne || {};
