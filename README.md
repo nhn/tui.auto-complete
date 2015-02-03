@@ -17,7 +17,7 @@ Component-AutoComplete
 
 ## Download/Install
 * Bower: `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/FE/Component-AutoComplete.git#dist"`
-* Download: <a href="http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/dist">http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/dist</a>
+* Download: <a href="http://fe.nhnent.com/etc/sample/Component-AutoComplete/dist">http://fe.nhnent.com/etc/sample/Component-AutoComplete/dist</a>
 
 
 ## History
