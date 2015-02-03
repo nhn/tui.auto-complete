@@ -1,4 +1,5 @@
-var Default = { // 설정용가능한 항목을 모두 설정한 config
+// 설정용가능한 항목을 모두 설정한 config
+var Default = {
     // 자동완성 결과를 보여주는 엘리먼트
     'resultListElement': '._resultBox',
 
@@ -35,16 +36,16 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
     // 형식은 수정 가능하지만, keyword-field는 키워드가 들어가는 부분에 필수로 들어가야함. 단 title에는 들어가면 안됨.
     'templateElement' :  {
         'department':   '<li class="department">' +
-        '<span class="slot-field">Shop the</span> ' +
-        '<a href="#" class="keyword-field">@subject@</a> ' +
-        '<span class="slot-field">Store</span>' +
-        '</li>',
+                            '<span class="slot-field">Shop the</span> ' +
+                            '<a href="#" class="keyword-field">@subject@</a> ' +
+                            '<span class="slot-field">Store</span>' +
+                        '</li>',
         'srch': '<li class="srch"><span class="keyword-field">@subject@</span></li>',
         'srch_in_department':   '<li class="inDepartment">' +
-        '<a href="#" class="keyword-field">@subject@</a> ' +
-        '<span class="slot-field">in </span>' +
-        '<span class="depart-field">@department@</span>' +
-        '</li>',
+                                    '<a href="#" class="keyword-field">@subject@</a> ' +
+                                    '<span class="slot-field">in </span>' +
+                                    '<span class="depart-field">@department@</span>' +
+                                '</li>',
         'title': '<li class="title"><strong>@subject@</strong></li>',
         'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
     },
@@ -85,7 +86,9 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
         'q_enc' : 'UTF-8',
         'r_format' : 'json'
     }
-}, Plane = { // 필수 항목만 나열한 config
+};
+// 필수 항목만 나열한 config
+var Plane = {
     // 자동완성 결과를 보여주는 엘리먼트
     'resultListElement': '._resultBox',
 
@@ -111,7 +114,7 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
 
     // 컬렉션 별 템플릿에서 사용하고 있는 변수들을 나열한다. (지정하지 않으면defaults가 적용된다)
     'templateAttribute': {
-        'defaults': ['subject'],
+        'defaults': ['subject']
     },
 
     // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
