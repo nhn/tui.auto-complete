@@ -1,7 +1,9 @@
 /**
  * @fileOverview 자동완성 컴포넌트 중에서 입력창에 대한 기능을 제공하는 클래스
- * @author kihyun.lee@nhnent.com
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
+
 
 ne = window.ne || {};
 ne.component = ne.component || {};
@@ -36,6 +38,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         this.$searchBox = this.options.searchBoxElement;
         this.$toggleBtn = this.options.toggleBtnElement;
         this.$orgQuery = this.options.orgQueryElement;
+        // 추가
+        this.$formElement = this.options.formElement;
 
         //입력값 저장해두기
         this.inputValue = this.$searchBox.val();
@@ -59,6 +63,55 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     setValue: function(str) {
         this.inputValue = str;
         this.$searchBox.val(str);
+    },
+
+    /**
+     * config에 설정되어 있는 param option 을 읽어 온뒤, param 을 설정하게 한다.
+     * @param {array} options 배열로 받은 옵션들을 추가한다.
+     */
+    setParams: function(options, type) {
+        if (options && ne.util.isString(options)) {
+            options = options.split(',');
+        }
+
+        if (!options || ne.util.isEmpty(options)) {
+            return;
+        }
+
+        this._createParamSetByType(options, type);
+    },
+
+    /**
+     * 타입에 따른 inputElement 생성
+     * @param {string|undefined} type 선택된 자동완성의 타입
+     * @private
+     */
+    _createParamSetByType: function(options, type) {
+
+        var key,
+            conf = this.options.subQuerySet[type] || this.options.subQuerySet['defaults'];
+
+        if (!this.hiddens) {
+            this._createParamContainer();
+        }
+
+        ne.util.forEach(options, function(value, index) {
+
+            key = conf[index];
+            this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
+
+        }, this);
+
+    },
+
+    /**
+     * hidden 요소 엘리먼트 들을 감싸는 래퍼를 생성한다.
+     * @private
+     */
+    _createParamContainer: function() {
+        this.hiddens = $('<div class="hidden-inputs"></div>');
+        this.hiddens.hide();
+        this.hiddens.appendTo($(this.$formElement));
     },
 
     /**
@@ -183,7 +236,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     _onKeyUp: function() {
         //입력값에 변경이 생겼다면 ( 소녀 --> 소녀시 --> 소녀시대 )
         //_onChange함수를 통해 서버에 데이터 요청하도록 한다.
-
         if (this.inputValue !== this.$searchBox.val()) {
             this.inputValue = this.$searchBox.val();
             this._onChange();
@@ -199,7 +251,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-
         this.autoCompleteObj.request(this.$searchBox.val());
     },
 
@@ -216,25 +267,38 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     },
 
     /**
-     * 검색창 keydown event 처리 핸들러. 입력키값에 따라서 액션을 정의한다.
-     * @param {Event} keyDown 이벤트 객체
+     * 검색창 keydown event 처리 핸들러.
+     * 입력키값에 따라서 액션을 정의한다.
+     * @param {Event} e keyDown 이벤트 객체
      * @private
      */
     _onKeyDown: function(e) {
-        if (!this.autoCompleteObj.isUseAutoComplete() ||
-            !this.autoCompleteObj.isVisibleResult()) {
+        var autoCompleteObj = this.autoCompleteObj;
+
+        if (!autoCompleteObj.isUseAutoComplete() ||
+            !autoCompleteObj.isVisibleResult()) {
             return;
         }
 
+        var code = e.keyCode,
+            flow = null,
+            codeMap = this.keyCodeMap,
+            flowMap = autoCompleteObj.flowMap;
+
         //입력키값(TAB,방향키)에 따른 액션 정의
-        if (e.keyCode === this.keyCodeMap.TAB) {
+        if (code === codeMap.TAB) {
             e.preventDefault();
-            e.shiftKey ? this.autoCompleteObj.movePrevKeyword(e) : this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode === this.keyCodeMap.DOWN_ARROW) {
-            this.autoCompleteObj.moveNextKeyword(e);
-        } else if (e.keyCode === this.keyCodeMap.UP_ARROW) {
-            this.autoCompleteObj.movePrevKeyword(e);
+            flow = e.shiftKey ? flowMap.NEXT : flowMap.PREV;
+        } else if (code === codeMap.DOWN_ARROW) {
+            flow = flowMap.NEXT;
+        } else if (code === codeMap.UP_ARROW) {
+            flow = flowMap.PREV;
+        } else {
+            return;
         }
+
+        autoCompleteObj.moveNextList(flow);
+
     },
 
     /**

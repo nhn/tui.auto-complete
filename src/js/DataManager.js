@@ -1,6 +1,7 @@
 /**
  * @fileoverview 자동완성 컴포넌트 중에서 입력된 값으로 검색 API와 연동하여 자동완성 검색 결과를 받아오는 클래스
- * @author kihyun.lee@nhnent.com
+ * @version 1.1.0
+ * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
 ne = window.ne || {};
@@ -34,11 +35,16 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             return;
         }
 
+        // 공백을 제거한 키워드
+        var rsKeyWrod = keyword.replace(/\s/g, '');
+
+        if (!keyword || !rsKeyWrod) {
+            this.autoCompleteObj.hideResultList();
+            return;
+        }
+
         //request를 위한 변수 세팅
-        var keyDatas = [],
-            dataArr = [],
-            self = this,
-            dataCallback = function(){},
+        var dataCallback = function(){},
             defaultParam = {
                 q: keyword,
                 r_enc: 'UTF-8',
@@ -46,40 +52,76 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                 r_format: 'json',
                 _callback: 'dataCallback'
             },
-            requestParam = ne.util.extend(this.options.searchApi, defaultParam);
+            requestParam = ne.util.extend(this.options.searchApi, defaultParam),
+            keyDatas;
 
-        ne.util.ajax.request(this.options.searchApi.url, {
+        ne.util.ajax.request(this.options.searchUrl, {
             'dataType': 'jsonp',
             'jsonpCallback': 'dataCallback',
             'data': requestParam,
             'type': 'get',
-            'success': function(dataObj) {
+            'success': ne.util.bind(function(dataObj) {
                 try {
-                    var itemLen = dataObj.items.length,
-                        i,
-                        j;
-
-                    //서버에서 내려주는 slot갯수를 고려하여 data를 받아 keyDatas배열에 저장한다.
-                    for (i = 0; i < itemLen; i++) {
-                        dataArr[i] = [];
-
-                        var slots = dataObj.items[i],
-                            slotLen = slots.length;
-
-                        if (slotLen > 0) {
-                            for (j = 0; j < slots.length; j++) {
-                                dataArr[i][j] = slots[j][0];
-                                keyDatas.push(dataArr[i][j]);
-                            }
-                        }
-                    }
-
-                    //서버로부터 받은 결과를 세팅하여 화면에 그리도록 한다.
-                    self.autoCompleteObj.setServerData(keyDatas);
+                    keyDatas = this._getCollectionData(dataObj);
+                    // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
+                    this.autoCompleteObj.setQuerys(dataObj.query);
+                    // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
+                    this.autoCompleteObj.setServerData(keyDatas);
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
-            }
+            }, this)
         });
+    },
+    /**
+     * 화면에 뿌려질 컬렉션 데이터를 생성한다.
+     * @param dataObj
+     * @returns {Array}
+     * @private
+     */
+    _getCollectionData: function(dataObj) {
+        var collection = dataObj.collections,
+            itemDataList = [];
+
+        ne.util.forEach(collection, function(itemSet) {
+
+            // 컬렉션 아이템 생성
+            var keys = this._getRedirectData(itemSet);
+            itemDataList.push({
+                type: 'title',
+                values: [itemSet.title]
+            });
+            itemDataList = itemDataList.concat(keys);
+
+        }, this);
+
+        return itemDataList;
+    },
+    /**
+     * 화면에 뿌려질 컬렉션의 아이템 데이터를 생성한다.
+     * @param itemSet
+     * @private
+     * @returns {Array}
+     */
+    _getRedirectData: function(itemSet) {
+        var type = itemSet.type,
+            index = itemSet.index,
+            dest = itemSet.destination,
+            items = [];
+
+        ne.util.forEachArray(itemSet.items, function(item, idx) {
+
+            if (idx <= (this.options.viewCount - 1)) {
+                items.push({
+                    values: item,
+                    type: type,
+                    index: index,
+                    dest: dest
+                });
+            }
+
+        }, this);
+
+        return items;
     }
 });
