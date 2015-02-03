@@ -109,24 +109,20 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
         var type = itemSet.type,
             index = itemSet.index,
             dest = itemSet.destination,
-            items = ne.util.map(itemSet.items, function(item, idx) {
+            items = [];
 
-                if (idx > (this.options.viewCount - 1)) {
-                    return;
-                }
+        ne.util.forEachArray(itemSet.items, function(item, idx) {
 
-                return {
+            if (idx <= (this.options.viewCount - 1)) {
+                items.push({
                     values: item,
                     type: type,
                     index: index,
                     dest: dest
-                };
+                });
+            }
 
-            }, this);
-
-        items = ne.util.filter(items, function(item) {
-            return item;
-        });
+        }, this);
 
         return items;
     }

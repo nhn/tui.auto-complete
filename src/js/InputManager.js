@@ -229,7 +229,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
             this._onChange();
         } else if (!this.autoCompleteObj.getMoved()) {
             this._setOrgQuery(this.$searchBox.val());
-
         }
     },
 
