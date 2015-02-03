@@ -25,6 +25,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         this.viewCount = this.options.viewCount || 10;
         this.$onOffTxt = this.options.onoffTextElement;
         this.mouseOverClass = this.options.mouseOverClass;
+        this.flowMap = this.autoCompleteObj.flowMap;
 
         this._attachEvent();
 
@@ -82,7 +83,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 데이터를 템플릿화 한다.
-     * @param {array} attr 템플릿 요소들
+     * @param {array} attrs 템플릿 요소들
      * @param {string|Object} data 텔플릿팅 할 데이터
      * @return {object} template화 된 데이터
      * @private
@@ -143,8 +144,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      */
     moveNextList: function(flow) {
 
-        var autoConfigObj = this.autoCompleteObj,
-            flowMap = autoConfigObj.flowMap,
+        var flowMap = this.flowMap,
             selectEl = this.selectedElement,
             getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
             getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast;
@@ -308,7 +308,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getFirst: function() {
-        return this._orderStage('first');
+        return this._orderStage(this.flowMap.FIRST);
     },
 
     /**
@@ -317,7 +317,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getLast: function() {
-        return this._orderStage('last');
+        return this._orderStage(this.flowMap.LAST);
     },
 
     /**
@@ -327,6 +327,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _orderStage: function(type) {
+        type = (type === this.flowMap.FIRST) ? 'first' : 'last';
         if (this.$resultList &&
             this.$resultList.children() &&
             this.$resultList.children().length) {
@@ -343,7 +344,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getNext: function(element) {
-        return this._orderElement('next', element);
+        return this._orderElement(this.flowMap.NEXT, element);
     },
 
     /**
@@ -354,7 +355,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      * @private
      */
     _getPrev: function(element) {
-        return this._orderElement('prev', element);
+        return this._orderElement(this.flowMap.PREV, element);
     },
 
     /**
@@ -371,7 +372,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
 
         var $current = $(element),
-            isNext = (type === 'next'),
+            isNext = (type === this.flowMap.NEXT),
             order;
 
         if ($current.closest(this.resultSelector)) {

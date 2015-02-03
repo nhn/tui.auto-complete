@@ -111,7 +111,9 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     flowMap: {
         'NEXT': 'next',
-        'PREV': 'prev'
+        'PREV': 'prev',
+        'FIRST': 'first',
+        'LAST': 'last'
     },
 
     /**
