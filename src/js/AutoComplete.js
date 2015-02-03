@@ -26,6 +26,18 @@ ne.component = ne.component || {};
             // 입력한 검색어를 넘기기 위한 hidden element
             'orgQueryElement' : '#org_query',
 
+            // on,off 버튼 엘리먼트
+            'toggleBtnElement' : $("#onoffBtn"),
+
+            // on,off 상태를 알리는 엘리먼트
+            'onoffTextElement' : $(".baseBox .bottom"),
+
+            // on, off상태일때 변경 이미지 경로
+            'toggleImg' : {
+                'on' : 'img/btn_on.jpg',
+                'off' : 'img/btn_off.jpg'
+            }
+
             // 컬렉션아이템별 보여질 리스트 겟수
             'viewCount' : 5,
 
