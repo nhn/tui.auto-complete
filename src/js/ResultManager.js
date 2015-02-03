@@ -148,7 +148,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             selectEl = this.selectedElement,
             getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
             getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast;
-
         this.isMoved = true;
 
         // 현재 선택요소가 있는지에 따른, 다음 선택 요소를 설정한다.

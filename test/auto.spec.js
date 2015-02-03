@@ -13,7 +13,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         $("#ac_input1").val('운동화');
 
         //객체 생성
-        autoComplete = new ne.component.AutoComplete({'configId' : 'Default2'});
+        autoComplete = new ne.component.AutoComplete({'configId' : Default2});
         resultManager = autoComplete.resultManager;
         inputManager = autoComplete.inputManager;
 

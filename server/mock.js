@@ -1,41 +1,58 @@
 dataCallback({
-    "collections" : [
-        {
-            "index" : 0,
-            "items" : [
-                [ "고양이용품", "cid=1&cid2=2" ]
-            ],
-            "title" : "카테고리",
-            "type" : "department"
-        },
-        {
-            "index" : 1,
-            "items" : [
-                [ "고양이 desk", "Home & Kitchen", "cid=20&aid=30&bid=40" ],
-                [ "고양이 chair", "Products & Supplies", "cid=20&aid=30&bid=40" ],
-                [ "고양이 books", "stripbooks", "cid=20&aid=30&bid=40" ]
-            ],
-            "title" : "카테고리내의 상품",
-            "type" : "srch_in_department"
-        },
-        {
-            "index" : 2,
-            "items" : [
-                [ "rhdiddl 이건 고양이"],
-                [ "고양이 desk" ],
-                [ "고양이 computer" ],
-                [ "고양이 socks" ],
-                [ "고양이 chair" ],
-                [ "고양이 boots" ],
-                [ "고양이 compass" ],
-                [ "고양이 bow" ],
-                [ "고양이 monitor" ],
-                [ "고양이 laptop computer" ]
-            ],
-            "title" : "상품",
-            "type" : "srch"
-        }
-    ],
-    "query" : [ "rhdiddl", "고양이"],
-    "ver" : "mod_nautocomplete_norm-2.5.3"
-});
+        "collections" : [
+            {
+                "index" : 0,
+                "items" : [
+                    [ "Shrugs & Cardigans", "27", "30" ],
+                    [ "Sweaters",  "27", "30" ],
+                    [ "Sets",  "27", "30" ],
+                    [ "Shirts & Blouse",  "27", "30"  ],
+                    [ "Shorts",  "27", "30"  ],
+                    [ "Shoes",  "27", "30"  ],
+                    [ "Semiformal",  "27", "30"  ],
+                    [ "Seamless",  "27", "30"  ],
+                    [ "Special Occasion",  "27", "30"  ],
+                    [ "Socks\\/Footwear",  "27", "30"  ]
+                ],
+                "title" : "Category",
+                "type" : "department"
+            },
+            {
+                "index" : 1,
+                "items" : [
+                    [ "Solid Dress", "Casual", "c3,44" ],
+                    [ "Stretch Bracelet", "Bracelets", "c3=153" ],
+                    [ "Striped Top", "Fashion Tops", "c3=254" ],
+                    [ "stripe  cardigan", "Shrugs & Cardigans", "c3=27" ],
+                    [ "SOLID TOP", "Dressy Tops", "c3=18" ],
+                    [ "Sweater top", "Fashion Tops", "c3=254" ],
+                    [ "SOLID  TOP", "Casual", "c3=210" ],
+                    [ "SLEEVELESS TOP", "Fashion Tops", "c3=254" ],
+                    [ "SOLID TOP", "Fashion Tops", "c3=254" ],
+                    [ "STRIPED TOP", "Casual", "c3=210" ]
+                ],
+                "title" : "Product in Category",
+                "type" : "srch_in_department"
+            },
+            {
+                "index" : 2,
+                "items" : [
+                    [ "Skinny jeans" ],
+                    [ "shirt dress" ],
+                    [ "SWEATSHIRT" ],
+                    [ "striped dress" ],
+                    [ "sweat pants" ],
+                    [ "stripe CARDIGAN" ],
+                    [ "SunGlasses" ],
+                    [ "short sleeve" ],
+                    [ "Shopwtd" ],
+                    [ "shorts" ]
+                ],
+                "title" : "Product",
+                "type" : "srch"
+            }
+        ],
+        "query" : [ "s" ],
+        "ver" : "1.0"
+    }
+)
