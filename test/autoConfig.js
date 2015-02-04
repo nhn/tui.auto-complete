@@ -1,5 +1,4 @@
-// 설정용가능한 항목을 모두 설정한 config
-var Default = {
+var Default = { // 설정용가능한 항목을 모두 설정한 config
     // 자동완성 결과를 보여주는 엘리먼트
     'resultListElement': '._resultBox',
 
@@ -17,54 +16,94 @@ var Default = {
 
     // on, off상태일때 변경 이미지 경로
     'toggleImg' : {
-        'on' : 'img/btn_on.jpg',
-        'off' : 'img/btn_off.jpg'
+        'on' : '../img/btn_on.jpg',
+        'off' : '../img/btn_off.jpg'
     },
 
     // 컬렉션아이템별 보여질 리스트 겟수
-    'viewCount' : 5,
+    'viewCount' : 3,
 
     // 서브쿼리로 넘어갈 키 값들의 배열(컬렉션 명 별로 지정 할 수 있다, 따로 지정하지 않으면 defaults가 적용된다.)
-    'subQuerySet': {
-        'department': ['key1', 'key2', 'key3'],
-        'srch_in_department': ['dep1', 'dep2', 'dep3'],
-        'srch': ['ch1', 'ch2', 'ch3'],
-        'defaults': ['cid']
+    'subQuerySet': [
+        ['key1', 'key2', 'key3'],
+        ['dep1', 'dep2', 'dep3'],
+        ['ch1', 'ch2', 'ch3'],
+        ['cid']
+    ],
+
+    // 컬렉션 인덱스별 자동완성 리스트의 config를 설정한다.
+    'listConfig': {
+        '0': {
+            'template': 'department',
+            'subQuerySet' : 0,
+            'action': 0
+        },
+        '1': {
+            'template': 'srch_in_department',
+            'subQuerySet' : 1,
+            'action': 0
+        },
+        '2': {
+            'template': 'srch_in_department',
+            'subQuerySet' : 2,
+            'action': 1,
+            'staticParams': 0
+        },
+        '3': {
+            'template': 'department',
+            'subQuerySet' : 0,
+            'action': 1,
+            'staticParams': 1
+        }
     },
 
     // 컬렉션 타입 별로 표시될 마크업, 데이터가 들어갈 부분은 @key@ 형식으로 사용한다.(지정하지 않으면, defaults가 적용된다.)
     // 형식은 수정 가능하지만, keyword-field는 키워드가 들어가는 부분에 필수로 들어가야함. 단 title에는 들어가면 안됨.
-    'templateElement' :  {
-        'department':   '<li class="department">' +
-                            '<span class="slot-field">Shop the</span> ' +
-                            '<a href="#" class="keyword-field">@subject@</a> ' +
-                            '<span class="slot-field">Store</span>' +
-                        '</li>',
-        'srch': '<li class="srch"><span class="keyword-field">@subject@</span></li>',
-        'srch_in_department':   '<li class="inDepartment">' +
-                                    '<a href="#" class="keyword-field">@subject@</a> ' +
-                                    '<span class="slot-field">in </span>' +
-                                    '<span class="depart-field">@department@</span>' +
-                                '</li>',
-        'title': '<li class="title"><strong>@subject@</strong></li>',
-        'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
-    },
-
-    // 컬렉션 별 템플릿에서 사용하고 있는 변수들을 나열한다. (지정하지 않으면defaults가 적용된다)
-    'templateAttribute': {
-        'defaults': ['subject'],
-        'department': ['subject'],
-        'srch_in_department': ['subject', 'department']
+    'template' :  {
+        department:    {
+            element: '<li class="department">' +
+                        '<span class="slot-field">Shop the</span> ' +
+                        '<a href="#" class="keyword-field">@subject@</a> ' +
+                        '<span class="slot-field">Store</span>' +
+                    '</li>',
+            attr: ['subject']
+        },
+        srch : {
+            element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+            attr: ['subject']
+        },
+        srch_in_department :    {
+            element: '<li class="inDepartment">' +
+                        '<a href="#" class="keyword-field">@subject@</a> ' +
+                        '<span class="slot-field">in </span>' +
+                        '<span class="depart-field">@department@</span>' +
+                    '</li>',
+            attr: ['subject', 'department']
+        },
+        title: {
+            element: '<li class="title"><span>@title@</span></li>',
+            attr: ['title']
+        },
+        defaults: {
+            element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+            attr: ['subject']
+        }
     },
 
     // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
-    actions: {
-        'department': "http://www.fashiongo.net/catalog.aspx",
-        'defaults': "http://www.fashiongo.net/search2.aspx"
-    },
+    'actions': [
+        "http://www.fashiongo.net/catalog.aspx",
+        "http://www.fashiongo.net/search2.aspx"
+    ],
+
+    // 컬렉션 타입별 추가 스테틱한 옵션들을 설정
+    'staticParams':[
+        "qt=ProductName",
+        "at=TEST,bt=ACT"
+    ],
 
     // 타이틀을 보일지 여부
-    'useTitle': false,
+    'useTitle': true,
 
     // 검색창을 감싸고 있는 form앨리먼트
     'formElement' : '#ac_form1',
@@ -80,15 +119,14 @@ var Default = {
 
     // 자동완성API request 설정
     'searchApi' : {
-        'st' : 111,
-        'r_lt' : 111,
+        'st' : 1111,
+        'r_lt' : 1111,
         'r_enc' : 'UTF-8',
         'q_enc' : 'UTF-8',
         'r_format' : 'json'
     }
 };
-// 필수 항목만 나열한 config
-var Plane = {
+var Plane = { // 필수 항목만 나열한 config
     // 자동완성 결과를 보여주는 엘리먼트
     'resultListElement': '._resultBox',
 
@@ -99,28 +137,87 @@ var Plane = {
     'orgQueryElement' : '#org_query',
 
     // 컬렉션아이템별 보여질 리스트 겟수
-    'viewCount' : 5,
+    'viewCount' : 2,
+
 
     // 서브쿼리로 넘어갈 키 값들의 배열(컬렉션 명 별로 지정 할 수 있다, 따로 지정하지 않으면 defaults가 적용된다.)
-    'subQuerySet': {
-        'defaults': ['cid']
+    'subQuerySet': [
+        ['key1', 'key2', 'key3'],
+        ['dep1', 'dep2', 'dep3'],
+        ['ch1', 'ch2', 'ch3'],
+        ['cid']
+    ],
+
+    // 컬렉션 인덱스별 자동완성 리스트의 config를 설정한다.
+    'listConfig': {
+        '0': {
+            'template': 'department',
+            'subQuerySet' : 0,
+            'action': 0
+        },
+        '1': {
+            'template': 'srch_in_department',
+            'subQuerySet' : 1,
+            'action': 0
+        },
+        '2': {
+            'template': 'srch_in_department',
+            'subQuerySet' : 2,
+            'action': 1,
+            'staticParams': 0
+        },
+        '3': {
+            'template': 'department',
+            'subQuerySet' : 0,
+            'action': 1,
+            'staticParams': 1
+        }
     },
 
     // 컬렉션 타입 별로 표시될 마크업, 데이터가 들어갈 부분은 @key@ 형식으로 사용한다.(지정하지 않으면, defaults가 적용된다.)
     // 형식은 수정 가능하지만, keyword-field는 키워드가 들어가는 부분에 필수로 들어가야함. 단 title에는 들어가면 안됨.
-    'templateElement' :  {
-        'defaults': '<li><a href="#" class="keyword-field">@subject@</a></li>'
-    },
-
-    // 컬렉션 별 템플릿에서 사용하고 있는 변수들을 나열한다. (지정하지 않으면defaults가 적용된다)
-    'templateAttribute': {
-        'defaults': ['subject']
+    'template' :  {
+        department:    {
+            element: '<li class="department">' +
+                        '<span class="slot-field">Shop the</span> ' +
+                        '<a href="#" class="keyword-field">@subject@</a> ' +
+                        '<span class="slot-field">Store</span>' +
+                    '</li>',
+            attr: ['subject']
+        },
+        srch : {
+            element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+            attr: ['subject']
+        },
+        srch_in_department :    {
+            element: '<li class="inDepartment">' +
+                        '<a href="#" class="keyword-field">@subject@</a> ' +
+                        '<span class="slot-field">in </span>' +
+                        '<span class="depart-field">@department@</span>' +
+                    '</li>',
+            attr: ['subject', 'department']
+        },
+        title: {
+            element: '<li class="title"><span>@title@</span></li>',
+            attr: ['title']
+        },
+        defaults: {
+            element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+            attr: ['subject']
+        }
     },
 
     // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
-    actions: {
-        'defaults': "http://www.fashiongo.net/search2.aspx"
-    },
+    'actions': [
+        "http://www.fashiongo.net/catalog.aspx",
+        "http://www.fashiongo.net/search2.aspx"
+    ],
+
+    // 컬렉션 타입별 추가 스테틱한 옵션들을 설정
+    'staticParams':[
+        "qt=ProductName",
+        "at=TEST,bt=ACT"
+    ],
 
     // 검색창을 감싸고 있는 form앨리먼트
     'formElement' : '#ac_form1',
@@ -130,8 +227,8 @@ var Plane = {
 
     // 자동완성API request 설정
     'searchApi' : {
-        'st' : 111,
-        'r_lt' : 111,
+        'st' : 1111,
+        'r_lt' : 1111,
         'r_enc' : 'UTF-8',
         'q_enc' : 'UTF-8',
         'r_format' : 'json'
