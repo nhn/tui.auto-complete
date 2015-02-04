@@ -71,6 +71,10 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
             tmpl = config[index] ? template[config[index].template] : template.defaults;
 
+            // 타이틀일 경우는 타이틀로 치환한다.
+            if (type === 'title') {
+                tmpl = template.title;
+            }
             // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
             if (!useTitle && type === 'title') {
                 continue;
