@@ -85,7 +85,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             // 파라미터를 넘기기위한 값들
             $el.attr('data-params', tmplValue.params);
             $el.attr('data-index', index);
-            $el.attr('data-type', type);
             this.$resultList.append($el);
         }
 
