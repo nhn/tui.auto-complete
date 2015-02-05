@@ -59,6 +59,8 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             len = dataLength,
             index,
             type,
+            tmplValue,
+            $el,
             i;
 
         if (dataLength < 1) {
@@ -74,14 +76,17 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             // 타이틀일 경우는 타이틀로 치환한다.
             if (type === 'title') {
                 tmpl = template.title;
+                if ($el) {
+                    $el.addClass('lastitem');
+                }
             }
             // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
             if (!useTitle && type === 'title') {
                 continue;
             }
 
-            var tmplValue = this._getTmplData(tmpl.attr, dataArr[i]),
-                $el = $(this._applyTemplate(tmpl.element, tmplValue));
+            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]),
+            $el = $(this._applyTemplate(tmpl.element, tmplValue));
             // 파라미터를 넘기기위한 값들
             $el.attr('data-params', tmplValue.params);
             $el.attr('data-index', index);
@@ -485,7 +490,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }, this);
 
         //마우스오버된 li 항목에 addClass
-        if (selectedItem) {
+        if (selectedItem && selectedItem.find('.keyword-field').length) {
             selectedItem.addClass(this.mouseOverClass);
         }
 
