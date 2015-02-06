@@ -425,3 +425,4 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         this.resultManager.isMoved = moved;
     }
 });
+ne.util.CustomEvents.mixin(ne.component.AutoComplete);

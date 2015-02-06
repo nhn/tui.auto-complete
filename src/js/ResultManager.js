@@ -142,6 +142,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     hideResultList: function() {
         this.$resultList.css('display', 'none');
         this._hideBottomArea();
+        this.autoCompleteObj.fire('close');
     },
 
     /**
@@ -460,6 +461,12 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         this.autoCompleteObj.setParams(paramsString, index);
 
+        // 설정된 submit option을 돌려준다.
+        this.autoCompleteObj.fire('change', {
+            index: index,
+            action: action,
+            params: paramsString
+        });
     },
 
     /**
