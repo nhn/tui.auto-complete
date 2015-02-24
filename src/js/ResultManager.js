@@ -47,12 +47,20 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         this.$resultList.hide();
         this.selectedElement = null;
 
-        var tmplStr = this.options.templateElement,
-            tmplAttr = this.options.templateAttribute,
-            useTitle = this.options.useTitle,
+        var template = this.options.template;
+        var config = this.options.listConfig;
+        var tmpl, tmplStr, tmplAttr;
+
+        //tmplStr = this.options.templateElement,
+        //    tmplAttr = this.options.templateAttribute,
+
+        var useTitle = (this.options.useTitle && !!template.title),
             dataLength = dataArr.length,
             len = dataLength,
+            index,
             type,
+            tmplValue,
+            $el,
             i;
 
         if (dataLength < 1) {
@@ -61,17 +69,27 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         for (i = 0; i < len; i++) {
             type = dataArr[i].type;
+            index = dataArr[i].index;
+
+            tmpl = config[index] ? template[config[index].template] : template.defaults;
+
+            // 타이틀일 경우는 타이틀로 치환한다.
+            if (type === 'title') {
+                tmpl = template.title;
+                if ($el) {
+                    $el.addClass('lastitem');
+                }
+            }
             // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
             if (!useTitle && type === 'title') {
                 continue;
             }
-            var attr = tmplAttr[type] || tmplAttr['defaults'],
-                str = tmplStr[type] || tmplStr['defaults'],
-                tmplValue = this._getTmplData(attr, dataArr[i]),
-                $el = $(this._applyTemplate(str, tmplValue));
+
+            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]),
+            $el = $(this._applyTemplate(tmpl.element, tmplValue));
             // 파라미터를 넘기기위한 값들
             $el.attr('data-params', tmplValue.params);
-            $el.attr('data-type', type);
+            $el.attr('data-index', index);
             this.$resultList.append($el);
         }
 
@@ -124,6 +142,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     hideResultList: function() {
         this.$resultList.css('display', 'none');
         this._hideBottomArea();
+        this.autoCompleteObj.fire('close');
     },
 
     /**
@@ -432,22 +451,22 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         var formElement = this.options.formElement,
             $selectField = $target ? $($target).closest('li') : $(this.selectedElement),
             actions = this.options.actions,
-            type = $selectField.attr('data-type'),
-            action,
+            index = $selectField.attr('data-index'),
+            config = this.options.listConfig[index],
+            action = this.options.actions[config.action],
             paramsString;
-
-        // 타입에 따른 액션설정
-        if(actions[type]) {
-            action = actions[type];
-        } else {
-            action = actions['defaults'];
-        }
 
         $(formElement).attr('action', action);
         paramsString = $selectField.attr('data-params');
 
-        this.autoCompleteObj.setParams(paramsString, type);
+        this.autoCompleteObj.setParams(paramsString, index);
 
+        // 설정된 submit option을 돌려준다.
+        this.autoCompleteObj.fire('change', {
+            index: index,
+            action: action,
+            params: paramsString
+        });
     },
 
     /**
@@ -478,7 +497,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }, this);
 
         //마우스오버된 li 항목에 addClass
-        if (selectedItem) {
+        if (selectedItem && selectedItem.find('.keyword-field').length) {
             selectedItem.addClass(this.mouseOverClass);
         }
 
