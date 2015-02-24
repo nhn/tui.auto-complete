@@ -11,12 +11,12 @@ AutoComplete
 * 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행
 
 ## Documentation
-* **API** <a href="https://github.nhnent.com/pages/fe/Component-AutoComplete/">https://github.nhnent.com/pages/fe/Component-AutoComplete/</a>
-* **Sample** - <a href="http://fe.nhnent.com/pages/fe/Component-AutoComplete/samples/">http://fe.nhnent.com/pages/fe//Component-AutoComplete/samples/</a>
-* **CI** - <a href="http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/">http://fe.nhnent.com:8080/jenkins/job/Component-AutoComplete/</a>
+* **API** <a href="https://github.nhnent.com/pages/fe/component-auto-complete/">https://github.nhnent.com/pages/fe/component-auto-complete/</a>
+* **Sample** - <a href="http://fe.nhnent.com/pages/fe/component-auto-complete/samples/">http://fe.nhnent.com/pages/fe//component-auto-complete/samples/</a>
+* **CI** - <a href="http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/">http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/</a>
 
 ## Download/Install
-* Bower: `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/fe/Component-AutoComplete.git#tag"`
+* Bower: `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git#tag"`
 * Download: <a href="https://github.nhnent.com/fe/component-auto-complete">https://github.nhnent.com/fe/component-auto-complete</a>
 
 
