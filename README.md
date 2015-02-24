@@ -4,11 +4,11 @@ AutoComplete
 검색어 입력시 실시간으로 자동완성된 추천 검색어 목록을 보여주는 컴포넌트입니다.
 
 ## Feature
-* 입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어에 뿌려준다.
-* 자동완성 기능을 끄고 켤 수 있다.
-* TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회할 수 있다.
-* 결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색할 수 있다.
-* 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행한다.
+* 입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어 출력
+* 자동완성 기능 on/off 가능
+* TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회 가능
+* 결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능
+* 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행
 
 ## Documentation
 * **API** <a href="https://github.nhnent.com/pages/FE/Component-AutoComplete/">https://github.nhnent.com/pages/FE/Component-AutoComplete/</a>
