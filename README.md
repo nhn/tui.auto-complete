@@ -12,7 +12,7 @@ AutoComplete
 
 ## Documentation
 * **API** <a href="https://github.nhnent.com/pages/fe/component-auto-complete/">https://github.nhnent.com/pages/fe/component-auto-complete/</a>
-* **Sample** - <a href="http://fe.nhnent.com/etc/sample/component-auto-complete/demo/">http://fe.nhnent.com/etc/sample/component-auto-complete/demo/g햣 </a>
+* **Sample** - <a href="http://fe.nhnent.com/etc/sample/component-auto-complete/demo/">http://fe.nhnent.com/etc/sample/component-auto-complete/demo/</a>
 * **CI** - <a href="http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/">http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/</a>
 
 ## Download/Install
