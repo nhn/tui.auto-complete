@@ -24,5 +24,5 @@ AutoComplete
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
 | 0.1.1 | 템프릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| 0.0.2 | GitHub 이전 | 2015.01 | |
+|  | GitHub 이전 | 2015.01 | |
 | 0.0.1 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.git lee@nhnent.com> |
