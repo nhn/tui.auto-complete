@@ -99,37 +99,60 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
     /**
      * config에 설정되어 있는 param option 을 읽어 온뒤, param 을 설정하게 한다.
      * @param {array} options 배열로 받은 옵션들을 추가한다.
+     * @param {number} index 키값을 설정하는 인덱스
      */
-    setParams: function(options, type) {
+    setParams: function(options, index) {
+
+        var opt = this.options,
+            listConfig = opt.listConfig[index],
+            statics = opt.staticParams[listConfig.staticParams];
+
         if (options &amp;&amp; ne.util.isString(options)) {
             options = options.split(',');
         }
 
-        if (!options || ne.util.isEmpty(options)) {
+        if ((!options || ne.util.isEmpty(options)) &amp;&amp; !ne.util.isExisty(statics)) {
             return;
         }
 
-        this._createParamSetByType(options, type);
+        this._createParamSetByType(options, index);
     },
 
     /**
      * 타입에 따른 inputElement 생성
-     * @param {string|undefined} type 선택된 자동완성의 타입
+     * @param {object} options 검색에 넘겨야 할 values 값들
+     * @param {number} index 검색에서 쿼리키 값의 인덱스 값
      * @private
      */
-    _createParamSetByType: function(options, type) {
+    _createParamSetByType: function(options, index) {
 
         var key,
-            conf = this.options.subQuerySet[type] || this.options.subQuerySet['defaults'];
+            val,
+            opt = this.options,
+            listConfig = opt.listConfig[index],
+            config = opt.subQuerySet[listConfig.subQuerySet],
+            statics = opt.staticParams[listConfig.staticParams];
 
         if (!this.hiddens) {
             this._createParamContainer();
         }
 
-        ne.util.forEach(options, function(value, index) {
+        ne.util.forEach(options, function(value, idx) {
 
-            key = conf[index];
+            key = config[idx];
             this.hiddens.append($('&lt;input type="hidden" name="' + key + '" value="' + value + '" />'));
+
+        }, this);
+
+        if (!statics) {
+            return;
+        }
+
+        // 스테이틱하게 붙은 파라미터들을 처리한다.
+        statics = statics.split(',');
+        ne.util.forEach(statics, function(value) {
+            val = value.split("=");
+            this.hiddens.append($('&lt;input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
 
         }, this);
 
