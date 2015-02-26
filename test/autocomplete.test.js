@@ -86,4 +86,6 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         resultManager._useAutoComplete();
         expect(resultManager.isShowResultList()).toBeFalsy();
     });
+
+
 });
