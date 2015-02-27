@@ -283,4 +283,17 @@ describe('InputManager', function() {
 
     });
 
+
+    it('_onClickToggle when autoComplete is using, turn off autoComplete', function() {
+
+        var autocon = im1.autoCompleteObj;
+        autocon.isUse = true;
+
+        im1._onClickToggle();
+
+
+        expect(autocon.isUse).toBeFalsy();
+
+    });
+
 });

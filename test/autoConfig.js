@@ -174,6 +174,8 @@ var Plane = { // 필수 항목만 나열한 config
         }
     },
 
+    useTitle: false,
+
     // 컬렉션 타입 별로 표시될 마크업, 데이터가 들어갈 부분은 @key@ 형식으로 사용한다.(지정하지 않으면, defaults가 적용된다.)
     // 형식은 수정 가능하지만, keyword-field는 키워드가 들어가는 부분에 필수로 들어가야함. 단 title에는 들어가면 안됨.
     'template' :  {
