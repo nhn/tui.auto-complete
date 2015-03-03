@@ -47,8 +47,15 @@ Desktop.ini
 .metadata
 
 # etc
+*.swp
+etc
 temp
 doc
-demo
 report
 dist
+mock/*.json
+
+karma.conf.local.js
+mock/*.nhn
+mock/api
+.tern-project
