@@ -85,7 +85,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
                 continue;
             }
 
-            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]),
+            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
             $el = $(this._applyTemplate(tmpl.element, tmplValue));
             // 파라미터를 넘기기위한 값들
             $el.attr('data-params', tmplValue.params);
