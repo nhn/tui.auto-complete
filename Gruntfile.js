@@ -39,6 +39,12 @@ module.exports = function(grunt) {
             normal: {
                 files: {
                     '<%= name %>.min.js' : '<%= name %>.js'
+                },
+                options: {
+                    banner: '/*!<%= pkg.name %> v<%=pkg.version%> | NHN Entertainment*/',
+                    preserveComments: false,
+                    sourceMap: true,
+                    sourceMapName: "<%= name %>.min.map"
                 }
             }
         },
