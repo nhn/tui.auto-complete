@@ -15,6 +15,10 @@ AutoComplete
 * **Sample** - http://fe.nhnent.com/etc/sample/component-auto-complete/demo/
 * **CI** - http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
 
+## Dependency
+* code-snippet - https://github.nhnent.com/fe/share-code-snippet
+* jquery1.8.3
+
 ## Download/Install
 * Bower: `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git#tag"`
 * Download: https://github.nhnent.com/fe/component-auto-complete
