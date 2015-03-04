@@ -10,6 +10,11 @@ AutoComplete
 * 결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능
 * 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행
 
+## Sample Image
+* 샘플이미지<br>
+![alt tag](https://github.nhnent.com/pages/fe/component-auto-complete/autocomplete.png)<br><br>
+
+
 ## Documentation
 * **API** https://github.nhnent.com/pages/fe/component-auto-complete
 * **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/tutorial-sample1.html
@@ -29,4 +34,4 @@ AutoComplete
 | ---- | ---- | ---- | ---- |
 | 1.0.0 | 배포 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | 0.1.1 | 템플릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| 0.0.1 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.lee@nhnent.com> |
+| 0.1.0 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.lee@nhnent.com> |
