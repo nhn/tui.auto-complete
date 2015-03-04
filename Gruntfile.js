@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         // You can set arbitrary key-value pairs.
         distFolder: 'dist',
-        name: 'AutoComplete',
+        name: 'autoComplete',
         // You can also set the value of a key as parsed JSON.
         // Allows us to reference properties we declared in package.json.
         pkg: grunt.file.readJSON('package.json'),
@@ -23,7 +23,6 @@ module.exports = function(grunt) {
                 // The files to concatenate:
                 // Notice the wildcard, which is automatically expanded.
                 src: [
-                    'src/common/*.js',
                     'src/js/AutoComplete.js',
                     'src/js/*.js'
                 ],
@@ -31,22 +30,7 @@ module.exports = function(grunt) {
                 // Notice the angle-bracketed ERB-like templating,
                 // which allows you to reference other properties.
                 // This is equivalent to 'dist/main.js'.
-                dest: '<%= distFolder %>/Component-<%= name %>.js'
-                // You can reference any grunt config property you want.
-                // Ex: '<%= concat.options.separator %>' instead of ';'
-            },
-            core: {
-                // The files to concatenate:
-                // Notice the wildcard, which is automatically expanded.
-                src: [
-                    'src/js/AutoComplete.js',
-                    'src/js/*.js'
-                ],
-                // The destination file:
-                // Notice the angle-bracketed ERB-like templating,
-                // which allows you to reference other properties.
-                // This is equivalent to 'dist/main.js'.
-                dest: '<%= distFolder %>/Component-<%= name %>.core.js'
+                dest: '<%= name %>.js'
                 // You can reference any grunt config property you want.
                 // Ex: '<%= concat.options.separator %>' instead of ';'
             }
@@ -54,12 +38,7 @@ module.exports = function(grunt) {
         uglify: {
             normal: {
                 files: {
-                    '<%= distFolder %>/Component-<%= name %>.min.js' : '<%= distFolder %>/Component-<%= name %>.js'
-                }
-            },
-            core: {
-                files: {
-                    '<%= distFolder %>/Component-<%= name %>.core.min.js' : '<%= distFolder %>/Component-<%= name %>.core.js'
+                    '<%= name %>.min.js' : '<%= name %>.js'
                 }
             }
         },
@@ -73,7 +52,7 @@ module.exports = function(grunt) {
         zip: {
             main: {
                 src: ['<%= distFolder %>/*'],
-                dest: '<%= distFolder %>/Component-<%= name %>.zip'
+                dest: '<%= name %>.zip'
             }
         }
     }); // The end of grunt.initConfig
