@@ -16,8 +16,9 @@ AutoComplete
 
 
 ## Documentation
-* **API** - https://github.nhnent.com/pages/fe/component-auto-complete
 * **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/tutorial-sample1.html
+* **Tutorial** - https://github.nhnent.com/fe/component-auto-complete/wiki/Component-AutoComplete
+* **API** - https://github.nhnent.com/pages/fe/component-auto-complete
 * **CI** - http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
 
 ## Dependency
