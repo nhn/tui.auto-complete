@@ -73,7 +73,7 @@ function generateCode() {
 
     if (doc) {
         scripts = doc.getElementsByTagName('script');
-        codeArea.innerHTML = '<pre>' + encodeHTMLEntity(scripts[scripts.length-1].innerText) + '</pre>';
+        codeArea.innerHTML = '<pre>' + encodeHTMLEntity(scripts[scripts.length-1].innerHTML) + '</pre>';
     }
 }
 
