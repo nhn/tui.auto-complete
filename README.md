@@ -16,13 +16,14 @@ AutoComplete
 
 
 ## Documentation
-* **API** https://github.nhnent.com/pages/fe/component-auto-complete
 * **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/tutorial-sample1.html
+* **Tutorial** - https://github.nhnent.com/fe/component-auto-complete/wiki/Component-AutoComplete
+* **API** - https://github.nhnent.com/pages/fe/component-auto-complete
 * **CI** - http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
 
 ## Dependency
+* jquery1.8.3 - https://github.com/jquery/jquery/tree/1.8.3
 * code-snippet - https://github.nhnent.com/fe/share-code-snippet
-* jquery1.8.3
 
 ## Download/Install
 * Bower: `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git#tag"`
