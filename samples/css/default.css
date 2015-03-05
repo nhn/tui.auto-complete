@@ -24,3 +24,10 @@ a:active {background-color:transparent}
 .suggestBox .baseBox li.emp {background-color:#e7e7e7}
 .suggestBox .baseBox li.lastitem { border-bottom: 1px solid goldenrod; }
 .suggestBox .baseBox li.title {color:#0000ff;}
+
+.sampleWarp, .link {height:500px; }
+.sampleWarp {width:500px; float:left; border:1px solid #eee; }
+.sampleWarp .formWrap { margin-left:50px; position:relative; margin-top:50px;}
+.sampleWarp form {margin:0 auto; display: block;}
+.link { width:400px; float:left; margin-left: 15px; border:1px solid #eee;}
+.link a {font-size:12px; text-decoration: underline;display:block; margin:60px auto; text-align:center; }

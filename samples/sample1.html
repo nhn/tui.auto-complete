@@ -8,32 +8,32 @@
     <title>자동완성 - 검색창만 있는 기본 유형</title>
         <script type="text/javascript" src="libs/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="libs/jquery.cookie.js"></script>
-    <style>
-        .link {margin-top:200px;}
-        .link a {font-size: 12px; color:#0000ff; text-decoration: underline; }
-    </style>
 </head>
 <body style="height:500px;">
-<!-- 폼태그 -->
-<form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
-    <!-- 검색창 -->
-    <div class="inputBox">
-        <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
-        <input type="hidden" id="org_query" name="org_query">
-    </div>
-
-    <!-- 자동완성 검색결과 영역 -->
-    <div class="suggestBox" id="ac_view1" style="width:269px;">
-        <div class="baseBox">
-            <ul class="_resultBox" style="display:none;">
-                <li><a href="#" onclick="return false;" title="">@txt@</a></li>
-            </ul>
-            <p id="onofftext" class="bottom" style="display:none;">자동완성 끄기</p>
+<div class="sampleWarp">
+    <div class="formWrap">
+    <!-- 폼태그 -->
+    <form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
+        <!-- 검색창 -->
+        <div class="inputBox">
+            <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
+            <input type="hidden" id="org_query" name="org_query">
         </div>
+
+        <!-- 자동완성 검색결과 영역 -->
+        <div class="suggestBox" id="ac_view1" style="width:269px;">
+            <div class="baseBox">
+                <ul class="_resultBox" style="display:none;">
+                    <li><a href="#" onclick="return false;" title="">@txt@</a></li>
+                </ul>
+                <p id="onofftext" class="bottom" style="display:none;">자동완성 끄기</p>
+            </div>
+        </div>
+    </form>
     </div>
-</form>
+</div>
 <div class="link">
-<a href="http://fe.nhnent.com/etc/sample/component-auto-complete/demo/default.html" target="_blank">패션고API적용 예제</a>
+<a href="http://fe.nhnent.com/etc/sample/component-auto-complete/demo/default.html" target="_blank">패션고API적용 예제로 이동</a>
 </div>
 </body>
 <!-- include js -->
