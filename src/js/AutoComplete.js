@@ -423,6 +423,22 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      */
     setMoved: function(moved) {
         this.resultManager.isMoved = moved;
+    },
+
+    /**
+     * serachApi를 재설정한다.
+     * @param {Object} options searchApi옵션 설정
+     * @example
+     *  autoComplete.setSearchApi({
+     *      'st' : 9351,
+     *      'r_lt' : 7187,
+     *      'r_enc' : 'UTF-8',
+     *      'q_enc' : 'UTF-8',
+     *      'r_format' : 'json'
+     *  });
+     */
+    setSearchApi: function(options) {
+        ne.util.extend(this.options.searchApi, options);
     }
 });
 ne.util.CustomEvents.mixin(ne.component.AutoComplete);
