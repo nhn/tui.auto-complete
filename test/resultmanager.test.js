@@ -1,4 +1,4 @@
-describe('InputManager', function() {
+describe('ResultManager', function() {
     var rm1,
         rm2;
     beforeEach(function() {
