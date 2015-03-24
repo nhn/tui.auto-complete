@@ -49,9 +49,6 @@
         </form>
     </div>
 </div>
-<div class="link">
-    <a href="http://fe.nhnent.com/etc/sample/component-auto-complete/demo/expand1.html" target="_blank">패션고API적용 예제로 이동</a>
-</div>
 </body>
 
 <!-- include js -->
@@ -110,12 +107,10 @@
             }
         };
 
-
+    // select를 클릭할 때마다 요청 searchApi값을 변경한다.
     select.change(function(e) {
-        console.log(e);
         var value = e.target.value;
         autoComp.setSearchApi(state[value]);
-
     });
 </script>
 
