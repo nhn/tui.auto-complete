@@ -27,7 +27,7 @@ AutoComplete
 * code-snippet - https://github.nhnent.com/fe/share-code-snippet
 
 ## Test environment
-* PC : 
+* browser : 
    * IE7~11
    * Chrome
    * Firefox
