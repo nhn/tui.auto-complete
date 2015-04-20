@@ -26,12 +26,17 @@ AutoComplete
 * jquery.cookie - https://github.com/carhartl/jquery-cookie
 * code-snippet - https://github.nhnent.com/fe/share-code-snippet
 
+## Test environment
+* PC : 
+   * IE7~11
+   * Chrome
+   * Firefox
+
 ## Download/Install
 * Bower: 
    * 최신버전 :  `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git#master"`
    * 특정버전 : `bower install "git+http://3c672057a1ac16c4e6f1baaba73e24d5270ef453:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git[#tag]"`
 * Download: https://github.nhnent.com/fe/component-auto-complete
-
 
 ## History
 | Version | Description | Date | Developer |
