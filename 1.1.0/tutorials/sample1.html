@@ -5,18 +5,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" type="text/css" href="css/default.css">
-    <title>자동완성 - 자동완성 끄기,켜기 기능 있는 유형</title>
-    <script type="text/javascript" src="libs/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="libs/jquery.cookie.js"></script>
-
+    <title>자동완성 - 검색창만 있는 기본 유형</title>
+        <script type="text/javascript" src="libs/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="libs/jquery.cookie.js"></script>
 </head>
-<body style="height:500px;">
-<!-- 폼태그 -->
-<form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
+<body style="height:500px;width:1000px;">
+<div class="sampleWarp">
+    <div class="formWrap">
+    <!-- 폼태그 -->
+    <form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
         <!-- 검색창 -->
         <div class="inputBox">
-			<input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
-            <img class="onoff" id="onoffBtn" src="img/btn_on.jpg" width="21" height="21">
+            <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
             <input type="hidden" id="org_query" name="org_query">
         </div>
 
@@ -29,21 +29,26 @@
                 <p id="onofftext" class="bottom" style="display:none;">자동완성 끄기</p>
             </div>
         </div>
-</form>
+    </form>
+    </div>
+</div>
+<div class="link">
+<a href="http://fe.nhnent.com/etc/sample/component-auto-complete/demo/default.html" target="_blank">패션고API적용 예제로 이동</a>
+</div>
 </body>
-
 <!-- include js -->
 <script type="text/javascript" src="autoConfig.js"></script>
-<script type="text/javascript" src="dist/Component-AutoComplete.js"></script>
-
+<script type="text/javascript" src="dist/code-snippet.js"></script>
+<script type="text/javascript" src="dist/auto-complete.js"></script>
 <!--<script type="text/javascript" src="../src/js/AutoComplete.js"></script>-->
 <!--<script type="text/javascript" src="../src/js/DataManager.js"></script>-->
 <!--<script type="text/javascript" src="../src/js/InputManager.js"></script>-->
 <!--<script type="text/javascript" src="../src/js/ResultManager.js"></script>-->
 
+
 <!-- 자동완성 생성 -->
 <script>
-   new ne.component.AutoComplete({"config" : Default});
+    new ne.component.AutoComplete({"config" : Plane});
 </script>
 
 
