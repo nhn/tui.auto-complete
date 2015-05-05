@@ -158,6 +158,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         'LAST': 'last'
     },
 
+    watchInterval: 200,
+
     /**
      * 초기화 함수
      * @param {Object} htOptions 함수의 argument. autoConfig의 키값 정보가 들어온다.
@@ -193,7 +195,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             this.options.cookieName = defaultCookieName;
         }
 
-        //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
+        // watch interval set
+        this.options.watchInterval = ne.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
+
+            //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
         this.dataManager = new autoComplete.DataManager(this, this.options);
         this.inputManager = new autoComplete.InputManager(this, this.options);
         this.resultManager = new autoComplete.ResultManager(this, this.options);
