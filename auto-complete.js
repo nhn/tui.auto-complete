@@ -518,7 +518,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
-                    this.clearReadyValue();
+                    this._clearReadyValue();
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
@@ -528,7 +528,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
     /**
      * clear ready value and set idle state
      */
-    clearReadyValue: function() {
+    _clearReadyValue: function() {
         if (ne.util.isExisty(this.autoCompleteObj.readyValue)) {
             this.autoCompleteObj.request(this.autoCompleteObj.readyValue);
         } else {
