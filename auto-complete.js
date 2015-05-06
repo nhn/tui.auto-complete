@@ -525,6 +525,9 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             }, this)
         });
     },
+    /**
+     * clear ready value and set idle state
+     */
     clearReadyValue: function() {
         if (ne.util.isExisty(this.autoCompleteObj.readyValue)) {
             this.autoCompleteObj.request(this.autoCompleteObj.readyValue);
@@ -820,7 +823,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
             self._onWatch();
-        }), this, 10);
+        }), this, this.options.watchInterval);
     },
 
     /**
