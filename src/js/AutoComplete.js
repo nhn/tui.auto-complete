@@ -208,6 +208,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
          * @type {null}
          */
         this.querys = null;
+        this.isIdle = true;
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);

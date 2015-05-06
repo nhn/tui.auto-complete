@@ -142,6 +142,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     hideResultList: function() {
         this.$resultList.css('display', 'none');
         this._hideBottomArea();
+        this.autoCompleteObj.isIdle = true;
         this.autoCompleteObj.fire('close');
     },
 

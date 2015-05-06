@@ -229,7 +229,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
             self._onWatch();
-        }), this, this.options.watchInterval);
+        }), this, 10);
     },
 
     /**
@@ -274,7 +274,13 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-        this.autoCompleteObj.request(this.$searchBox.val());
+        // 자동완성 요청이 빠르게 들어갈때 응답이 순차적으로 오지 않을수 있으므로, 요청이 시작되면 응답값이 오기 전까지 다음 값을 저장시킨다.
+        if (this.autoCompleteObj.isIdle) {
+            this.autoCompleteObj.isIdle = false;
+            this.autoCompleteObj.request(this.$searchBox.val());
+        } else {
+            this.autoCompleteObj.readyValue = this.$searchBox.val();
+        }
     },
 
     /**

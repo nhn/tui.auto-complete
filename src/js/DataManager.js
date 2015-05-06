@@ -67,11 +67,20 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
+                    this.clearReady();
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
             }, this)
         });
+    },
+    clearReady: function() {
+        if (ne.util.isExisty(this.autoCompleteObj.readyValue)) {
+            this.autoCompleteObj.request(this.autoCompleteObj.readyValue);
+        } else {
+            this.autoCompleteObj.isIdle = true;
+        }
+        this.autoCompleteObj.readyValue = null;
     },
     /**
      * 화면에 뿌려질 컬렉션 데이터를 생성한다.
