@@ -41,7 +41,7 @@ AutoComplete
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
-| 1.1.1 |  | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
+| 1.1.1 | 요청 방식 병렬->순차로 변경 | 2015.05 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/">1.1.0</a> | searchApi추가 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.0.0/">1.0.0</a> | 배포 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | 0.1.1 | 템플릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
