@@ -35,7 +35,7 @@ AutoComplete
 * Bower: 
    * 최신버전 :  `bower install "ne-component-auto-complete#master"`
    * 특정버전 : `bower install "ne-component-auto-complete[#tag]"`
-* Download: https://github.nhnent.com/fe/component-auto-complete
+* Download: https://github.com/nhnent/fe.component-auto-complete
 
 ## History
 | Version | Description | Date | Developer |
