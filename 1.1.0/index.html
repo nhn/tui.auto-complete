@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Index</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Samples</h3><ul class="list samples"><li class="item"><a href="tutorial-sample1.html">기본 예제</a></li><li class="item"><a href="tutorial-sample2.html">자동완성옵션 예제</a></li><li class="item"><a href="tutorial-sample3.html">자동완성옵션 변경 예제</a></li></ul><h3>Classes</h3><ul class="list classes"><li class="item" id="ne.component.AutoComplete"><span class="title"><span class="p-item">ne.component.</span><a href="ne.component.AutoComplete.html">AutoComplete</a></span><span class="icon blue static">static</span><ul class="sublist members ne.component.AutoComplete"><span class="subtitle">Members</span><li><a href="ne.component.AutoComplete.html#querys">querys</a></li></ul><ul class="sublist division ne.component.AutoComplete"><li></li></ul><ul class="sublist methods ne.component.AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.component.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.html#init">init</a></li><li><a href="ne.component.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.component.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.component.AutoComplete.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.html#request">request</a></li><li><a href="ne.component.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.component.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.component.AutoComplete.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.html#setQuerys">setQuerys</a></li><li><a href="ne.component.AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="ne.component.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.component.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.component.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item" id="ne.component.AutoComplete.DataManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.DataManager.html">DataManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.DataManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.DataManager.html#request">request</a></li></ul></li><li class="item" id="ne.component.AutoComplete.InputManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.InputManager.html">InputManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.InputManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.InputManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item" id="ne.component.AutoComplete.ResultManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.ResultManager.html">ResultManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.ResultManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul></div>
+        <div id="main" class="main">
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><div class="readme"><h1>AutoComplete</h1><p>검색어 자동완성 컴포넌트<br>
+검색어 입력시 실시간으로 자동완성된 추천 검색어 목록을 보여주는 컴포넌트입니다.</p>
+<h2>Feature</h2><ul>
+<li>입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어 출력</li>
+<li>자동완성 기능 on/off 가능</li>
+<li>TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회 가능</li>
+<li>결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능</li>
+<li>결과 레이어 영역에서 mouse click으로 키워드 검색을 수행</li>
+</ul>
+<h2>Sample Image</h2><ul>
+<li>샘플이미지<br>
+<img src="https://nhnent.github.io/fe.component-auto-complete/sampleimg.png" alt="alt tag"><br><br></li>
+</ul>
+<h2>Documentation</h2><ul>
+<li><strong>API</strong> - https://nhnent.github.io/fe.component-auto-complete/1.1.0/</li>
+<li><strong>Sample</strong> - https://nhnent.github.io/fe.component-auto-complete/1.1.0/tutorial-sample1.html</li>
+<li><strong>Tutorial</strong> - https://goo.gl/4dcMtM</li>
+</ul>
+<h2>Dependency</h2><ul>
+<li>jquery1.8.3 - https://github.com/jquery/jquery/tree/1.8.3</li>
+<li>jquery.cookie - https://github.com/carhartl/jquery-cookie</li>
+<li>code-snippet - https://github.com/nhnent/fe.code-snippet</li>
+</ul>
+<h2>Test environment</h2><ul>
+<li>browser : <ul>
+<li>IE7~11</li>
+<li>Chrome</li>
+<li>Firefox</li>
+</ul>
+</li>
+</ul>
+<h2>Download/Install</h2><ul>
+<li>Bower: <ul>
+<li>최신버전 :  <code>bower install &quot;ne-component-auto-complete#master&quot;</code></li>
+<li>특정버전 : <code>bower install &quot;ne-component-auto-complete[#tag]&quot;</code></li>
+</ul>
+</li>
+<li>Download: https://github.com/nhnent/fe.component-auto-complete</li>
+</ul>
+<h2>History</h2><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Description</th>
+<th>Date</th>
+<th>Developer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://nhnent.github.io/fe.component-auto-complete/1.1.0/">1.1.0</a></td>
+<td>searchApi추가</td>
+<td>2015.03</td>
+<td>FE개발팀 이제인<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6a;&#101;&#x69;&#110;&#x2e;&#x79;&#105;&#x40;&#110;&#104;&#110;&#x65;&#x6e;&#x74;&#x2e;&#x63;&#x6f;&#109;">&#x6a;&#101;&#x69;&#110;&#x2e;&#x79;&#105;&#x40;&#110;&#104;&#110;&#x65;&#x6e;&#x74;&#x2e;&#x63;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td><a href="https://nhnent.github.io/fe.component-auto-complete/1.0.0/">1.0.0</a></td>
+<td>배포</td>
+<td>2015.03</td>
+<td>FE개발팀 이제인<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#106;&#101;&#x69;&#110;&#x2e;&#x79;&#x69;&#x40;&#x6e;&#x68;&#110;&#101;&#x6e;&#116;&#46;&#99;&#111;&#109;">&#106;&#101;&#x69;&#110;&#x2e;&#x79;&#x69;&#x40;&#x6e;&#x68;&#110;&#101;&#x6e;&#116;&#46;&#99;&#111;&#109;</a></td>
+</tr>
+<tr>
+<td>0.1.1</td>
+<td>템플릿 기능 추가</td>
+<td>2015.01</td>
+<td>FE개발팀 이제인<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#106;&#101;&#105;&#110;&#46;&#121;&#105;&#64;&#x6e;&#104;&#110;&#x65;&#x6e;&#x74;&#x2e;&#99;&#x6f;&#109;">&#106;&#101;&#105;&#110;&#46;&#121;&#105;&#64;&#x6e;&#104;&#110;&#x65;&#x6e;&#x74;&#x2e;&#99;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>0.1.0</td>
+<td>최초개발</td>
+<td>2014.09</td>
+<td>FE개발팀 이기현 <a href="&#109;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#x6b;&#x69;&#x68;&#x79;&#117;&#x6e;&#x2e;&#x6c;&#101;&#101;&#x40;&#x6e;&#x68;&#x6e;&#x65;&#x6e;&#x74;&#x2e;&#x63;&#111;&#x6d;">&#x6b;&#x69;&#x68;&#x79;&#117;&#x6e;&#x2e;&#x6c;&#101;&#101;&#x40;&#x6e;&#x68;&#x6e;&#x65;&#x6e;&#x74;&#x2e;&#x63;&#111;&#x6d;</a></td>
+</tr>
+</tbody>
+</table></div></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        AutoComplete.js
+        
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트의 모든 구성요소들을 총괄하는 최상위 클래스</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>FE개발팀 이제인&lt;jein.yi@nhnent.com></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="AutoComplete.js.html">AutoComplete.js</a>, <a href="AutoComplete.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        DataManager.js
+        
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트 중에서 입력된 값으로 검색 API와 연동하여 자동완성 검색 결과를 받아오는 클래스</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>FE개발팀 이제인&lt;jein.yi@nhnent.com></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="DataManager.js.html">DataManager.js</a>, <a href="DataManager.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        InputManager.js
+        
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트 중에서 입력창에 대한 기능을 제공하는 클래스</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>FE개발팀 이제인&lt;jein.yi@nhnent.com></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="InputManager.js.html">InputManager.js</a>, <a href="InputManager.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        ResultManager.js
+        
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>자동완성 컴포넌트 중에서 검색 결과 영역에 대한 기능을 제공하는 클래스</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>FE개발팀 이제인&lt;jein.yi@nhnent.com></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+        <dd class="tag-source"><ul class="dummy"><li>
+            <a href="ResultManager.js.html">ResultManager.js</a>, <a href="ResultManager.js.html#line1">line 1</a>
+        </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+        
+    
+    </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className, parentElement) {
+	if(document.getElementsByClassName) {
+		return (parentElement || document).getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = (parentElement || document.body).getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var fullName = fileName.split('.');
+fullName.length -= 1;
+fullName = fullName.join('.');
+fullName = fullName.split('-');
+fullName = fullName[fullName.length - 1];
+var lnbList = getElementsByClassName(fullName);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].className += ' selected';
+    }
+}
+
+var title = document.getElementById(fullName);
+if(title) {
+    title.className += ' selected';
+    title.innerHTML = '<span class="arrow">▶</span>' + title.innerHTML;
+
+    var static = getElementsByClassName('static', title);
+    if(static) {
+        static[0].className += ' selected';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>

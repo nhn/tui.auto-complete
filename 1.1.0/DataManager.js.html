@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DataManager.js</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Samples</h3><ul class="list samples"><li class="item"><a href="tutorial-sample1.html">기본 예제</a></li><li class="item"><a href="tutorial-sample2.html">자동완성옵션 예제</a></li><li class="item"><a href="tutorial-sample3.html">자동완성옵션 변경 예제</a></li></ul><h3>Classes</h3><ul class="list classes"><li class="item" id="ne.component.AutoComplete"><span class="title"><span class="p-item">ne.component.</span><a href="ne.component.AutoComplete.html">AutoComplete</a></span><span class="icon blue static">static</span><ul class="sublist members ne.component.AutoComplete"><span class="subtitle">Members</span><li><a href="ne.component.AutoComplete.html#querys">querys</a></li></ul><ul class="sublist division ne.component.AutoComplete"><li></li></ul><ul class="sublist methods ne.component.AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.component.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.html#init">init</a></li><li><a href="ne.component.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.component.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.component.AutoComplete.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.html#request">request</a></li><li><a href="ne.component.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.component.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.component.AutoComplete.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.html#setQuerys">setQuerys</a></li><li><a href="ne.component.AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="ne.component.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.component.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.component.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item" id="ne.component.AutoComplete.DataManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.DataManager.html">DataManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.DataManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.DataManager.html#request">request</a></li></ul></li><li class="item" id="ne.component.AutoComplete.InputManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.InputManager.html">InputManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.InputManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.InputManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item" id="ne.component.AutoComplete.ResultManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.ResultManager.html">ResultManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.ResultManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul></div>
+        <div id="main" class="main">
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview 자동완성 컴포넌트 중에서 입력된 값으로 검색 API와 연동하여 자동완성 검색 결과를 받아오는 클래스
+ * @version 1.1.0
+ * @author FE개발팀 이제인&lt;jein.yi@nhnent.com>
+ */
+
+ne = window.ne || {};
+ne.component = ne.component || {};
+
+
+/**
+ * 자동완성 컴포넌트 구성 요소중 검색api와 연동하여 데이터를 받아오는 클래스
+ * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
+ * @constructor
+ */
+ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.DataManager.prototype */{
+    init: function(autoCompleteObj, options) {
+        if (arguments.length != 2) {
+            alert('argument length error !');
+            return;
+        }
+
+        // argument로 넘어온 AutoComplete 클래스와 사용자가 지정한 옵션값을 내부 변수로 저장한다.
+        this.autoCompleteObj = autoCompleteObj;
+        this.options = options;
+    },
+
+    /**
+     * 검색서버에 입력값을 보내어 ajax통신으로 자동완성 검색어 리스트를 받아온다.
+     * @param {String} keyword 검색서버에 요청할 키워드 스트링
+     */
+    request: function(keyword) {
+        //혹시라도 검색용 api가 설정되지 않았다면 request하지 않고 바로 종료한다.
+        if (!this.options.searchApi) {
+            return;
+        }
+
+        // 공백을 제거한 키워드
+        var rsKeyWrod = keyword.replace(/\s/g, '');
+
+        if (!keyword || !rsKeyWrod) {
+            this.autoCompleteObj.hideResultList();
+            return;
+        }
+
+        //request를 위한 변수 세팅
+        var dataCallback = function(){},
+            defaultParam = {
+                q: keyword,
+                r_enc: 'UTF-8',
+                q_enc: 'UTF-8',
+                r_format: 'json',
+                _callback: 'dataCallback'
+            },
+            requestParam = ne.util.extend(this.options.searchApi, defaultParam),
+            keyDatas;
+
+        ne.util.ajax.request(this.options.searchUrl, {
+            'dataType': 'jsonp',
+            'jsonpCallback': 'dataCallback',
+            'data': requestParam,
+            'type': 'get',
+            'success': ne.util.bind(function(dataObj) {
+                try {
+                    keyDatas = this._getCollectionData(dataObj);
+                    // 응답값으로 돌아온 입력값(한글을 영문으로 맞춰놓고 잘못 입력 했을 경우에 오는 값 포함)을 전역에서 쓸수 있게 autoComplete에 셋팅
+                    this.autoCompleteObj.setQuerys(dataObj.query);
+                    // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
+                    this.autoCompleteObj.setServerData(keyDatas);
+                } catch (e) {
+                    throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
+                }
+            }, this)
+        });
+    },
+    /**
+     * 화면에 뿌려질 컬렉션 데이터를 생성한다.
+     * @param dataObj
+     * @returns {Array}
+     * @private
+     */
+    _getCollectionData: function(dataObj) {
+        var collection = dataObj.collections,
+            itemDataList = [];
+
+        ne.util.forEach(collection, function(itemSet) {
+
+            if(ne.util.isEmpty(itemSet.items)) {
+                return;
+            }
+            // 컬렉션 아이템 생성
+            var keys = this._getRedirectData(itemSet);
+
+            itemDataList.push({
+                type: 'title',
+                values: [itemSet.title]
+            });
+            itemDataList = itemDataList.concat(keys);
+
+        }, this);
+
+        return itemDataList;
+    },
+    /**
+     * 화면에 뿌려질 컬렉션의 아이템 데이터를 생성한다.
+     * @param itemSet
+     * @private
+     * @returns {Array}
+     */
+    _getRedirectData: function(itemSet) {
+        var type = itemSet.type,
+            index = itemSet.index,
+            dest = itemSet.destination,
+            items = [];
+
+        ne.util.forEachArray(itemSet.items, function(item, idx) {
+
+            if (idx &lt;= (this.options.viewCount - 1)) {
+                items.push({
+                    values: item,
+                    type: type,
+                    index: index,
+                    dest: dest
+                });
+            }
+
+        }, this);
+
+        return items;
+    }
+});</code></pre>
+        </article>
+    </section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className, parentElement) {
+	if(document.getElementsByClassName) {
+		return (parentElement || document).getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = (parentElement || document.body).getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var fullName = fileName.split('.');
+fullName.length -= 1;
+fullName = fullName.join('.');
+fullName = fullName.split('-');
+fullName = fullName[fullName.length - 1];
+var lnbList = getElementsByClassName(fullName);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].className += ' selected';
+    }
+}
+
+var title = document.getElementById(fullName);
+if(title) {
+    title.className += ' selected';
+    title.innerHTML = '<span class="arrow">▶</span>' + title.innerHTML;
+
+    var static = getElementsByClassName('static', title);
+    if(static) {
+        static[0].className += ' selected';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>

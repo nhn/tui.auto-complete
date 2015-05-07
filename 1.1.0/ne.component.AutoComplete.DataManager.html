@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: DataManager</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Samples</h3><ul class="list samples"><li class="item"><a href="tutorial-sample1.html">기본 예제</a></li><li class="item"><a href="tutorial-sample2.html">자동완성옵션 예제</a></li><li class="item"><a href="tutorial-sample3.html">자동완성옵션 변경 예제</a></li></ul><h3>Classes</h3><ul class="list classes"><li class="item" id="ne.component.AutoComplete"><span class="title"><span class="p-item">ne.component.</span><a href="ne.component.AutoComplete.html">AutoComplete</a></span><span class="icon blue static">static</span><ul class="sublist members ne.component.AutoComplete"><span class="subtitle">Members</span><li><a href="ne.component.AutoComplete.html#querys">querys</a></li></ul><ul class="sublist division ne.component.AutoComplete"><li></li></ul><ul class="sublist methods ne.component.AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.component.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.html#init">init</a></li><li><a href="ne.component.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.component.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.component.AutoComplete.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.html#request">request</a></li><li><a href="ne.component.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.component.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.component.AutoComplete.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.html#setQuerys">setQuerys</a></li><li><a href="ne.component.AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="ne.component.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.component.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.component.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item" id="ne.component.AutoComplete.DataManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.DataManager.html">DataManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.DataManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.DataManager.html#request">request</a></li></ul></li><li class="item" id="ne.component.AutoComplete.InputManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.InputManager.html">InputManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.InputManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.InputManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item" id="ne.component.AutoComplete.ResultManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.ResultManager.html">ResultManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.ResultManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul></div>
+        <div id="main" class="main">
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+            <span class="ancestors"><a href="ne.component.AutoComplete.html">.AutoComplete</a>.</span>
+        
+        DataManager
+        
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+    <div class="container-overview">
+    
+        
+<dt>
+    
+        <h4 class="name" id="DataManager">
+            <span class="type-signature"></span>new DataManager<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="DataManager.js.html">DataManager.js</a></code>,
+                    <code><a href="DataManager.js.html#line16">line 16</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 컴포넌트 구성 요소중 검색api와 연동하여 데이터를 받아오는 클래스
+단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+    <div class="container-methods">
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    
+        <h4 class="name" id="_getCollectionData">
+            <span class="type-signature"><span class="icon green">private</span> </span>_getCollectionData<span class="signature">(dataObj)</span><span class="type-signature"> &rarr; {Array}</span>
+            
+                <div class="container-source method">
+                    <code><a href="DataManager.js.html">DataManager.js</a></code>,
+                    <code><a href="DataManager.js.html#line82">line 82</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>화면에 뿌려질 컬렉션 데이터를 생성한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>dataObj</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">Array</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="_getRedirectData">
+            <span class="type-signature"><span class="icon green">private</span> </span>_getRedirectData<span class="signature">(itemSet)</span><span class="type-signature"> &rarr; {Array}</span>
+            
+                <div class="container-source method">
+                    <code><a href="DataManager.js.html">DataManager.js</a></code>,
+                    <code><a href="DataManager.js.html#line110">line 110</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>화면에 뿌려질 컬렉션의 아이템 데이터를 생성한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>itemSet</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+    
+<span class="param-type">Array</span>
+
+
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="request">
+            <span class="type-signature"></span>request<span class="signature">(keyword)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="DataManager.js.html">DataManager.js</a></code>,
+                    <code><a href="DataManager.js.html#line32">line 32</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색서버에 입력값을 보내어 ajax통신으로 자동완성 검색어 리스트를 받아온다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>keyword</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>검색서버에 요청할 키워드 스트링</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className, parentElement) {
+	if(document.getElementsByClassName) {
+		return (parentElement || document).getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = (parentElement || document.body).getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var fullName = fileName.split('.');
+fullName.length -= 1;
+fullName = fullName.join('.');
+fullName = fullName.split('-');
+fullName = fullName[fullName.length - 1];
+var lnbList = getElementsByClassName(fullName);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].className += ' selected';
+    }
+}
+
+var title = document.getElementById(fullName);
+if(title) {
+    title.className += ' selected';
+    title.innerHTML = '<span class="arrow">▶</span>' + title.innerHTML;
+
+    var static = getElementsByClassName('static', title);
+    if(static) {
+        static[0].className += ' selected';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>
