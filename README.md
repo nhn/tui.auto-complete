@@ -12,7 +12,7 @@ AutoComplete
 
 ## Sample Image
 * 샘플이미지<br>
-![alt tag](https://nhnent.github.com/fe.component-auto-complete/sampleimg.png)<br><br>
+![alt tag](https://nhnent.github.io/fe.component-auto-complete/sampleimg.png)<br><br>
 
 
 ## Documentation
