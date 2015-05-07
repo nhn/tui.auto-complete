@@ -12,19 +12,18 @@ AutoComplete
 
 ## Sample Image
 * 샘플이미지<br>
-![alt tag](https://github.nhnent.com/pages/fe/component-auto-complete/autocomplete.png)<br><br>
+![alt tag](https://nhnent.github.com/fe.component-auto-complete/sampleimg.png)<br><br>
 
 
 ## Documentation
-* **API** - https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/
-* **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/tutorial-sample1.html
-* **Tutorial** - https://github.nhnent.com/fe/component-auto-complete/wiki/%EC%9E%90%EB%8F%99%EC%99%84%EC%84%B1-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%A0%81%EC%9A%A9%EB%B0%A9%EB%B2%95
-* **CI** - http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
+* **API** - https://nhnent.github.io/fe.component-auto-complete/1.0.0/
+* **Sample** - https://nhnent.github.io/fe.component-auto-complete/1.0.0/tutorial-sample1.html
+* **Tutorial** - https://goo.gl/4dcMtM
 
 ## Dependency
 * jquery1.8.3 - https://github.com/jquery/jquery/tree/1.8.3
 * jquery.cookie - https://github.com/carhartl/jquery-cookie
-* code-snippet - https://github.nhnent.com/fe/share-code-snippet
+* code-snippet - https://github.com/nhnent/fe.code-snippet
 
 ## Test environment
 * browser : 
@@ -34,14 +33,13 @@ AutoComplete
 
 ## Download/Install
 * Bower: 
-   * 최신버전 :  `bower install "git+http://70327b4564c7a80eb61724056876b960290946dd:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git#master"`
-   * 특정버전 : `bower install "git+http://70327b4564c7a80eb61724056876b960290946dd:x-oauth-basic@github.nhnent.com/fe/component-auto-complete.git[#tag]"`
-* Download: https://github.nhnent.com/fe/component-auto-complete
+   * 최신버전 :  `bower install "ne-component-auto-complete#master"`
+   * 특정버전 : `bower install "ne-component-auto-complete[#tag]"`
+* Download: https://github.com/nhnent/fe.component-auto-complete
 
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/">1.1.0</a> | searchApi추가 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.0.0/">1.0.0</a> | 배포 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
+| <a href="https://nhnent.github.io/fe.component-auto-complete/1.0.0/">1.0.0</a> | 배포 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | 0.1.1 | 템플릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
 | 0.1.0 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.lee@nhnent.com> |
