@@ -23,7 +23,7 @@ AutoComplete
 ## Dependency
 * jquery1.8.3 - https://github.com/jquery/jquery/tree/1.8.3
 * jquery.cookie - https://github.com/carhartl/jquery-cookie
-* code-snippet - https://github.com/nhnent/fe.share-code-snippet
+* code-snippet - https://github.com/nhnent/fe.code-snippet
 
 ## Test environment
 * browser : 
