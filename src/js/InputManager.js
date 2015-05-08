@@ -228,11 +228,9 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * @private
      */
     _onFocus: function() {
-        var self = this;
-
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
-            self._onWatch();
+            this._onWatch();
         }, this), this.options.watchInterval);
     },
 
