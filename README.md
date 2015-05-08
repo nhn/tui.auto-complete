@@ -18,7 +18,7 @@ AutoComplete
 ## Documentation
 * **API** - https://nhnent.github.io/fe.component-auto-complete/1.0.0/
 * **Sample** - https://nhnent.github.io/fe.component-auto-complete/1.0.0/tutorial-sample1.html
-* **Tutorial** - https://goo.gl/4dcMtM
+* **Tutorial** - https://github.com/nhnent/fe.component-auto-complete/wiki/자동완성-컴포넌트-적용방법
 
 ## Dependency
 * jquery1.8.3 - https://github.com/jquery/jquery/tree/1.8.3
