@@ -88,9 +88,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         for (i = 0; i < len; i++) {
             type = dataArr[i].type;
             index = dataArr[i].index;
-
             tmpl = config[index] ? template[config[index].template] : template.defaults;
-
             // 타이틀일 경우는 타이틀로 치환한다.
             if (type === 'title') {
                 tmpl = template.title;
@@ -98,7 +96,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
                     continue;
                 }
             }
-
             tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
             $el = $(this._applyTemplate(tmpl.element, tmplValue));
             // 파라미터를 넘기기위한 값들

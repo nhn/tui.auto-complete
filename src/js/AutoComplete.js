@@ -450,6 +450,18 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      */
     setSearchApi: function(options) {
         ne.util.extend(this.options.searchApi, options);
+    },
+
+    /**
+     * clear ready value and set idle state
+     */
+    clearReadyValue: function() {
+        if (ne.util.isExisty(this.readyValue)) {
+            this.request(this.readyValue);
+        } else {
+            this.isIdle = true;
+        }
+        this.readyValue = null;
     }
 });
 ne.util.CustomEvents.mixin(ne.component.AutoComplete);
