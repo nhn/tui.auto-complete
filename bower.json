@@ -4,6 +4,7 @@
     "authors": [
         "FE 개발팀"
     ],
+    "main": "auto-complete.js",
     "license": "MIT",
     "ignore": [
         "**/.*",
