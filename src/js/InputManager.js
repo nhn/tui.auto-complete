@@ -16,6 +16,9 @@ ne.component = ne.component || {};
  */
 ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.InputManager.prototype */{
 
+    /**
+     * keyboard 입력 비교 코드
+     */
     keyCodeMap: {
         'TAB' : 9,
         'UP_ARROW' : 38,
@@ -24,7 +27,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**
      * 초기화 함수
-     * @param {Object} arguments
+     * @param {Object} autoCompleteObj 자동완성 본체
+     * @param {object} options 자동완성 컴포넌트 옵션
      */
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
@@ -229,7 +233,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
             self._onWatch();
-        }), this, this.options.watchInterval);
+        }, this), this.options.watchInterval);
     },
 
     /**

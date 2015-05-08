@@ -151,13 +151,18 @@ ne.component = ne.component || {};
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
 
+    /**
+     * 키입력시 방향값
+     */
     flowMap: {
         'NEXT': 'next',
         'PREV': 'prev',
         'FIRST': 'first',
         'LAST': 'last'
     },
-
+    /**
+     * 입력값이 변경되었는지 체크하는 타이머의 interval
+     */
     watchInterval: 200,
 
     /**
@@ -167,13 +172,13 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     init: function(htOptions) {
         this.options = {};
 
-        var cookieValue,
-            autoComplete = ne.component.AutoComplete,
-            defaultCookieName = '_atcp_use_cookie';
-
         if (!this._checkValidation(htOptions)) {
             return;
         }
+
+        var cookieValue,
+            autoComplete = ne.component.AutoComplete,
+            defaultCookieName = '_atcp_use_cookie';
 
         if (!this.options.toggleImg || !this.options.onoffTextElement) {
             // toggleImg 나 onoffTextElement 가 정의되지 않은 경우.(항상 자동완성 사용)
