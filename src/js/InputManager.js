@@ -99,8 +99,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      */
     _createParamSetByType: function(options, index) {
 
-        var key,
-            val,
+        var key,d
             opt = this.options,
             listConfig = opt.listConfig[index],
             config = opt.subQuerySet[listConfig.subQuerySet],
@@ -117,18 +116,23 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
         }, this);
 
-        if (!statics) {
-            return;
+        if (statics) {
+            this._createStaticParams(statics);
         }
 
-        // 스테이틱하게 붙은 파라미터들을 처리한다.
+    },
+    /**
+     * 스테이틱하게 붙은 파라미터들을 처리한다.
+     * @param {string} statics
+     * @private
+     */
+    _createStaticParams: function(statics) {
         statics = statics.split(',');
         ne.util.forEach(statics, function(value) {
             val = value.split("=");
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
 
         }, this);
-
     },
 
     /**

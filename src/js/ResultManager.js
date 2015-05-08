@@ -38,34 +38,52 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
+     * 이전결과를 지운다
+     * @private
+     */
+    _deleteBeforeElement: function() {
+        this.$resultList.html('');
+        this.$resultList.hide();
+        this.selectedElement = null;
+    },
+
+    /**
      * AutoComplete의 setServerData함수에 의해 호출되어 서버로부터 전달받은 자동완성 데이터를 화면에 그린다.
      * @param {Array} dataArr 서버로부터 받은 자동완성 데이터 배열
      */
     draw: function(dataArr) {
         //이전 결과 지운다.
-        this.$resultList.html('');
-        this.$resultList.hide();
-        this.selectedElement = null;
+        this._deleteBeforeElement();
 
-        var template = this.options.template;
-        var config = this.options.listConfig;
-        var tmpl, tmplStr, tmplAttr;
+        var len = dataArr.length;
 
-        //tmplStr = this.options.templateElement,
-        //    tmplAttr = this.options.templateAttribute,
+        if (len < 1) {
+            this._hideBottomArea();
+        } else {
+            this._makeResultList(dataArr, len);
+        }
 
-        var useTitle = (this.options.useTitle && !!template.title),
-            dataLength = dataArr.length,
-            len = dataLength,
+        //결과 영역을 노출한다.
+        this.$resultList.show();
+
+        //자동완성 켜기 영역을 보여준다.
+        this._showBottomArea();
+    },
+
+    /**
+     * 결과리스트를 만든다
+     * @private
+     */
+    _makeResultList: function(dataArr, len) {
+        var template = this.options.template,
+            config = this.options.listConfig,
+            tmpl,
+            useTitle = (this.options.useTitle && !!template.title),
             index,
             type,
             tmplValue,
             $el,
             i;
-
-        if (dataLength < 1) {
-            this._hideBottomArea();
-        }
 
         for (i = 0; i < len; i++) {
             type = dataArr[i].type;
@@ -76,13 +94,9 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             // 타이틀일 경우는 타이틀로 치환한다.
             if (type === 'title') {
                 tmpl = template.title;
-                if ($el) {
-                    $el.addClass('lastitem');
+                if (!useTitle) {
+                    continue;
                 }
-            }
-            // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
-            if (!useTitle && type === 'title') {
-                continue;
             }
 
             tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
@@ -92,12 +106,6 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             $el.attr('data-index', index);
             this.$resultList.append($el);
         }
-
-        //결과 영역을 노출한다.
-        this.$resultList.show();
-
-        //자동완성 켜기 영역을 보여준다.
-        this._showBottomArea();
     },
 
     /**
@@ -454,7 +462,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             actions = this.options.actions,
             index = $selectField.attr('data-index'),
             config = this.options.listConfig[index],
-            action = this.options.actions[config.action],
+            action = actions[config.action],
             paramsString;
 
         $(formElement).attr('action', action);
