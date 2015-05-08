@@ -159,6 +159,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         'LAST': 'last'
     },
 
+    watchInterval: 200,
+
     /**
      * 초기화 함수
      * @param {Object} htOptions 함수의 argument. autoConfig의 키값 정보가 들어온다.
@@ -194,7 +196,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             this.options.cookieName = defaultCookieName;
         }
 
-        //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
+        // watch interval set
+        this.options.watchInterval = ne.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
+
+            //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
         this.dataManager = new autoComplete.DataManager(this, this.options);
         this.inputManager = new autoComplete.InputManager(this, this.options);
         this.resultManager = new autoComplete.ResultManager(this, this.options);
@@ -204,6 +209,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
          * @type {null}
          */
         this.querys = null;
+        this.isIdle = true;
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
@@ -512,11 +518,23 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
+                    this._clearReadyValue();
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
             }, this)
         });
+    },
+    /**
+     * clear ready value and set idle state
+     */
+    _clearReadyValue: function() {
+        if (ne.util.isExisty(this.autoCompleteObj.readyValue)) {
+            this.autoCompleteObj.request(this.autoCompleteObj.readyValue);
+        } else {
+            this.autoCompleteObj.isIdle = true;
+        }
+        this.autoCompleteObj.readyValue = null;
     },
     /**
      * 화면에 뿌려질 컬렉션 데이터를 생성한다.
@@ -805,7 +823,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
             self._onWatch();
-        }), this, 200);
+        }), this, this.options.watchInterval);
     },
 
     /**
@@ -850,7 +868,13 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-        this.autoCompleteObj.request(this.$searchBox.val());
+        // 자동완성 요청이 빠르게 들어갈때 응답이 순차적으로 오지 않을수 있으므로, 요청이 시작되면 응답값이 오기 전까지 다음 값을 저장시킨다.
+        if (this.autoCompleteObj.isIdle) {
+            this.autoCompleteObj.isIdle = false;
+            this.autoCompleteObj.request(this.$searchBox.val());
+        } else {
+            this.autoCompleteObj.readyValue = this.$searchBox.val();
+        }
     },
 
     /**
@@ -1071,6 +1095,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     hideResultList: function() {
         this.$resultList.css('display', 'none');
         this._hideBottomArea();
+        this.autoCompleteObj.isIdle = true;
         this.autoCompleteObj.fire('close');
     },
 

@@ -151,12 +151,19 @@ ne.component = ne.component || {};
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
 
+    /**
+     * 키입력시 방향값
+     */
     flowMap: {
         'NEXT': 'next',
         'PREV': 'prev',
         'FIRST': 'first',
         'LAST': 'last'
     },
+    /**
+     * 입력값이 변경되었는지 체크하는 타이머의 interval
+     */
+    watchInterval: 200,
 
     /**
      * 초기화 함수
@@ -165,13 +172,13 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     init: function(htOptions) {
         this.options = {};
 
-        var cookieValue,
-            autoComplete = ne.component.AutoComplete,
-            defaultCookieName = '_atcp_use_cookie';
-
         if (!this._checkValidation(htOptions)) {
             return;
         }
+
+        var cookieValue,
+            autoComplete = ne.component.AutoComplete,
+            defaultCookieName = '_atcp_use_cookie';
 
         if (!this.options.toggleImg || !this.options.onoffTextElement) {
             // toggleImg 나 onoffTextElement 가 정의되지 않은 경우.(항상 자동완성 사용)
@@ -193,7 +200,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
             this.options.cookieName = defaultCookieName;
         }
 
-        //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
+        // watch interval set
+        this.options.watchInterval = ne.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
+
+            //AutoComplete 내부에서 사용할 InputManager, ViewManager, ResultManager 객체 변수 설정
         this.dataManager = new autoComplete.DataManager(this, this.options);
         this.inputManager = new autoComplete.InputManager(this, this.options);
         this.resultManager = new autoComplete.ResultManager(this, this.options);
@@ -203,6 +213,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
          * @type {null}
          */
         this.querys = null;
+        this.isIdle = true;
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
@@ -439,6 +450,18 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      */
     setSearchApi: function(options) {
         ne.util.extend(this.options.searchApi, options);
+    },
+
+    /**
+     * clear ready value and set idle state
+     */
+    clearReadyValue: function() {
+        if (ne.util.isExisty(this.readyValue)) {
+            this.request(this.readyValue);
+        } else {
+            this.isIdle = true;
+        }
+        this.readyValue = null;
     }
 });
 ne.util.CustomEvents.mixin(ne.component.AutoComplete);

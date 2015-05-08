@@ -16,6 +16,9 @@ ne.component = ne.component || {};
  */
 ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.InputManager.prototype */{
 
+    /**
+     * keyboard 입력 비교 코드
+     */
     keyCodeMap: {
         'TAB' : 9,
         'UP_ARROW' : 38,
@@ -24,7 +27,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**
      * 초기화 함수
-     * @param {Object} arguments
+     * @param {Object} autoCompleteObj 자동완성 본체
+     * @param {object} options 자동완성 컴포넌트 옵션
      */
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
@@ -95,8 +99,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      */
     _createParamSetByType: function(options, index) {
 
-        var key,
-            val,
+        var key,d
             opt = this.options,
             listConfig = opt.listConfig[index],
             config = opt.subQuerySet[listConfig.subQuerySet],
@@ -113,18 +116,23 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
         }, this);
 
-        if (!statics) {
-            return;
+        if (statics) {
+            this._createStaticParams(statics);
         }
 
-        // 스테이틱하게 붙은 파라미터들을 처리한다.
+    },
+    /**
+     * 스테이틱하게 붙은 파라미터들을 처리한다.
+     * @param {string} statics
+     * @private
+     */
+    _createStaticParams: function(statics) {
         statics = statics.split(',');
         ne.util.forEach(statics, function(value) {
             val = value.split("=");
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
 
         }, this);
-
     },
 
     /**
@@ -224,12 +232,10 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * @private
      */
     _onFocus: function() {
-        var self = this;
-
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
-            self._onWatch();
-        }), this, 200);
+            this._onWatch();
+        }, this), this.options.watchInterval);
     },
 
     /**
@@ -274,7 +280,13 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-        this.autoCompleteObj.request(this.$searchBox.val());
+        // 자동완성 요청이 빠르게 들어갈때 응답이 순차적으로 오지 않을수 있으므로, 요청이 시작되면 응답값이 오기 전까지 다음 값을 저장시킨다.
+        if (this.autoCompleteObj.isIdle) {
+            this.autoCompleteObj.isIdle = false;
+            this.autoCompleteObj.request(this.$searchBox.val());
+        } else {
+            this.autoCompleteObj.readyValue = this.$searchBox.val();
+        }
     },
 
     /**
