@@ -2,8 +2,9 @@
     "name": "component-auto-complete",
     "version": "1.0.0",
     "authors": [
-        "FIXME"
+        "FE개발팀"
     ],
+    "main": "auto-complete.js",
     "license": "MIT",
     "ignore": [
         "**/.*",
