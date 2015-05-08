@@ -152,13 +152,18 @@ ne.component = ne.component || {};
 */
 ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
 
+    /**
+     * 키입력시 방향값
+     */
     flowMap: {
         'NEXT': 'next',
         'PREV': 'prev',
         'FIRST': 'first',
         'LAST': 'last'
     },
-
+    /**
+     * 입력값이 변경되었는지 체크하는 타이머의 interval
+     */
     watchInterval: 200,
 
     /**
@@ -168,13 +173,13 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
     init: function(htOptions) {
         this.options = {};
 
-        var cookieValue,
-            autoComplete = ne.component.AutoComplete,
-            defaultCookieName = '_atcp_use_cookie';
-
         if (!this._checkValidation(htOptions)) {
             return;
         }
+
+        var cookieValue,
+            autoComplete = ne.component.AutoComplete,
+            defaultCookieName = '_atcp_use_cookie';
 
         if (!this.options.toggleImg || !this.options.onoffTextElement) {
             // toggleImg 나 onoffTextElement 가 정의되지 않은 경우.(항상 자동완성 사용)
@@ -446,6 +451,18 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      */
     setSearchApi: function(options) {
         ne.util.extend(this.options.searchApi, options);
+    },
+
+    /**
+     * clear ready value and set idle state
+     */
+    clearReadyValue: function() {
+        if (ne.util.isExisty(this.readyValue)) {
+            this.request(this.readyValue);
+        } else {
+            this.isIdle = true;
+        }
+        this.readyValue = null;
     }
 });
 ne.util.CustomEvents.mixin(ne.component.AutoComplete);
@@ -518,23 +535,12 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
                     this.autoCompleteObj.setQuerys(dataObj.query);
                     // 키 값으로 뽑아낸 데이터들을 resultManager에 전달하여 뿌려준다.
                     this.autoCompleteObj.setServerData(keyDatas);
-                    this._clearReadyValue();
+                    this.autoCompleteObj.clearReadyValue();
                 } catch (e) {
                     throw new Error('[DataManager] 서버에서 정보를 받을 수 없습니다. ' , e);
                 }
             }, this)
         });
-    },
-    /**
-     * clear ready value and set idle state
-     */
-    _clearReadyValue: function() {
-        if (ne.util.isExisty(this.autoCompleteObj.readyValue)) {
-            this.autoCompleteObj.request(this.autoCompleteObj.readyValue);
-        } else {
-            this.autoCompleteObj.isIdle = true;
-        }
-        this.autoCompleteObj.readyValue = null;
     },
     /**
      * 화면에 뿌려질 컬렉션 데이터를 생성한다.
@@ -610,6 +616,9 @@ ne.component = ne.component || {};
  */
 ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.InputManager.prototype */{
 
+    /**
+     * keyboard 입력 비교 코드
+     */
     keyCodeMap: {
         'TAB' : 9,
         'UP_ARROW' : 38,
@@ -618,7 +627,8 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**
      * 초기화 함수
-     * @param {Object} arguments
+     * @param {Object} autoCompleteObj 자동완성 본체
+     * @param {object} options 자동완성 컴포넌트 옵션
      */
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
@@ -689,8 +699,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      */
     _createParamSetByType: function(options, index) {
 
-        var key,
-            val,
+        var key,d
             opt = this.options,
             listConfig = opt.listConfig[index],
             config = opt.subQuerySet[listConfig.subQuerySet],
@@ -707,18 +716,23 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
         }, this);
 
-        if (!statics) {
-            return;
+        if (statics) {
+            this._createStaticParams(statics);
         }
 
-        // 스테이틱하게 붙은 파라미터들을 처리한다.
+    },
+    /**
+     * 스테이틱하게 붙은 파라미터들을 처리한다.
+     * @param {string} statics
+     * @private
+     */
+    _createStaticParams: function(statics) {
         statics = statics.split(',');
         ne.util.forEach(statics, function(value) {
             val = value.split("=");
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
 
         }, this);
-
     },
 
     /**
@@ -818,12 +832,10 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
      * @private
      */
     _onFocus: function() {
-        var self = this;
-
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval($.proxy(function() {
-            self._onWatch();
-        }), this, this.options.watchInterval);
+            this._onWatch();
+        }, this), this.options.watchInterval);
     },
 
     /**
@@ -991,59 +1003,29 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
     },
 
     /**
+     * 이전결과를 지운다
+     * @private
+     */
+    _deleteBeforeElement: function() {
+        this.$resultList.html('');
+        this.$resultList.hide();
+        this.selectedElement = null;
+    },
+
+    /**
      * AutoComplete의 setServerData함수에 의해 호출되어 서버로부터 전달받은 자동완성 데이터를 화면에 그린다.
      * @param {Array} dataArr 서버로부터 받은 자동완성 데이터 배열
      */
     draw: function(dataArr) {
         //이전 결과 지운다.
-        this.$resultList.html('');
-        this.$resultList.hide();
-        this.selectedElement = null;
+        this._deleteBeforeElement();
 
-        var template = this.options.template;
-        var config = this.options.listConfig;
-        var tmpl, tmplStr, tmplAttr;
+        var len = dataArr.length;
 
-        //tmplStr = this.options.templateElement,
-        //    tmplAttr = this.options.templateAttribute,
-
-        var useTitle = (this.options.useTitle && !!template.title),
-            dataLength = dataArr.length,
-            len = dataLength,
-            index,
-            type,
-            tmplValue,
-            $el,
-            i;
-
-        if (dataLength < 1) {
+        if (len < 1) {
             this._hideBottomArea();
-        }
-
-        for (i = 0; i < len; i++) {
-            type = dataArr[i].type;
-            index = dataArr[i].index;
-
-            tmpl = config[index] ? template[config[index].template] : template.defaults;
-
-            // 타이틀일 경우는 타이틀로 치환한다.
-            if (type === 'title') {
-                tmpl = template.title;
-                if ($el) {
-                    $el.addClass('lastitem');
-                }
-            }
-            // 타이틀을 사용하지 않는 옵션일땐 타이틀을 붙이지 않는다.
-            if (!useTitle && type === 'title') {
-                continue;
-            }
-
-            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
-            $el = $(this._applyTemplate(tmpl.element, tmplValue));
-            // 파라미터를 넘기기위한 값들
-            $el.attr('data-params', tmplValue.params);
-            $el.attr('data-index', index);
-            this.$resultList.append($el);
+        } else {
+            this._makeResultList(dataArr, len);
         }
 
         //결과 영역을 노출한다.
@@ -1051,6 +1033,41 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
         //자동완성 켜기 영역을 보여준다.
         this._showBottomArea();
+    },
+
+    /**
+     * 결과리스트를 만든다
+     * @private
+     */
+    _makeResultList: function(dataArr, len) {
+        var template = this.options.template,
+            config = this.options.listConfig,
+            tmpl,
+            useTitle = (this.options.useTitle && !!template.title),
+            index,
+            type,
+            tmplValue,
+            $el,
+            i;
+
+        for (i = 0; i < len; i++) {
+            type = dataArr[i].type;
+            index = dataArr[i].index;
+            tmpl = config[index] ? template[config[index].template] : template.defaults;
+            // 타이틀일 경우는 타이틀로 치환한다.
+            if (type === 'title') {
+                tmpl = template.title;
+                if (!useTitle) {
+                    continue;
+                }
+            }
+            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
+            $el = $(this._applyTemplate(tmpl.element, tmplValue));
+            // 파라미터를 넘기기위한 값들
+            $el.attr('data-params', tmplValue.params);
+            $el.attr('data-index', index);
+            this.$resultList.append($el);
+        }
     },
 
     /**
@@ -1407,7 +1424,7 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
             actions = this.options.actions,
             index = $selectField.attr('data-index'),
             config = this.options.listConfig[index],
-            action = this.options.actions[config.action],
+            action = actions[config.action],
             paramsString;
 
         $(formElement).attr('action', action);
