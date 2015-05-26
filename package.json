@@ -1,7 +1,26 @@
 {
-    "name": "Component-AutoComplete",
+    "name": "component-auto-complete",
     "version": "1.0.0",
-    "description": "Component-AutoComplete",
+    "description": "검색어 자동완성 컴포넌트<br>검색어 입력시 실시간으로 자동완성된 추천 검색어 목록을 보여주는 컴포넌트입니다.",
+    "featureList": [
+        "입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어 출력",
+        "자동완성 기능 on/off 가능",
+        "TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회 가능",
+        "결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능",
+        "결과 레이어 영역에서 mouse click으로 키워드 검색을 수행"
+    ],
+    "dependency": [
+        "jquery#~1.8.3",
+        "json2#*",
+        "code-snippet#~1.0.2"
+    ],
+    "test": {
+        "PC": [
+            "IE7~11",
+            "Chrome",
+            "Firefox"
+        ]
+    },
     "private": true,
     "devDependencies": {
         "grunt": "^0.4.5",
@@ -22,10 +41,44 @@
         "jasmine-jquery": "^2.0.5",
         "karma-coverage": "^0.2.6",
         "karma-junit-reporter": "^0.2.2",
-        "karma-webdriver-launcher": "git+https://github.com/everedifice/karma-webdriver-launcher.git"
+        "karma-webdriver-launcher": "git+https://github.com/everedifice/karma-webdriver-launcher.git",
+        "readme-builder": "git+https://github.com/jein-yi/readme-builder"
+    },
+    "sample": {
+        "샘플이미지": "![alt tag](https://nhnent.github.io/fe.component-auto-complete/sampleimg.png)"
     },
     "scripts": {
         "doc": "./node_modules/.bin/jsdoc -c conf.json"
     },
-    "author": "kihyun.lee"
+    "author": "kihyun.lee",
+    "history": {
+        "1.1.1": {
+            "content": "요청 방식 병렬->순차로 변경",
+            "date" : "2015.05",
+            "author": "이제인<jein.yi@nhnent.com>"
+        },
+        "1.1.0": {
+            "content": "searchApi 추가",
+            "date": "2015.03",
+            "author": "이제인<jein.yi@nhnent.com>",
+            "hasAPI": true
+        },
+        "1.0.0": {
+            "content": "배포",
+            "date" : "2015.03",
+            "author" : "이제인<jein.yi@nhnent.com>",
+            "hasAPI": true
+        },
+        "0.1.1": {
+            "content": "템플릿 기능 추가",
+            "date": "2015.01",
+            "author": "이제인<jein.yi@nhnent.com>"
+        },
+        "0.1.0": {
+            "content": "최초개발",
+            "date": "2014.09",
+            "author": "이기현 <kihyun.lee@nhnent.com>"
+        }
+    },
+    "tutorial": "자동완성"
 }
