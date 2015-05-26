@@ -10,7 +10,7 @@ Auto Complete
 * 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행
 
 ## Documentation
-* API : https://github.nhnent.com/pages/fe/component-auto-complete/1.1.1
+* API : https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0
 * Tutorial : https://github.nhnent.com/fe/component-auto-complete/wiki/자동완성-컴포넌트-적용방법
 * CI : http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
 
@@ -40,7 +40,7 @@ Auto Complete
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
 | 1.1.1 | 요청 방식 병렬->순차로 변경 | 2015.05 | 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.1">1.1.0</a> | searchApi 추가 | 2015.03 | 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.1">1.0.0</a> | 배포 | 2015.03 | 이제인<jein.yi@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi 추가 | 2015.03 | 이제인<jein.yi@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | 배포 | 2015.03 | 이제인<jein.yi@nhnent.com> |
 | 0.1.1 | 템플릿 기능 추가 | 2015.01 | 이제인<jein.yi@nhnent.com> |
 | 0.1.0 | 최초개발 | 2014.09 | 이기현 <kihyun.lee@nhnent.com> |
