@@ -4,8 +4,7 @@
  * @author FE개발팀 이제인<jein.yi@nhnent.com>
 */
 
-ne = window.ne || {};
-ne.component = ne.component || {};
+ne.util.defineNamespace('ne.component');
 
 /**
  @constructor

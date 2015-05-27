@@ -55,7 +55,7 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
             requestParam = ne.util.extend(this.options.searchApi, defaultParam),
             keyDatas;
 
-        ne.util.ajax.request(this.options.searchUrl, {
+        $.ajax.request(this.options.searchUrl, {
             'dataType': 'jsonp',
             'jsonpCallback': 'dataCallback',
             'data': requestParam,
