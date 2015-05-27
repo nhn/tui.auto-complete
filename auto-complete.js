@@ -471,10 +471,6 @@ ne.util.CustomEvents.mixin(ne.component.AutoComplete);
  * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
-ne = window.ne || {};
-ne.component = ne.component || {};
-
-
 /**
  * 자동완성 컴포넌트 구성 요소중 검색api와 연동하여 데이터를 받아오는 클래스
  * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
@@ -602,11 +598,6 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
  * @version 1.1.0
  * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
-
-
-ne = window.ne || {};
-ne.component = ne.component || {};
-
 
 /**
  * 자동완성 컴포넌트의 구성 요소중 검색어 입력받는 입력창의 동작과 관련된 클래스. <br>
@@ -967,9 +958,6 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
  * @version 1.1.0
  * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
-
-ne = window.ne || {};
-ne.component = ne.component || {};
 
 /**
  * 자동완성 컴포넌트의 구성 요소중 검색어 검색 결과영역에 관련된 클래스. <br>

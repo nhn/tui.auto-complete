@@ -4,9 +4,6 @@
  * @author FE개발팀 이제인<jein.yi@nhnent.com>
  */
 
-ne = window.ne || {};
-ne.component = ne.component || {};
-
 /**
  * 자동완성 컴포넌트의 구성 요소중 검색어 검색 결과영역에 관련된 클래스. <br>
  * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다...
