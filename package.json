@@ -10,7 +10,7 @@
         "결과 레이어 영역에서 mouse click으로 키워드 검색을 수행"
     ],
     "tutorial": "자동완성",
-    "samplePage": "sample1",
+    "samplePage": "sample1.html",
     "dependency": [
         "jquery#~1.8.3",
         "json2#*",

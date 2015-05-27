@@ -12,7 +12,7 @@ Auto Complete
 ## Documentation
 * **API** : https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0
 * **Tutorial** : https://github.nhnent.com/fe/component-auto-complete/wiki/자동완성-컴포넌트-적용방법
-* **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/tutorial-sample1
+* **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/tutorial-sample1.html
 * **CI** : http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
 
 ## Sample Image
