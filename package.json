@@ -9,6 +9,8 @@
         "결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능",
         "결과 레이어 영역에서 mouse click으로 키워드 검색을 수행"
     ],
+    "tutorial": "자동완성",
+    "samplePage": "sample1",
     "dependency": [
         "jquery#~1.8.3",
         "json2#*",
@@ -79,6 +81,5 @@
             "date": "2014.09",
             "author": "이기현 <kihyun.lee@nhnent.com>"
         }
-    },
-    "tutorial": "자동완성"
+    }
 }

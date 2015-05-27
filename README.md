@@ -10,18 +10,19 @@ Auto Complete
 * 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행
 
 ## Documentation
-* API : https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0
-* Tutorial : https://github.nhnent.com/fe/component-auto-complete/wiki/자동완성-컴포넌트-적용방법
-* CI : http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
+* **API** : https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0
+* **Tutorial** : https://github.nhnent.com/fe/component-auto-complete/wiki/자동완성-컴포넌트-적용방법
+* **Sample** - https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0/tutorial-sample1
+* **CI** : http://fe.nhnent.com:8080/jenkins/job/component-auto-complete/
 
 ## Sample Image
 * 샘플이미지<br>
 ![alt tag](https://nhnent.github.io/fe.component-auto-complete/sampleimg.png)
 
 ## Dependency
-* jquery: v1.8.3
-* json2: v*
-* code-snippet: v1.0.2
+* jquery: ~1.8.3
+* json2: *
+* code-snippet: ~1.0.2
 
 ## Test environment
 * PC
@@ -39,8 +40,8 @@ Auto Complete
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
-| 1.1.1 | 요청 방식 병렬->순차로 변경 | 2015.05 | 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi 추가 | 2015.03 | 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | 배포 | 2015.03 | 이제인<jein.yi@nhnent.com> |
-| 0.1.1 | 템플릿 기능 추가 | 2015.01 | 이제인<jein.yi@nhnent.com> |
-| 0.1.0 | 최초개발 | 2014.09 | 이기현 <kihyun.lee@nhnent.com> |
+| 1.1.1 | 요청 방식 병렬->순차로 변경 | 2015.05 | FE개발팀 이제인<jein.yi@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi 추가 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | 배포 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
+| 0.1.1 | 템플릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
+| 0.1.0 | 최초개발 | 2014.09 | FE개발팀 이기현 <kihyun.lee@nhnent.com> |
