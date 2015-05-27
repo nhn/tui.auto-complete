@@ -54,6 +54,11 @@
     },
     "author": "kihyun.lee",
     "history": {
+        "1.1.1a": {
+            "content": "defineNamespace적용",
+            "date" : "2015.05",
+            "author": "이제인<jein.yi@nhnent.com>"
+        },
         "1.1.1": {
             "content": "요청 방식 병렬->순차로 변경",
             "date" : "2015.05",
