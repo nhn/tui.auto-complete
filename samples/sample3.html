@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <title>자동완성 - 자동완성 끄기,켜기 기능 있는 유형</title>
+    <script type="text/javascript" src="libs/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="libs/jquery.cookie.js"></script>
+    <style>
+        #select-search-target {margin:30px 0 0 50px;position:absolute;}
+    </style>
+</head>
+<body style="height:500px;width:1000px;">
+
+<div class="sampleWarp">
+    <select id="select-search-target">
+        <option value="0">All Categories</option>
+        <option value="1">Women</option>
+        <option value="2">Men</option>
+        <option value="3">Children</option>
+        <option value="4">Shoes</option>
+    </select>
+    <div class="formWrap">
+        <!-- 폼태그 -->
+        <form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
+            <!-- 검색창 -->
+            <div class="inputBox">
+                <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
+                <img class="onoff" id="onoffBtn" src="img/btn_on.jpg" width="21" height="21">
+                <input type="hidden" id="org_query" name="org_query">
+            </div>
+
+            <!-- 자동완성 검색결과 영역 -->
+            <div class="suggestBox" id="ac_view1" style="width:269px;">
+                <div class="baseBox">
+                    <ul class="_resultBox" style="display:none;">
+                        <li><a href="#" onclick="return false;" title="">@txt@</a></li>
+                    </ul>
+                    <p id="onofftext" class="bottom" style="display:none;">자동완성 끄기</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+<!-- include js -->
+<script type="text/javascript" src="autoConfig.js"></script>
+<script type="text/javascript" src="dist/code-snippet.js"></script>
+<script type="text/javascript" src="dist/auto-complete.js"></script>
+<!--<script type="text/javascript" src="../src/js/AutoComplete.js"></script>-->
+<!--<script type="text/javascript" src="../src/js/DataManager.js"></script>-->
+<!--<script type="text/javascript" src="../src/js/InputManager.js"></script>-->
+<!--<script type="text/javascript" src="../src/js/ResultManager.js"></script>-->
+
+<!-- 자동완성 생성 -->
+<script>
+    var autoComp = new ne.component.AutoComplete({"config" : Default}),
+        select = $('#select-search-target'),
+        state = {
+            "0": {
+                st: 1111,
+                r_lt: 1111
+            },
+            "1": {
+                st: 11111,
+                r_lt: 11111
+            },
+            "2": {
+                st: 1234,
+                r_lt: 3456
+            },
+            "3": {
+                st: 12345,
+                r_lt: 34567
+            },
+            "4": {
+                st: 01111,
+                r_lt: 14444
+            }
+        };
+
+    // select를 클릭할 때마다 요청 searchApi값을 변경한다.
+    select.change(function(e) {
+        var value = e.target.value;
+        autoComp.setSearchApi(state[value]);
+    });
+</script>
+
+
+</html>
