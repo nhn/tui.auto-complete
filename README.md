@@ -17,7 +17,7 @@ Auto Complete
 
 ## Sample Image
 * 샘플이미지<br>
-![alt tag](https://nhnent.github.io/fe.component-auto-complete/sampleimg.png)
+![autocomplete](https://cloud.githubusercontent.com/assets/11814228/8348687/f73f696c-1b50-11e5-88a4-d503fd1c05b6.png)
 
 ## Dependency
 * jquery: ~1.8.3
