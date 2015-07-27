@@ -182,7 +182,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
         if (!this.options.toggleImg || !this.options.onoffTextElement) {
             // toggleImg 나 onoffTextElement 가 정의되지 않은 경우.(항상 자동완성 사용)
-             this.isUse = true;
+             this._isUse = true;
 
             //자동완성 끄기,켜기 $onOffTxt의미없으므로 옵션값 삭제
             delete this.options.onoffTextElement;
@@ -192,7 +192,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
             //명시적으로 쿠키값이 true로 설정되어 있거나 컴포넌트 최초 로딩시 쿠키값이 없을 경우에는
             //isUse값을 true로 설정하여 자동완성 컴포넌트의 기능을 이용 가능하도록 한다.
-            this.isUse = !!(cookieValue === 'use' || !cookieValue);
+            this._isUse = !!(cookieValue === 'use' || !cookieValue);
         }
 
         //cookieName 체크하여 설정하지 않았다면 defaultName으로 설정
@@ -215,8 +215,8 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         this.querys = null;
         this.isIdle = true;
 
-        this.setToggleBtnImg(this.isUse);
-        this.setCookieValue(this.isUse);
+        this.setToggleBtnImg(this._isUse);
+        this.setCookieValue(this._isUse);
     },
 
     /**
@@ -338,12 +338,12 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 자동완성 사용여부에 대한 쿠키값을 세팅하고 토글버튼을 변경한다.
-     * @param {Boolean} isUse 자동완성 사용여부
+     * @param {Boolean} _isUse 자동완성 사용여부
      */
-    setCookieValue: function(isUse) {
-        $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
-        this.isUse = isUse;
-        this.setToggleBtnImg(isUse);
+    setCookieValue: function(_isUse) {
+        $.cookie(this.options.cookieName, _isUse ? 'use' : 'notUse');
+        this._isUse = _isUse;
+        this.setToggleBtnImg(_isUse);
     },
 
     /**
@@ -359,7 +359,7 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
      *  @return {Boolean} 자동완성 사용여부
      */
     isUseAutoComplete: function() {
-        return this.isUse;
+        return this._isUse;
     },
 
     /**
@@ -372,10 +372,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * 검색창의 토글버튼 이미지를 변경하도록 요청한다.
-     * @param {Boolean} isUse 자동완성 사용 유무
+     * @param {Boolean} _isUse 자동완성 사용 유무
      */
-    setToggleBtnImg: function(isUse) {
-        this.inputManager.setToggleBtnImg(isUse);
+    setToggleBtnImg: function(_isUse) {
+        this.inputManager.setToggleBtnImg(_isUse);
     },
 
     /**
@@ -406,10 +406,10 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
     /**
      * '자동완성 끄기 | 자동완성 켜기' 텍스트를 설정하도록 resultManager에 요청한다.
-     * @param {Boolean} isUse true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
+     * @param {Boolean} _isUse true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.
      */
-    changeOnOffText: function(isUse) {
-        this.resultManager.changeOnOffText(isUse);
+    changeOnOffText: function(_isUse) {
+        this.resultManager.changeOnOffText(_isUse);
     },
 
     /**
@@ -737,14 +737,14 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
 
     /**
      * on/off 토글버튼 이미지를 변경한다.
-     * @param {Boolean} isUse 자동완성 사용 여부
+     * @param {Boolean} _isUse 자동완성 사용 여부
      */
-    setToggleBtnImg: function(isUse) {
+    setToggleBtnImg: function(_isUse) {
         if (!this.options.toggleImg || !(this.$toggleBtn)) {
             return;
         }
 
-        if (isUse) {
+        if (_isUse) {
             this.$toggleBtn.attr('src', this.options.toggleImg.on);
         } else {
             this.$toggleBtn.attr('src', this.options.toggleImg.off);
@@ -1152,10 +1152,10 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
 
     /**
      * 자동완성 사용여부에 따라 결과 리스트 하단에 [자동완성 끄기 | 자동완성 켜기] 텍스트를 설정한다.
-     * @param {Boolean} isUse on/off 여부
+     * @param {Boolean} _isUse on/off 여부
      */
-    changeOnOffText: function(isUse) {
-        if (isUse) {
+    changeOnOffText: function(_isUse) {
+        if (_isUse) {
             this.$onOffTxt.text('자동완성 켜기');
             this.hideResultList();
         } else {
@@ -1368,13 +1368,13 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
      */
     _useAutoComplete: function() {
         //AutoComplete에서 자동완성 사용여부에 대한 쿠키값을 가져온다.
-        var isUse = this.autoCompleteObj.isUseAutoComplete();
+        var _isUse = this.autoCompleteObj.isUseAutoComplete();
 
         //위에서 가져온 쿠키값을 바탕으로 결과 리스트 하단의 자동완성끄기/켜기 텍스트 변경한다.
-        this.changeOnOffText(isUse);
+        this.changeOnOffText(_isUse);
 
         //변경된 자동완성 사용여부 값을 다시 쿠키에 세팅한다.
-        this.autoCompleteObj.setCookieValue(!isUse);
+        this.autoCompleteObj.setCookieValue(!_isUse);
     },
 
     /**

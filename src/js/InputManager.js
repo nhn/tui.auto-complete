@@ -1,11 +1,11 @@
 /**
- * @fileOverview 자동완성 컴포넌트 중에서 입력창에 대한 기능을 제공하는 클래스
+ * @fileOverview InputManager support input element events and all of input function
  * @version 1.1.0
- * @author FE개발팀 이제인<jein.yi@nhnent.com>
+ * @author NHN Entertainment FE dev team. Jein Yi<jein.yi@nhnent.com>
  */
 
 /**
- * 자동완성 컴포넌트의 구성 요소중 검색어 입력받는 입력창의 동작과 관련된 클래스. <br>
+ *  자동완성 컴포넌트의 구성 요소중 검색어 입력받는 입력창의 동작과 관련된 클래스. <br>
  * 단독으로 생성될 수 없으며 ne.component.AutoComplete클래스 내부에서 생성되어 사용된다.
  * @constructor
  */
@@ -306,7 +306,7 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         var autoCompleteObj = this.autoCompleteObj;
 
         if (!autoCompleteObj.isUseAutoComplete() ||
-            !autoCompleteObj.isVisibleResult()) {
+            !autoCompleteObj.isShowResultList()) {
             return;
         }
 

@@ -27,7 +27,7 @@ describe('ResultManager', function() {
 
         rm1.draw(data);
 
-        expect(autocon.isVisibleResult()).toBeTruthy();
+        expect(autocon.isShowResultList()).toBeTruthy();
 
     });
 
@@ -38,7 +38,7 @@ describe('ResultManager', function() {
 
         rm2.draw(data);
 
-        expect(autocon.isVisibleResult()).toBeTruthy();
+        expect(autocon.isShowResultList()).toBeTruthy();
     });
 
     it('_getTmplData', function() {
