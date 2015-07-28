@@ -127,7 +127,7 @@ ne.util.defineNamespace('ne.component');
          // Form element that include search element
          'formElement' : '#ac_form1',
 
-         // Cookie name for toggle cookie
+         // Cookie name for save state
          'cookieName' : "usecookie",
 
          // Class name for selected element
