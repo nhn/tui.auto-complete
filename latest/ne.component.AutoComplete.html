@@ -1,0 +1,3305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: AutoComplete</title>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-fe2.css">
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="header">
+
+        <div class="container-fluid">
+            <h3><a href="index.html">API Documentation</a> <small>FE개발팀</small></h3>
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div id="navigation" class="navigation"><h3>Samples</h3><ul class="list samples"><li class="item"><a href="tutorial-sample1.html">기본 예제</a></li><li class="item"><a href="tutorial-sample2.html">자동완성옵션 예제</a></li><li class="item"><a href="tutorial-sample3.html">자동완성옵션 변경 예제</a></li></ul><h3>Classes</h3><ul class="list classes"><li class="item" id="ne.component.AutoComplete"><span class="title"><span class="p-item">ne.component.</span><a href="ne.component.AutoComplete.html">AutoComplete</a></span><span class="icon blue static">static</span><ul class="sublist members ne.component.AutoComplete"><span class="subtitle">Members</span><li><a href="ne.component.AutoComplete.html#flowMap">flowMap</a></li><li><a href="ne.component.AutoComplete.html#querys">querys</a></li><li><a href="ne.component.AutoComplete.html#watchInterval">watchInterval</a></li></ul><ul class="sublist division ne.component.AutoComplete"><li></li></ul><ul class="sublist methods ne.component.AutoComplete"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.html#clearReadyValue">clearReadyValue</a></li><li><a href="ne.component.AutoComplete.html#getMoved">getMoved</a></li><li><a href="ne.component.AutoComplete.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.html#init">init</a></li><li><a href="ne.component.AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="ne.component.AutoComplete.html#isVisibleResult">isVisibleResult</a></li><li><a href="ne.component.AutoComplete.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.html#request">request</a></li><li><a href="ne.component.AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="ne.component.AutoComplete.html#setMoved">setMoved</a></li><li><a href="ne.component.AutoComplete.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.html#setQuerys">setQuerys</a></li><li><a href="ne.component.AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="ne.component.AutoComplete.html#setServerData">setServerData</a></li><li><a href="ne.component.AutoComplete.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.html#setValue">setValue</a></li><li><a href="ne.component.AutoComplete.html#showResultList">showResultList</a></li></ul></li><li class="item" id="ne.component.AutoComplete.DataManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.DataManager.html">DataManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.DataManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.DataManager.html#request">request</a></li></ul></li><li class="item" id="ne.component.AutoComplete.InputManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.InputManager.html">InputManager</a></span><span class="icon blue static">static</span><ul class="sublist members ne.component.AutoComplete.InputManager"><span class="subtitle">Members</span><li><a href="ne.component.AutoComplete.InputManager.html#keyCodeMap">keyCodeMap</a></li></ul><ul class="sublist division ne.component.AutoComplete.InputManager"><li></li></ul><ul class="sublist methods ne.component.AutoComplete.InputManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.InputManager.html#getValue">getValue</a></li><li><a href="ne.component.AutoComplete.InputManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setParams">setParams</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setToggleBtnImg">setToggleBtnImg</a></li><li><a href="ne.component.AutoComplete.InputManager.html#setValue">setValue</a></li></ul></li><li class="item" id="ne.component.AutoComplete.ResultManager"><span class="title"><span class="p-item">ne.component.AutoComplete.</span><a href="ne.component.AutoComplete.ResultManager.html">ResultManager</a></span><span class="icon blue static">static</span><ul class="sublist methods ne.component.AutoComplete.ResultManager"><span class="subtitle">Methods</span><li><a href="ne.component.AutoComplete.ResultManager.html#changeOnOffText">changeOnOffText</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#draw">draw</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#hideResultList">hideResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#init">init</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#isShowResultList">isShowResultList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#moveNextList">moveNextList</a></li><li><a href="ne.component.AutoComplete.ResultManager.html#showResultList">showResultList</a></li></ul></li></ul></div>
+        <div id="main" class="main">
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        AutoComplete
+        
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+    <div class="container-overview">
+    
+        
+<dt>
+    
+        <h4 class="name" id="AutoComplete">
+            <span class="type-signature"></span>new AutoComplete<span class="signature">(htOptions)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line151">line 151</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>htOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="prettyprint"><code>var autoCompleteObj = new ne.component.AutoComplete({
+       "configId" : "Default"    // autoConfig.js에서 사용할 DataSet의 키값
+    });
+    /**
+    작성되어야 하는 autoConfig.js 의 형식
+    {
+        Default = {
+        // 설정용가능한 항목을 모두 설정한 config
+        // 자동완성 결과를 보여주는 엘리먼트
+        'resultListElement': '._resultBox',
+
+        // 검색어를 입력하는 input 엘리먼트
+        'searchBoxElement':  '#ac_input1',
+
+        // 입력한 검색어를 넘기기 위한 hidden element
+        'orgQueryElement' : '#org_query',
+
+        // on,off 버튼 엘리먼트
+        'toggleBtnElement' : $("#onoffBtn"),
+
+        // on,off 상태를 알리는 엘리먼트
+        'onoffTextElement' : $(".baseBox .bottom"),
+
+        // on, off상태일때 변경 이미지 경로
+        'toggleImg' : {
+            'on' : '../img/btn_on.jpg',
+            'off' : '../img/btn_off.jpg'
+        },
+
+        // 컬렉션아이템별 보여질 리스트 겟수
+        'viewCount' : 3,
+
+        // 서브쿼리로 넘어갈 키 값들의 배열(컬렉션 명 별로 지정 할 수 있다, 따로 지정하지 않으면 defaults가 적용된다.)
+        'subQuerySet': [
+            ['key1', 'key2', 'key3'],
+            ['dep1', 'dep2', 'dep3'],
+            ['ch1', 'ch2', 'ch3'],
+            ['cid']
+        ],
+
+        // 컬렉션 인덱스별 자동완성 리스트의 config를 설정한다.
+        'listConfig': {
+            '0': {
+                'template': 'department',
+                'subQuerySet' : 0,
+                'action': 0
+            },
+            '1': {
+                'template': 'srch_in_department',
+                'subQuerySet' : 1,
+                'action': 0
+            },
+            '2': {
+                'template': 'srch_in_department',
+                'subQuerySet' : 2,
+                'action': 1,
+                'staticParams': 0
+            },
+            '3': {
+                'template': 'department',
+                'subQuerySet' : 0,
+                'action': 1,
+                'staticParams': 1
+            }
+        },
+
+        // 컬렉션 타입 별로 표시될 마크업, 데이터가 들어갈 부분은 @key@ 형식으로 사용한다.(지정하지 않으면, defaults가 적용된다.)
+         // 형식은 수정 가능하지만, keyword-field는 키워드가 들어가는 부분에 필수로 들어가야함. 단 title에는 들어가면 안됨.
+         'template' :  {
+                department:    {
+                    element: '&lt;li class="department">' +
+                                '&lt;span class="slot-field">Shop the&lt;/span> ' +
+                                '&lt;a href="#" class="keyword-field">@subject@&lt;/a> ' +
+                                '&lt;span class="slot-field">Store&lt;/span>' +
+                             '&lt;/li>',
+                     attr: ['subject']
+         },
+         srch : {
+                    element: '&lt;li class="srch">&lt;span class="keyword-field">@subject@&lt;/span>&lt;/li>',
+                    attr: ['subject']
+         },
+         srch_in_department :    {
+                    element: '&lt;li class="inDepartment">' +
+                                '&lt;a href="#" class="keyword-field">@subject@&lt;/a> ' +
+                                 '&lt;span class="slot-field">in &lt;/span>' +
+                                 '&lt;span class="depart-field">@department@&lt;/span>' +
+                             '&lt;/li>',
+                     attr: ['subject', 'department']
+         },
+         title: {
+                    element: '&lt;li class="title">&lt;span>@title@&lt;/span>&lt;/li>',
+                    attr: ['title']
+         },
+         defaults: {
+                    element: '&lt;li class="srch">&lt;span class="keyword-field">@subject@&lt;/span>&lt;/li>',
+                    attr: ['subject']
+         }
+         },
+
+         // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
+         'actions': [
+             "http://www.fashiongo.net/catalog.aspx",
+             "http://www.fashiongo.net/search2.aspx"
+         ],
+
+         // 컬렉션 타입별 추가 스테틱한 옵션들을 설정
+         'staticParams':[
+             "qt=ProductName",
+             "at=TEST,bt=ACT"
+         ],
+
+         // 타이틀을 보일지 여부
+         'useTitle': true,
+
+         // 검색창을 감싸고 있는 form앨리먼트
+         'formElement' : '#ac_form1',
+
+         // 자동완성을 끄고 켤때 사용되는 쿠키명
+         'cookieName' : "usecookie",
+
+         // 선택된 엘리먼트에 추가되는 클래스명
+         'mouseOverClass' : 'emp',
+
+         // 자동완성API url
+         'searchUrl' : 'http://10.24.136.172:20011/ac',
+
+         // 자동완성API request 설정
+         'searchApi' : {
+                'st' : 1111,
+                'r_lt' : 1111,
+                'r_enc' : 'UTF-8',
+                'q_enc' : 'UTF-8',
+                'r_format' : 'json'
+            }
+       }
+    }</code></pre>
+
+    
+</dd>
+
+    
+    </div>
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+        
+<dl>
+    <dt><h4 class="name">
+        ne.component.AutoComplete.DataManager
+        <div class="container-source members">
+            <code><a href="ne.component.AutoComplete.DataManager.html">ne.component.AutoComplete.DataManager</a></code>
+        </div>
+    <h4></dt>
+    <dd></dd>
+
+    <dt><h4 class="name">
+        ne.component.AutoComplete.InputManager
+        <div class="container-source members">
+            <code><a href="ne.component.AutoComplete.InputManager.html">ne.component.AutoComplete.InputManager</a></code>
+        </div>
+    <h4></dt>
+    <dd></dd>
+
+    <dt><h4 class="name">
+        ne.component.AutoComplete.ResultManager
+        <div class="container-source members">
+            <code><a href="ne.component.AutoComplete.ResultManager.html">ne.component.AutoComplete.ResultManager</a></code>
+        </div>
+    <h4></dt>
+    <dd></dd>
+</dl>
+    
+
+     
+
+    
+
+    
+    <div class="container-members">
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id="flowMap">
+        <span class="type-signature"></span>flowMap<span class="type-signature"></span>
+        
+        <div class="container-source members">
+            <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+            <code><a href="AutoComplete.js.html#line156">line 156</a></code>
+        </div>
+        
+    </h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>키입력시 방향값</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="querys">
+        <span class="type-signature"></span>querys<span class="type-signature"> :null</span>
+        
+        <div class="container-source members">
+            <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+            <code><a href="AutoComplete.js.html#line214">line 214</a></code>
+        </div>
+        
+    </h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>사용자가 입력한 쿼리 데이터와, 한글값으로 매칭되는 값이 있을경우 함께 넘어오는 배열을 저장함.</p>
+    </div>
+    
+
+    <!--
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">null</span>
+
+
+            </li>
+        </ul>
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="watchInterval">
+        <span class="type-signature"></span>watchInterval<span class="type-signature"></span>
+        
+        <div class="container-source members">
+            <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+            <code><a href="AutoComplete.js.html#line165">line 165</a></code>
+        </div>
+        
+    </h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>입력값이 변경되었는지 체크하는 타이머의 interval</p>
+    </div>
+    
+
+    <!--
+    
+    -->
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+</dd>
+
+        </dl>
+    </div>
+    
+
+    
+    <div class="container-methods">
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    
+        <h4 class="name" id="_checkValidation">
+            <span class="type-signature"><span class="icon green">private</span> </span>_checkValidation<span class="signature">(htOptions)</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line227">line 227</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 컴포넌트 사용을 위해 설정하는 설정 파일 내용을 검증 및 필수 항목을 체크한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>htOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>config의 설정 내용</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>설정 파일의 유효성 여부</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="changeOnOffText">
+            <span class="type-signature"></span>changeOnOffText<span class="signature">(isUse)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line410">line 410</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>'자동완성 끄기 | 자동완성 켜기' 텍스트를 설정하도록 resultManager에 요청한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>isUse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>true로 설정되면 '자동완성 끄기' 로 하단에 노출된다.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="clearReadyValue">
+            <span class="type-signature"></span>clearReadyValue<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line457">line 457</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>clear ready value and set idle state</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="getMoved">
+            <span class="type-signature"></span>getMoved<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line426">line 426</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>resultManager의 isMoved변수값을 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>resultManager의 isMoved값</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="getValue">
+            <span class="type-signature"></span>getValue<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line310">line 310</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색창에 현재 입력된 키워드 스트링을 반환한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>검색창에 입력된 값</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="hideResultList">
+            <span class="type-signature"></span>hideResultList<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line383">line 383</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색결과 영역 리스트가 숨겨지도록 요청한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="init">
+            <span class="type-signature"></span>init<span class="signature">(htOptions)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line171">line 171</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>초기화 함수</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>htOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>함수의 argument. autoConfig의 키값 정보가 들어온다.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="isShowResultList">
+            <span class="type-signature"></span>isShowResultList<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line368">line 368</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>결과 리스트 영역이 show상태인지 hide상태인지 여부를 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>결과 리스트 영역이 보이는 상태인지에 대한 여부</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="isUseAutoComplete">
+            <span class="type-signature"></span>isUseAutoComplete<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line360">line 360</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성을 사용하고 있는지 여부 리턴</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>자동완성 사용여부</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="isVisibleResult">
+            <span class="type-signature"></span>isVisibleResult<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line418">line 418</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 검색어 리스트의 display상태를 리턴한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <div class="returns">
+        <h5>Returns:</h5>
+        <div class="details">
+        
+                
+<div class="param-desc">
+    <p>자동완성 검색어 리스트의 display상태</p>
+</div>
+
+            
+        </div>
+        </div>
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="moveNextList">
+            <span class="type-signature"></span>moveNextList<span class="signature">(flow)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line402">line 402</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>resultManager의 moveNextList함수를 호출하여 자동완성 검색어 리스트중에서 이전 or 다음 항목으로 이동한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>flow</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>이동한 방향을 정한다.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="request">
+            <span class="type-signature"></span>request<span class="signature">(keyword)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line302">line 302</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>DataManager에 keyword와 함께 서버로 데이터 요청을 하도록 한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>keyword</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>자동완성 서버api로 전송할 키워드</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setCookieValue">
+            <span class="type-signature"></span>setCookieValue<span class="signature">(isUse)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line342">line 342</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>자동완성 사용여부에 대한 쿠키값을 세팅하고 토글버튼을 변경한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>isUse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>자동완성 사용여부</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setMoved">
+            <span class="type-signature"></span>setMoved<span class="signature">(isMoved변수값)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line434">line 434</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>resultManager의 isMoved변수값을 세팅한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>isMoved변수값</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setParams">
+            <span class="type-signature"></span>setParams<span class="signature">(paramStr)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line326">line 326</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>추가 파라미터로 전달 될 자동완성 파라미터들을 생성하도록 inputManger에 요청</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>paramStr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>함께 넘어갈 파라미터 배열의 문자열 형태(&amp;로 연결되어 있음)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setQuerys">
+            <span class="type-signature"></span>setQuerys<span class="signature">(querys)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line352">line 352</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>사용자가 입력한 값과, 매칭되는 한글값을 저장한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>querys</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>응답받은 쿼리값들</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setSearchApi">
+            <span class="type-signature"></span>setSearchApi<span class="signature">(options)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line450">line 450</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>serachApi를 재설정한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>searchApi옵션 설정</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="prettyprint"><code>autoComplete.setSearchApi({
+     'st' : 9351,
+     'r_lt' : 7187,
+     'r_enc' : 'UTF-8',
+     'q_enc' : 'UTF-8',
+     'r_format' : 'json'
+ });</code></pre>
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setServerData">
+            <span class="type-signature"></span>setServerData<span class="signature">(dataArr)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line334">line 334</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>ajax통신하여 서버로부터 내려온 데이터를 화면에 결과를 그리도록 요청한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>dataArr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ajax통신 후 서버로부터 받은 검색 결과 배열</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setToggleBtnImg">
+            <span class="type-signature"></span>setToggleBtnImg<span class="signature">(isUse)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line376">line 376</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색창의 토글버튼 이미지를 변경하도록 요청한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>isUse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>자동완성 사용 유무</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="setValue">
+            <span class="type-signature"></span>setValue<span class="signature">(keyword)</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line318">line 318</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>파라미터로 전달된 자동완성 키워드를 inputManager에 전달하여 검색창에 노출되도록 한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <div class="params">
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name first"><code>keyword</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>검색창에 노출할 키워드</p></td>
+        </tr>
+
+    
+    </tbody>
+</table></div>
+    </div>
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="showResultList">
+            <span class="type-signature"></span>showResultList<span class="signature">()</span><span class="type-signature"></span>
+            
+                <div class="container-source method">
+                    <code><a href="AutoComplete.js.html">AutoComplete.js</a></code>,
+                    <code><a href="AutoComplete.js.html#line392">line 392</a></code>
+                </div>
+            
+        </h4>
+
+
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>검색결과 영역 리스트가 보여지도록 요청한다.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    <!--
+    
+    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+</div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+<script>
+(function() {
+// 영역 height 설정
+var height = (window.innerHeight || document.documentElement.clientHeight || document.getElementByTagName('body')[0].clientHeight) - 50;
+var navigation = document.getElementById('navigation');
+var main = document.getElementById('main');
+navigation.style.height = height + 'px';
+main.style.height = height + 'px';
+
+// IE 7,8을 위한 getElementsByClassName 구현
+var getElementsByClassName = function(className, parentElement) {
+	if(document.getElementsByClassName) {
+		return (parentElement || document).getElementsByClassName(className);
+	}
+
+    var regEx = new RegExp('(^| )'+className+'( |$)');
+	var nodes = new Array();
+    var elements = (parentElement || document.body).getElementsByTagName("*");
+    for(var i = 0, len = elements.length; i < len ; i++) {
+        if(regEx.test(elements[i].className)) {
+			nodes.push(elements[i]);
+		}
+	}
+	elements = null;
+    return nodes;
+}
+
+// url 파싱후 해당 카테고리만 display:block 처리
+var url = location.href;
+var path = url.lastIndexOf('/');
+var fileName = url.substring(path+1);
+var fullName = fileName.split('.');
+fullName.length -= 1;
+fullName = fullName.join('.');
+fullName = fullName.split('-');
+fullName = fullName[fullName.length - 1];
+var lnbList = getElementsByClassName(fullName);
+if(lnbList.length && lnbList.length > 0) {
+    for(var i = 0, len = lnbList.length; i < len; i++) {
+        lnbList[i].className += ' selected';
+    }
+}
+
+var title = document.getElementById(fullName);
+if(title) {
+    title.className += ' selected';
+    title.innerHTML = '<span class="arrow">▶</span>' + title.innerHTML;
+
+    var static = getElementsByClassName('static', title);
+    if(static) {
+        static[0].className += ' selected';
+    }
+}
+})();
+</script>
+<script type="text/javascript" src="scripts/prettify/prettify.js"></script>
+<script type="text/javascript" src="scripts/prettify/lang-css.js"></script>
+<script type="text/javascript">prettyPrint();</script>
+<script type="text/javascript" src="scripts/linenumber.js"></script>
+</body>
+</html>
