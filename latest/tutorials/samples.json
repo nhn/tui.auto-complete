@@ -1,11 +1,11 @@
 {
   "sample1": {
-    "title" : "기본 예제"
+    "title" : "Defulat Example"
   },
   "sample2": {
-    "title": "자동완성옵션 예제"
+    "title": "Option Example"
   },
   "sample3": {
-    "title": "자동완성옵션 변경 예제"
+    "title": "Change Option Example"
   }
 }
