@@ -1,18 +1,18 @@
 Auto Complete
 ===============
 Search keyword auto complete component.<br>
-Display recommend word list, when you type search charator in input element.
+Display recommend word list, when you type search character in input element.
 
 ## Feature
 * Show recommend result list layer from api.
 * Auto complete on/off
 * Move focus use tab, up, down keys
-* Submit by result element click or enter
+* Submit by click result element or type enter key
 
 ## Documentation
-* **API** : https://nhnent.github.io/fe.component-auto-complete/1.1.0
+* **API** : https://nhnent.github.io/fe.component-auto-complete/latest
 * **Tutorial** : https://github.com/nhnent/fe.component-auto-complete/wiki/Auto-Complete-Tutorial
-* **Sample** - https://nhnent.github.io/fe.component-auto-complete/1.1.0/tutorial-sample1.html
+* **Sample** - https://nhnent.github.io/fe.component-auto-complete/latest/tutorial-sample1.html
 
 
 ## Sample Image
@@ -32,7 +32,7 @@ Display recommend word list, when you type search charator in input element.
 
 ## Download/Install
 * Bower:
-   * lastest : `bower install ne-component-auto-complete#master`
+   * latest : `bower install ne-component-auto-complete#master`
    * each version : `bower install ne-component-auto-complete[#tag]`
 * Download: https://github.com/nhnent/fe.component-auto-complete
 
