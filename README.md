@@ -1,22 +1,21 @@
 Auto Complete
 ===============
-검색어 자동완성 컴포넌트<br>검색어 입력시 실시간으로 자동완성된 추천 검색어 목록을 보여준다.
+Search keyword auto complete component.<br>
+Display recommend word list, when you type search character in input element.
 
 ## Feature
-* 입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어 출력
-* 자동완성 기능 on/off 가능
-* TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회 가능
-* 결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능
-* 결과 레이어 영역에서 mouse click으로 키워드 검색을 수행
+* Show recommend result list layer from api.
+* Auto complete on/off
+* Move focus use tab, up, down keys
+* Submit by click result element or type enter key
 
 ## Documentation
-* **API** : https://nhnent.github.io/fe.component-auto-complete/1.1.0
-* **Tutorial** : https://github.com/nhnent/fe.component-auto-complete/wiki/자동완성-컴포넌트-적용방법
-* **Sample** - https://nhnent.github.io/fe.component-auto-complete/1.1.0/tutorial-sample1.html
+* **API** : https://nhnent.github.io/fe.component-auto-complete/latest
+* **Tutorial** : https://github.com/nhnent/fe.component-auto-complete/wiki/Auto-Complete-Tutorial
+* **Sample** - https://nhnent.github.io/fe.component-auto-complete/latest/tutorial-sample1.html
 
 
 ## Sample Image
-* 샘플이미지<br>
 ![autocomplete](https://cloud.githubusercontent.com/assets/11814228/8348687/f73f696c-1b50-11e5-88a4-d503fd1c05b6.png)
 
 ## Dependency
@@ -33,20 +32,20 @@ Auto Complete
 
 ## Download/Install
 * Bower:
-   * 최신버전 : `bower install ne-component-auto-complete#master`
-   * 특정버전 : `bower install ne-component-auto-complete[#tag]`
+   * latest : `bower install ne-component-auto-complete#master`
+   * each version : `bower install ne-component-auto-complete[#tag]`
 * Download: https://github.com/nhnent/fe.component-auto-complete
 
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
-| 1.1.1a | defineNamespace적용 | 2015.05 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| 1.1.1 | 요청 방식 병렬->순차로 변경 | 2015.05 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi 추가 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | 배포 | 2015.03 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| 0.1.1 | 템플릿 기능 추가 | 2015.01 | FE개발팀 이제인<jein.yi@nhnent.com> |
-| 0.1.0 | 최초개발 | 2014.09 | FE개발팀 이기현 |
+| 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
+| 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi added | 2015.03 |  NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | release | 2015.03 |  NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
+| 0.1.1 | Template added | 2015.01 | NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
+| 0.1.0 | Develop | 2014.09 | NHN ent. FE dev team Kee Hyun Lee |
 
 
 ## LICENSE
-[MIT 라이선스](LICENSE)로 자유롭게 사용할 수 있습니다.
+[MIT LICENSE](LICENSE)
