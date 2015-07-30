@@ -1,0 +1,40 @@
+{
+  "name": "code-snippet",
+  "version": "1.0.4",
+  "authors": [
+    "FE"
+  ],
+  "license": "PRIVATE",
+  "private": true,
+  "main": "code-snippet.js",
+  "ignore": [
+    "**/.*",
+    ".*",
+    "src",
+    "bin",
+    "node_modules",
+    "bower_components",
+    "test",
+    "bower.json",
+    "conf.json",
+    "Gruntfile.js",
+    "karma.conf.js",
+    "package.json",
+    "karma.local.conf.js",
+    "tutorial"
+  ],
+  "devDependencies": {
+    "json2": "*",
+    "jquery": "~1.8.3"
+  },
+  "homepage": "https://github.com/nhnent/fe.code-snippet",
+  "_release": "1.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.4",
+    "commit": "5f77e24f71d7b2c04ca2d08d516ea521728f4b94"
+  },
+  "_source": "git://github.com/nhnent/fe.code-snippet.git",
+  "_target": "~1.0.2",
+  "_originalSource": "ne-code-snippet"
+}
