@@ -8,7 +8,7 @@
  * Unit of auto complete that belong with search result list.
  * @constructor
  */
-ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.component.AutoComplete.ResultManager.prototype */{
+var ResultManager = ne.util.defineClass(/** @lends ResultManager.prototype */{
     /**
      * Initailize
      */
@@ -505,3 +505,5 @@ ne.component.AutoComplete.ResultManager = ne.util.defineClass(/** @lends ne.comp
         }
     }
 });
+
+module.exports = ResultManager;

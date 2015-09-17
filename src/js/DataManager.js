@@ -8,7 +8,7 @@
  * Unit of auto complete connecting server.
  * @constructor
  */
-ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.DataManager.prototype */{
+var DataManager = ne.util.defineClass(/**@lends DataManager.prototype */{
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
@@ -116,3 +116,5 @@ ne.component.AutoComplete.DataManager = ne.util.defineClass(/**@lends ne.compone
         return items;
     }
 });
+
+module.exports = DataManager;

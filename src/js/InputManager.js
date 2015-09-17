@@ -8,7 +8,7 @@
  * Unit of auto complete component that belong with input element.
  * @constructor
  */
-ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.component.AutoComplete.InputManager.prototype */{
+var InputManager = ne.util.defineClass(/**@lends InputManager.prototype */{
 
     /**
      * keyboard Input KeyCode enum
@@ -338,3 +338,5 @@ ne.component.AutoComplete.InputManager = ne.util.defineClass(/**@lends ne.compon
         }
     }
 });
+
+module.exports = InputManager;

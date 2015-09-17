@@ -4,7 +4,9 @@
  * @author NHN Entertainment FE Dev Team. Jein Yi<jein.yi@nhnent.com>
 */
 
-ne.util.defineNamespace('ne.component');
+var DataManager = require('./DataManager');
+var InputManager = require('./InputManager');
+var ResultManager = require('./ResultManager');
 
 /**
  @constructor
@@ -147,7 +149,7 @@ ne.util.defineNamespace('ne.component');
     }
 
 */
-ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
+var AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
 
     /**
      * Direction value for key
@@ -175,7 +177,6 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         }
 
         var cookieValue,
-            autoComplete = ne.component.AutoComplete,
             defaultCookieName = '_atcp_use_cookie';
 
         if (!this.options.toggleImg || !this.options.onoffTextElement) {
@@ -192,9 +193,9 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
 
         this.options.watchInterval = ne.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
 
-        this.dataManager = new autoComplete.DataManager(this, this.options);
-        this.inputManager = new autoComplete.InputManager(this, this.options);
-        this.resultManager = new autoComplete.ResultManager(this, this.options);
+        this.dataManager = new DataManager(this, this.options);
+        this.inputManager = new InputManager(this, this.options);
+        this.resultManager = new ResultManager(this, this.options);
 
         /**
          * Save matched input english string with Korean.
@@ -439,4 +440,5 @@ ne.component.AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoCompl
         this.readyValue = null;
     }
 });
-ne.util.CustomEvents.mixin(ne.component.AutoComplete);
+ne.util.CustomEvents.mixin(AutoComplete);
+module.exports = AutoComplete;

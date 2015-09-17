@@ -39,12 +39,11 @@ Display recommend word list, when you type search character in input element.
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
-| 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
-| 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi added | 2015.03 |  NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | release | 2015.03 |  NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
-| 0.1.1 | Template added | 2015.01 | NHN ent. FE dev team Jein Yi<jein.yi@nhnent.com> |
-| 0.1.0 | Develop | 2014.09 | NHN ent. FE dev team Kee Hyun Lee |
+| 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi added | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | release | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| 0.1.1 | Template added | 2015.01 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 
 
 ## LICENSE

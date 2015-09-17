@@ -1,90 +1,39 @@
 {
   "name": "component-auto-complete",
-  "version": "1.0.0",
-  "description": "검색어 자동완성 컴포넌트<br>검색어 입력시 실시간으로 자동완성된 추천 검색어 목록을 보여준다.",
-  "featureList": [
-    "입력창에 검색어를 입력하면 자동완성 검색어 api에 검색어를 질의하여 자동완성 결과를 결과 레이어 출력",
-    "자동완성 기능 on/off 가능",
-    "TAB키, 방향키(up, down)로 검색 결과 레이어에서 키워드들을 순회 가능",
-    "결과 레이어 영역에서 mouse move로 자동완성 목록을 탐색 가능",
-    "결과 레이어 영역에서 mouse click으로 키워드 검색을 수행"
-  ],
-  "tutorial": "자동완성",
-  "samplePage": "sample1.html",
-  "dependency": [
-    "jquery#~1.8.3",
-    "json2#*",
-    "code-snippet#~1.0.2"
-  ],
-  "test": {
-    "PC": [
-      "IE7~11",
-      "Chrome",
-      "Firefox"
-    ]
-  },
-  "private": true,
+  "version": "1.1.1a",
+  "description": "",
   "devDependencies": {
-    "fedoc-template": "git+http://14bfd38a036366f7ca90355d202038126127bd01:x-oauth-basic@github.nhnent.com/FE/Share-FEDocTemplate.git",
-    "grunt": "^0.4.5",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-copy": "^0.6.0",
-    "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-contrib-requirejs": "^0.4.4",
-    "grunt-contrib-uglify": "^0.6.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-template": "^0.2.3",
-    "grunt-zip": "^0.16.0",
-    "jasmine-jquery": "^2.0.5",
-    "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
-    "karma": "^0.12.22",
-    "karma-coverage": "^0.2.6",
-    "karma-jasmine": "~0.2.0",
-    "karma-junit-reporter": "^0.2.2",
-    "karma-requirejs": "^0.2.2",
+    "browserify": "latest",
+    "browserify-istanbul": "^0.2.1",
+    "code-snippet": "git+http://4316b69ceef56267d69d733515f0f6ef3651ca7f:x-oauth-basic@github.nhnent.com/fe/code-snippet.git",
+    "fedoc-template": "git+http://70327b4564c7a80eb61724056876b960290946dd:x-oauth-basic@github.nhnent.com/fe/share-fedoc-template.git#develop",
+    "gulp": "latest",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "latest",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "handlebars": "^3.0.3",
+    "hbsfy": "^2.2.1",
+    "jasmine-core": "latest",
+    "jasmine-jquery": "^2.1.0",
+    "karma": "^0.12.37",
+    "karma-browserify": "latest",
+    "karma-coverage": "latest",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-jasmine": "^0.3.5",
+    "karma-junit-reporter": "^0.3.0",
+    "karma-mocha-reporter": "latest",
+    "karma-phantomjs-launcher": "^0.2.1",
     "karma-webdriver-launcher": "git+https://github.com/everedifice/karma-webdriver-launcher.git",
-    "readme-builder": "git+https://github.com/jein-yi/readme-builder.git",
-    "requirejs": "^2.1.14"
-  },
-  "sample": {
-    "샘플이미지": "![alt tag](https://nhnent.github.io/fe.component-auto-complete/sampleimg.png)"
+    "moment": "^2.10.3",
+    "phantomjs": "^1.9.18",
+    "underscore": "^1.8.3",
+    "vinyl-buffer": "latest",
+    "vinyl-source-stream": "latest"
   },
   "scripts": {
-    "doc": "./node_modules/.bin/jsdoc -c conf.json"
+    "doc": "./node_modules/.bin/jsdoc -c jsdoc-conf.json"
   },
-  "author": "kihyun.lee",
-  "history": {
-    "1.1.1a": {
-      "content": "defineNamespace적용",
-      "date": "2015.05",
-      "author": "이제인<jein.yi@nhnent.com>"
-    },
-    "1.1.1": {
-      "content": "요청 방식 병렬->순차로 변경",
-      "date": "2015.05",
-      "author": "이제인<jein.yi@nhnent.com>"
-    },
-    "1.1.0": {
-      "content": "searchApi 추가",
-      "date": "2015.03",
-      "author": "이제인<jein.yi@nhnent.com>",
-      "hasAPI": true
-    },
-    "1.0.0": {
-      "content": "배포",
-      "date": "2015.03",
-      "author": "이제인<jein.yi@nhnent.com>",
-      "hasAPI": true
-    },
-    "0.1.1": {
-      "content": "템플릿 기능 추가",
-      "date": "2015.01",
-      "author": "이제인<jein.yi@nhnent.com>"
-    },
-    "0.1.0": {
-      "content": "최초개발",
-      "date": "2014.09",
-      "author": "이기현"
-    }
-  }
+  "author": "NHNEnt FE Development Team <dl_javascript@nhnent.com>"
 }
