@@ -1,14 +1,14 @@
 /**
- * @fileoverview DataManager that request data at api with input query
+ * @fileoverview Data is kind of manager module to request data at API with input querys.
  * @version 1.1.0
- * @author NHN Entertainment FE dev team. Jein Yi<jein.yi@nhnent.com>
+ * @author NHN Entertainment FE dev team. <dl_javascript@nhnent.com>
  */
 
 /**
  * Unit of auto complete connecting server.
  * @constructor
  */
-var DataManager = ne.util.defineClass(/**@lends DataManager.prototype */{
+var Data = ne.util.defineClass(/**@lends DataManager.prototype */{
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
@@ -117,4 +117,4 @@ var DataManager = ne.util.defineClass(/**@lends DataManager.prototype */{
     }
 });
 
-module.exports = DataManager;
+module.exports = Data;

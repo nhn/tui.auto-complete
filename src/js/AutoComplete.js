@@ -1,12 +1,12 @@
 /**
- * @fileoverview Core element. All of auto complete objects belong with this object.
+ * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
  * @version 1.1.0
- * @author NHN Entertainment FE Dev Team. Jein Yi<jein.yi@nhnent.com>
+ * @author NHN Entertainment FE Dev Team. <dl_javascript@nhnent.com>
 */
 
-var DataManager = require('./DataManager');
-var InputManager = require('./InputManager');
-var ResultManager = require('./ResultManager');
+var DataManager = require('./manager/data');
+var InputManager = require('./manager/input');
+var ResultManager = require('./manager/result');
 
 /**
  @constructor

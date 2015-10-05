@@ -1,14 +1,14 @@
 /**
- * @fileoverview ResultManager draw result list and apply template.
+ * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
  * @version 1.1.0
- * @author  NHN entertainment FE dev team Jein Yi<jein.yi@nhnent.com>
+ * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
  */
 
 /**
  * Unit of auto complete that belong with search result list.
  * @constructor
  */
-var ResultManager = ne.util.defineClass(/** @lends ResultManager.prototype */{
+var Result = ne.util.defineClass(/** @lends Result.prototype */{
     /**
      * Initailize
      */
@@ -506,4 +506,4 @@ var ResultManager = ne.util.defineClass(/** @lends ResultManager.prototype */{
     }
 });
 
-module.exports = ResultManager;
+module.exports = Result;

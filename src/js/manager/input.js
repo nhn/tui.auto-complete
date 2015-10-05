@@ -1,14 +1,14 @@
 /**
- * @fileOverview InputManager support input element events and all of input function
+ * @fileOverview Input is kind of manager module to support input element events and all of input functions.
  * @version 1.1.0
- * @author NHN Entertainment FE dev team. Jein Yi<jein.yi@nhnent.com>
+ * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
  */
 
 /**
  * Unit of auto complete component that belong with input element.
  * @constructor
  */
-var InputManager = ne.util.defineClass(/**@lends InputManager.prototype */{
+var Input = ne.util.defineClass(/**@lends InputManager.prototype */{
 
     /**
      * keyboard Input KeyCode enum
@@ -339,4 +339,4 @@ var InputManager = ne.util.defineClass(/**@lends InputManager.prototype */{
     }
 });
 
-module.exports = InputManager;
+module.exports = Input;
