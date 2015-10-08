@@ -8,7 +8,7 @@
  * Unit of auto complete component that belong with input element.
  * @constructor
  */
-var Input = ne.util.defineClass(/**@lends InputManager.prototype */{
+var Input = ne.util.defineClass(/**@lends Input.prototype */{
 
     /**
      * keyboard Input KeyCode enum

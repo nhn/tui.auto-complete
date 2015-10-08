@@ -149,7 +149,7 @@ var ResultManager = require('./manager/result');
     }
 
 */
-var AutoComplete = ne.util.defineClass(/**@lends ne.component.AutoComplete.prototype */{
+var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Direction value for key

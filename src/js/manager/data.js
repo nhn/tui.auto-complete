@@ -8,7 +8,7 @@
  * Unit of auto complete connecting server.
  * @constructor
  */
-var Data = ne.util.defineClass(/**@lends DataManager.prototype */{
+var Data = ne.util.defineClass(/**@lends Data.prototype */{
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
