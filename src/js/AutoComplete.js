@@ -149,7 +149,7 @@ var ResultManager = require('./manager/result');
     }
 
 */
-var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
+var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Direction value for key
@@ -191,7 +191,7 @@ var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
             this.options.cookieName = defaultCookieName;
         }
 
-        this.options.watchInterval = ne.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
+        this.options.watchInterval = tui.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
 
         this.dataManager = new DataManager(this, this.options);
         this.inputManager = new InputManager(this, this.options);
@@ -220,12 +220,12 @@ var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
 
         config = htOptions.config;
 
-        if (!ne.util.isExisty(config)) {
+        if (!tui.util.isExisty(config)) {
             throw new Error('Config file is not avaliable. #' + config);
             return false;
         }
 
-        configArr = ne.util.keys(config);
+        configArr = tui.util.keys(config);
 
         var configLen = configArr.length,
             i,
@@ -244,13 +244,13 @@ var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
             checkedFields = [];
 
         for (i = 0; i < configLen; i++) {
-            if (ne.util.inArray(configArr[i], requiredFields, 0) >= 0) {
+            if (tui.util.inArray(configArr[i], requiredFields, 0) >= 0) {
                 checkedFields.push(configArr[i]);
             }
         }
 
-        ne.util.forEach(requiredFields, function(el) {
-            if (ne.util.inArray(el, checkedFields, 0) === -1) {
+        tui.util.forEach(requiredFields, function(el) {
+            if (tui.util.inArray(el, checkedFields, 0) === -1) {
                 throw new Error(el + 'does not not exist.');
                 return false;
             }
@@ -425,14 +425,14 @@ var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
      *  });
      */
     setSearchApi: function(options) {
-        ne.util.extend(this.options.searchApi, options);
+        tui.util.extend(this.options.searchApi, options);
     },
 
     /**
      * clear ready value and set idle state
      */
     clearReadyValue: function() {
-        if (ne.util.isExisty(this.readyValue)) {
+        if (tui.util.isExisty(this.readyValue)) {
             this.request(this.readyValue);
         } else {
             this.isIdle = true;
@@ -440,5 +440,5 @@ var AutoComplete = ne.util.defineClass(/**@lends AutoComplete.prototype */{
         this.readyValue = null;
     }
 });
-ne.util.CustomEvents.mixin(AutoComplete);
+tui.util.CustomEvents.mixin(AutoComplete);
 module.exports = AutoComplete;

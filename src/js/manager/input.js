@@ -8,7 +8,7 @@
  * Unit of auto complete component that belong with input element.
  * @constructor
  */
-var Input = ne.util.defineClass(/**@lends Input.prototype */{
+var Input = tui.util.defineClass(/**@lends Input.prototype */{
 
     /**
      * keyboard Input KeyCode enum
@@ -72,11 +72,11 @@ var Input = ne.util.defineClass(/**@lends Input.prototype */{
             listConfig = opt.listConfig[index],
             statics = opt.staticParams[listConfig.staticParams];
 
-        if (options && ne.util.isString(options)) {
+        if (options && tui.util.isString(options)) {
             options = options.split(',');
         }
 
-        if ((!options || ne.util.isEmpty(options)) && !ne.util.isExisty(statics)) {
+        if ((!options || tui.util.isEmpty(options)) && !tui.util.isExisty(statics)) {
             return;
         }
 
@@ -101,7 +101,7 @@ var Input = ne.util.defineClass(/**@lends Input.prototype */{
             this._createParamContainer();
         }
 
-        ne.util.forEach(options, function(value, idx) {
+        tui.util.forEach(options, function(value, idx) {
 
             key = config[idx];
             this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
@@ -120,7 +120,7 @@ var Input = ne.util.defineClass(/**@lends Input.prototype */{
      */
     _createStaticParams: function(statics) {
         statics = statics.split(',');
-        ne.util.forEach(statics, function(value) {
+        tui.util.forEach(statics, function(value) {
             val = value.split("=");
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
 

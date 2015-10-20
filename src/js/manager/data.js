@@ -8,7 +8,7 @@
  * Unit of auto complete connecting server.
  * @constructor
  */
-var Data = ne.util.defineClass(/**@lends Data.prototype */{
+var Data = tui.util.defineClass(/**@lends Data.prototype */{
     init: function(autoCompleteObj, options) {
         if (arguments.length != 2) {
             alert('argument length error !');
@@ -40,7 +40,7 @@ var Data = ne.util.defineClass(/**@lends Data.prototype */{
                 r_format: 'json',
                 _callback: 'dataCallback'
             },
-            requestParam = ne.util.extend(this.options.searchApi, defaultParam),
+            requestParam = tui.util.extend(this.options.searchApi, defaultParam),
             keyDatas;
 
         $.ajax(this.options.searchUrl, {
@@ -48,7 +48,7 @@ var Data = ne.util.defineClass(/**@lends Data.prototype */{
             'jsonpCallback': 'dataCallback',
             'data': requestParam,
             'type': 'get',
-            'success': ne.util.bind(function(dataObj) {
+            'success': tui.util.bind(function(dataObj) {
                 try {
                     keyDatas = this._getCollectionData(dataObj);
                     this.autoCompleteObj.setQuerys(dataObj.query);
@@ -70,9 +70,9 @@ var Data = ne.util.defineClass(/**@lends Data.prototype */{
         var collection = dataObj.collections,
             itemDataList = [];
 
-        ne.util.forEach(collection, function(itemSet) {
+        tui.util.forEach(collection, function(itemSet) {
 
-            if(ne.util.isEmpty(itemSet.items)) {
+            if(tui.util.isEmpty(itemSet.items)) {
                 return;
             }
             // create collection items.
@@ -100,7 +100,7 @@ var Data = ne.util.defineClass(/**@lends Data.prototype */{
             dest = itemSet.destination,
             items = [];
 
-        ne.util.forEachArray(itemSet.items, function(item, idx) {
+        tui.util.forEachArray(itemSet.items, function(item, idx) {
 
             if (idx <= (this.options.viewCount - 1)) {
                 items.push({

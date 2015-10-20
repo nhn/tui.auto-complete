@@ -8,7 +8,7 @@
  * Unit of auto complete that belong with search result list.
  * @constructor
  */
-var Result = ne.util.defineClass(/** @lends Result.prototype */{
+var Result = tui.util.defineClass(/** @lends Result.prototype */{
     /**
      * Initailize
      */
@@ -105,11 +105,11 @@ var Result = ne.util.defineClass(/** @lends Result.prototype */{
         var tmplValue = {},
             values = data.values || null;
 
-        if (ne.util.isString(data)) {
+        if (tui.util.isString(data)) {
             tmplValue[attrs[0]] = data;
             return tmplValue;
         }
-        ne.util.forEach(attrs, function(attr, idx) {
+        tui.util.forEach(attrs, function(attr, idx) {
 
             tmplValue[attr] = values[idx];
 
@@ -264,7 +264,7 @@ var Result = ne.util.defineClass(/** @lends Result.prototype */{
         var querys = this.autoCompleteObj.querys,
             returnStr;
 
-        ne.util.forEach(querys, function(query) {
+        tui.util.forEach(querys, function(query) {
 
             if (!returnStr) {
                 returnStr = text;
@@ -375,7 +375,7 @@ var Result = ne.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _orderElement: function(type, element) {
-        if (!ne.util.isExisty(element)) {
+        if (!tui.util.isExisty(element)) {
             return null;
         }
 
@@ -473,7 +473,7 @@ var Result = ne.util.defineClass(/** @lends Result.prototype */{
             $arr = this.$resultList.find('li'),
             selectedItem = $target.closest('li');
 
-        ne.util.forEachArray($arr, function(val) {
+        tui.util.forEachArray($arr, function(val) {
             $(val).removeClass(this.mouseOverClass);
         }, this);
 
