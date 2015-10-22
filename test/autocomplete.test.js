@@ -1,3 +1,4 @@
+var AutoComplete = require('../src/js/AutoComplete');
 describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.', function() {
 
     var html,
@@ -13,7 +14,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         $("#ac_input1").val('운동화');
 
         //객체 생성
-        autoComplete = new ne.component.AutoComplete({'config' : Default});
+        autoComplete = new AutoComplete({'config' : Default});
         resultManager = autoComplete.resultManager;
         inputManager = autoComplete.inputManager;
 
@@ -22,7 +23,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
     //OK
     it('AutoComplete, Manager 객체가 생성되는지 테스트한다.', function() {
-        var A = new ne.component.AutoComplete({'config' : Default});
+        var A = new AutoComplete({'config' : Default});
         expect(A).toEqual(jasmine.any(Object));
 
         var resultManager = A.resultManager;
@@ -35,7 +36,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
 
     it('키워드 하이라이팅이 제대로 되는가.', function() {
-        var A = new ne.component.AutoComplete({'config' :  Default}),
+        var A = new AutoComplete({'config' :  Default}),
             resultManager = A.resultManager;
 
         //검색어 입력
@@ -52,7 +53,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
     //OK
     it('자동완성 기능을 사용안함으로 설정되는가.', function() {
-        var A = new ne.component.AutoComplete({'config' :  Default});
+        var A = new AutoComplete({'config' :  Default});
 
         //자동완성 기능 사용 안함 설정
         A.setCookieValue(false);

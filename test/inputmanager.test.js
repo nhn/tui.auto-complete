@@ -1,3 +1,5 @@
+var AutoComplete = require('../src/js/AutoComplete');
+var InputManager = require('../src/js/manager/input');
 describe('InputManager', function() {
     var im1,
         im2;
@@ -6,9 +8,9 @@ describe('InputManager', function() {
         jasmine.getFixtures().fixturesPath = 'base';
         loadFixtures('test/fixture/expand.html');
 
-        var autocom = new ne.component.AutoComplete({config:Default});
+        var autocom = new AutoComplete({config:Default});
         im1 = autocom.inputManager;
-        im2 = new ne.component.AutoComplete.InputManager(Default);
+        im2 = new InputManager(Default);
 
     });
     it('to be defined', function() {

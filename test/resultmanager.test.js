@@ -1,3 +1,5 @@
+var AutoComplete = require('../src/js/AutoComplete');
+
 describe('ResultManager', function() {
     var rm1,
         rm2;

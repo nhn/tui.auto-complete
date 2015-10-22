@@ -1,3 +1,5 @@
+var AutoComplete = require('../src/js/AutoComplete');
+var DataManager = require('../src/js/manager/data');
 describe('DataManager 생성 및 테스트', function() {
 
     var dm1,
@@ -9,11 +11,11 @@ describe('DataManager 생성 및 테스트', function() {
         jasmine.getFixtures().fixturesPath = 'base';
         loadFixtures('test/fixture/expand.html');
 
-        var autocom = new ne.component.AutoComplete({config:Plane});
-        var autocom2 = new ne.component.AutoComplete({config:Default});
+        var autocom = new AutoComplete({config:Plane});
+        var autocom2 = new AutoComplete({config:Default});
         dm1 = autocom.dataManager;
         dm2 = autocom2.dataManager;
-        dm3 = new ne.component.AutoComplete.DataManager(Default);
+        dm3 = new DataManager(Default);
 
     });
 
