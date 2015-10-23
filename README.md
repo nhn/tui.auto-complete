@@ -10,9 +10,9 @@ Display recommend word list, when you type search character in input element.
 * Submit by click result element or type enter key
 
 ## Documentation
-* **API** : https://nhnent.github.io/fe.component-auto-complete/latest
-* **Tutorial** : https://github.com/nhnent/fe.component-auto-complete/wiki/Auto-Complete-Tutorial
-* **Sample** - https://nhnent.github.io/fe.component-auto-complete/latest/tutorial-sample1.html
+* **API** : https://nhnent.github.io/tui-component-auto-complete/latest
+* **Tutorial** : https://github.com/nhnent/tui-component-auto-complete/wiki/Auto-Complete-Tutorial
+* **Sample** - https://nhnent.github.io/tui-component-auto-complete/latest/tutorial-sample1.html
 
 
 ## Sample Image
@@ -34,15 +34,16 @@ Display recommend word list, when you type search character in input element.
 * Bower:
    * latest : `bower install ne-component-auto-complete#master`
    * each version : `bower install ne-component-auto-complete[#tag]`
-* Download: https://github.com/nhnent/fe.component-auto-complete
+* Download: https://github.com/nhnent/tui-component-auto-complete
 
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
+| 1.1.1a | Namespace changed | 2015.10 | NHN ent. FE dev team<dl_javascript@nhnent.com> | 
 | 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.1.0</a> | searchApi added | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
-| <a href="https://github.nhnent.com/pages/fe/component-auto-complete/1.1.0">1.0.0</a> | release | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| <a href="https://nhnent.github.io/tui-component-auto-complete/1.1.0">1.1.0</a> | searchApi added | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| <a href="https://nhnent.github.io/tui-component-auto-complete/1.1.0">1.0.0</a> | release | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 0.1.1 | Template added | 2015.01 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 
 
