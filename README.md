@@ -32,8 +32,8 @@ Display recommend word list, when you type search character in input element.
 
 ## Download/Install
 * Bower:
-   * latest : `bower install ne-component-auto-complete#master`
-   * each version : `bower install ne-component-auto-complete[#tag]`
+   * latest : `bower install tui-component-auto-complete#master`
+   * each version : `bower install tui-component-auto-complete[#tag]`
 * Download: https://github.com/nhnent/tui.component.auto-complete
 
 ## History
