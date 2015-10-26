@@ -21,7 +21,7 @@ Display recommend word list, when you type search character in input element.
 ## Dependency
 * jquery: ~1.8.3
 * json2: *
-* code-snippet: ~1.0.2
+* tui-code-snippet: ~1.0.2
 
 ## Test environment
 * PC
