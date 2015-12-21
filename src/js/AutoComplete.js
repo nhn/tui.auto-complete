@@ -340,6 +340,9 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Get whether use auto complete or not
+     * @api
+     * @example
+     *  autoComplete.isUseAutoComplete(); => true|false
      *  @return {Boolean}
      */
     isUseAutoComplete: function() {
