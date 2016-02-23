@@ -10,7 +10,7 @@
  */
 var Data = tui.util.defineClass(/**@lends Data.prototype */{
     init: function(autoCompleteObj, options) {
-        if (arguments.length != 2) {
+        if (arguments.length !== 2) {
             alert('argument length error !');
             return;
         }
@@ -24,7 +24,6 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      * @param {String} keyword String to request at server
      */
     request: function(keyword) {
-
         var rsKeyWrod = keyword.replace(/\s/g, '');
 
         if (!keyword || !rsKeyWrod) {

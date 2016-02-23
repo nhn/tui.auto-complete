@@ -9,146 +9,143 @@ var InputManager = require('./manager/input');
 var ResultManager = require('./manager/result');
 
 /**
- @constructor
- @param {Object} htOptions
- @example
-    var autoCompleteObj = new ne.component.AutoComplete({
-       "configId" : "Default"    // Dataset in autoConfig.js
-    });
-    /**
-    The form of config file "autoConfig.js"
-    {
-        Default = {
-        // Result element
-        'resultListElement': '._resultBox',
-
-        // Input element
-        'searchBoxElement':  '#ac_input1',
-
-        // Hidden element that is for throwing query that user type.
-        'orgQueryElement' : '#org_query',
-
-        // on,off Button element
-        'toggleBtnElement' : $("#onoffBtn"),
-
-        // on,off State element
-        'onoffTextElement' : $(".baseBox .bottom"),
-
-        // on, off State image source
-        'toggleImg' : {
-            'on' : '../img/btn_on.jpg',
-            'off' : '../img/btn_off.jpg'
-        },
-
-        // Collection items each count.
-        'viewCount' : 3,
-
-        // Key arrays (sub query keys' array)
-        'subQuerySet': [
-            ['key1', 'key2', 'key3'],
-            ['dep1', 'dep2', 'dep3'],
-            ['ch1', 'ch2', 'ch3'],
-            ['cid']
-        ],
-
-        // Config for auto complete list by index of collection
-        'listConfig': {
-            '0': {
-                'template': 'department',
-                'subQuerySet' : 0,
-                'action': 0
-            },
-            '1': {
-                'template': 'srch_in_department',
-                'subQuerySet' : 1,
-                'action': 0
-            },
-            '2': {
-                'template': 'srch_in_department',
-                'subQuerySet' : 2,
-                'action': 1,
-                'staticParams': 0
-            },
-            '3': {
-                'template': 'department',
-                'subQuerySet' : 0,
-                'action': 1,
-                'staticParams': 1
-            }
-        },
-
-         // Mark up for each collection. (Default markup is defaults.)
-         // This markup has to have "keywold-field" but title.
-         'template' :  {
-                department:    {
-                    element: '<li class="department">' +
-                                '<span class="slot-field">Shop the</span> ' +
-                                '<a href="#" class="keyword-field">@subject@</a> ' +
-                                '<span class="slot-field">Store</span>' +
-                             '</li>',
-                     attr: ['subject']
-         },
-         srch : {
-                    element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
-                    attr: ['subject']
-         },
-         srch_in_department :    {
-                    element: '<li class="inDepartment">' +
-                                '<a href="#" class="keyword-field">@subject@</a> ' +
-                                 '<span class="slot-field">in </span>' +
-                                 '<span class="depart-field">@department@</span>' +
-                             '</li>',
-                     attr: ['subject', 'department']
-         },
-         title: {
-                    element: '<li class="title"><span>@title@</span></li>',
-                    attr: ['title']
-         },
-         defaults: {
-                    element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
-                    attr: ['subject']
-         }
-         },
-
-         // Action attribute for each collection
-         'actions': [
-             "http://www.fashiongo.net/catalog.aspx",
-             "http://www.fashiongo.net/search2.aspx"
-         ],
-
-         // Set static options for each collection.
-         'staticParams':[
-             "qt=ProductName",
-             "at=TEST,bt=ACT"
-         ],
-
-         // Whether use title or not.
-         'useTitle': true,
-
-         // Form element that include search element
-         'formElement' : '#ac_form1',
-
-         // Cookie name for save state
-         'cookieName' : "usecookie",
-
-         // Class name for selected element
-         'mouseOverClass' : 'emp',
-
-         // Auto complete API
-         'searchUrl' : 'http://10.24.136.172:20011/ac',
-
-         // Auto complete API request config
-         'searchApi' : {
-                'st' : 1111,
-                'r_lt' : 1111,
-                'r_enc' : 'UTF-8',
-                'q_enc' : 'UTF-8',
-                'r_format' : 'json'
-            }
-       }
-    }
-
-*/
+ * @constructor
+ * @param {Object} htOptions
+ * @example
+ *  var autoCompleteObj = new ne.component.AutoComplete({
+ *     "configId" : "Default"    // Dataset in autoConfig.js
+ *  });
+ *
+ *  // The form of config file "autoConfig.js"
+ *  // var Default = {
+ *  //     // Result element
+ *  //     'resultListElement': '._resultBox',
+ *  //
+ *  //     // Input element
+ *  //     'searchBoxElement':  '#ac_input1',
+ *  //
+ *  //     // Hidden element that is for throwing query that user type.
+ *  //     'orgQueryElement' : '#org_query',
+ *  //
+ *  //     // on,off Button element
+ *  //     'toggleBtnElement' : $("#onoffBtn"),
+ *  //
+ *  //     // on,off State element
+ *  //     'onoffTextElement' : $(".baseBox .bottom"),
+ *  //
+ *  //     // on, off State image source
+ *  //     'toggleImg' : {
+ *  //         'on' : '../img/btn_on.jpg',
+ *  //         'off' : '../img/btn_off.jpg'
+ *  //     },
+ *  //
+ *  //     // Collection items each count.
+ *  //     'viewCount' : 3,
+ *  //
+ *  //     // Key arrays (sub query keys' array)
+ *  //     'subQuerySet': [
+ *  //         ['key1', 'key2', 'key3'],
+ *  //         ['dep1', 'dep2', 'dep3'],
+ *  //         ['ch1', 'ch2', 'ch3'],
+ *  //         ['cid']
+ *  //     ],
+ *  //
+ *  //     // Config for auto complete list by index of collection
+ *  //     'listConfig': {
+ *  //         '0': {
+ *  //             'template': 'department',
+ *  //             'subQuerySet' : 0,
+ *  //             'action': 0
+ *  //         },
+ *  //         '1': {
+ *  //             'template': 'srch_in_department',
+ *  //             'subQuerySet' : 1,
+ *  //             'action': 0
+ *  //         },
+ *  //         '2': {
+ *  //             'template': 'srch_in_department',
+ *  //             'subQuerySet' : 2,
+ *  //             'action': 1,
+ *  //             'staticParams': 0
+ *  //         },
+ *  //         '3': {
+ *  //             'template': 'department',
+ *  //             'subQuerySet' : 0,
+ *  //             'action': 1,
+ *  //             'staticParams': 1
+ *  //         }
+ *  //     },
+ *  //
+ *  //     // Mark up for each collection. (Default markup is defaults.)
+ *  //     // This markup has to have "keywold-field" but title.
+ *  //     'template': {
+ *  //         department: {
+ *  //             element: '<li class="department">' +
+ *  //                           '<span class="slot-field">Shop the</span> ' +
+ *  //                           '<a href="#" class="keyword-field">@subject@</a> ' +
+ *  //                           '<span class="slot-field">Store</span>' +
+ *  //                       '</li>',
+ *  //             attr: ['subject']
+ *  //         },
+ *  //         srch: {
+ *  //             element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+ *  //             attr: ['subject']
+ *  //         },
+ *  //         srch_in_department: {
+ *  //             element: '<li class="inDepartment">' +
+ *  //                          '<a href="#" class="keyword-field">@subject@</a> ' +
+ *  //                          '<span class="slot-field">in </span>' +
+ *  //                          '<span class="depart-field">@department@</span>' +
+ *  //                      '</li>',
+ *  //             attr: ['subject', 'department']
+ *  //         },
+ *  //         title: {
+ *  //             element: '<li class="title"><span>@title@</span></li>',
+ *  //             attr: ['title']
+ *  //         },
+ *  //         defaults: {
+ *  //             element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+ *  //             attr: ['subject']
+ *  //         }
+ *  //     },
+ *  //
+ *  //     // Action attribute for each collection
+ *  //     'actions': [
+ *  //         "http://www.fashiongo.net/catalog.aspx",
+ *  //         "http://www.fashiongo.net/search2.aspx"
+ *  //     ],
+ *  //
+ *  //     // Set static options for each collection.
+ *  //     'staticParams':[
+ *  //         "qt=ProductName",
+ *  //         "at=TEST,bt=ACT"
+ *  //     ],
+ *  //
+ *  //     // Whether use title or not.
+ *  //     'useTitle': true,
+ *  //
+ *  //     // Form element that include search element
+ *  //     'formElement' : '#ac_form1',
+ *  //
+ *  //     // Cookie name for save state
+ *  //     'cookieName' : "usecookie",
+ *  //
+ *  //     // Class name for selected element
+ *  //     'mouseOverClass' : 'emp',
+ *  //
+ *  //     // Auto complete API
+ *  //     'searchUrl' : 'http://10.24.136.172:20011/ac',
+ *  //
+ *  //     // Auto complete API request config
+ *  //     'searchApi' : {
+ *  //         'st' : 1111,
+ *  //         'r_lt' : 1111,
+ *  //         'r_enc' : 'UTF-8',
+ *  //         'q_enc' : 'UTF-8',
+ *  //         'r_format' : 'json'
+ *  //     }
+ *  // }
+ */
 var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
@@ -222,7 +219,6 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
         if (!tui.util.isExisty(config)) {
             throw new Error('Config file is not avaliable. #' + config);
-            return false;
         }
 
         configArr = tui.util.keys(config);
@@ -238,8 +234,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
                 'listConfig',
                 'actions',
                 'formElement',
-                'searchUrl',
-                'searchApi'
+                'searchUrl'
             ],
             checkedFields = [];
 
@@ -252,7 +247,6 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         tui.util.forEach(requiredFields, function(el) {
             if (tui.util.inArray(el, checkedFields, 0) === -1) {
                 throw new Error(el + 'does not not exist.');
-                return false;
             }
         });
 

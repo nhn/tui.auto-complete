@@ -272,7 +272,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             returnStr = this._makeStrong(returnStr, query);
 
         }, this);
-        return (returnStr || text);
+        return returnStr || text;
     },
 
     /**

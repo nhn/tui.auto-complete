@@ -25,7 +25,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {object} options auto complete options
      */
     init: function(autoCompleteObj, options) {
-        if (arguments.length != 2) {
+        if (arguments.length !== 2) {
             alert('argument length error !');
             return;
         }
