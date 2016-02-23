@@ -254,15 +254,6 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
                 throw new Error(el + 'does not not exist.');
                 return false;
             }
-
-            if (el === 'searchApi' && config['searchApi']) {
-                if (!config.searchUrl ||
-                    !config.searchApi.st ||
-                    !config.searchApi.r_lt) {
-                    alert('searchApi required value does not exist.');
-                    return false;
-                }
-            }
         });
 
         for (i = 0; i < configLen; i++) {
@@ -420,8 +411,8 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @param {Object} options searchApi옵션 설정
      * @example
      *  autoComplete.setSearchApi({
-     *      'st' : 9351,
-     *      'r_lt' : 7187,
+     *      'st' : 111,
+     *      'r_lt' : 111,
      *      'r_enc' : 'UTF-8',
      *      'q_enc' : 'UTF-8',
      *      'r_format' : 'json'
