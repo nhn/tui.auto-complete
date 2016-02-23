@@ -1,22 +1,27 @@
-var AutoComplete = require('../src/js/AutoComplete');
-var DataManager = require('../src/js/manager/data');
-describe('DataManager 생성 및 테스트', function() {
+var AutoComplete = require('../src/js/AutoComplete'),
+    DataManager = require('../src/js/manager/data'),
+    Mock = require('./mock'),
+    config = require('./autoConfig');
 
-    var dm1,
-        dm2,
-        dm3;
+var Default = config.Default,
+    Plane = config.Plane,
+    mock = Mock.mock,
+    n_mock = Mock.n_mock;
+
+jasmine.getFixtures().fixturesPath = 'base';
+describe('DataManager 생성 및 테스트', function() {
+    var dm1, dm2, dm3;
 
     beforeEach(function() {
-
-        jasmine.getFixtures().fixturesPath = 'base';
+        var ac;
         loadFixtures('test/fixture/expand.html');
 
-        var autocom = new AutoComplete({config:Plane});
-        var autocom2 = new AutoComplete({config:Default});
-        dm1 = autocom.dataManager;
-        dm2 = autocom2.dataManager;
-        dm3 = new DataManager(Default);
+        ac = new AutoComplete({config:Plane});
+        dm1 = ac.dataManager;
+        ac = new AutoComplete({config:Default});
+        dm2 = ac.dataManager;
 
+        dm3 = new DataManager(Default);
     });
 
     it('to be defined', function() {
@@ -32,23 +37,20 @@ describe('DataManager 생성 및 테스트', function() {
     });
 
     it('getCollectionData return array of collection data', function() {
-        var arr = dm1._getCollectionData(mock);
-        var arr2 = dm2._getCollectionData(n_mock);
+        var arr = dm1._getCollectionData(mock),
+            arr2 = dm2._getCollectionData(n_mock);
+
         expect(arr).toBeDefined();
         expect(arr.length).toBeDefined();
         expect(arr2).toBeDefined();
         expect(arr2.length).toBe(0);
-
     });
 
-    it('request', function() {
-
-        dm1.options = {};
-        dm1.request("s");
-
-        dm1.options.searchApi = '../data.js';
-        dm1.request(" ");
-
-    });
-
+    //it('request', function() {
+    //    dm1.options = {};
+    //    dm1.request("s");
+    //
+    //    dm1.options.searchApi = '../data.js';
+    //    dm1.request(" ");
+    //});
 });

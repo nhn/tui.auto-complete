@@ -82,3 +82,8 @@ var n_mock = {
     "query" : [ "s" ],
     "ver" : "1.0"
 };
+
+module.exports = {
+    mock: mock,
+    n_mock: n_mock
+};

@@ -1,4 +1,8 @@
-var AutoComplete = require('../src/js/AutoComplete');
+var AutoComplete = require('../src/js/AutoComplete'),
+    config = require('./autoConfig');
+
+var Default = config.Default;
+jasmine.getFixtures().fixturesPath = 'base';
 describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.', function() {
 
     var html,
@@ -8,9 +12,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         inputManager;
 
     beforeEach(function() {
-        jasmine.getFixtures().fixturesPath = 'base';
         loadFixtures('test/fixture/expand.html');
-
         $("#ac_input1").val('운동화');
 
         //객체 생성
@@ -36,29 +38,25 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
 
     it('키워드 하이라이팅이 제대로 되는가.', function() {
-        var A = new AutoComplete({'config' :  Default}),
-            resultManager = A.resultManager;
+        var resultManager = autoComplete.resultManager;
 
         //검색어 입력
-        A.setValue('운동화');
-        A.request('운동화');
+        autoComplete.setValue('운동화');
+        autoComplete.request('운동화');
 
         //키워드 하이라이트 처리 테스트
-        A.querys = ['나이키'];
+        autoComplete.querys = ['나이키'];
         expect(resultManager._highlight('나이키 에어')).toBe('<strong>나이키 </strong>에어');
-        A.querys = ['TEST'];
+        autoComplete.querys = ['TEST'];
         expect(resultManager._highlight('나이키 에어')).toBe('나이키 에어');
     });
 
-
     //OK
     it('자동완성 기능을 사용안함으로 설정되는가.', function() {
-        var A = new AutoComplete({'config' :  Default});
-
         //자동완성 기능 사용 안함 설정
-        A.setCookieValue(false);
-        expect(A.isUseAutoComplete()).toBeFalsy();
-        A.hideResultList();
+        autoComplete.setCookieValue(false);
+        expect(autoComplete.isUseAutoComplete()).toBeFalsy();
+        autoComplete.hideResultList();
     });
 
 
@@ -87,6 +85,4 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         resultManager._useAutoComplete();
         expect(resultManager.isShowResultList()).toBeFalsy();
     });
-
-
 });

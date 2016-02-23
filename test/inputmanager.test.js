@@ -1,11 +1,16 @@
-var AutoComplete = require('../src/js/AutoComplete');
-var InputManager = require('../src/js/manager/input');
+var AutoComplete = require('../src/js/AutoComplete'),
+    InputManager = require('../src/js/manager/input'),
+    Mock = require('./mock'),
+    config = require('./autoConfig');
+
+var Default = config.Default,
+    mock = Mock.mock;
+
+jasmine.getFixtures().fixturesPath = 'base';
 describe('InputManager', function() {
     var im1,
         im2;
     beforeEach(function() {
-
-        jasmine.getFixtures().fixturesPath = 'base';
         loadFixtures('test/fixture/expand.html');
 
         var autocom = new AutoComplete({config:Default});
@@ -23,10 +28,10 @@ describe('InputManager', function() {
         expect(im2.options).not.toBeDisabled();
     });
 
-    //it('getValue', function() {
-    //    im1.$searchBox.val('s');
-    //    expect(im1.getValue()).toBe('s');
-    //});
+    it('getValue', function() {
+        im1.$searchBox.val('s');
+        expect(im1.getValue()).toBe('s');
+    });
 
     it('setParams with array', function() {
         var opt = ['a', 'b'],

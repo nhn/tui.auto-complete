@@ -236,3 +236,8 @@ var Plane = { // 필수 항목만 나열한 config
         'r_format' : 'json'
     }
 };
+
+module.exports = {
+    Default: Default,
+    Plane: Plane
+};
