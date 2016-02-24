@@ -11,10 +11,10 @@ var DataManager = require('./manager/data'),
 
 /**
  * @constructor
- * @param {Object} htOptions
+ * @param {Object} options
  * @example
  *  var autoCompleteObj = new ne.component.AutoComplete({
- *     "configId" : "Default"    // Dataset in autoConfig.js
+ *     "config" : "Default"    // Dataset in autoConfig.js
  *  });
  *
  *  // The form of config file "autoConfig.js"
@@ -157,6 +157,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         'FIRST': 'first',
         'LAST': 'last'
     },
+
     /**
      * Interval for check update input
      */
@@ -164,37 +165,36 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Initialize
-     * @param {Object} htOptions autoconfig values
+     * @param {Object} options autoconfig values
      */
-    init: function(htOptions) {
+    init: function(options) {
         var cookieValue,
             defaultCookieName = '_atcp_use_cookie';
 
         this.options = {};
+        this._checkValidation(options);
+        this._setOptions(options);
 
-        if (!this._checkValidation(htOptions)) {
-            return;
-        }
-
-        if (!this.options.toggleImg || !this.options.onoffTextElement) {
+        options = this.options;
+        if (!options.toggleImg || !options.onoffTextElement) {
             this.isUse = true;
-            delete this.options.onoffTextElement;
+            delete options.onoffTextElement;
         } else {
-            cookieValue = $.cookie(this.options.cookieName);
+            cookieValue = $.cookie(options.cookieName);
             this.isUse = !!(cookieValue === 'use' || !cookieValue);
         }
 
-        if (!this.options.cookieName) {
-            this.options.cookieName = defaultCookieName;
+        if (!options.cookieName) {
+            options.cookieName = defaultCookieName;
         }
 
-        if (!tui.util.isExisty(this.options.watchInterval)) {
-            this.options.watchInterval = this.watchInterval;
+        if (!tui.util.isExisty(options.watchInterval)) {
+            options.watchInterval = this.watchInterval;
         }
 
-        this.dataManager = new DataManager(this, this.options);
-        this.inputManager = new InputManager(this, this.options);
-        this.resultManager = new ResultManager(this, this.options);
+        this.dataManager = new DataManager(this, options);
+        this.inputManager = new InputManager(this, options);
+        this.resultManager = new ResultManager(this, options);
 
         /**
          * Save matched input english string with Korean.
@@ -209,60 +209,50 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Check required fields and validate fields.
-     * @param {Object} htOptions component configurations
-     * @returns {Boolean}
+     * @param {Object} options component configurations
      * @private
      */
-    _checkValidation: function(htOptions) {
-        var config, configArr, configLen,
-            i, requiredFields, checkedFields,
-            configName, configValue;
+    _checkValidation: function(options) {
+        var config, requiredFields,
+            isExisty = tui.util.isExisty;
 
-        config = htOptions.config;
-        if (!tui.util.isExisty(config)) {
-            throw new Error('Config file is not avaliable. #' + config);
+        config = options.config;
+        if (!isExisty(config)) {
+            throw new Error('No configuration #' + config);
         }
 
-        configArr = tui.util.keys(config);
-        configLen = configArr.length;
         requiredFields = [
             'resultListElement',
             'searchBoxElement',
             'orgQueryElement',
+            'formElement',
             'subQuerySet',
             'template',
             'listConfig',
             'actions',
-            'formElement',
             'searchUrl'
         ];
-        checkedFields = [];
 
-        for (i = 0; i < configLen; i += 1) {
-            if (tui.util.inArray(configArr[i], requiredFields, 0) >= 0) {
-                checkedFields.push(configArr[i]);
-            }
-        }
-
-        tui.util.forEach(requiredFields, function(el) {
-            if (tui.util.inArray(el, checkedFields, 0) === -1) {
-                throw new Error(el + 'does not not exist.');
+        tui.util.forEach(requiredFields, function(name) {
+            if (!isExisty(config[name])) {
+                throw new Error(name + 'does not not exist.');
             }
         });
+    },
 
-        for (i = 0; i < configLen; i += 1) {
-            configName = configArr[i];
-            configValue = config[configName];
-
-            if (typeof configValue === 'string' &&
-               (configValue.charAt(0) === '.' || configValue.charAt(0) === '#')) {
-                this.options[configName] = $(configValue);
+    /**
+     * Set component options
+     * @param {Object} options component configurations
+     * @private
+     */
+    _setOptions: function(options) {
+        tui.util.forEach(options.config, function(value, name) {
+            if (typeof name === 'string' && /element/i.test(name)) {
+                this.options[name] = $(value);
             } else {
-                this.options[configName] = config[configName];
+                this.options[name] = value;
             }
-        }
-
-        return true;
+        }, this);
     },
 
     /**
