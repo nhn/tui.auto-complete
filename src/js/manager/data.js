@@ -3,6 +3,7 @@
  * @version 1.1.0
  * @author NHN Entertainment FE dev team. <dl_javascript@nhnent.com>
  */
+'use strict';
 
 /**
  * Unit of auto complete connecting server.
@@ -24,23 +25,22 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      * @param {String} keyword String to request at server
      */
     request: function(keyword) {
-        var rsKeyWrod = keyword.replace(/\s/g, '');
+        var rsKeyWrod = keyword.replace(/\s/g, ''),
+            defaultParam, requestParam, keyDatas;
 
         if (!keyword || !rsKeyWrod) {
             this.autoCompleteObj.hideResultList();
             return;
         }
 
-        var dataCallback = function(){},
-            defaultParam = {
-                q: keyword,
-                r_enc: 'UTF-8',
-                q_enc: 'UTF-8',
-                r_format: 'json',
-                _callback: 'dataCallback'
-            },
-            requestParam = tui.util.extend(this.options.searchApi, defaultParam),
-            keyDatas;
+        defaultParam = {
+            'q': keyword,
+            'r_enc': 'UTF-8',
+            'q_enc': 'UTF-8',
+            'r_format': 'json',
+            '_callback': 'dataCallback'
+        };
+        requestParam = tui.util.extend(this.options.searchApi, defaultParam);
 
         $.ajax(this.options.searchUrl, {
             'dataType': 'jsonp',
@@ -54,11 +54,12 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
                     this.autoCompleteObj.setServerData(keyDatas);
                     this.autoCompleteObj.clearReadyValue();
                 } catch (e) {
-                    throw new Error('[DataManager] Request faild.' , e);
+                    throw new Error('[DataManager] Request faild.', e);
                 }
             }, this)
         });
     },
+
     /**
      * Make collection data to display
      * @param {object} dataObj Collection data
@@ -70,23 +71,24 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
             itemDataList = [];
 
         tui.util.forEach(collection, function(itemSet) {
+            var keys;
 
-            if(tui.util.isEmpty(itemSet.items)) {
+            if (tui.util.isEmpty(itemSet.items)) {
                 return;
             }
-            // create collection items.
-            var keys = this._getRedirectData(itemSet);
 
+            // create collection items.
+            keys = this._getRedirectData(itemSet);
             itemDataList.push({
                 type: 'title',
                 values: [itemSet.title]
             });
             itemDataList = itemDataList.concat(keys);
-
         }, this);
 
         return itemDataList;
     },
+
     /**
      * Make item of collection to display
      * @param {object} itemSet Item of collection data
@@ -100,7 +102,6 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
             items = [];
 
         tui.util.forEachArray(itemSet.items, function(item, idx) {
-
             if (idx <= (this.options.viewCount - 1)) {
                 items.push({
                     values: item,
@@ -109,9 +110,7 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
                     dest: dest
                 });
             }
-
         }, this);
-
         return items;
     }
 });

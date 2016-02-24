@@ -79,6 +79,6 @@ module.exports = function(config) {
             'PhantomJS'
         ],
 
-        singleRun: true
+        singleRun: false
     });
 };

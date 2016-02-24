@@ -3,15 +3,12 @@
  * @version 1.1.0
  * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
  */
-
+'use strict';
 /**
  * Unit of auto complete that belong with search result list.
  * @constructor
  */
 var Result = tui.util.defineClass(/** @lends Result.prototype */{
-    /**
-     * Initailize
-     */
     init: function(autoCompleteObj, options) {
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
@@ -45,11 +42,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @param {Array} dataArr Result data
      */
     draw: function(dataArr) {
-
-        this._deleteBeforeElement();
-
         var len = dataArr.length;
 
+        this._deleteBeforeElement();
         if (len < 1) {
             this._hideBottomArea();
         } else {
@@ -63,6 +58,8 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Make search result list element
+     * @param {Array} dataArr - Data array
+     * @param {number} len - Length of dataArray
      * @private
      */
     _makeResultList: function(dataArr, len) {
@@ -76,7 +73,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             $el,
             i;
 
-        for (i = 0; i < len; i++) {
+        for (i = 0; i < len; i += 1) {
             type = dataArr[i].type;
             index = dataArr[i].index;
             tmpl = config[index] ? template[config[index].template] : template.defaults;
@@ -96,9 +93,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Make template data
-     * @param {array} attrs Template attributes
+     * @param {Array} attrs Template attributes
      * @param {string|Object} data The data to make template
-     * @return {object}
+     * @returns {Object} Template data
      * @private
      */
     _getTmplData: function(attrs, data) {
@@ -109,13 +106,12 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             tmplValue[attrs[0]] = data;
             return tmplValue;
         }
+
         tui.util.forEach(attrs, function(attr, idx) {
-
             tmplValue[attr] = values[idx];
-
         });
 
-        if(attrs.length < values.length) {
+        if (attrs.length < values.length) {
             tmplValue.params = values.slice(attrs.length);
         }
 
@@ -124,7 +120,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Return whether result list show or not
-     * @return {Boolean}
+     * @returns {Boolean}
      */
     isShowResultList: function() {
         return (this.$resultList.css('display') === 'block');
@@ -177,10 +173,8 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             selectEl.addClass(this.mouseOverClass);
             this.autoCompleteObj.setValue(keyword);
             this._setSubmitOption();
-        } else {
-            if(selectEl) {
-                this.moveNextList(flow);
-            }
+        } else if (selectEl) {
+            this.moveNextList(flow);
         }
     },
 
@@ -225,30 +219,31 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         }, this));
     },
 
-
     /**
      * Highlight key word
-     * @param {String} tmplStr Template string
+     * @param {string} tmplStr Template string
      * @param {Object} dataObj Replace string map
-     * @return {String}
+     * @returns {string}
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
         var temp = {},
             keyStr;
 
-        for (keyStr in dataObj) {
-            temp[keyStr] = dataObj[keyStr];
-            if (keyStr === 'subject') {
-                temp.subject = this._highlight(dataObj.subject);
+        tui.util.forEach(dataObj, function(value, key) {
+            if (!dataObj.propertyIsEnumerable(key)) { //@todo: Is it necessary?
+                return;
             }
 
-            if (!dataObj.propertyIsEnumerable(keyStr)) {
-                continue;
+            if (key === 'subject') {
+                temp.subject = this._highlight(value);
+            } else {
+                temp[key] = value;
             }
 
-            tmplStr = tmplStr.replace(new RegExp("@" + keyStr + "@", "g"), temp[keyStr]);
-        }
+            tmplStr = tmplStr.replace(new RegExp('@' + keyStr + '@', 'g'), temp[keyStr]);
+        }, this);
+
         return tmplStr;
     },
 
@@ -257,7 +252,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * (text: Nike air  /  query : [Nike] / Result : <strong>Nike </strong>air
      * text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 <strong>rhdiddl</strong>와 <strong>고양이</strong>
      * @param {String} text Input string
-     * @return {String}
+     * @returns {String}
      * @private
      */
     _highlight: function(text) {
@@ -265,12 +260,10 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             returnStr;
 
         tui.util.forEach(querys, function(query) {
-
             if (!returnStr) {
                 returnStr = text;
             }
             returnStr = this._makeStrong(returnStr, query);
-
         }, this);
         return returnStr || text;
     },
@@ -279,28 +272,39 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Contain text by strong tag
      * @param {String} text Recommend search data  추천검색어 데이터
      * @param {String} query Input keyword
-     * @return {String}
+     * @returns {String}
      * @private
      */
     _makeStrong: function(text, query) {
+        var escRegExp, tmpStr, tmpCharacters,
+            tmpCharLen, tmpArr, returnStr,
+            regQuery, cnt, i;
+
         if (!query || query.length < 1) {
             return text;
         }
-        var escRegExp = new RegExp("[.*+?|()\\[\\]{}\\\\]", "g"),
-            tmpStr = query.replace(/()/g, " ").replace(/^\s+|\s+$/g, ""),
-            tmpCharacters = tmpStr.match(/\S/g),
-            tmpCharLen = tmpCharacters.length,
-            tmpArr = [],
-            returnStr = '',
-            regQuery,
-            cnt,
-            i;
 
-        for (i = 0, cnt = tmpCharLen; i < cnt; i++) {
-            tmpArr.push(tmpCharacters[i].replace(/[\S]+/g, "[" + tmpCharacters[i].toLowerCase().replace(escRegExp, "\\$&") + "|" + tmpCharacters[i].toUpperCase().replace(escRegExp, "\\$&") + "] ").replace(/[\s]+/g, "[\\s]*"));
+        escRegExp = new RegExp('[.*+?|()\\[\\]{}\\\\]', 'g');
+        tmpStr = query.replace(/()/g, ' ').replace(/^\s+|\s+$/g, '');
+        tmpCharacters = tmpStr.match(/\S/g);
+        tmpCharLen = tmpCharacters.length;
+        tmpArr = [];
+        returnStr = '';
+
+        for (i = 0, cnt = tmpCharLen; i < cnt; i += 1) {
+            tmpArr.push(
+                tmpCharacters[i]
+                    .replace(/[\S]+/g,
+                        '['
+                        + tmpCharacters[i].toLowerCase().replace(escRegExp, '\\$&')
+                        + '|' + tmpCharacters[i].toUpperCase().replace(escRegExp, '\\$&')
+                        + '] '
+                    )
+                    .replace(/[\s]+/g, '[\\s]*')
+            );
         }
 
-        tmpStr = "(" + tmpArr.join("") + ")";
+        tmpStr = '(' + tmpArr.join('') + ')';
         regQuery = new RegExp(tmpStr);
 
         if (regQuery.test(text)) {
@@ -312,7 +316,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Return the first result item
-     * @return {Element}
+     * @returns {Element}
      * @private
      */
     _getFirst: function() {
@@ -321,7 +325,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Return the last result item
-     * @return {Element}
+     * @returns {Element}
      * @private
      */
     _getLast: function() {
@@ -349,7 +353,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Return next element from selected element
      * If next element is not exist, return first element.
      * @param {Element} element focused element
-     * @return {Element}
+     * @returns {Element}
      * @private
      */
     _getNext: function(element) {
@@ -360,7 +364,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Return previous element from selected element
      * If previous element is not exist, return the last element.
      * @param {Element} element focused element
-     * @return {Element}
+     * @returns {Element}
      * @private
      */
     _getPrev: function(element) {
@@ -375,22 +379,22 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _orderElement: function(type, element) {
+        var $current, isNext, order;
+
         if (!tui.util.isExisty(element)) {
             return null;
         }
 
-        var $current = $(element),
-            isNext = (type === this.flowMap.NEXT),
-            order;
-
+        $current = $(element);
+        isNext = (type === this.flowMap.NEXT);
         if ($current.closest(this.resultSelector)) {
             order = isNext ? element.next() : element.prev();
             if (order.length) {
                 return order;
-            } else {
-                return isNext ? this._getFirst() : this._getLast();
             }
+            return isNext ? this._getFirst() : this._getLast();
         }
+        return null;
     },
 
     /**
@@ -429,15 +433,16 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _setSubmitOption: function($target) {
-        this._clearSubmitOption();
+        var formElement, $selectField, actions,
+            index, config, action, paramsString;
 
-        var formElement = this.options.formElement,
-            $selectField = $target ? $($target).closest('li') : $(this.selectedElement),
-            actions = this.options.actions,
-            index = $selectField.attr('data-index'),
-            config = this.options.listConfig[index],
-            action = actions[config.action],
-            paramsString;
+        this._clearSubmitOption();
+        formElement = this.options.formElement;
+        $selectField = $target ? $($target).closest('li') : $(this.selectedElement);
+        actions = this.options.actions;
+        index = $selectField.attr('data-index');
+        config = this.options.listConfig[index];
+        action = actions[config.action];
 
         $(formElement).attr('action', action);
         paramsString = $selectField.attr('data-params');
@@ -455,7 +460,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Reset form element.
      * @private
      */
-    _clearSubmitOption: function(e) {
+    _clearSubmitOption: function() {
         var formElement = this.options.formElement,
             hiddenWrap = $(formElement).find('.hidden-inputs');
 

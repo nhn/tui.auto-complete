@@ -3,20 +3,19 @@
  * @version 1.1.0
  * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
  */
-
+'use strict';
 /**
  * Unit of auto complete component that belong with input element.
  * @constructor
  */
 var Input = tui.util.defineClass(/**@lends Input.prototype */{
-
     /**
      * keyboard Input KeyCode enum
      */
     keyCodeMap: {
-        'TAB' : 9,
-        'UP_ARROW' : 38,
-        'DOWN_ARROW' : 40
+        'TAB': 9,
+        'UP_ARROW': 38,
+        'DOWN_ARROW': 40
     },
 
     /**
@@ -46,7 +45,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
 
     /**
      * Return input element value
-     * @return {String}
+     * @returns {String} Searchbox value
      */
     getValue: function() {
         return this.$searchBox.val();
@@ -67,7 +66,6 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {number} index The index for setting key value
      */
     setParams: function(options, index) {
-
         var opt = this.options,
             listConfig = opt.listConfig[index],
             statics = opt.staticParams[listConfig.staticParams];
@@ -90,9 +88,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _createParamSetByType: function(options, index) {
-
-        var key,
-            opt = this.options,
+        var opt = this.options,
             listConfig = opt.listConfig[index],
             config = opt.subQuerySet[listConfig.subQuerySet],
             statics = opt.staticParams[listConfig.staticParams];
@@ -102,17 +98,15 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         }
 
         tui.util.forEach(options, function(value, idx) {
-
-            key = config[idx];
+            var key = config[idx];
             this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
-
         }, this);
 
         if (statics) {
             this._createStaticParams(statics);
         }
-
     },
+
     /**
      * Create static parameters
      * @param {string} statics Static values
@@ -121,9 +115,8 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
     _createStaticParams: function(statics) {
         statics = statics.split(',');
         tui.util.forEach(statics, function(value) {
-            val = value.split("=");
+            var val = value.split('=');
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
-
         }, this);
     },
 
@@ -183,7 +176,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         }, this));
 
         if (this.$toggleBtn) {
-            this.$toggleBtn.bind('click', $.proxy(function(e) {
+            this.$toggleBtn.bind('click', $.proxy(function() {
                 this._onClickToggle();
             }, this));
         }
@@ -202,6 +195,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
     /**
      * Input element onclick event handler
      * @private
+     * @returns {boolean} False if no input-keyword or not use auto-complete
      */
     _onClick: function() {
         //입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
@@ -217,6 +211,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             //결과 리스트 영역이 hide 상태이면(isResultShowing==false) 결과 리스트 show 요청
             this.autoCompleteObj.showResultList();
         }
+        return true;
     },
 
     /**
@@ -294,17 +289,18 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onKeyDown: function(e) {
-        var autoCompleteObj = this.autoCompleteObj;
+        var autoCompleteObj = this.autoCompleteObj,
+            code, flow, codeMap, flowMap;
 
         if (!autoCompleteObj.isUseAutoComplete() ||
             !autoCompleteObj.isShowResultList()) {
             return;
         }
 
-        var code = e.keyCode,
-            flow = null,
-            codeMap = this.keyCodeMap,
-            flowMap = autoCompleteObj.flowMap;
+        code = e.keyCode;
+        flow = null;
+        codeMap = this.keyCodeMap;
+        flowMap = autoCompleteObj.flowMap;
 
         if (code === codeMap.TAB) {
             e.preventDefault();
@@ -316,9 +312,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         } else {
             return;
         }
-
         autoCompleteObj.moveNextList(flow);
-
     },
 
     /**

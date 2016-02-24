@@ -3,10 +3,11 @@
  * @version 1.1.0
  * @author NHN Entertainment FE Dev Team. <dl_javascript@nhnent.com>
 */
+'use strict';
 
-var DataManager = require('./manager/data');
-var InputManager = require('./manager/input');
-var ResultManager = require('./manager/result');
+var DataManager = require('./manager/data'),
+    InputManager = require('./manager/input'),
+    ResultManager = require('./manager/result');
 
 /**
  * @constructor
@@ -147,7 +148,6 @@ var ResultManager = require('./manager/result');
  *  // }
  */
 var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
-
     /**
      * Direction value for key
      */
@@ -167,14 +167,14 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @param {Object} htOptions autoconfig values
      */
     init: function(htOptions) {
+        var cookieValue,
+            defaultCookieName = '_atcp_use_cookie';
+
         this.options = {};
 
         if (!this._checkValidation(htOptions)) {
             return;
         }
-
-        var cookieValue,
-            defaultCookieName = '_atcp_use_cookie';
 
         if (!this.options.toggleImg || !this.options.onoffTextElement) {
             this.isUse = true;
@@ -188,7 +188,9 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
             this.options.cookieName = defaultCookieName;
         }
 
-        this.options.watchInterval = tui.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
+        if (!tui.util.isExisty(this.options.watchInterval)) {
+            this.options.watchInterval = this.watchInterval;
+        }
 
         this.dataManager = new DataManager(this, this.options);
         this.inputManager = new InputManager(this, this.options);
@@ -208,37 +210,35 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     /**
      * Check required fields and validate fields.
      * @param {Object} htOptions component configurations
-     * @return {Boolean}
+     * @returns {Boolean}
      * @private
      */
     _checkValidation: function(htOptions) {
-        var config,
-            configArr;
+        var config, configArr, configLen,
+            i, requiredFields, checkedFields,
+            configName, configValue;
 
         config = htOptions.config;
-
         if (!tui.util.isExisty(config)) {
             throw new Error('Config file is not avaliable. #' + config);
         }
 
         configArr = tui.util.keys(config);
+        configLen = configArr.length;
+        requiredFields = [
+            'resultListElement',
+            'searchBoxElement',
+            'orgQueryElement',
+            'subQuerySet',
+            'template',
+            'listConfig',
+            'actions',
+            'formElement',
+            'searchUrl'
+        ];
+        checkedFields = [];
 
-        var configLen = configArr.length,
-            i,
-            requiredFields = [
-                'resultListElement',
-                'searchBoxElement' ,
-                'orgQueryElement',
-                'subQuerySet',
-                'template',
-                'listConfig',
-                'actions',
-                'formElement',
-                'searchUrl'
-            ],
-            checkedFields = [];
-
-        for (i = 0; i < configLen; i++) {
+        for (i = 0; i < configLen; i += 1) {
             if (tui.util.inArray(configArr[i], requiredFields, 0) >= 0) {
                 checkedFields.push(configArr[i]);
             }
@@ -250,9 +250,9 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
             }
         });
 
-        for (i = 0; i < configLen; i++) {
-            var configName = configArr[i],
-                configValue = config[configName];
+        for (i = 0; i < configLen; i += 1) {
+            configName = configArr[i];
+            configValue = config[configName];
 
             if (typeof configValue === 'string' &&
                (configValue.charAt(0) === '.' || configValue.charAt(0) === '#')) {
@@ -275,7 +275,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Return string in input element.
-     * @return {String}
+     * @returns {String}
      */
     getValue: function() {
         return this.inputManager.getValue();
@@ -290,8 +290,10 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     },
 
     /**
+     * @todo param - type??
      * Request to create addition parameters at inputManager.
      * @param {string} paramStr String to be addition parameters.(saperator '&')
+     * @param {string} type Type
      */
     setParams: function(paramStr, type) {
         this.inputManager.setParams(paramStr, type);
@@ -326,9 +328,9 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     /**
      * Get whether use auto complete or not
      * @api
+     * @returns {Boolean}
      * @example
      *  autoComplete.isUseAutoComplete(); => true|false
-     *  @return {Boolean}
      */
     isUseAutoComplete: function() {
         return this.isUse;
@@ -336,7 +338,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Get whether result list area show or not
-     * @return {Boolean}
+     * @returns {Boolean}
      */
     isShowResultList: function() {
         return this.resultManager.isShowResultList();
@@ -386,7 +388,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Return resultManager whether locked or not
-     * @return {Boolean} resultManager의 isMoved값
+     * @returns {Boolean} resultManager의 isMoved값
      */
     getMoved: function() {
         return this.resultManager.isMoved;
@@ -396,12 +398,13 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * Set resultManager's isMoved field
      * @param {Boolean} isMoved Whether locked or not.
      */
-    setMoved: function(moved) {
-        this.resultManager.isMoved = moved;
+    setMoved: function(isMoved) {
+        this.resultManager.isMoved = isMoved;
     },
 
     /**
      * Reset serachApi
+     * @api
      * @param {Object} options searchApi옵션 설정
      * @example
      *  autoComplete.setSearchApi({
