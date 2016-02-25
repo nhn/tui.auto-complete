@@ -5,6 +5,16 @@
  */
 'use strict';
 
+var CALLBACK_NAME = 'dataCallback',
+    SERACH_KEYWORD_IDENTIFIER = 'q',
+    DEFAULT_PARAMS = {
+        'r_enc': 'UTF-8',
+        'q_enc': 'UTF-8',
+        'r_format': 'json'
+    },
+    forEach = tui.util.forEach,
+    isEmpty = tui.util.isEmpty;
+
 /**
  * Unit of auto complete connecting server.
  * @constructor
@@ -21,35 +31,27 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      */
     request: function(keyword) {
         var rsKeyWrod = keyword.replace(/\s/g, ''),
-            defaultParam, requestParam, keyDatas;
+            acObj = this.autoCompleteObj, keyDatas;
 
         if (!keyword || !rsKeyWrod) {
-            this.autoCompleteObj.hideResultList();
+            acObj.hideResultList();
             return;
         }
 
-        defaultParam = {
-            'q': keyword,
-            'r_enc': 'UTF-8',
-            'q_enc': 'UTF-8',
-            'r_format': 'json',
-            '_callback': 'dataCallback'
-        };
-        requestParam = tui.util.extend(this.options.searchApi, defaultParam);
-
+        DEFAULT_PARAMS[SERACH_KEYWORD_IDENTIFIER] = keyword;
         $.ajax(this.options.searchUrl, {
             'dataType': 'jsonp',
-            'jsonpCallback': 'dataCallback',
-            'data': requestParam,
+            'jsonpCallback': CALLBACK_NAME,
+            'data': $.extend(this.options.searchApi, DEFAULT_PARAMS),
             'type': 'get',
-            'success': tui.util.bind(function(dataObj) {
+            'success': $.proxy(function(dataObj) {
                 try {
                     keyDatas = this._getCollectionData(dataObj);
-                    this.autoCompleteObj.setQuerys(dataObj.query);
-                    this.autoCompleteObj.setServerData(keyDatas);
-                    this.autoCompleteObj.clearReadyValue();
+                    acObj.setQuerys(dataObj.query);
+                    acObj.setServerData(keyDatas);
+                    acObj.clearReadyValue();
                 } catch (e) {
-                    throw new Error('[DataManager] Request faild.', e);
+                    throw new Error('[DataManager] invalid response data.', e);
                 }
             }, this)
         });
@@ -65,14 +67,13 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
         var collection = dataObj.collections,
             itemDataList = [];
 
-        tui.util.forEach(collection, function(itemSet) {
+        forEach(collection, function(itemSet) {
             var keys;
 
-            if (tui.util.isEmpty(itemSet.items)) {
+            if (isEmpty(itemSet.items)) {
                 return;
             }
 
-            // create collection items.
             keys = this._getRedirectData(itemSet);
             itemDataList.push({
                 type: 'title',
@@ -94,18 +95,23 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
         var type = itemSet.type,
             index = itemSet.index,
             dest = itemSet.destination,
-            items = [];
+            items = [],
+            viewCount = this.options.viewCount;
 
-        tui.util.forEachArray(itemSet.items, function(item, idx) {
-            if (idx <= (this.options.viewCount - 1)) {
-                items.push({
-                    values: item,
-                    type: type,
-                    index: index,
-                    dest: dest
-                });
+        /* eslint-disable consistent-return */
+        forEach(itemSet.items, function(item, idx) {
+            if (idx >= viewCount) {
+                return false;
             }
+
+            items.push({
+                values: item,
+                type: type,
+                index: index,
+                dest: dest
+            });
         }, this);
+        /* eslint-enable consistent-return */
         return items;
     }
 });
