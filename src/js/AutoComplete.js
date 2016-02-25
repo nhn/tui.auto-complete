@@ -29,7 +29,7 @@ var DataManager = require('./manager/data'),
  *  //     'orgQueryElement' : '#org_query',
  *  //
  *  //     // on,off Button element
- *  //     'toggleBtnElement' : $("#onoffBtn"),
+ *  //     'toggleBtnElement' : "#onoffBtn",
  *  //
  *  //     // on,off State element
  *  //     'onoffTextElement' : $(".baseBox .bottom"),
@@ -247,7 +247,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      */
     _setOptions: function(options) {
         tui.util.forEach(options.config, function(value, name) {
-            if (typeof name === 'string' && /element/i.test(name)) {
+            if (/element/i.test(name)) {
                 this.options[name] = $(value);
             } else {
                 this.options[name] = value;
@@ -280,13 +280,13 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     },
 
     /**
-     * @todo param - type??
-     * Request to create addition parameters at inputManager.
+     * @todo Fix function description, {@link InputManager.setParams}
+     * Set additional parameters at inputManager.
      * @param {string} paramStr String to be addition parameters.(saperator '&')
-     * @param {string} type Type
+     * @param {string} index The index for setting key value
      */
-    setParams: function(paramStr, type) {
-        this.inputManager.setParams(paramStr, type);
+    setParams: function(paramStr, index) {
+        this.inputManager.setParams(paramStr, index);
     },
 
     /**

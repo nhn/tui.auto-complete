@@ -11,11 +11,12 @@ describe('ResultManager', function() {
     var rm1, rm2;
 
     beforeEach(function() {
+        var ac;
         loadFixtures('test/fixture/expand.html');
-        var ac = new AutoComplete({config:Default});
-
+        ac = new AutoComplete({config: Default});
         rm1 = ac.resultManager;
-        ac = new AutoComplete({config:Plane});
+
+        ac = new AutoComplete({config: Plane});
         rm2 = ac.resultManager;
     });
 
@@ -75,9 +76,9 @@ describe('ResultManager', function() {
         rm1.draw(data);
         rm1.moveNextList('next');
 
-        bSel = rm1.selectedElement;
+        bSel = rm1.$selectedElement;
         rm1.moveNextList('next');
-        aSel = rm1.selectedElement;
+        aSel = rm1.$selectedElement;
 
         expect(bSel).not.toBe(aSel);
     });

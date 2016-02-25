@@ -24,10 +24,6 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {object} options auto complete options
      */
     init: function(autoCompleteObj, options) {
-        if (arguments.length !== 2) {
-            alert('argument length error !');
-            return;
-        }
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
 
@@ -36,12 +32,10 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         this.$toggleBtn = this.options.toggleBtnElement;
         this.$orgQuery = this.options.orgQueryElement;
         this.$formElement = this.options.formElement;
-
         this.inputValue = this.$searchBox.val();
 
         this._attachEvent();
     },
-
 
     /**
      * Return input element value
@@ -56,65 +50,64 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {String} str The keyword to set value.
      */
     setValue: function(str) {
-        this.inputValue = str;
         this.$searchBox.val(str);
+        this.inputValue = str;
     },
 
     /**
      * Read config files parameter option and set parameter.
-     * @param {array} options The parameters from config
-     * @param {number} index The index for setting key value
+     * @param {Array|string} subQueryValues The subQueryValues from resultList
+     * @param {number|string} index The index for subQuerySet in config
      */
-    setParams: function(options, index) {
-        var opt = this.options,
-            listConfig = opt.listConfig[index],
-            statics = opt.staticParams[listConfig.staticParams];
-
-        if (options && tui.util.isString(options)) {
-            options = options.split(',');
+    setParams: function(subQueryValues, index) {
+        if (subQueryValues && tui.util.isString(subQueryValues)) {
+            subQueryValues = subQueryValues.split(',');
         }
 
-        if ((!options || tui.util.isEmpty(options)) && !tui.util.isExisty(statics)) {
+        if ((!subQueryValues || tui.util.isEmpty(subQueryValues))) {
             return;
         }
-
-        this._createParamSetByType(options, index);
+        this._createParamSetByType(subQueryValues, index);
     },
 
     /**
      * Create inputElement by type
-     * @param {object} options The values to send search api
-     * @param {number} index The index of query key array
+     * @param {Array|string} subQueryValues The subQueryValues from resultList
+     * @param {number|string} index The index for subQuerySet in config
      * @private
      */
-    _createParamSetByType: function(options, index) {
-        var opt = this.options,
-            listConfig = opt.listConfig[index],
-            config = opt.subQuerySet[listConfig.subQuerySet],
-            statics = opt.staticParams[listConfig.staticParams];
+    _createParamSetByType: function(subQueryValues, index) {
+        var opttions = this.options,
+            listConfig = opttions.listConfig[index],
+            subQuerySetIndex = listConfig.subQuerySet,
+            staticParamsIndex = listConfig.staticParams,
+            subQueryKeys = opttions.subQuerySet[subQuerySetIndex],
+            staticParams = opttions.staticParams[staticParamsIndex];
 
         if (!this.hiddens) {
             this._createParamContainer();
         }
 
-        tui.util.forEach(options, function(value, idx) {
-            var key = config[idx];
+        tui.util.forEach(subQueryValues, function(value, idx) {
+            var key = subQueryKeys[idx];
             this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
         }, this);
 
-        if (statics) {
-            this._createStaticParams(statics);
-        }
+        this._createStaticParams(staticParams);
     },
 
     /**
      * Create static parameters
-     * @param {string} statics Static values
+     * @param {string} staticParams Static parameters
      * @private
      */
-    _createStaticParams: function(statics) {
-        statics = statics.split(',');
-        tui.util.forEach(statics, function(value) {
+    _createStaticParams: function(staticParams) {
+        if (!staticParams) {
+            return;
+        }
+
+        staticParams = staticParams.split(',');
+        tui.util.forEach(staticParams, function(value) {
             var val = value.split('=');
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
         }, this);
@@ -125,9 +118,9 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _createParamContainer: function() {
-        this.hiddens = $('<div class="hidden-inputs"></div>');
-        this.hiddens.hide();
-        this.hiddens.appendTo($(this.$formElement));
+        this.hiddens = $('<div class="hidden-inputs"></div>')
+            .hide()
+            .appendTo(this.$formElement);
     },
 
     /**
@@ -135,7 +128,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {Boolean} isUse 자동완성 사용 여부
      */
     setToggleBtnImg: function(isUse) {
-        if (!this.options.toggleImg || !(this.$toggleBtn)) {
+        if (!this.options.toggleImg || !this.$toggleBtn || !this.$toggleBtn.length) {
             return;
         }
 
@@ -146,39 +139,21 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         }
     },
 
-    /**************************** Private Functions **************************/
     /**
      * Event binding
      * @private
      */
     _attachEvent: function() {
-        //검색창에 focus, keyup, keydown, click 이벤트 바인딩.
-        this.$searchBox.bind('focus keyup keydown blur click', $.proxy(function(e) {
-            switch (e.type) {
-                case 'focus' :
-                    this._onFocus();
-                    break;
-                case 'blur' :
-                    this._onBlur(e);
-                    break;
-                case 'keyup' :
-                    this._onKeyUp(e);
-                    break;
-                case 'keydown' :
-                    this._onKeyDown(e);
-                    break;
-                case 'click' :
-                    this._onClick();
-                    break;
-                default :
-                    break;
-            }
-        }, this));
+        this.$searchBox.on({
+            focus: $.proxy(this._onFocus, this),
+            blur: $.proxy(this._onBlur, this),
+            keyup: $.proxy(this._onKeyUp, this),
+            keydown: $.proxy(this._onKeyDown, this),
+            click: $.proxy(this.click, this)
+        });
 
-        if (this.$toggleBtn) {
-            this.$toggleBtn.bind('click', $.proxy(function() {
-                this._onClickToggle();
-            }, this));
+        if (this.$toggleBtn && this.$toggleBtn.length) {
+            this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
         }
     },
 
@@ -191,7 +166,6 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         this.$orgQuery.val(str);
     },
 
-    /**************************** Event Handlers *****************************/
     /**
      * Input element onclick event handler
      * @private
@@ -230,16 +204,18 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onWatch: function() {
-        if (this.$searchBox.val() === '') {
+        var searchboxValue = this.$searchBox.val();
+
+        if (!searchboxValue) {
             this._setOrgQuery('');
             this.autoCompleteObj.setMoved(false);
         }
 
-        if (this.inputValue !== this.$searchBox.val()) {
-            this.inputValue = this.$searchBox.val();
+        if (this.inputValue !== searchboxValue) {
+            this.inputValue = searchboxValue;
             this._onChange();
         } else if (!this.autoCompleteObj.getMoved()) {
-            this._setOrgQuery(this.$searchBox.val());
+            this._setOrgQuery(searchboxValue);
         }
     },
 
@@ -248,8 +224,10 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onKeyUp: function() {
-        if (this.inputValue !== this.$searchBox.val()) {
-            this.inputValue = this.$searchBox.val();
+        var searchBoxValue = this.$searchBox.val();
+
+        if (this.inputValue !== searchBoxValue) {
+            this.inputValue = searchBoxValue;
             this._onChange();
         }
     },
@@ -259,15 +237,16 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onChange: function() {
-        if (!this.autoCompleteObj.isUseAutoComplete()) {
+        var acObj = this.autoCompleteObj;
+        if (!acObj.isUseAutoComplete()) {
             return;
         }
 
-        if (this.autoCompleteObj.isIdle) {
-            this.autoCompleteObj.isIdle = false;
-            this.autoCompleteObj.request(this.$searchBox.val());
+        if (acObj.isIdle) {
+            acObj.isIdle = false;
+            acObj.request(this.$searchBox.val());
         } else {
-            this.autoCompleteObj.readyValue = this.$searchBox.val();
+            acObj.readyValue = this.$searchBox.val();
         }
     },
 
@@ -276,19 +255,17 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onBlur: function() {
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-            this.intervalId = null;
-        }
+        clearInterval(this.intervalId);
+        this.intervalId = null;
     },
 
     /**
      * Input element keydown event handler
      * Set actino by input value
-     * @param {Event} e keyDown Event instance
+     * @param {Event} event keyDown Event instance
      * @private
      */
-    _onKeyDown: function(e) {
+    _onKeyDown: function(event) {
         var autoCompleteObj = this.autoCompleteObj,
             code, flow, codeMap, flowMap;
 
@@ -297,14 +274,13 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             return;
         }
 
-        code = e.keyCode;
-        flow = null;
+        code = event.keyCode;
         codeMap = this.keyCodeMap;
         flowMap = autoCompleteObj.flowMap;
 
         if (code === codeMap.TAB) {
-            e.preventDefault();
-            flow = e.shiftKey ? flowMap.NEXT : flowMap.PREV;
+            event.preventDefault();
+            flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;
         } else if (code === codeMap.DOWN_ARROW) {
             flow = flowMap.NEXT;
         } else if (code === codeMap.UP_ARROW) {

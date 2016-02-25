@@ -11,11 +11,6 @@
  */
 var Data = tui.util.defineClass(/**@lends Data.prototype */{
     init: function(autoCompleteObj, options) {
-        if (arguments.length !== 2) {
-            alert('argument length error !');
-            return;
-        }
-
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
     },

@@ -8,24 +8,18 @@ var Default = config.Default,
 
 jasmine.getFixtures().fixturesPath = 'base';
 describe('InputManager', function() {
-    var im1,
-        im2;
+    var im1;
+
     beforeEach(function() {
         loadFixtures('test/fixture/expand.html');
 
         var autocom = new AutoComplete({config:Default});
         im1 = autocom.inputManager;
-        im2 = new InputManager(Default);
-
     });
+
     it('to be defined', function() {
         expect(im1).toBeDefined();
         expect(im1.options).toBeDefined();
-    });
-
-    it('to be defined but not normally', function() {
-        expect(im2).toBeDefined();
-        expect(im2.options).not.toBeDisabled();
     });
 
     it('getValue', function() {

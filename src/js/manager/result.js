@@ -22,7 +22,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
         this._attachEvent();
 
-        this.selectedElement = null;
+        this.$selectedElement = null;
 
         this.isMoved = false;
     },
@@ -34,7 +34,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
     _deleteBeforeElement: function() {
         this.$resultList.html('');
         this.$resultList.hide();
-        this.selectedElement = null;
+        this.$selectedElement = null;
     },
 
     /**
@@ -64,19 +64,14 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      */
     _makeResultList: function(dataArr, len) {
         var template = this.options.template,
-            config = this.options.listConfig,
-            tmpl,
+            listConfig = this.options.listConfig,
             useTitle = (this.options.useTitle && !!template.title),
-            index,
-            type,
-            tmplValue,
-            $el,
-            i;
+            tmpl, index, type, tmplValue, i;
 
         for (i = 0; i < len; i += 1) {
             type = dataArr[i].type;
             index = dataArr[i].index;
-            tmpl = config[index] ? template[config[index].template] : template.defaults;
+            tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;
             if (type === 'title') {
                 tmpl = template.title;
                 if (!useTitle) {
@@ -84,10 +79,12 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
                 }
             }
             tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
-            $el = $(this._applyTemplate(tmpl.element, tmplValue));
-            $el.attr('data-params', tmplValue.params);
-            $el.attr('data-index', index);
-            this.$resultList.append($el);
+            $(this._applyTemplate(tmpl.element, tmplValue))
+                .data({
+                    'params': tmplValue.params,
+                    'index': index
+                })
+                .appendTo(this.$resultList);
         }
     },
 
@@ -154,26 +151,25 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      */
     moveNextList: function(flow) {
         var flowMap = this.flowMap,
-            selectEl = this.selectedElement,
+            $selectEl = this.$selectedElement,
             getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
             getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast,
             keyword;
         this.isMoved = true;
 
-        if (selectEl) {
-            selectEl.removeClass(this.mouseOverClass);
-            selectEl = this.selectedElement = getNext.call(this, selectEl);
+        if ($selectEl && $selectEl.length) {
+            $selectEl.removeClass(this.mouseOverClass);
+            $selectEl = this.$selectedElement = getNext.call(this, $selectEl);
         } else {
-            selectEl = this.selectedElement = getBound.call(this);
+            $selectEl = this.$selectedElement = getBound.call(this);
         }
 
-        keyword = selectEl.find('.keyword-field').text();
-
-        if (selectEl && keyword) {
-            selectEl.addClass(this.mouseOverClass);
+        keyword = $selectEl.find('.keyword-field').text();
+        if (keyword) {
+            $selectEl.addClass(this.mouseOverClass);
             this.autoCompleteObj.setValue(keyword);
             this._setSubmitOption();
-        } else if (selectEl) {
+        } else {
             this.moveNextList(flow);
         }
     },
@@ -197,24 +193,18 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _attachEvent: function() {
-        this.$resultList.bind('mouseover click', $.proxy(function(e) {
-            if (e.type === 'mouseover') {
-                this._onMouseOver(e);
-            } else if (e.type === 'click') {
-                this._onClick(e);
-            }
-        }, this));
+        this.$resultList.on({
+            mouseover: $.proxy(this._onMouseOver, this),
+            click: $.proxy(this._onClick, this)
+        });
 
         if (this.$onOffTxt) {
-            this.$onOffTxt.bind('click', $.proxy(function() {
+            this.$onOffTxt.on('click', $.proxy(function() {
                 this._useAutoComplete();
             }, this));
         }
 
-        $(document).bind('click', $.proxy(function(e) {
-            if (e.target.tagName.toLowerCase() !== 'html') {
-                return;
-            }
+        $(document).on('click', $.proxy(function() {
             this.hideResultList();
         }, this));
     },
@@ -227,21 +217,12 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
-        var temp = {},
-            keyStr;
-
         tui.util.forEach(dataObj, function(value, key) {
-            if (!dataObj.propertyIsEnumerable(key)) { //@todo: Is it necessary?
-                return;
-            }
-
             if (key === 'subject') {
-                temp.subject = this._highlight(value);
-            } else {
-                temp[key] = value;
+                value = this._highlight(value);
             }
 
-            tmplStr = tmplStr.replace(new RegExp('@' + keyStr + '@', 'g'), temp[keyStr]);
+            tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
         }, this);
 
         return tmplStr;
@@ -429,8 +410,12 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Change action attribute of form element and set addition values in hidden type elements.
+     *
+     * //XXX: When click (li)
+     *
      * @param {element} [$target] Submit options target
      * @private
+     *
      */
     _setSubmitOption: function($target) {
         var formElement, $selectField, actions,
@@ -438,17 +423,17 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
         this._clearSubmitOption();
         formElement = this.options.formElement;
-        $selectField = $target ? $($target).closest('li') : $(this.selectedElement);
+        $selectField = $target ? $($target).closest('li') : this.$selectedElement;
         actions = this.options.actions;
-        index = $selectField.attr('data-index');
+
+        index = $selectField.data('index');
         config = this.options.listConfig[index];
         action = actions[config.action];
 
         $(formElement).attr('action', action);
-        paramsString = $selectField.attr('data-params');
+        paramsString = $selectField.data('params');
 
         this.autoCompleteObj.setParams(paramsString, index);
-
         this.autoCompleteObj.fire('change', {
             index: index,
             action: action,
@@ -486,7 +471,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             selectedItem.addClass(this.mouseOverClass);
         }
 
-        this.selectedElement = $target;
+        this.$selectedElement = $target;
     },
 
     /**
