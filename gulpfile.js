@@ -4,12 +4,10 @@ var gulp = require('gulp');
 var connect = require('gulp-connect');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-var sourceMap = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
 var karma = require('karma').server;
 var hbsfy = require('hbsfy');
 var uglify = require('gulp-uglify');
-var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var filename = require('./package.json').name.replace('component-', '');
 
@@ -41,7 +39,8 @@ gulp.task('bundle', function() {
         })
         .pipe(source(filename + '.js'))
         .pipe(buffer())
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./samples/js/'));
 });
 
 gulp.task('compress', ['bundle'], function() {
@@ -52,10 +51,4 @@ gulp.task('compress', ['bundle'], function() {
 
 });
 
-gulp.task('concat', ['compress'], function() {
-    gulp.src(filename + '.js')
-        .pipe(concat(filename + '.js'))
-        .pipe(gulp.dest('./samples/js/'));
-});
-
-gulp.task('default', ['bundle', 'compress', 'concat']);
+gulp.task('default', ['bundle', 'compress']);
