@@ -1,5 +1,5 @@
 /**
- * @fileoverview Data is kind of manager module to request data at API with input querys.
+ * @fileoverview Data is kind of manager module to request data at API with input queries.
  * @version 1.1.0
  * @author NHN Entertainment FE dev team. <dl_javascript@nhnent.com>
  */
@@ -47,7 +47,7 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
             'success': $.proxy(function(dataObj) {
                 try {
                     keyDatas = this._getCollectionData(dataObj);
-                    acObj.setQuerys(dataObj.query);
+                    acObj.setQueries(dataObj.query);
                     acObj.setServerData(keyDatas);
                     acObj.clearReadyValue();
                 } catch (e) {

@@ -45,9 +45,9 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         autoComplete.request('운동화');
 
         //키워드 하이라이트 처리 테스트
-        autoComplete.querys = ['나이키'];
+        autoComplete.queries = ['나이키'];
         expect(resultManager._highlight('나이키 에어')).toBe('<strong>나이키 </strong>에어');
-        autoComplete.querys = ['TEST'];
+        autoComplete.queries = ['TEST'];
         expect(resultManager._highlight('나이키 에어')).toBe('나이키 에어');
     });
 

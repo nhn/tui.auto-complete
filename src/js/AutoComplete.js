@@ -9,6 +9,18 @@ var DataManager = require('./manager/data'),
     InputManager = require('./manager/input'),
     ResultManager = require('./manager/result');
 
+var REQUIRED_FIELDS = [
+    'resultListElement',
+    'searchBoxElement',
+    'orgQueryElement',
+    'formElement',
+    'subQuerySet',
+    'template',
+    'listConfig',
+    'actions',
+    'searchUrl'
+];
+
 /**
  * @constructor
  * @param {Object} options
@@ -32,7 +44,7 @@ var DataManager = require('./manager/data'),
  *  //     'toggleBtnElement' : "#onoffBtn",
  *  //
  *  //     // on,off State element
- *  //     'onoffTextElement' : $(".baseBox .bottom"),
+ *  //     'onoffTextElement' : ".baseBox .bottom",
  *  //
  *  //     // on, off State image source
  *  //     'toggleImg' : {
@@ -176,7 +188,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         this._setOptions(options);
 
         options = this.options;
-        if (!options.toggleImg || !options.onoffTextElement) {
+        if (!options.toggleImg || tui.util.isEmpty(options.onoffTextElement)) {
             this.isUse = true;
             delete options.onoffTextElement;
         } else {
@@ -200,7 +212,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
          * Save matched input english string with Korean.
          * @type {null}
          */
-        this.querys = null;
+        this.queries = null;
         this.isIdle = true;
 
         this.setToggleBtnImg(this.isUse);
@@ -213,27 +225,14 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @private
      */
     _checkValidation: function(options) {
-        var config, requiredFields,
-            isExisty = tui.util.isExisty;
+        var isExisty = tui.util.isExisty,
+            config = options.config;
 
-        config = options.config;
         if (!isExisty(config)) {
             throw new Error('No configuration #' + config);
         }
 
-        requiredFields = [
-            'resultListElement',
-            'searchBoxElement',
-            'orgQueryElement',
-            'formElement',
-            'subQuerySet',
-            'template',
-            'listConfig',
-            'actions',
-            'searchUrl'
-        ];
-
-        tui.util.forEach(requiredFields, function(name) {
+        tui.util.forEach(REQUIRED_FIELDS, function(name) {
             if (!isExisty(config[name])) {
                 throw new Error(name + 'does not not exist.');
             }
@@ -280,7 +279,6 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     },
 
     /**
-     * @todo Fix function description, {@link InputManager.setParams}
      * Set additional parameters at inputManager.
      * @param {string} paramStr String to be addition parameters.(saperator '&')
      * @param {string} index The index for setting key value
@@ -309,10 +307,10 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Save Korean that is matched real query.
-     * @param {array} querys Result qureys
+     * @param {array} queries Result queries
      */
-    setQuerys: function(querys) {
-        this.querys = [].concat(querys);
+    setQueries: function(queries) {
+        this.queries = [].concat(queries);
     },
 
     /**
