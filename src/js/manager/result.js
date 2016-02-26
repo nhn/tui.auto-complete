@@ -268,9 +268,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         if (!query || query.length < 1) {
             return text;
         }
-
-        query = query.replace(WHITE_SPACES_RE_G, '');
-        tmpArr = map(query, function(char) {
+        
+        tmpArr = query.replace(WHITE_SPACES_RE_G, '').split('');
+        tmpArr = map(tmpArr, function(char) {
             if (SPECIAL_CHARACTERS_RE.test(char)) {
                 return '\\' + char;
             }
