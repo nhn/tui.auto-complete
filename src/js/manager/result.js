@@ -135,6 +135,12 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         this.$resultList.hide();
         this._hideBottomArea();
         this.autoCompleteObj.isIdle = true;
+
+        /**
+         * Fired when hide the result list
+         * @api
+         * @event AutoComplete#close
+         */
         this.autoCompleteObj.fire('close');
     },
 
@@ -396,6 +402,16 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         $formElement.attr('action', action);
         this._clearSubmitOption();
         this.autoCompleteObj.setParams(paramsString, index);
+
+        /**
+         * Fired when the user's selected element in result list is changed
+         * @api
+         * @event AutoComplete#change
+         * @param {Object} data - Data for submit
+         *  @param {string} data.index - Index of collection
+         *  @param {string} data.action - Form action
+         *  @param {string} data.params - Parameters
+         */
         this.autoCompleteObj.fire('change', {
             index: index,
             action: action,
