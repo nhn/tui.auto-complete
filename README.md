@@ -39,6 +39,7 @@ Display recommend word list, when you type search character in input element.
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
+| [1.1.2](https://github.nhnent.com/fe/component-auto-complete/releases/tag/1.1.2) | Parameter check removed | 2016.02 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1a | Namespace changed | 2015.10 | NHN ent. FE dev team<dl_javascript@nhnent.com> | 
 | 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
