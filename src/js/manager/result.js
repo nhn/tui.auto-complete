@@ -268,7 +268,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         if (!query || query.length < 1) {
             return text;
         }
-        
+
         tmpArr = query.replace(WHITE_SPACES_RE_G, '').split('');
         tmpArr = map(tmpArr, function(char) {
             if (SPECIAL_CHARACTERS_RE.test(char)) {
