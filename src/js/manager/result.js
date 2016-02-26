@@ -7,7 +7,8 @@
 var DEFAULT_VIEW_COUNT = 10,
     isEmpty = tui.util.isEmpty,
     map = tui.util.map,
-    SPECIAL_CHARACTERS_REGEXP = /[^\w\s]/,
+    SPECIAL_CHARACTERS_RE = /[\\^$.*+?()[\]{}|]/,
+    WHITE_SPACES_RE_G = '/\s+/g',
     WHITE_SPACES = '[\\s]*';
 
 /**
@@ -262,9 +263,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             return text;
         }
 
-        query = query.replace(/\s+/g, '');
+        query = query.replace(WHITE_SPACES_RE_G, '');
         tmpArr = map(query, function(char) {
-            if (SPECIAL_CHARACTERS_REGEXP.test(char)) {
+            if (SPECIAL_CHARACTERS_RE.test(char)) {
                 return '\\' + char;
             }
             return char;

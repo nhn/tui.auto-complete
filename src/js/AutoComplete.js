@@ -10,16 +10,18 @@ var DataManager = require('./manager/data'),
     ResultManager = require('./manager/result');
 
 var REQUIRED_FIELDS = [
-    'resultListElement',
-    'searchBoxElement',
-    'orgQueryElement',
-    'formElement',
-    'subQuerySet',
-    'template',
-    'listConfig',
-    'actions',
-    'searchUrl'
-];
+        'resultListElement',
+        'searchBoxElement',
+        'orgQueryElement',
+        'formElement',
+        'subQuerySet',
+        'template',
+        'listConfig',
+        'actions',
+        'searchUrl'
+    ],
+    DEFAULT_COOKIE_NAME = '_atcp_use_cookie',
+    IS_ELEMENT_OPTION_RE_I = /element/i;
 
 /**
  * @constructor
@@ -180,36 +182,13 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @param {Object} options autoconfig values
      */
     init: function(options) {
-        var cookieValue,
-            defaultCookieName = '_atcp_use_cookie';
-
         this.options = {};
         this._checkValidation(options);
         this._setOptions(options);
 
-        options = this.options;
-
-        /* @todo: refactoring */
-        if (!options.toggleImg || tui.util.isEmpty(options.onoffTextElement)) {
-            this.isUse = true;
-            delete options.onoffTextElement;
-        } else {
-            cookieValue = $.cookie(options.cookieName);
-            this.isUse = !!(cookieValue === 'use' || !cookieValue);
-        }
-
-        if (!options.cookieName) {
-            options.cookieName = defaultCookieName;
-        }
-
-        if (!tui.util.isExisty(options.watchInterval)) {
-            options.watchInterval = this.watchInterval;
-        }
-        /************************/
-
-        this.dataManager = new DataManager(this, options);
-        this.inputManager = new InputManager(this, options);
-        this.resultManager = new ResultManager(this, options);
+        this.dataManager = new DataManager(this, this.options);
+        this.inputManager = new InputManager(this, this.options);
+        this.resultManager = new ResultManager(this, this.options);
 
         /**
          * Save matched input english string with Korean.
@@ -248,8 +227,25 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @private
      */
     _setOptions: function(options) {
-        tui.util.forEach(options.config, function(value, name) {
-            if (/element/i.test(name)) {
+        var config = options.config,
+            cookieValue;
+
+        if (!config.toggleImg || !config.onoffTextElement) {
+            this.isUse = true;
+            delete config.onoffTextElement;
+        } else {
+            cookieValue = $.cookie(config.cookieName);
+            this.isUse = !!(cookieValue === 'use' || !cookieValue);
+        }
+
+        config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
+
+        if (!tui.util.isFalsy(config.watchInterval)) {
+            config.watchInterval = this.watchInterval;
+        }
+
+        tui.util.forEach(config, function(value, name) {
+            if (IS_ELEMENT_OPTION_RE_I.test(name)) {
                 this.options[name] = $(value);
             } else {
                 this.options[name] = value;
