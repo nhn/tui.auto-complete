@@ -5,7 +5,10 @@
  */
 'use strict';
 var DEFAULT_VIEW_COUNT = 10,
-    isEmpty = tui.util.isEmpty;
+    isEmpty = tui.util.isEmpty,
+    map = tui.util.map,
+    SPECIAL_CHARACTERS_REGEXP = /[^\w\s]/,
+    WHITE_SPACES = '[\\s]*';
 
 /**
  * Unit of auto complete that belong with search result list.
@@ -218,7 +221,6 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             if (key === 'subject') {
                 value = this._highlight(value);
             }
-
             tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
         }, this);
 
@@ -252,45 +254,26 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @param {String} query Input keyword
      * @returns {String}
      * @private
-     * @todo: Refactoring
      */
     _makeStrong: function(text, query) {
-        var escRegExp, tmpStr, tmpCharacters,
-            tmpCharLen, tmpArr, returnStr,
-            regQuery, cnt, i;
+        var tmpArr, regQuery;
 
         if (!query || query.length < 1) {
             return text;
         }
 
-        escRegExp = new RegExp('[.*+?|()\\[\\]{}\\\\]', 'g');
-        tmpStr = query.replace(/()/g, ' ').replace(/^\s+|\s+$/g, '');
-        tmpCharacters = tmpStr.match(/\S/g);
-        tmpCharLen = tmpCharacters.length;
-        tmpArr = [];
-        returnStr = '';
+        query = query.replace(/\s+/g, '');
+        tmpArr = map(query, function(char) {
+            if (SPECIAL_CHARACTERS_REGEXP.test(char)) {
+                return '\\' + char;
+            }
+            return char;
+        });
+        regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
 
-        for (i = 0, cnt = tmpCharLen; i < cnt; i += 1) {
-            tmpArr.push(
-                tmpCharacters[i]
-                    .replace(/[\S]+/g,
-                        '['
-                        + tmpCharacters[i].toLowerCase().replace(escRegExp, '\\$&')
-                        + '|' + tmpCharacters[i].toUpperCase().replace(escRegExp, '\\$&')
-                        + '] '
-                    )
-                    .replace(/[\s]+/g, '[\\s]*')
-            );
-        }
-
-        tmpStr = '(' + tmpArr.join('') + ')';
-        regQuery = new RegExp(tmpStr);
-
-        if (regQuery.test(text)) {
-            returnStr = text.replace(regQuery, '<strong>' + RegExp.$1 + '</strong>');
-        }
-
-        return returnStr;
+        return text.replace(regQuery, function(match) {
+            return '<strong>' + match + '</strong>';
+        });
     },
 
     /**

@@ -82,4 +82,17 @@ describe('ResultManager', function() {
 
         expect(bSel).not.toBe(aSel);
     });
+
+    it('makeStrong', function() {
+        var text = 'dkfjdkfj 65 _ 2 * G+ T 9"76asdl65g65_2Gt965_2*G+t9',
+            query = '65_2*G+t9',
+            result;
+
+        result = rm1._makeStrong(text, query);
+        expect(result).toEqual(
+            'dkfjdkfj <strong>65 _ 2 * G+ T 9</strong>"' +
+            '76asdl65g65_2Gt9' +
+            '<strong>65_2*G+t9</strong>'
+        );
+    });
 });

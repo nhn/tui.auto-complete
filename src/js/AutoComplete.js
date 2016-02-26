@@ -188,6 +188,8 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         this._setOptions(options);
 
         options = this.options;
+
+        /* @todo: refactoring */
         if (!options.toggleImg || tui.util.isEmpty(options.onoffTextElement)) {
             this.isUse = true;
             delete options.onoffTextElement;
@@ -203,6 +205,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         if (!tui.util.isExisty(options.watchInterval)) {
             options.watchInterval = this.watchInterval;
         }
+        /************************/
 
         this.dataManager = new DataManager(this, options);
         this.inputManager = new InputManager(this, options);

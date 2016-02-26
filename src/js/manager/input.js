@@ -265,31 +265,34 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {Event} event keyDown Event instance
      * @private
      */
+    /*eslint-disable complexity*/
     _onKeyDown: function(event) {
-        var autoCompleteObj = this.autoCompleteObj,
-            code, flow, codeMap, flowMap;
+        var acObj = this.autoCompleteObj,
+            flow, codeMap, flowMap;
 
-        if (!autoCompleteObj.isUseAutoComplete() ||
-            !autoCompleteObj.isShowResultList()) {
+        if (!acObj.isUseAutoComplete() || !acObj.isShowResultList()) {
             return;
         }
 
-        code = event.keyCode;
         codeMap = this.keyCodeMap;
-        flowMap = autoCompleteObj.flowMap;
-
-        if (code === codeMap.TAB) {
-            event.preventDefault();
-            flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;
-        } else if (code === codeMap.DOWN_ARROW) {
-            flow = flowMap.NEXT;
-        } else if (code === codeMap.UP_ARROW) {
-            flow = flowMap.PREV;
-        } else {
-            return;
+        flowMap = acObj.flowMap;
+        switch (event.keyCode) {
+            case codeMap.TAB:
+                event.preventDefault();
+                flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;
+                break;
+            case codeMap.DOWN_ARROW:
+                flow = flowMap.NEXT;
+                break;
+            case codeMap.UP_ARROW:
+                flow = flowMap.PREV;
+                break;
+            default:
+                return;
         }
-        autoCompleteObj.moveNextList(flow);
+        acObj.moveNextList(flow);
     },
+    /*eslint-enable complexity*/
 
     /**
      * Toggle button click event handler
