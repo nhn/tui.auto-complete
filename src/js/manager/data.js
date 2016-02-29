@@ -6,7 +6,7 @@
 'use strict';
 
 var CALLBACK_NAME = 'dataCallback',
-    SERACH_KEYWORD_IDENTIFIER = 'q',
+    SERACH_QUERY_IDENTIFIER = 'q',
     DEFAULT_PARAMS = {
         'r_enc': 'UTF-8',
         'q_enc': 'UTF-8',
@@ -31,14 +31,15 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      */
     request: function(keyword) {
         var rsKeyWrod = keyword.replace(/\s/g, ''),
-            acObj = this.autoCompleteObj, keyDatas;
+            acObj = this.autoCompleteObj,
+            keyData;
 
         if (!keyword || !rsKeyWrod) {
             acObj.hideResultList();
             return;
         }
 
-        DEFAULT_PARAMS[SERACH_KEYWORD_IDENTIFIER] = keyword;
+        DEFAULT_PARAMS[SERACH_QUERY_IDENTIFIER] = keyword;
         $.ajax(this.options.searchUrl, {
             'dataType': 'jsonp',
             'jsonpCallback': CALLBACK_NAME,
@@ -46,9 +47,9 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
             'type': 'get',
             'success': $.proxy(function(dataObj) {
                 try {
-                    keyDatas = this._getCollectionData(dataObj);
+                    keyData = this._getCollectionData(dataObj);
                     acObj.setQueries(dataObj.query);
-                    acObj.setServerData(keyDatas);
+                    acObj.setServerData(keyData);
                     acObj.clearReadyValue();
                 } catch (e) {
                     throw new Error('[DataManager] invalid response data.', e);
