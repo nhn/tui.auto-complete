@@ -6,14 +6,12 @@
 'use strict';
 
 var CALLBACK_NAME = 'dataCallback',
-    SERACH_QUERY_IDENTIFIER = 'q',
-    DEFAULT_PARAMS = {
-        'r_enc': 'UTF-8',
-        'q_enc': 'UTF-8',
-        'r_format': 'json'
-    },
-    forEach = tui.util.forEach,
-    isEmpty = tui.util.isEmpty;
+    SERACH_QUERY_IDENTIFIER = 'q';
+
+var forEach = tui.util.forEach,
+    map = tui.util.map,
+    isEmpty = tui.util.isEmpty,
+    extend = tui.util.extend;
 
 /**
  * Unit of auto complete connecting server.
@@ -39,11 +37,11 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
             return;
         }
 
-        DEFAULT_PARAMS[SERACH_QUERY_IDENTIFIER] = keyword;
+        this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
         $.ajax(this.options.searchUrl, {
             'dataType': 'jsonp',
             'jsonpCallback': CALLBACK_NAME,
-            'data': $.extend(this.options.searchApi, DEFAULT_PARAMS),
+            'data': this.options.searchApi,
             'type': 'get',
             'success': $.proxy(function(dataObj) {
                 try {
@@ -93,26 +91,19 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      * @returns {Array}
      */
     _getRedirectData: function(itemSet) {
-        var type = itemSet.type,
-            index = itemSet.index,
-            dest = itemSet.destination,
-            items = [],
-            viewCount = this.options.viewCount;
+        var defaultData = {
+                type: itemSet.type,
+                index: itemSet.index,
+                dest: itemSet.destination
+            },
+            items = itemSet.items.slice(0, this.options.viewCount - 1);
 
-        /* eslint-disable consistent-return */
-        forEach(itemSet.items, function(item, idx) {
-            if (idx >= viewCount) {
-                return false;
-            }
+        items = map(items, function(item) {
+            return extend({
+                values: item
+            }, defaultData);
+        });
 
-            items.push({
-                values: item,
-                type: type,
-                index: index,
-                dest: dest
-            });
-        }, this);
-        /* eslint-enable consistent-return */
         return items;
     }
 });

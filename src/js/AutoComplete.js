@@ -9,7 +9,9 @@ var DataManager = require('./manager/data'),
     InputManager = require('./manager/input'),
     ResultManager = require('./manager/result');
 
-var REQUIRED_FIELDS = [
+var DEFAULT_COOKIE_NAME = '_atcp_use_cookie';
+
+var requiredOptions = [
         'resultListElement',
         'searchBoxElement',
         'orgQueryElement',
@@ -20,8 +22,7 @@ var REQUIRED_FIELDS = [
         'actions',
         'searchUrl'
     ],
-    DEFAULT_COOKIE_NAME = '_atcp_use_cookie',
-    IS_ELEMENT_OPTION_RE_I = /element/i;
+    rIsElementOption = /element/i;
 
 /**
  * @constructor
@@ -175,7 +176,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     /**
      * Interval for check update input
      */
-    watchInterval: 200,
+    watchInterval: 300,
 
     /**
      * Initialize
@@ -190,10 +191,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         this.inputManager = new InputManager(this, this.options);
         this.resultManager = new ResultManager(this, this.options);
 
-        /**
-         * Save matched input english string with Korean.
-         * @type {null}
-         */
+        this.isUse = true;
         this.queries = null;
         this.isIdle = true;
 
@@ -214,7 +212,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
             throw new Error('No configuration #' + config);
         }
 
-        tui.util.forEach(REQUIRED_FIELDS, function(name) {
+        tui.util.forEach(requiredOptions, function(name) {
             if (!isExisty(config[name])) {
                 throw new Error(name + 'does not not exist.');
             }
@@ -235,17 +233,16 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
             delete config.onoffTextElement;
         } else {
             cookieValue = $.cookie(config.cookieName);
-            this.isUse = !!(cookieValue === 'use' || !cookieValue);
+            this.isUse = (cookieValue === 'use' || !cookieValue);
         }
-
         config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
 
-        if (!tui.util.isFalsy(config.watchInterval)) {
+        if (tui.util.isFalsy(config.watchInterval)) {
             config.watchInterval = this.watchInterval;
         }
 
         tui.util.forEach(config, function(value, name) {
-            if (IS_ELEMENT_OPTION_RE_I.test(name)) {
+            if (rIsElementOption.test(name)) {
                 this.options[name] = $(value);
             } else {
                 this.options[name] = value;
@@ -361,8 +358,8 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * Move to next item in result list.
      * @param {string} flow Direction to move.
      */
-    moveNextList: function(flow) {
-        this.resultManager.moveNextList(flow);
+    moveNextResult: function(flow) {
+        this.resultManager.moveNextResult(flow);
     },
 
     /**
@@ -371,22 +368,6 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      */
     changeOnOffText: function(isUse) {
         this.resultManager.changeOnOffText(isUse);
-    },
-
-    /**
-     * Return resultManager whether locked or not
-     * @returns {Boolean} resultManager의 isMoved값
-     */
-    getMoved: function() {
-        return this.resultManager.isMoved;
-    },
-
-    /**
-     * Set resultManager's isMoved field
-     * @param {Boolean} isMoved Whether locked or not.
-     */
-    setMoved: function(isMoved) {
-        this.resultManager.isMoved = isMoved;
     },
 
     /**

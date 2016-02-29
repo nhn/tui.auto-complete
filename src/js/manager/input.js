@@ -15,7 +15,8 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
     keyCodeMap: {
         'TAB': 9,
         'UP_ARROW': 38,
-        'DOWN_ARROW': 40
+        'DOWN_ARROW': 40,
+        'ESC': 27
     },
 
     /**
@@ -27,12 +28,18 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
 
+        /**
+         * Flag to distinguish new changed inputValue from moving-value in resultList
+         * @type {boolean}
+         */
+        this.isKeyMoving = false;
+
         // Save elements from configuration.
         this.$searchBox = this.options.searchBoxElement;
         this.$toggleBtn = this.options.toggleBtnElement;
         this.$orgQuery = this.options.orgQueryElement;
         this.$formElement = this.options.formElement;
-        this.inputValue = this.$searchBox.val();
+        this.prevValue = '';
 
         this._attachEvent();
     },
@@ -51,7 +58,6 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      */
     setValue: function(str) {
         this.$searchBox.val(str);
-        this.inputValue = str;
     },
 
     /**
@@ -77,12 +83,12 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _createParamSetByType: function(subQueryValues, index) {
-        var opttions = this.options,
-            listConfig = opttions.listConfig[index],
+        var options = this.options,
+            listConfig = options.listConfig[index],
             subQuerySetIndex = listConfig.subQuerySet,
             staticParamsIndex = listConfig.staticParams,
-            subQueryKeys = opttions.subQuerySet[subQuerySetIndex],
-            staticParams = opttions.staticParams[staticParamsIndex];
+            subQueryKeys = options.subQuerySet[subQuerySetIndex],
+            staticParams = options.staticParams[staticParamsIndex];
 
         if (!this.hiddens) {
             this._createParamContainer();
@@ -128,7 +134,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {Boolean} isUse 자동완성 사용 여부
      */
     setToggleBtnImg: function(isUse) {
-        if (!this.options.toggleImg || !this.$toggleBtn || !this.$toggleBtn.length) {
+        if (!this.options.toggleImg || !tui.util.isEmpty(this.$toggleBtn)) {
             return;
         }
 
@@ -147,9 +153,8 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         this.$searchBox.on({
             focus: $.proxy(this._onFocus, this),
             blur: $.proxy(this._onBlur, this),
-            keyup: $.proxy(this._onKeyUp, this),
             keydown: $.proxy(this._onKeyDown, this),
-            click: $.proxy(this.click, this)
+            click: $.proxy(this._onClick, this)
         });
 
         if (this.$toggleBtn && this.$toggleBtn.length) {
@@ -169,22 +174,20 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
     /**
      * Input element onclick event handler
      * @private
+     * @param {MouseEvent} event Mouse event
      * @returns {boolean} False if no input-keyword or not use auto-complete
      */
-    _onClick: function() {
+    _onClick: function(event) {
         //입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
         if (!this.autoCompleteObj.getValue() ||
             !this.autoCompleteObj.isUseAutoComplete()) {
             return false;
         }
 
-        if (this.autoCompleteObj.isShowResultList()) {
-            //결과 리스트 영역이 show 상태이면(isResultShowing==true) 결과 리스트 hide 요청
-            this.autoCompleteObj.hideResultList();
-        } else {
-            //결과 리스트 영역이 hide 상태이면(isResultShowing==false) 결과 리스트 show 요청
+        if (!this.autoCompleteObj.isShowResultList()) {
             this.autoCompleteObj.showResultList();
         }
+        event.stopPropagation();
         return true;
     },
 
@@ -194,9 +197,10 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      */
     _onFocus: function() {
         //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
-        this.intervalId = setInterval($.proxy(function() {
-            this._onWatch();
-        }, this), this.options.watchInterval);
+        this.intervalId = setInterval(
+            $.proxy(this._onWatch, this),
+            this.options.watchInterval
+        );
     },
 
     /**
@@ -204,30 +208,19 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onWatch: function() {
-        var searchboxValue = this.$searchBox.val();
+        var searchBoxValue = this.getValue();
 
-        if (!searchboxValue) {
+        if (!searchBoxValue) {
+            this.autoCompleteObj.hideResultList();
+            this.prevValue = '';
             this._setOrgQuery('');
-            this.autoCompleteObj.setMoved(false);
+            return;
         }
 
-        if (this.inputValue !== searchboxValue) {
-            this.inputValue = searchboxValue;
-            this._onChange();
-        } else if (!this.autoCompleteObj.getMoved()) {
-            this._setOrgQuery(searchboxValue);
-        }
-    },
-
-    /**
-     * Input element keyup event handler
-     * @private
-     */
-    _onKeyUp: function() {
-        var searchBoxValue = this.$searchBox.val();
-
-        if (this.inputValue !== searchBoxValue) {
-            this.inputValue = searchBoxValue;
+        if (this.isKeyMoving) {
+            this._setOrgQuery(searchBoxValue);
+            this.prevValue = searchBoxValue;
+        } else if (this.prevValue !== searchBoxValue) {
             this._onChange();
         }
     },
@@ -237,16 +230,19 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onChange: function() {
-        var acObj = this.autoCompleteObj;
-        if (!acObj.isUseAutoComplete()) {
+        var acObj = this.autoCompleteObj,
+            searchBoxValue = this.getValue();
+
+        if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-
+        this.autoCompleteObj.showResultList();
+        this.prevValue = searchBoxValue;
         if (acObj.isIdle) {
             acObj.isIdle = false;
-            acObj.request(this.$searchBox.val());
+            acObj.request(searchBoxValue);
         } else {
-            acObj.readyValue = this.$searchBox.val();
+            acObj.readyValue = searchBoxValue;
         }
     },
 
@@ -287,10 +283,19 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             case codeMap.UP_ARROW:
                 flow = flowMap.PREV;
                 break;
+            case codeMap.ESC:
+                acObj.hideResultList();
+                break;
             default:
-                return;
+                break;
         }
-        acObj.moveNextList(flow);
+
+        if (flow) {
+            this.isKeyMoving = true;
+            acObj.moveNextResult(flow);
+        } else {
+            this.isKeyMoving = false;
+        }
     },
     /*eslint-enable complexity*/
 

@@ -5,14 +5,19 @@
  */
 'use strict';
 var DEFAULT_VIEW_COUNT = 10,
-    isEmpty = tui.util.isEmpty,
-    map = tui.util.map,
-    SPECIAL_CHARACTERS_RE = /[\\^$.*+?()[\]{}|]/,
-    WHITE_SPACES_RE_G = '/\s+/g',
     WHITE_SPACES = '[\\s]*';
+
+var isEmpty = tui.util.isEmpty,
+    forEach = tui.util.forEach,
+    map = tui.util.map;
+
+var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
+    rWhiteSpace = '/\s+/g';
 
 /**
  * Unit of auto complete that belong with search result list.
+ * Handle the submit data from resultList.
+ * See {@link Result.prototype._orderElement} which set the request data from arrow-key input
  * @constructor
  */
 var Result = tui.util.defineClass(/** @lends Result.prototype */{
@@ -27,10 +32,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         this.flowMap = autoCompleteObj.flowMap;
 
         this._attachEvent();
-
-        this.$selectedElement = null;
-
-        this.isMoved = false;
+        this.$selectedElement = $();
     },
 
     /**
@@ -38,10 +40,10 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _deleteBeforeElement: function() {
+        this.$selectedElement = $();
         this.$resultList
             .hide()
             .html('');
-        this.$selectedElement = null;
     },
 
     /**
@@ -109,10 +111,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             return tmplValue;
         }
 
-        tui.util.forEach(attrs, function(attr, idx) {
+        forEach(attrs, function(attr, idx) {
             tmplValue[attr] = values[idx];
         });
-
         if (attrs.length < values.length) {
             tmplValue.params = values.slice(attrs.length);
         }
@@ -156,20 +157,14 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Move focus to next item, change input element value as focus value.
      * @param {string} flow Direction by key code
      */
-    moveNextList: function(flow) {
-        var flowMap = this.flowMap,
-            $selectEl = this.$selectedElement,
-            getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
-            getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast,
+    moveNextResult: function(flow) {
+        var $selectEl = this.$selectedElement,
             keyword;
 
-        this.isMoved = true;
-        if (isEmpty($selectEl)) {
-            $selectEl = this.$selectedElement = getBound.call(this);
-        } else {
+        if (!isEmpty($selectEl)) {
             $selectEl.removeClass(this.mouseOverClass);
-            $selectEl = this.$selectedElement = getNext.call(this, $selectEl);
         }
+        $selectEl = this.$selectedElement = this._orderElement(flow);
 
         keyword = $selectEl.find('.keyword-field').text();
         if (keyword) {
@@ -177,7 +172,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             this.autoCompleteObj.setValue(keyword);
             this._setSubmitOption();
         } else {
-            this.moveNextList(flow);
+            this.moveNextResult(flow);
         }
     },
 
@@ -269,9 +264,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             return text;
         }
 
-        tmpArr = query.replace(WHITE_SPACES_RE_G, '').split('');
+        tmpArr = query.replace(rWhiteSpace, '').split('');
         tmpArr = map(tmpArr, function(char) {
-            if (SPECIAL_CHARACTERS_RE.test(char)) {
+            if (rIsSpeicalCharacters.test(char)) {
                 return '\\' + char;
             }
             return char;
@@ -304,53 +299,37 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
     /**
      * Return whether first or last
      * @param {string} type First/end element type
-     * @returns {jQuery|null}
+     * @returns {jQuery}
      * @private
      */
     _orderStage: function(type) {
-        var $children = this.$resultList.children();
+        var flowMap = this.flowMap,
+            $children = this.$resultList.children();
 
-        type = (type === this.flowMap.FIRST) ? 'first' : 'last';
-        return $children[type]();
+        if (type === flowMap.FIRST) {
+            return $children.first();
+        } else if (type === flowMap.LAST) {
+            return $children.last();
+        }
+
+        return null;
     },
 
     /**
-     * Return next element from selected element
-     * If next element is not exist, return first element.
-     * @param {jQuery} $el focused element
-     * @returns {jQuery}
-     * @private
-     */
-    _getNext: function($el) {
-        return this._orderElement(this.flowMap.NEXT, $el);
-    },
-
-    /**
-     * Return previous element from selected element
-     * If previous element is not exist, return the last element.
-     * @param {jQuery} $el focused element
-     * @returns {jQuery}
-     * @private
-     */
-    _getPrev: function($el) {
-        return this._orderElement(this.flowMap.PREV, $el);
-    },
-
-    /**
-     * Return previous or next element by direction.
+     * Return previous or next element from resultList by direction
      * @param {string} type The direction type for finding element
-     * @param {jQuery} $el focused element
      * @returns {jQuery}
      * @private
      */
-    _orderElement: function(type, $el) {
-        var $order;
+    _orderElement: function(type) {
+        var $selectedElement = this.$selectedElement,
+            $order;
 
         if (type === this.flowMap.NEXT) {
-            $order = $el.next();
+            $order = $selectedElement.next();
             return $order.length ? $order : this._getFirst();
         }
-        $order = $el.prev();
+        $order = $selectedElement.prev();
         return $order.length ? $order : this._getLast();
     },
 
