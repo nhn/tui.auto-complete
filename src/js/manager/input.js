@@ -1,6 +1,5 @@
 /**
  * @fileOverview Input is kind of manager module to support input element events and all of input functions.
- * @version 1.1.0
  * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
  */
 'use strict';

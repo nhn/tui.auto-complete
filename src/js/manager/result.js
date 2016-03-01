@@ -1,6 +1,5 @@
 /**
  * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
- * @version 1.1.0
  * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
  */
 'use strict';

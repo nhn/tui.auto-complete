@@ -1,6 +1,5 @@
 /**
  * @fileoverview Data is kind of manager module to request data at API with input queries.
- * @version 1.1.0
  * @author NHN Entertainment FE dev team. <dl_javascript@nhnent.com>
  */
 'use strict';
