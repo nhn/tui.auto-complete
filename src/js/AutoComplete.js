@@ -1,156 +1,168 @@
 /**
  * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
- * @version 1.1.0
+ * @version 1.1.2
  * @author NHN Entertainment FE Dev Team. <dl_javascript@nhnent.com>
 */
+'use strict';
 
-var DataManager = require('./manager/data');
-var InputManager = require('./manager/input');
-var ResultManager = require('./manager/result');
+var DataManager = require('./manager/data'),
+    InputManager = require('./manager/input'),
+    ResultManager = require('./manager/result');
+
+var DEFAULT_COOKIE_NAME = '_atcp_use_cookie';
+
+var requiredOptions = [
+        'resultListElement',
+        'searchBoxElement',
+        'orgQueryElement',
+        'formElement',
+        'subQuerySet',
+        'template',
+        'listConfig',
+        'actions',
+        'searchUrl'
+    ],
+    rIsElementOption = /element/i;
 
 /**
- @constructor
- @param {Object} htOptions
- @example
-    var autoCompleteObj = new ne.component.AutoComplete({
-       "configId" : "Default"    // Dataset in autoConfig.js
-    });
-    /**
-    The form of config file "autoConfig.js"
-    {
-        Default = {
-        // Result element
-        'resultListElement': '._resultBox',
-
-        // Input element
-        'searchBoxElement':  '#ac_input1',
-
-        // Hidden element that is for throwing query that user type.
-        'orgQueryElement' : '#org_query',
-
-        // on,off Button element
-        'toggleBtnElement' : $("#onoffBtn"),
-
-        // on,off State element
-        'onoffTextElement' : $(".baseBox .bottom"),
-
-        // on, off State image source
-        'toggleImg' : {
-            'on' : '../img/btn_on.jpg',
-            'off' : '../img/btn_off.jpg'
-        },
-
-        // Collection items each count.
-        'viewCount' : 3,
-
-        // Key arrays (sub query keys' array)
-        'subQuerySet': [
-            ['key1', 'key2', 'key3'],
-            ['dep1', 'dep2', 'dep3'],
-            ['ch1', 'ch2', 'ch3'],
-            ['cid']
-        ],
-
-        // Config for auto complete list by index of collection
-        'listConfig': {
-            '0': {
-                'template': 'department',
-                'subQuerySet' : 0,
-                'action': 0
-            },
-            '1': {
-                'template': 'srch_in_department',
-                'subQuerySet' : 1,
-                'action': 0
-            },
-            '2': {
-                'template': 'srch_in_department',
-                'subQuerySet' : 2,
-                'action': 1,
-                'staticParams': 0
-            },
-            '3': {
-                'template': 'department',
-                'subQuerySet' : 0,
-                'action': 1,
-                'staticParams': 1
-            }
-        },
-
-         // Mark up for each collection. (Default markup is defaults.)
-         // This markup has to have "keywold-field" but title.
-         'template' :  {
-                department:    {
-                    element: '<li class="department">' +
-                                '<span class="slot-field">Shop the</span> ' +
-                                '<a href="#" class="keyword-field">@subject@</a> ' +
-                                '<span class="slot-field">Store</span>' +
-                             '</li>',
-                     attr: ['subject']
-         },
-         srch : {
-                    element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
-                    attr: ['subject']
-         },
-         srch_in_department :    {
-                    element: '<li class="inDepartment">' +
-                                '<a href="#" class="keyword-field">@subject@</a> ' +
-                                 '<span class="slot-field">in </span>' +
-                                 '<span class="depart-field">@department@</span>' +
-                             '</li>',
-                     attr: ['subject', 'department']
-         },
-         title: {
-                    element: '<li class="title"><span>@title@</span></li>',
-                    attr: ['title']
-         },
-         defaults: {
-                    element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
-                    attr: ['subject']
-         }
-         },
-
-         // Action attribute for each collection
-         'actions': [
-             "http://www.fashiongo.net/catalog.aspx",
-             "http://www.fashiongo.net/search2.aspx"
-         ],
-
-         // Set static options for each collection.
-         'staticParams':[
-             "qt=ProductName",
-             "at=TEST,bt=ACT"
-         ],
-
-         // Whether use title or not.
-         'useTitle': true,
-
-         // Form element that include search element
-         'formElement' : '#ac_form1',
-
-         // Cookie name for save state
-         'cookieName' : "usecookie",
-
-         // Class name for selected element
-         'mouseOverClass' : 'emp',
-
-         // Auto complete API
-         'searchUrl' : 'http://10.24.136.172:20011/ac',
-
-         // Auto complete API request config
-         'searchApi' : {
-                'st' : 1111,
-                'r_lt' : 1111,
-                'r_enc' : 'UTF-8',
-                'q_enc' : 'UTF-8',
-                'r_format' : 'json'
-            }
-       }
-    }
-
-*/
+ * @constructor
+ * @param {Object} options
+ * @example
+ *  var autoCompleteObj = new ne.component.AutoComplete({
+ *     "config" : "Default"    // Dataset in autoConfig.js
+ *  });
+ *
+ *  // The form of config file "autoConfig.js"
+ *  // var Default = {
+ *  //     // Result element
+ *  //     'resultListElement': '._resultBox',
+ *  //
+ *  //     // Input element
+ *  //     'searchBoxElement':  '#ac_input1',
+ *  //
+ *  //     // Hidden element that is for throwing query that user type.
+ *  //     'orgQueryElement' : '#org_query',
+ *  //
+ *  //     // on,off Button element
+ *  //     'toggleBtnElement' : "#onoffBtn",
+ *  //
+ *  //     // on,off State element
+ *  //     'onoffTextElement' : ".baseBox .bottom",
+ *  //
+ *  //     // on, off State image source
+ *  //     'toggleImg' : {
+ *  //         'on' : '../img/btn_on.jpg',
+ *  //         'off' : '../img/btn_off.jpg'
+ *  //     },
+ *  //
+ *  //     // Collection items each count.
+ *  //     'viewCount' : 3,
+ *  //
+ *  //     // Key arrays (sub query keys' array)
+ *  //     'subQuerySet': [
+ *  //         ['key1', 'key2', 'key3'],
+ *  //         ['dep1', 'dep2', 'dep3'],
+ *  //         ['ch1', 'ch2', 'ch3'],
+ *  //         ['cid']
+ *  //     ],
+ *  //
+ *  //     // Config for auto complete list by index of collection
+ *  //     'listConfig': {
+ *  //         '0': {
+ *  //             'template': 'department',
+ *  //             'subQuerySet' : 0,
+ *  //             'action': 0
+ *  //         },
+ *  //         '1': {
+ *  //             'template': 'srch_in_department',
+ *  //             'subQuerySet' : 1,
+ *  //             'action': 0
+ *  //         },
+ *  //         '2': {
+ *  //             'template': 'srch_in_department',
+ *  //             'subQuerySet' : 2,
+ *  //             'action': 1,
+ *  //             'staticParams': 0
+ *  //         },
+ *  //         '3': {
+ *  //             'template': 'department',
+ *  //             'subQuerySet' : 0,
+ *  //             'action': 1,
+ *  //             'staticParams': 1
+ *  //         }
+ *  //     },
+ *  //
+ *  //     // Mark up for each collection. (Default markup is defaults.)
+ *  //     // This markup has to have "keywold-field" but title.
+ *  //     'template': {
+ *  //         department: {
+ *  //             element: '<li class="department">' +
+ *  //                           '<span class="slot-field">Shop the</span> ' +
+ *  //                           '<a href="#" class="keyword-field">@subject@</a> ' +
+ *  //                           '<span class="slot-field">Store</span>' +
+ *  //                       '</li>',
+ *  //             attr: ['subject']
+ *  //         },
+ *  //         srch: {
+ *  //             element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+ *  //             attr: ['subject']
+ *  //         },
+ *  //         srch_in_department: {
+ *  //             element: '<li class="inDepartment">' +
+ *  //                          '<a href="#" class="keyword-field">@subject@</a> ' +
+ *  //                          '<span class="slot-field">in </span>' +
+ *  //                          '<span class="depart-field">@department@</span>' +
+ *  //                      '</li>',
+ *  //             attr: ['subject', 'department']
+ *  //         },
+ *  //         title: {
+ *  //             element: '<li class="title"><span>@title@</span></li>',
+ *  //             attr: ['title']
+ *  //         },
+ *  //         defaults: {
+ *  //             element: '<li class="srch"><span class="keyword-field">@subject@</span></li>',
+ *  //             attr: ['subject']
+ *  //         }
+ *  //     },
+ *  //
+ *  //     // Action attribute for each collection
+ *  //     'actions': [
+ *  //         "http://www.fashiongo.net/catalog.aspx",
+ *  //         "http://www.fashiongo.net/search2.aspx"
+ *  //     ],
+ *  //
+ *  //     // Set static options for each collection.
+ *  //     'staticParams':[
+ *  //         "qt=ProductName",
+ *  //         "at=TEST,bt=ACT"
+ *  //     ],
+ *  //
+ *  //     // Whether use title or not.
+ *  //     'useTitle': true,
+ *  //
+ *  //     // Form element that include search element
+ *  //     'formElement' : '#ac_form1',
+ *  //
+ *  //     // Cookie name for save state
+ *  //     'cookieName' : "usecookie",
+ *  //
+ *  //     // Class name for selected element
+ *  //     'mouseOverClass' : 'emp',
+ *  //
+ *  //     // Auto complete API
+ *  //     'searchUrl' : 'http://10.24.136.172:20011/ac',
+ *  //
+ *  //     // Auto complete API request config
+ *  //     'searchApi' : {
+ *  //         'st' : 1111,
+ *  //         'r_lt' : 1111,
+ *  //         'r_enc' : 'UTF-8',
+ *  //         'q_enc' : 'UTF-8',
+ *  //         'r_format' : 'json'
+ *  //     }
+ *  // }
+ */
 var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
-
     /**
      * Direction value for key
      */
@@ -160,49 +172,28 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         'FIRST': 'first',
         'LAST': 'last'
     },
+
     /**
      * Interval for check update input
      */
-    watchInterval: 200,
+    watchInterval: 300,
 
     /**
      * Initialize
-     * @param {Object} htOptions autoconfig values
+     * @param {Object} options autoconfig values
      */
-    init: function(htOptions) {
+    init: function(options) {
         this.options = {};
+        this.isUse = true;
+        this.queries = null;
+        this.isIdle = true;
 
-        if (!this._checkValidation(htOptions)) {
-            return;
-        }
-
-        var cookieValue,
-            defaultCookieName = '_atcp_use_cookie';
-
-        if (!this.options.toggleImg || !this.options.onoffTextElement) {
-            this.isUse = true;
-            delete this.options.onoffTextElement;
-        } else {
-            cookieValue = $.cookie(this.options.cookieName);
-            this.isUse = !!(cookieValue === 'use' || !cookieValue);
-        }
-
-        if (!this.options.cookieName) {
-            this.options.cookieName = defaultCookieName;
-        }
-
-        this.options.watchInterval = tui.util.isExisty(this.options.watchInterval) ? this.options.watchInterval : this.watchInterval;
+        this._checkValidation(options);
+        this._setOptions(options);
 
         this.dataManager = new DataManager(this, this.options);
         this.inputManager = new InputManager(this, this.options);
         this.resultManager = new ResultManager(this, this.options);
-
-        /**
-         * Save matched input english string with Korean.
-         * @type {null}
-         */
-        this.querys = null;
-        this.isIdle = true;
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
@@ -210,74 +201,53 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Check required fields and validate fields.
-     * @param {Object} htOptions component configurations
-     * @return {Boolean}
+     * @param {Object} options component configurations
      * @private
      */
-    _checkValidation: function(htOptions) {
-        var config,
-            configArr;
+    _checkValidation: function(options) {
+        var isExisty = tui.util.isExisty,
+            config = options.config;
 
-        config = htOptions.config;
-
-        if (!tui.util.isExisty(config)) {
-            throw new Error('Config file is not avaliable. #' + config);
-            return false;
+        if (!isExisty(config)) {
+            throw new Error('No configuration #' + config);
         }
 
-        configArr = tui.util.keys(config);
-
-        var configLen = configArr.length,
-            i,
-            requiredFields = [
-                'resultListElement',
-                'searchBoxElement' ,
-                'orgQueryElement',
-                'subQuerySet',
-                'template',
-                'listConfig',
-                'actions',
-                'formElement',
-                'searchUrl',
-                'searchApi'
-            ],
-            checkedFields = [];
-
-        for (i = 0; i < configLen; i++) {
-            if (tui.util.inArray(configArr[i], requiredFields, 0) >= 0) {
-                checkedFields.push(configArr[i]);
-            }
-        }
-
-        tui.util.forEach(requiredFields, function(el) {
-            if (tui.util.inArray(el, checkedFields, 0) === -1) {
-                throw new Error(el + 'does not not exist.');
-                return false;
-            }
-
-            if (el === 'searchApi' && config['searchApi']) {
-                if (!config.searchUrl ||
-                    !config.searchApi.st ||
-                    !config.searchApi.r_lt) {
-                    alert('searchApi required value does not exist.');
-                    return false;
-                }
+        tui.util.forEach(requiredOptions, function(name) {
+            if (!isExisty(config[name])) {
+                throw new Error(name + 'does not not exist.');
             }
         });
+    },
 
-        for (i = 0; i < configLen; i++) {
-            var configName = configArr[i],
-                configValue = config[configName];
+    /**
+     * Set component options
+     * @param {Object} options component configurations
+     * @private
+     */
+    _setOptions: function(options) {
+        var config = options.config,
+            cookieValue;
 
-            if (typeof configValue === 'string' &&
-               (configValue.charAt(0) === '.' || configValue.charAt(0) === '#')) {
-                this.options[configName] = $(configValue);
-            } else {
-                this.options[configName] = config[configName];
-            }
+        if (!config.toggleImg || !config.onoffTextElement) {
+            this.isUse = true;
+            delete config.onoffTextElement;
+        } else {
+            cookieValue = $.cookie(config.cookieName);
+            this.isUse = (cookieValue === 'use' || !cookieValue);
+        }
+        config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
+
+        if (tui.util.isFalsy(config.watchInterval)) {
+            config.watchInterval = this.watchInterval;
         }
 
-        return true;
+        tui.util.forEach(config, function(value, name) {
+            if (rIsElementOption.test(name)) {
+                this.options[name] = $(value);
+            } else {
+                this.options[name] = value;
+            }
+        }, this);
     },
 
     /**
@@ -290,7 +260,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Return string in input element.
-     * @return {String}
+     * @returns {String}
      */
     getValue: function() {
         return this.inputManager.getValue();
@@ -305,11 +275,12 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     },
 
     /**
-     * Request to create addition parameters at inputManager.
+     * Set additional parameters at inputManager.
      * @param {string} paramStr String to be addition parameters.(saperator '&')
+     * @param {string} index The index for setting key value
      */
-    setParams: function(paramStr, type) {
-        this.inputManager.setParams(paramStr, type);
+    setParams: function(paramStr, index) {
+        this.inputManager.setParams(paramStr, index);
     },
 
     /**
@@ -332,18 +303,18 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Save Korean that is matched real query.
-     * @param {array} querys Result qureys
+     * @param {array} queries Result queries
      */
-    setQuerys: function(querys) {
-        this.querys = [].concat(querys);
+    setQueries: function(queries) {
+        this.queries = [].concat(queries);
     },
 
     /**
      * Get whether use auto complete or not
      * @api
+     * @returns {Boolean}
      * @example
      *  autoComplete.isUseAutoComplete(); => true|false
-     *  @return {Boolean}
      */
     isUseAutoComplete: function() {
         return this.isUse;
@@ -351,7 +322,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
 
     /**
      * Get whether result list area show or not
-     * @return {Boolean}
+     * @returns {Boolean}
      */
     isShowResultList: function() {
         return this.resultManager.isShowResultList();
@@ -369,9 +340,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * Hide search result list area
      */
     hideResultList: function() {
-        if (this.isUseAutoComplete()) {
-            this.resultManager.hideResultList();
-        }
+        this.resultManager.hideResultList();
     },
 
     /**
@@ -387,8 +356,8 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * Move to next item in result list.
      * @param {string} flow Direction to move.
      */
-    moveNextList: function(flow) {
-        this.resultManager.moveNextList(flow);
+    moveNextResult: function(flow) {
+        this.resultManager.moveNextResult(flow);
     },
 
     /**
@@ -400,28 +369,13 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
     },
 
     /**
-     * Return resultManager whether locked or not
-     * @return {Boolean} resultManager의 isMoved값
-     */
-    getMoved: function() {
-        return this.resultManager.isMoved;
-    },
-
-    /**
-     * Set resultManager's isMoved field
-     * @param {Boolean} isMoved Whether locked or not.
-     */
-    setMoved: function(moved) {
-        this.resultManager.isMoved = moved;
-    },
-
-    /**
      * Reset serachApi
+     * @api
      * @param {Object} options searchApi옵션 설정
      * @example
      *  autoComplete.setSearchApi({
-     *      'st' : 9351,
-     *      'r_lt' : 7187,
+     *      'st' : 111,
+     *      'r_lt' : 111,
      *      'r_enc' : 'UTF-8',
      *      'q_enc' : 'UTF-8',
      *      'r_format' : 'json'

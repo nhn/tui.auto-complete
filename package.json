@@ -1,15 +1,15 @@
 {
   "name": "component-auto-complete",
-  "version": "1.1.1a",
+  "version": "1.1.2",
   "description": "",
   "devDependencies": {
     "browserify": "latest",
     "browserify-istanbul": "^0.2.1",
-    "code-snippet": "git+http://4316b69ceef56267d69d733515f0f6ef3651ca7f:x-oauth-basic@github.nhnent.com/fe/code-snippet.git",
-    "fedoc-template": "git+http://70327b4564c7a80eb61724056876b960290946dd:x-oauth-basic@github.nhnent.com/fe/share-fedoc-template.git#develop",
-    "gulp": "latest",
+    "fedoc-template": "git+https://github.nhnent.com/fe/share-fedoc-template.git#develop",
+    "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "latest",
+    "gulp-eslint": "^2.0.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
@@ -17,11 +17,12 @@
     "hbsfy": "^2.2.1",
     "jasmine-core": "latest",
     "jasmine-jquery": "^2.1.0",
-    "karma": "^0.12.37",
+    "karma": "^0.13.21",
     "karma-browserify": "latest",
+    "karma-browserstack-launcher": "^0.1.10",
     "karma-coverage": "latest",
     "karma-firefox-launcher": "^0.1.6",
-    "karma-jasmine": "^0.3.5",
+    "karma-jasmine": "0.3.5",
     "karma-junit-reporter": "^0.3.0",
     "karma-mocha-reporter": "latest",
     "karma-phantomjs-launcher": "^0.2.1",
@@ -30,10 +31,11 @@
     "phantomjs": "^1.9.18",
     "underscore": "^1.8.3",
     "vinyl-buffer": "latest",
-    "vinyl-source-stream": "latest"
+    "vinyl-source-stream": "latest",
+    "watchify": "^3.7.0"
   },
   "scripts": {
-    "doc": "./node_modules/.bin/jsdoc -c jsdoc-conf.json"
+    "doc": "./node_modules/.bin/jsdoc -c jsdoc-conf.json -t ./node_modules/fedoc-template"
   },
   "author": "NHNEnt FE Development Team <dl_javascript@nhnent.com>"
 }

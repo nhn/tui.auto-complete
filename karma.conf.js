@@ -1,79 +1,59 @@
+'use strict';
+
+var Mock = require('./test/mock'),
+    config = require('./test/autoConfig');
+
+var CONTEXT = {
+    'Default': config.Default,
+    'Plane': config.Plane,
+    'mock': Mock.mock,
+    'n_mock': Mock.n_mock
+};
+
 module.exports = function(config) {
-    var webdriverConfig = {
-        hostname: 'fe.nhnent.com',
-        port: 4444,
-        remoteHost: true
-    };
-
     config.set({
-
-        // base path that will be used to resolve all patterns (eg. files, exclude)
-        // karma runner 의 웹 서버 root를 변경할 수 있음
         basePath: './',
 
-
-        // frameworks to use
-        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['browserify', 'jasmine'],
 
         reporters: [
             'dots',
             'coverage',
             'junit'
         ],
-        /*
-         karma runner 의 웹 서버에 포함될 파일들을 적어주세요.
 
-         included: false 가 아닌 항목은 전부 자동으로 테스트 페이지에 include 됩니다.
-
-         테스트 코드 파일들은 전부 포함되어야 합니다.
-         files: [
-         'lib/jquery/jquery.js', // JS 추가
-         'src/css/test.css',     // CSS 추가
-         { pattern: 'test/app/model/*.test.js', included: false }    // 웹서버에 포함은 하지만 테스트 페이지에 include안함
-         { pattern: 'test/fixtures/*.html', included: false }        // 웹서버에 올라가지만 jasmine.loadFixture 로 쓸것이므로 include안함.
-         ]
-         */
         // list of files / patterns to load in the browser
         files: [
-            //'src/lib/jquery-1.9.1.min.js',
-            //'src/lib/jquery.cookie.js',
-            //'src/common/common.js',
-
             // dependencies
-            {pattern: 'src/libs/*.js', watched: false, served: true, included: true},
-            {pattern: 'src/common/*.js', watched: false, served: true, included: true},
-            {pattern: 'src/js/*.js', watched: false, served: true, included: true},
-            {pattern: 'test/*.js', watched: false, served: true, included: true},
-            {pattern: 'node_modules/jasmine-jquery/lib/jasmine-jquery.js', watched: false, served: true, included: true},
-
-            // fixtures
-            {pattern: 'test/fixture/*.html', watched: true, served: true, included: false}
+            'bower_components/tui-code-snippet/code-snippet.js',
+            'bower_components/jquery/jquery.min.js',
+            'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+            'bower_components/js-cookie/jquery.cookie.js',
+            //sources
+            'src/js/**/*.js',
+            //'test/autocomplete.test.js',
+            //'test/datamanager.test.js',
+            //'test/inputmanager.test.js',
+            //'test/resultmanager.test.js',
+            'test/preparation.js',
+            'test/*.test.js',
+            'test/fixtures/**/*'
         ],
 
-
-
-        /*
-         무시할 파일들
-
-         특정 테스트를 제외하고 수행할 때 유용합니다.
-         */
         exclude: [
         ],
 
-
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'src/js/*.js': ['coverage']
+            'test/**/*.js': ['browserify'],
+            'src/js/**/*.js': ['browserify', 'coverage']
         },
 
+        browserify: {
+            debug: true
+        },
 
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         coverageReporter: {
-            dir : 'report/coverage/',
+            dir: 'report/coverage/',
             reporters: [
                 {
                     type: 'html',
@@ -92,86 +72,23 @@ module.exports = function(config) {
         },
 
         junitReporter: {
+            outputDir: 'report',
             outputFile: 'report/junit-result.xml',
             suite: ''
         },
 
-        // web server port
         port: 9876,
 
-
-        // enable / disable colors in the output (reporters and logs)
         colors: true,
 
-
-        // level of logging
-        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_INFO,
 
-
-        // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
 
-
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
-            //'IE7',
-            'IE8',
-            'IE9',
-            'IE10',
-            'IE11',
-            'Chrome-WebDriver',
-            'Firefox-WebDriver'
+            'PhantomJS'
         ],
 
-
-        /*
-         사용가능한 테스트 브라우저 목록
-
-         추가를 원하시면 말씀주세요
-         */
-        customLaunchers: {
-            'IE7': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'IE7'
-            },
-            'IE8': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'IE8'
-            },
-            'IE9': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'IE9'
-            },
-            'IE10': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'IE10'
-            },
-            'IE11': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'IE11'
-            },
-            'Chrome-WebDriver': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'chrome'
-            },
-            'Firefox-WebDriver': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'firefox'
-            }
-        },
-
-
-        // Continuous Integration mode
-        // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true
+        singleRun: false
     });
 };

@@ -1,8 +1,16 @@
 /**
- * @fileoverview Data is kind of manager module to request data at API with input querys.
- * @version 1.1.0
+ * @fileoverview Data is kind of manager module to request data at API with input queries.
  * @author NHN Entertainment FE dev team. <dl_javascript@nhnent.com>
  */
+'use strict';
+
+var CALLBACK_NAME = 'dataCallback',
+    SERACH_QUERY_IDENTIFIER = 'q';
+
+var forEach = tui.util.forEach,
+    map = tui.util.map,
+    isEmpty = tui.util.isEmpty,
+    extend = tui.util.extend;
 
 /**
  * Unit of auto complete connecting server.
@@ -10,11 +18,6 @@
  */
 var Data = tui.util.defineClass(/**@lends Data.prototype */{
     init: function(autoCompleteObj, options) {
-        if (arguments.length != 2) {
-            alert('argument length error !');
-            return;
-        }
-
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
     },
@@ -24,42 +27,34 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      * @param {String} keyword String to request at server
      */
     request: function(keyword) {
-
-        var rsKeyWrod = keyword.replace(/\s/g, '');
+        var rsKeyWrod = keyword.replace(/\s/g, ''),
+            acObj = this.autoCompleteObj,
+            keyData;
 
         if (!keyword || !rsKeyWrod) {
-            this.autoCompleteObj.hideResultList();
+            acObj.hideResultList();
             return;
         }
 
-        var dataCallback = function(){},
-            defaultParam = {
-                q: keyword,
-                r_enc: 'UTF-8',
-                q_enc: 'UTF-8',
-                r_format: 'json',
-                _callback: 'dataCallback'
-            },
-            requestParam = tui.util.extend(this.options.searchApi, defaultParam),
-            keyDatas;
-
+        this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
         $.ajax(this.options.searchUrl, {
             'dataType': 'jsonp',
-            'jsonpCallback': 'dataCallback',
-            'data': requestParam,
+            'jsonpCallback': CALLBACK_NAME,
+            'data': this.options.searchApi,
             'type': 'get',
-            'success': tui.util.bind(function(dataObj) {
+            'success': $.proxy(function(dataObj) {
                 try {
-                    keyDatas = this._getCollectionData(dataObj);
-                    this.autoCompleteObj.setQuerys(dataObj.query);
-                    this.autoCompleteObj.setServerData(keyDatas);
-                    this.autoCompleteObj.clearReadyValue();
+                    keyData = this._getCollectionData(dataObj);
+                    acObj.setQueries(dataObj.query);
+                    acObj.setServerData(keyData);
+                    acObj.clearReadyValue();
                 } catch (e) {
-                    throw new Error('[DataManager] Request faild.' , e);
+                    throw new Error('[DataManager] invalid response data.', e);
                 }
             }, this)
         });
     },
+
     /**
      * Make collection data to display
      * @param {object} dataObj Collection data
@@ -70,24 +65,24 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
         var collection = dataObj.collections,
             itemDataList = [];
 
-        tui.util.forEach(collection, function(itemSet) {
+        forEach(collection, function(itemSet) {
+            var keys;
 
-            if(tui.util.isEmpty(itemSet.items)) {
+            if (isEmpty(itemSet.items)) {
                 return;
             }
-            // create collection items.
-            var keys = this._getRedirectData(itemSet);
 
+            keys = this._getRedirectData(itemSet);
             itemDataList.push({
                 type: 'title',
                 values: [itemSet.title]
             });
             itemDataList = itemDataList.concat(keys);
-
         }, this);
 
         return itemDataList;
     },
+
     /**
      * Make item of collection to display
      * @param {object} itemSet Item of collection data
@@ -95,23 +90,18 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
      * @returns {Array}
      */
     _getRedirectData: function(itemSet) {
-        var type = itemSet.type,
-            index = itemSet.index,
-            dest = itemSet.destination,
-            items = [];
+        var defaultData = {
+                type: itemSet.type,
+                index: itemSet.index,
+                dest: itemSet.destination
+            },
+            items = itemSet.items.slice(0, this.options.viewCount - 1);
 
-        tui.util.forEachArray(itemSet.items, function(item, idx) {
-
-            if (idx <= (this.options.viewCount - 1)) {
-                items.push({
-                    values: item,
-                    type: type,
-                    index: index,
-                    dest: dest
-                });
-            }
-
-        }, this);
+        items = map(items, function(item) {
+            return extend({
+                values: item
+            }, defaultData);
+        });
 
         return items;
     }

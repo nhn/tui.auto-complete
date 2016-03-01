@@ -1,33 +1,37 @@
 /**
  * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
- * @version 1.1.0
  * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
  */
+'use strict';
+var DEFAULT_VIEW_COUNT = 10,
+    WHITE_SPACES = '[\\s]*';
+
+var isEmpty = tui.util.isEmpty,
+    forEach = tui.util.forEach,
+    map = tui.util.map;
+
+var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
+    rWhiteSpace = '/\s+/g';
 
 /**
  * Unit of auto complete that belong with search result list.
+ * Handle the submit data from resultList.
+ * See {@link Result.prototype._orderElement} which set the request data from arrow-key input
  * @constructor
  */
 var Result = tui.util.defineClass(/** @lends Result.prototype */{
-    /**
-     * Initailize
-     */
     init: function(autoCompleteObj, options) {
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
 
-        this.$resultList = this.options.resultListElement;
-        this.resultSelector = this.options.resultListElement;
-        this.viewCount = this.options.viewCount || 10;
-        this.$onOffTxt = this.options.onoffTextElement;
-        this.mouseOverClass = this.options.mouseOverClass;
-        this.flowMap = this.autoCompleteObj.flowMap;
+        this.$resultList = options.resultListElement;
+        this.viewCount = options.viewCount || DEFAULT_VIEW_COUNT;
+        this.$onOffTxt = options.onoffTextElement;
+        this.mouseOverClass = options.mouseOverClass;
+        this.flowMap = autoCompleteObj.flowMap;
 
         this._attachEvent();
-
-        this.selectedElement = null;
-
-        this.isMoved = false;
+        this.$selectedElement = $();
     },
 
     /**
@@ -35,9 +39,10 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _deleteBeforeElement: function() {
-        this.$resultList.html('');
-        this.$resultList.hide();
-        this.selectedElement = null;
+        this.$selectedElement = $();
+        this.$resultList
+            .hide()
+            .html('');
     },
 
     /**
@@ -45,60 +50,55 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @param {Array} dataArr Result data
      */
     draw: function(dataArr) {
-
-        this._deleteBeforeElement();
-
         var len = dataArr.length;
 
+        this._deleteBeforeElement();
         if (len < 1) {
             this._hideBottomArea();
         } else {
             this._makeResultList(dataArr, len);
         }
-
-        this.$resultList.show();
-        // show auto complete switch
-        this._showBottomArea();
+        this.showResultList();
     },
 
     /**
      * Make search result list element
+     * @param {Array} dataArr - Data array
+     * @param {number} len - Length of dataArray
      * @private
      */
     _makeResultList: function(dataArr, len) {
         var template = this.options.template,
-            config = this.options.listConfig,
-            tmpl,
+            listConfig = this.options.listConfig,
             useTitle = (this.options.useTitle && !!template.title),
-            index,
-            type,
-            tmplValue,
-            $el,
-            i;
+            tmpl, index, tmplValue, i, data;
 
-        for (i = 0; i < len; i++) {
-            type = dataArr[i].type;
-            index = dataArr[i].index;
-            tmpl = config[index] ? template[config[index].template] : template.defaults;
-            if (type === 'title') {
+        for (i = 0; i < len; i += 1) {
+            data = dataArr[i];
+            index = data.index;
+            tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;
+
+            if (data.type === 'title') {
                 tmpl = template.title;
                 if (!useTitle) {
                     continue;
                 }
             }
-            tmplValue = this._getTmplData(tmpl.attr, dataArr[i]);
-            $el = $(this._applyTemplate(tmpl.element, tmplValue));
-            $el.attr('data-params', tmplValue.params);
-            $el.attr('data-index', index);
-            this.$resultList.append($el);
+            tmplValue = this._getTmplData(tmpl.attr, data);
+            $(this._applyTemplate(tmpl.element, tmplValue))
+                .data({
+                    'params': tmplValue.params,
+                    'index': index
+                })
+                .appendTo(this.$resultList);
         }
     },
 
     /**
      * Make template data
-     * @param {array} attrs Template attributes
+     * @param {Array} attrs Template attributes
      * @param {string|Object} data The data to make template
-     * @return {object}
+     * @returns {Object} Template data
      * @private
      */
     _getTmplData: function(attrs, data) {
@@ -109,13 +109,11 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             tmplValue[attrs[0]] = data;
             return tmplValue;
         }
-        tui.util.forEach(attrs, function(attr, idx) {
 
+        forEach(attrs, function(attr, idx) {
             tmplValue[attr] = values[idx];
-
         });
-
-        if(attrs.length < values.length) {
+        if (attrs.length < values.length) {
             tmplValue.params = values.slice(attrs.length);
         }
 
@@ -124,19 +122,25 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Return whether result list show or not
-     * @return {Boolean}
+     * @returns {Boolean}
      */
     isShowResultList: function() {
-        return (this.$resultList.css('display') === 'block');
+        return this.$resultList.css('display') === 'block';
     },
 
     /**
      * Hide result list area
      */
     hideResultList: function() {
-        this.$resultList.css('display', 'none');
+        this.$resultList.hide();
         this._hideBottomArea();
         this.autoCompleteObj.isIdle = true;
+
+        /**
+         * Fired when hide the result list
+         * @api
+         * @event AutoComplete#close
+         */
         this.autoCompleteObj.fire('close');
     },
 
@@ -144,11 +148,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Show result list area
      */
     showResultList: function() {
-        var self = this;
-        setTimeout(function() {
-            self.$resultList.css('display', 'block');
-        }, 0);
-
+        this.$resultList.show();
         this._showBottomArea();
     },
 
@@ -156,31 +156,22 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Move focus to next item, change input element value as focus value.
      * @param {string} flow Direction by key code
      */
-    moveNextList: function(flow) {
-        var flowMap = this.flowMap,
-            selectEl = this.selectedElement,
-            getNext = (flow === flowMap.NEXT) ? this._getNext : this._getPrev,
-            getBound = (flow === flowMap.NEXT) ? this._getFirst : this._getLast,
+    moveNextResult: function(flow) {
+        var $selectEl = this.$selectedElement,
             keyword;
-        this.isMoved = true;
 
-        if (selectEl) {
-            selectEl.removeClass(this.mouseOverClass);
-            selectEl = this.selectedElement = getNext.call(this, selectEl);
-        } else {
-            selectEl = this.selectedElement = getBound.call(this);
+        if (!isEmpty($selectEl)) {
+            $selectEl.removeClass(this.mouseOverClass);
         }
+        $selectEl = this.$selectedElement = this._orderElement(flow);
 
-        keyword = selectEl.find('.keyword-field').text();
-
-        if (selectEl && keyword) {
-            selectEl.addClass(this.mouseOverClass);
+        keyword = $selectEl.find('.keyword-field').text();
+        if (keyword) {
+            $selectEl.addClass(this.mouseOverClass);
             this.autoCompleteObj.setValue(keyword);
             this._setSubmitOption();
         } else {
-            if(selectEl) {
-                this.moveNextList(flow);
-            }
+            this.moveNextResult(flow);
         }
     },
 
@@ -190,10 +181,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      */
     changeOnOffText: function(isUse) {
         if (isUse) {
-            this.$onOffTxt.text('자동완성 켜기');
-            this.hideResultList();
-        } else {
             this.$onOffTxt.text('자동완성 끄기');
+        } else {
+            this.$onOffTxt.text('자동완성 켜기');
         }
     },
 
@@ -203,52 +193,37 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _attachEvent: function() {
-        this.$resultList.bind('mouseover click', $.proxy(function(e) {
-            if (e.type === 'mouseover') {
-                this._onMouseOver(e);
-            } else if (e.type === 'click') {
-                this._onClick(e);
-            }
-        }, this));
+        this.$resultList.on({
+            mouseover: $.proxy(this._onMouseOver, this),
+            click: $.proxy(this._onClick, this)
+        });
 
         if (this.$onOffTxt) {
-            this.$onOffTxt.bind('click', $.proxy(function() {
+            this.$onOffTxt.on('click', $.proxy(function() {
                 this._useAutoComplete();
             }, this));
         }
 
-        $(document).bind('click', $.proxy(function(e) {
-            if (e.target.tagName.toLowerCase() !== 'html') {
-                return;
-            }
+        $(document).on('click', $.proxy(function() {
             this.hideResultList();
         }, this));
     },
 
-
     /**
      * Highlight key word
-     * @param {String} tmplStr Template string
+     * @param {string} tmplStr Template string
      * @param {Object} dataObj Replace string map
-     * @return {String}
+     * @returns {string}
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
-        var temp = {},
-            keyStr;
-
-        for (keyStr in dataObj) {
-            temp[keyStr] = dataObj[keyStr];
-            if (keyStr === 'subject') {
-                temp.subject = this._highlight(dataObj.subject);
+        tui.util.forEach(dataObj, function(value, key) {
+            if (key === 'subject') {
+                value = this._highlight(value);
             }
+            tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
+        }, this);
 
-            if (!dataObj.propertyIsEnumerable(keyStr)) {
-                continue;
-            }
-
-            tmplStr = tmplStr.replace(new RegExp("@" + keyStr + "@", "g"), temp[keyStr]);
-        }
         return tmplStr;
     },
 
@@ -257,62 +232,53 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * (text: Nike air  /  query : [Nike] / Result : <strong>Nike </strong>air
      * text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 <strong>rhdiddl</strong>와 <strong>고양이</strong>
      * @param {String} text Input string
-     * @return {String}
+     * @returns {String}
      * @private
      */
     _highlight: function(text) {
-        var querys = this.autoCompleteObj.querys,
+        var queries = this.autoCompleteObj.queries,
             returnStr;
 
-        tui.util.forEach(querys, function(query) {
-
+        tui.util.forEach(queries, function(query) {
             if (!returnStr) {
                 returnStr = text;
             }
             returnStr = this._makeStrong(returnStr, query);
-
         }, this);
-        return (returnStr || text);
+        return returnStr || text;
     },
 
     /**
      * Contain text by strong tag
      * @param {String} text Recommend search data  추천검색어 데이터
      * @param {String} query Input keyword
-     * @return {String}
+     * @returns {String}
      * @private
      */
     _makeStrong: function(text, query) {
+        var tmpArr, regQuery;
+
         if (!query || query.length < 1) {
             return text;
         }
-        var escRegExp = new RegExp("[.*+?|()\\[\\]{}\\\\]", "g"),
-            tmpStr = query.replace(/()/g, " ").replace(/^\s+|\s+$/g, ""),
-            tmpCharacters = tmpStr.match(/\S/g),
-            tmpCharLen = tmpCharacters.length,
-            tmpArr = [],
-            returnStr = '',
-            regQuery,
-            cnt,
-            i;
 
-        for (i = 0, cnt = tmpCharLen; i < cnt; i++) {
-            tmpArr.push(tmpCharacters[i].replace(/[\S]+/g, "[" + tmpCharacters[i].toLowerCase().replace(escRegExp, "\\$&") + "|" + tmpCharacters[i].toUpperCase().replace(escRegExp, "\\$&") + "] ").replace(/[\s]+/g, "[\\s]*"));
-        }
+        tmpArr = query.replace(rWhiteSpace, '').split('');
+        tmpArr = map(tmpArr, function(char) {
+            if (rIsSpeicalCharacters.test(char)) {
+                return '\\' + char;
+            }
+            return char;
+        });
+        regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
 
-        tmpStr = "(" + tmpArr.join("") + ")";
-        regQuery = new RegExp(tmpStr);
-
-        if (regQuery.test(text)) {
-            returnStr = text.replace(regQuery, '<strong>' + RegExp.$1 + '</strong>');
-        }
-
-        return returnStr;
+        return text.replace(regQuery, function(match) {
+            return '<strong>' + match + '</strong>';
+        });
     },
 
     /**
      * Return the first result item
-     * @return {Element}
+     * @returns {jQuery}
      * @private
      */
     _getFirst: function() {
@@ -321,7 +287,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Return the last result item
-     * @return {Element}
+     * @returns {jQuery}
      * @private
      */
     _getLast: function() {
@@ -331,66 +297,38 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
     /**
      * Return whether first or last
      * @param {string} type First/end element type
-     * @returns {*}
+     * @returns {jQuery}
      * @private
      */
     _orderStage: function(type) {
-        type = (type === this.flowMap.FIRST) ? 'first' : 'last';
+        var flowMap = this.flowMap,
+            $children = this.$resultList.children();
 
-        if (this.$resultList &&
-            this.$resultList.children() &&
-            this.$resultList.children().length) {
-            return this.$resultList.children()[type]();
+        if (type === flowMap.FIRST) {
+            return $children.first();
+        } else if (type === flowMap.LAST) {
+            return $children.last();
         }
+
         return null;
     },
 
     /**
-     * Return next element from selected element
-     * If next element is not exist, return first element.
-     * @param {Element} element focused element
-     * @return {Element}
-     * @private
-     */
-    _getNext: function(element) {
-        return this._orderElement(this.flowMap.NEXT, element);
-    },
-
-    /**
-     * Return previous element from selected element
-     * If previous element is not exist, return the last element.
-     * @param {Element} element focused element
-     * @return {Element}
-     * @private
-     */
-    _getPrev: function(element) {
-        return this._orderElement(this.flowMap.PREV, element);
-    },
-
-    /**
-     * Return previous or next element by direction.
+     * Return previous or next element from resultList by direction
      * @param {string} type The direction type for finding element
-     * @param {Element} element focused element
-     * @returns {*}
+     * @returns {jQuery}
      * @private
      */
-    _orderElement: function(type, element) {
-        if (!tui.util.isExisty(element)) {
-            return null;
-        }
+    _orderElement: function(type) {
+        var $selectedElement = this.$selectedElement,
+            $order;
 
-        var $current = $(element),
-            isNext = (type === this.flowMap.NEXT),
-            order;
-
-        if ($current.closest(this.resultSelector)) {
-            order = isNext ? element.next() : element.prev();
-            if (order.length) {
-                return order;
-            } else {
-                return isNext ? this._getFirst() : this._getLast();
-            }
+        if (type === this.flowMap.NEXT) {
+            $order = $selectedElement.next();
+            return $order.length ? $order : this._getFirst();
         }
+        $order = $selectedElement.prev();
+        return $order.length ? $order : this._getLast();
     },
 
     /**
@@ -400,7 +338,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
     _useAutoComplete: function() {
         var isUse = this.autoCompleteObj.isUseAutoComplete();
         this.changeOnOffText(isUse);
-        this.autoCompleteObj.setCookieValue(!isUse);
+        this.autoCompleteObj.setCookieValue(isUse);
     },
 
     /**
@@ -425,25 +363,32 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
     /**
      * Change action attribute of form element and set addition values in hidden type elements.
+     * (Called when click the <li>)
      * @param {element} [$target] Submit options target
      * @private
+     *
      */
     _setSubmitOption: function($target) {
-        this._clearSubmitOption();
-
-        var formElement = this.options.formElement,
-            $selectField = $target ? $($target).closest('li') : $(this.selectedElement),
-            actions = this.options.actions,
-            index = $selectField.attr('data-index'),
+        var $selectField = $target ? $($target).closest('li') : this.$selectedElement,
+            paramsString = $selectField.data('params'),
+            index = $selectField.data('index'),
             config = this.options.listConfig[index],
-            action = actions[config.action],
-            paramsString;
+            action = this.options.actions[config.action],
+            $formElement = this.options.formElement;
 
-        $(formElement).attr('action', action);
-        paramsString = $selectField.attr('data-params');
-
+        $formElement.attr('action', action);
+        this._clearSubmitOption();
         this.autoCompleteObj.setParams(paramsString, index);
 
+        /**
+         * Fired when the user's selected element in result list is changed
+         * @api
+         * @event AutoComplete#change
+         * @param {Object} data - Data for submit
+         *  @param {string} data.index - Index of collection
+         *  @param {string} data.action - Form action
+         *  @param {string} data.params - Parameters
+         */
         this.autoCompleteObj.fire('change', {
             index: index,
             action: action,
@@ -455,53 +400,46 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * Reset form element.
      * @private
      */
-    _clearSubmitOption: function(e) {
-        var formElement = this.options.formElement,
-            hiddenWrap = $(formElement).find('.hidden-inputs');
+    _clearSubmitOption: function() {
+        var $formElement = this.options.formElement;
 
-        hiddenWrap.html('');
+        $formElement.find('.hidden-inputs').html('');
     },
 
-    /************************* Event Handlers *********************/
     /**
      * Result list mouseover event handler
-     * @param {Event} e Event instanse
+     * @param {Event} event Event instanse
      * @private
      */
-    _onMouseOver: function(e) {
-        var $target = $(e.target),
+    _onMouseOver: function(event) {
+        var $target = $(event.target),
             $arr = this.$resultList.find('li'),
-            selectedItem = $target.closest('li');
+            $selectedItem = $target.closest('li');
 
-        tui.util.forEachArray($arr, function(val) {
-            $(val).removeClass(this.mouseOverClass);
-        }, this);
-
-        if (selectedItem && selectedItem.find('.keyword-field').length) {
-            selectedItem.addClass(this.mouseOverClass);
+        $arr.removeClass(this.mouseOverClass);
+        if ($selectedItem.find('.keyword-field').length) {
+            $selectedItem.addClass(this.mouseOverClass);
         }
-
-        this.selectedElement = $target;
+        this.$selectedElement = $target;
     },
 
     /**
      * Result list click evnet handler
      * Submit form element.
-     * @param {Event} e Event instanse
+     * @param {Event} event Event instanse
      * @private
      */
-    _onClick: function(e) {
-        var $target = $(e.target),
-            formElement = this.options.formElement,
+    _onClick: function(event) {
+        var $target = $(event.target),
+            $formElement = this.options.formElement,
             $selectField = $target.closest('li'),
             $keywordField = $selectField.find('.keyword-field'),
             selectedKeyword = $keywordField.text();
 
         this.autoCompleteObj.setValue(selectedKeyword);
-
-        if (formElement && selectedKeyword) {
+        if (selectedKeyword) {
             this._setSubmitOption($target);
-            formElement.submit();
+            $formElement.submit();
         }
     }
 });

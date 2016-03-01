@@ -20,7 +20,7 @@ Display recommend word list, when you type search character in input element.
 
 ## Dependency
 * jquery: ~1.8.3
-* json2: *
+* js-cookie: ~1.2.0
 * tui-code-snippet: ~1.0.2
 
 ## Test environment
@@ -39,13 +39,18 @@ Display recommend word list, when you type search character in input element.
 ## History
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
+| [1.1.2](https://nhnent.github.io/tui.component.auto-complete/1.1.2) | [Remove parameter checking](https://github.com/nhnent/tui.component.auto-complete/releases/tag/1.1.2)| 2016.02 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1a | Namespace changed | 2015.10 | NHN ent. FE dev team<dl_javascript@nhnent.com> | 
 | 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
-| <a href="https://nhnent.github.io/tui.component.auto-complete/1.1.0">1.1.0</a> | searchApi added | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
-| <a href="https://nhnent.github.io/tui.component.auto-complete/1.1.0">1.0.0</a> | release | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| [1.1.0](https://nhnent.github.io/tui.component.auto-complete/1.1.0) | searchApi added | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
+| [1.0.0](http://nhnent.github.io/tui.component.auto-complete/1.0.0/) | release | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 0.1.1 | Template added | 2015.01 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 
 
 ## LICENSE
 [MIT LICENSE](LICENSE)
+
+## Sponsor
+* <img src="https://cloud.githubusercontent.com/assets/12269563/12287774/8cf4d2c0-ba12-11e5-9fa8-0a9c452cca05.png" height="30"><br>
+ [BrowserStack](https://www.browserstack.com/) is a cloud based cross browser testing tool

@@ -9,10 +9,10 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
     'orgQueryElement' : '#org_query',
 
     // on,off 버튼 엘리먼트
-    'toggleBtnElement' : $("#onoffBtn"),
+    'toggleBtnElement' : "#onoffBtn",
 
     // on,off 상태를 알리는 엘리먼트
-    'onoffTextElement' : $(".baseBox .bottom"),
+    'onoffTextElement' : ".baseBox .bottom",
 
     // on, off상태일때 변경 이미지 경로
     'toggleImg' : {
@@ -235,4 +235,9 @@ var Plane = { // 필수 항목만 나열한 config
         'q_enc' : 'UTF-8',
         'r_format' : 'json'
     }
+};
+
+module.exports = {
+    Default: Default,
+    Plane: Plane
 };

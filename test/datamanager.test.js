@@ -1,22 +1,25 @@
-var AutoComplete = require('../src/js/AutoComplete');
-var DataManager = require('../src/js/manager/data');
-describe('DataManager 생성 및 테스트', function() {
+'use strict';
+var AutoComplete = require('../src/js/AutoComplete'),
+    DataManager = require('../src/js/manager/data');
 
-    var dm1,
-        dm2,
-        dm3;
+describe('DataManager 생성 및 테스트', function() {
+    var dm1, dm2, dm3,
+        global = tui.test.global;
 
     beforeEach(function() {
+        var ac;
+        loadFixtures('expand.html');
+        ac = new AutoComplete({
+            config: global.Plane
+        });
+        dm1 = ac.dataManager;
 
-        jasmine.getFixtures().fixturesPath = 'base';
-        loadFixtures('test/fixture/expand.html');
+        ac = new AutoComplete({
+            config: global.Default
+        });
+        dm2 = ac.dataManager;
 
-        var autocom = new AutoComplete({config:Plane});
-        var autocom2 = new AutoComplete({config:Default});
-        dm1 = autocom.dataManager;
-        dm2 = autocom2.dataManager;
-        dm3 = new DataManager(Default);
-
+        dm3 = new DataManager(global.Default);
     });
 
     it('to be defined', function() {
@@ -32,23 +35,12 @@ describe('DataManager 생성 및 테스트', function() {
     });
 
     it('getCollectionData return array of collection data', function() {
-        var arr = dm1._getCollectionData(mock);
-        var arr2 = dm2._getCollectionData(n_mock);
+        var arr = dm1._getCollectionData(global.mock),
+            arr2 = dm2._getCollectionData(global.n_mock);
+
         expect(arr).toBeDefined();
         expect(arr.length).toBeDefined();
         expect(arr2).toBeDefined();
         expect(arr2.length).toBe(0);
-
     });
-
-    it('request', function() {
-
-        dm1.options = {};
-        dm1.request("s");
-
-        dm1.options.searchApi = '../data.js';
-        dm1.request(" ");
-
-    });
-
 });
