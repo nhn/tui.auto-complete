@@ -182,10 +182,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      */
     changeOnOffText: function(isUse) {
         if (isUse) {
-            this.$onOffTxt.text('자동완성 켜기');
-            this.hideResultList();
-        } else {
             this.$onOffTxt.text('자동완성 끄기');
+        } else {
+            this.$onOffTxt.text('자동완성 켜기');
         }
     },
 
@@ -340,7 +339,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
     _useAutoComplete: function() {
         var isUse = this.autoCompleteObj.isUseAutoComplete();
         this.changeOnOffText(isUse);
-        this.autoCompleteObj.setCookieValue(!isUse);
+        this.autoCompleteObj.setCookieValue(isUse);
     },
 
     /**

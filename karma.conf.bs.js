@@ -16,17 +16,15 @@ module.exports = function(config) {
             'bower_components/jquery/jquery.min.js',
             'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             'bower_components/js-cookie/jquery.cookie.js',
-
             //sources
             'src/js/**/*.js',
             //'test/autocomplete.test.js',
             //'test/datamanager.test.js',
             //'test/inputmanager.test.js',
             //'test/resultmanager.test.js',
-            'test/*.js',
-
-            // fixtures
-            {pattern: 'test/fixture/*.html', watched: true, served: true, included: false}
+            'test/preparation.js',
+            'test/*.test.js',
+            'test/fixtures/**/*'
         ],
 
         exclude: [

@@ -184,16 +184,16 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      */
     init: function(options) {
         this.options = {};
+        this.isUse = true;
+        this.queries = null;
+        this.isIdle = true;
+
         this._checkValidation(options);
         this._setOptions(options);
 
         this.dataManager = new DataManager(this, this.options);
         this.inputManager = new InputManager(this, this.options);
         this.resultManager = new ResultManager(this, this.options);
-
-        this.isUse = true;
-        this.queries = null;
-        this.isIdle = true;
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
@@ -340,9 +340,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * Hide search result list area
      */
     hideResultList: function() {
-        if (this.isUseAutoComplete()) {
-            this.resultManager.hideResultList();
-        }
+        this.resultManager.hideResultList();
     },
 
     /**

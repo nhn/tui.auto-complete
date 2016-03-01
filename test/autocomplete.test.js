@@ -1,22 +1,21 @@
-var AutoComplete = require('../src/js/AutoComplete'),
-    config = require('./autoConfig');
+'use strict';
 
-var Default = config.Default;
-jasmine.getFixtures().fixturesPath = 'base';
+var AutoComplete = require('../src/js/AutoComplete');
+
 describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.', function() {
-
     var html,
         autoComplete,
         $searchBox,
         resultManager,
-        inputManager;
+        inputManager,
+        global = tui.test.global;
 
     beforeEach(function() {
-        loadFixtures('test/fixture/expand.html');
+        loadFixtures('expand.html');
         $("#ac_input1").val('운동화');
 
         //객체 생성
-        autoComplete = new AutoComplete({'config' : Default});
+        autoComplete = new AutoComplete({'config' : global.Default});
         resultManager = autoComplete.resultManager;
         inputManager = autoComplete.inputManager;
 
@@ -25,7 +24,9 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
     //OK
     it('AutoComplete, Manager 객체가 생성되는지 테스트한다.', function() {
-        var A = new AutoComplete({'config' : Default});
+        var A = new AutoComplete({
+            config : global.Default
+        });
         expect(A).toEqual(jasmine.any(Object));
 
         var resultManager = A.resultManager;
@@ -61,6 +62,9 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
 
     it('(검색어 결과가 있는 경우)검색어 입력 후, 검색 결과가 있는가.', function() {
+        var eventMock = {
+            stopPropagation: function() {}
+        };
         autoComplete.setCookieValue(true);
         autoComplete.setValue('운동화');
 
@@ -69,17 +73,16 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         expect(inputManager).toBeDefined();
 
         autoComplete.setCookieValue(false);
-        inputManager._onClickToggle();
+        inputManager._onClickToggle(eventMock);
     });
 
     it('자동완성 끄기/켜기 기능이 제대로 동작하는가.' , function() {
-        resultManager.showResultList();
-        resultManager.changeOnOffText(true);
-        expect($("#onofftext").text()).toEqual("자동완성 끄기");
-        resultManager.changeOnOffText(false);
+        var $onOffTxt = $('.baseBox .bottom');
 
-        var $onOffTxt = $(".baseBox .bottom");
-        resultManager._hideBottomArea();
+        resultManager.changeOnOffText(true);
+        expect($('#onofftext').text()).toEqual('자동완성 끄기');
+
+        resultManager.changeOnOffText(false);
         expect($onOffTxt.css('display')).toEqual('none');
 
         resultManager._useAutoComplete();

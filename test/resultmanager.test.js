@@ -1,22 +1,21 @@
-var AutoComplete = require('../src/js/AutoComplete'),
-    Mock = require('./mock'),
-    config = require('./autoConfig');
+'use strict';
+var AutoComplete = require('../src/js/AutoComplete');
 
-var Default = config.Default,
-    Plane = config.Plane,
-    mock = Mock.mock;
-
-jasmine.getFixtures().fixturesPath = 'base';
 describe('ResultManager', function() {
-    var rm1, rm2;
+    var rm1, rm2,
+        global = tui.test.global;
 
     beforeEach(function() {
         var ac;
-        loadFixtures('test/fixture/expand.html');
-        ac = new AutoComplete({config: Default});
+        loadFixtures('expand.html');
+        ac = new AutoComplete({
+            config: global.Default
+        });
         rm1 = ac.resultManager;
 
-        ac = new AutoComplete({config: Plane});
+        ac = new AutoComplete({
+            config: global.Plane
+        });
         rm2 = ac.resultManager;
     });
 
@@ -28,7 +27,7 @@ describe('ResultManager', function() {
     it('draw data with Title', function() {
         var autocon = rm1.autoCompleteObj,
             dm = autocon.dataManager,
-            data = dm._getCollectionData(mock);
+            data = dm._getCollectionData(global.mock);
 
         rm1.draw(data);
         expect(autocon.isShowResultList()).toBeTruthy();
@@ -38,7 +37,7 @@ describe('ResultManager', function() {
     it('draw data with no Title', function() {
         var autocon = rm2.autoCompleteObj,
             dm = autocon.dataManager,
-            data = dm._getCollectionData(mock);
+            data = dm._getCollectionData(global.mock);
 
         rm2.draw(data);
         expect(autocon.isShowResultList()).toBeTruthy();
@@ -54,33 +53,32 @@ describe('ResultManager', function() {
         expect(td2.a).toBe('v1');
     });
 
-
-    it('moveNextList without selectedElement', function() {
+    // Modify - v1.1.2: remove "isMoved" flag
+    it('moveNextResult will set the selectedElement to first-child of resultList', function() {
         var autocon = rm1.autoCompleteObj,
             dm = autocon.dataManager,
-            data = dm._getCollectionData(mock),
-            bMove = rm1.isMoved;
+            data = dm._getCollectionData(global.mock);
 
         rm1.draw(data);
-        rm1.moveNextList('next');
+        rm1.moveNextResult('next');
 
-        expect(bMove).not.toBe(rm1.isMoved);
+        expect(rm1.$selectedElement[0]).not.toBe(rm1.$resultList.children().first());
     });
 
-    it('moveNextList with selectedElement', function() {
+    it('moveNextResult with selectedElement', function() {
         var autocon = rm1.autoCompleteObj,
             dm = autocon.dataManager,
-            data = dm._getCollectionData(mock),
+            data = dm._getCollectionData(global.mock),
             bSel, aSel;
 
         rm1.draw(data);
-        rm1.moveNextList('next');
+        rm1.moveNextResult('next');
 
         bSel = rm1.$selectedElement;
-        rm1.moveNextList('next');
+        rm1.moveNextResult('next');
         aSel = rm1.$selectedElement;
 
-        expect(bSel).not.toBe(aSel);
+        expect(bSel.next()[0]).toBe(aSel[0]);
     });
 
     it('makeStrong', function() {

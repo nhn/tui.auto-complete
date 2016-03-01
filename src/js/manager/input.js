@@ -4,6 +4,8 @@
  * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
  */
 'use strict';
+var util = tui.util;
+
 /**
  * Unit of auto complete component that belong with input element.
  * @constructor
@@ -94,7 +96,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             this._createParamContainer();
         }
 
-        tui.util.forEach(subQueryValues, function(value, idx) {
+        util.forEach(subQueryValues, function(value, idx) {
             var key = subQueryKeys[idx];
             this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
         }, this);
@@ -113,7 +115,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         }
 
         staticParams = staticParams.split(',');
-        tui.util.forEach(staticParams, function(value) {
+        util.forEach(staticParams, function(value) {
             var val = value.split('=');
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
         }, this);
@@ -134,7 +136,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {Boolean} isUse 자동완성 사용 여부
      */
     setToggleBtnImg: function(isUse) {
-        if (!this.options.toggleImg || !tui.util.isEmpty(this.$toggleBtn)) {
+        if (!this.options.toggleImg || util.isEmpty(this.$toggleBtn)) {
             return;
         }
 
@@ -157,7 +159,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             click: $.proxy(this._onClick, this)
         });
 
-        if (this.$toggleBtn && this.$toggleBtn.length) {
+        if (!util.isEmpty(this.$toggleBtn)) {
             this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
         }
     },
@@ -236,14 +238,15 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         if (!this.autoCompleteObj.isUseAutoComplete()) {
             return;
         }
-        this.autoCompleteObj.showResultList();
-        this.prevValue = searchBoxValue;
+
         if (acObj.isIdle) {
             acObj.isIdle = false;
             acObj.request(searchBoxValue);
         } else {
             acObj.readyValue = searchBoxValue;
+            acObj.showResultList();
         }
+        this.prevValue = searchBoxValue;
     },
 
     /**
@@ -301,18 +304,28 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
 
     /**
      * Toggle button click event handler
+     * @param {MouseEvent} event Mouse click event
      * @private
      */
-    _onClickToggle: function() {
+    _onClickToggle: function(event) {
+        var curValue = this.getValue();
+        event.stopPropagation();
+
         if (!this.autoCompleteObj.isUseAutoComplete()) {
-            this.setToggleBtnImg(true);
             this.autoCompleteObj.setCookieValue(true);
-            this.autoCompleteObj.changeOnOffText(false);
-        } else {
-            this.autoCompleteObj.hideResultList();
-            this.setToggleBtnImg(false);
-            this.autoCompleteObj.setCookieValue(false);
             this.autoCompleteObj.changeOnOffText(true);
+            if (!curValue) {
+                return;
+            }
+            if (this.prevValue !== curValue) {
+                this.autoCompleteObj.request(curValue);
+            } else {
+                this.autoCompleteObj.showResultList();
+            }
+        } else {
+            this.autoCompleteObj.setCookieValue(false);
+            this.autoCompleteObj.changeOnOffText(false);
+            this.autoCompleteObj.hideResultList();
         }
     }
 });
