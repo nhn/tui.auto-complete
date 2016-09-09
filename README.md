@@ -21,7 +21,7 @@ Display recommend word list, when you type search character in input element.
 ## Dependency
 * jquery: ~1.8.3
 * js-cookie: ~1.2.0
-* tui-code-snippet: ~1.0.2
+* tui-code-snippet: ~1.2.0
 
 ## Test environment
 * PC
@@ -32,7 +32,7 @@ Display recommend word list, when you type search character in input element.
 
 ## Download/Install
 * Bower:
-   * latest : `bower install tui-component-auto-complete#master`
+   * latest : `bower install tui-component-auto-complete`
    * each version : `bower install tui-component-auto-complete[#tag]`
 * Download: https://github.com/nhnent/tui.component.auto-complete
 
@@ -40,7 +40,7 @@ Display recommend word list, when you type search character in input element.
 | Version | Description | Date | Developer |
 | ---- | ---- | ---- | ---- |
 | [1.1.2](https://nhnent.github.io/tui.component.auto-complete/1.1.2) | [Remove parameter checking](https://github.com/nhnent/tui.component.auto-complete/releases/tag/1.1.2)| 2016.02 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
-| 1.1.1a | Namespace changed | 2015.10 | NHN ent. FE dev team<dl_javascript@nhnent.com> | 
+| 1.1.1a | Namespace changed | 2015.10 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1a | defineNamespace apply | 2015.05 | NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | 1.1.1 | request sync | 2015.05 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
 | [1.1.0](https://nhnent.github.io/tui.component.auto-complete/1.1.0) | searchApi added | 2015.03 |  NHN ent. FE dev team<dl_javascript@nhnent.com> |
