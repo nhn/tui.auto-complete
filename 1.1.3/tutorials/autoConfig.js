@@ -92,8 +92,8 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
 
     // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
     'actions': [
-        "https://www.fashiongo.net/catalog.aspx",
-        "https://www.fashiongo.net/search2.aspx"
+        "http://www.fashiongo.net/catalog.aspx",
+        "http://www.fashiongo.net/search2.aspx"
     ],
 
     // 컬렉션 타입별 추가 스테틱한 옵션들을 설정
@@ -209,8 +209,8 @@ var Plane = { // 필수 항목만 나열한 config
 
     // 컬렉션 타입별 form action 을 지정한다. (지정하지 않으면 defaults가 적용된다)
     'actions': [
-        "http://www.fashiongo.net/catalog.aspx",
-        "http://www.fashiongo.net/search2.aspx"
+        '//www.fashiongo.net/catalog.aspx',
+        '//www.fashiongo.net/search2.aspx'
     ],
 
     // 컬렉션 타입별 추가 스테틱한 옵션들을 설정
