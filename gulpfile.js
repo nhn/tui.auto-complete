@@ -78,6 +78,7 @@ gulp.task('compress', function() {
     return gulp.src('./dist/' + filename + '.js')
         .pipe(uglify())
         .pipe(rename({extname: '.min.js'}))
+        .pipe(header(banner, {pkg: pkg}))
         .pipe(gulp.dest(distPath));
 });
 
