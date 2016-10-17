@@ -11,7 +11,6 @@
     "gulp-eslint": "^3.0.1",
     "gulp-header": "^1.8.8",
     "gulp-rename": "^1.2.2",
-    "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^2.1.1",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.6",

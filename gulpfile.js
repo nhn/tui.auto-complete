@@ -11,7 +11,6 @@ var uglify = require('gulp-uglify');
 var eslint = require('gulp-eslint');
 var rename = require('gulp-rename');
 var header = require('gulp-header');
-var gulpSeq = require('gulp-sequence');
 
 var pkg = require('./package.json');
 var filename = pkg.name.replace('component-', '');
@@ -50,7 +49,7 @@ gulp.task('eslint', function() {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('karma', function(done) {
+gulp.task('karma', ['eslint'], function(done) {
     new Server({
         configFile: __dirname + '/karma.conf.private.js',
         singleRun: true,
@@ -58,7 +57,7 @@ gulp.task('karma', function(done) {
     }, done).start();
 });
 
-gulp.task('bundle', function() {
+gulp.task('bundle', ['eslint', 'karma'], function() {
     var b = browserify({entries: 'index.js'});
 
     return b.transform(hbsfy)
@@ -74,7 +73,7 @@ gulp.task('bundle', function() {
         .pipe(gulp.dest(samplePath));
 });
 
-gulp.task('compress', function() {
+gulp.task('compress', ['eslint', 'karma', 'bundle'], function() {
     return gulp.src('./dist/' + filename + '.js')
         .pipe(uglify())
         .pipe(rename({extname: '.min.js'}))
@@ -82,4 +81,4 @@ gulp.task('compress', function() {
         .pipe(gulp.dest(distPath));
 });
 
-gulp.task('default', gulpSeq('eslint', 'karma', 'bundle', 'compress'));
+gulp.task('default', ['eslint', 'karma', 'bundle', 'compress']);
