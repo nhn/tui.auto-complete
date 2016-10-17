@@ -11,17 +11,11 @@ module.exports = function(config) {
         ],
 
         files: [
-            // dependencies
             'bower_components/tui-code-snippet/code-snippet.js',
             'bower_components/jquery/jquery.min.js',
             'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
             'bower_components/js-cookie/jquery.cookie.js',
-            //sources
             'src/js/**/*.js',
-            //'test/autocomplete.test.js',
-            //'test/datamanager.test.js',
-            //'test/inputmanager.test.js',
-            //'test/resultmanager.test.js',
             'test/preparation.js',
             'test/*.test.js',
             'test/fixtures/**/*'

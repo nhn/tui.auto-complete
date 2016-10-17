@@ -1,6 +1,6 @@
 'use strict';
 
-var AutoComplete = require('../src/js/AutoComplete'),
+var AutoComplete = require('../src/js/autoComplete'),
     InputManager = require('../src/js/manager/input');
 
 describe('InputManager', function() {

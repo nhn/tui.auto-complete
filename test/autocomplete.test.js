@@ -1,6 +1,6 @@
 'use strict';
 
-var AutoComplete = require('../src/js/AutoComplete');
+var AutoComplete = require('../src/js/autoComplete');
 
 describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.', function() {
     var html,
