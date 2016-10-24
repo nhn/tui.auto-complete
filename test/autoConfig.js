@@ -115,7 +115,7 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
     'mouseOverClass' : 'emp',
 
     // 자동완성API url
-    'searchUrl' : 'http://10.24.136.172:20011/ac',
+    'searchUrl' : 'http://12.123.123.123:20011/ac',
 
     // 자동완성API request 설정
     'searchApi' : {
@@ -225,7 +225,7 @@ var Plane = { // 필수 항목만 나열한 config
     'formElement' : '#ac_form1',
 
     // 자동완성API url
-    'searchUrl' : 'http://10.24.136.172:20011/ac',
+    'searchUrl' : 'http://12.123.123.123:20011/ac',
 
     // 자동완성API request 설정
     'searchApi' : {

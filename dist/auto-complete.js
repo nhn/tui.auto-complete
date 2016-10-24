@@ -157,7 +157,7 @@ var requiredOptions = [
  *  //     'mouseOverClass' : 'emp',
  *  //
  *  //     // Auto complete API
- *  //     'searchUrl' : 'http://10.24.136.172:20011/ac',
+ *  //     'searchUrl' : 'http://12.123.123.123:20011/ac',
  *  //
  *  //     // Auto complete API request config
  *  //     'searchApi' : {
