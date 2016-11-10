@@ -1,5 +1,5 @@
 'use strict';
-var AutoComplete = require('../src/js/AutoComplete');
+var AutoComplete = require('../src/js/autoComplete');
 
 describe('ResultManager', function() {
     var rm1, rm2,
