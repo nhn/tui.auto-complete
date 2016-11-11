@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AutoComplete</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px">
+        <img src="https://cloud.githubusercontent.com/assets/12269563/20029815/01133928-a39a-11e6-80f3-12500a91c755.png" width="100%" height="100%">
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AutoComplete</a></h1>
+        
+            <span class="version">v1.1.3</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>API</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-sample1.html">Basic</a><div class="hidden" id="sample1_sub"></div></li><li><a href="tutorial-sample2.html">On/Off the auto-completion</a><div class="hidden" id="sample2_sub"></div></li><li><a href="tutorial-sample3.html">Dynamic searchApi option</a><div class="hidden" id="sample3_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AutoComplete.html">AutoComplete</a><div class="hidden" id="AutoComplete_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AutoComplete.html#watchInterval">watchInterval</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="AutoComplete.html#clearReadyValue">clearReadyValue</a></li><li><a href="AutoComplete.html#getValue">getValue</a></li><li><a href="AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="AutoComplete.html#request">request</a></li><li><a href="AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="AutoComplete.html#setParams">setParams</a></li><li><a href="AutoComplete.html#setQueries">setQueries</a></li><li><a href="AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="AutoComplete.html#setServerData">setServerData</a></li><li><a href="AutoComplete.html#setValue">setValue</a></li><li><a href="AutoComplete.html#showResultList">showResultList</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="AutoComplete.html#event:change">change</a></li><li><a href="AutoComplete.html#event:close">close</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
+ * @version 1.1.2
+ * @author NHN Entertainment FE Dev Team. &lt;dl_javascript@nhnent.com>
+*/
+'use strict';
+
+var DataManager = require('./manager/data'),
+    InputManager = require('./manager/input'),
+    ResultManager = require('./manager/result');
+
+var DEFAULT_COOKIE_NAME = '_atcp_use_cookie';
+
+var requiredOptions = [
+        'resultListElement',
+        'searchBoxElement',
+        'orgQueryElement',
+        'formElement',
+        'subQuerySet',
+        'template',
+        'listConfig',
+        'actions',
+        'searchUrl'
+    ],
+    rIsElementOption = /element/i;
+
+/**
+ * @constructor
+ * @param {Object} options
+ * @example
+ *  var autoCompleteObj = new tui.component.AutoComplete({
+ *     "config" : "Default"    // Dataset in autoConfig.js
+ *  });
+ * @example
+ *  // The form of config file "autoConfig.js"
+ *  var Default = {
+ *      // Result element
+ *      'resultListElement': '._resultBox',
+ *
+ *      // Input element
+ *      'searchBoxElement':  '#ac_input1',
+ *
+ *      // Hidden element that is for throwing query that user type.
+ *      'orgQueryElement' : '#org_query',
+ *
+ *      // on,off Button element
+ *      'toggleBtnElement' : "#onoffBtn",
+ *
+ *      // on,off State element
+ *      'onoffTextElement' : ".baseBox .bottom",
+ *
+ *      // on, off State image source
+ *      'toggleImg' : {
+ *          'on' : '../img/btn_on.jpg',
+ *          'off' : '../img/btn_off.jpg'
+ *      },
+ *
+ *      // Collection items each count.
+ *      'viewCount' : 3,
+ *
+ *      // Key arrays (sub query keys' array)
+ *      'subQuerySet': [
+ *          ['key1', 'key2', 'key3'],
+ *          ['dep1', 'dep2', 'dep3'],
+ *          ['ch1', 'ch2', 'ch3'],
+ *          ['cid']
+ *      ],
+ *
+ *      // Config for auto complete list by index of collection
+ *      'listConfig': {
+ *          '0': {
+ *              'template': 'department',
+ *              'subQuerySet' : 0,
+ *              'action': 0
+ *          },
+ *          '1': {
+ *              'template': 'srch_in_department',
+ *              'subQuerySet' : 1,
+ *              'action': 0
+ *          },
+ *          '2': {
+ *              'template': 'srch_in_department',
+ *              'subQuerySet' : 2,
+ *              'action': 1,
+ *              'staticParams': 0
+ *          },
+ *          '3': {
+ *              'template': 'department',
+ *              'subQuerySet' : 0,
+ *              'action': 1,
+ *              'staticParams': 1
+ *          }
+ *      },
+ *
+ *      // Mark up for each collection. (Default markup is defaults.)
+ *      // This markup has to have "keywold-field" but title.
+ *      'template': {
+ *          department: {
+ *              element: '&lt;li class="department">' +
+ *                            '&lt;span class="slot-field">Shop the&lt;/span> ' +
+ *                            '&lt;a href="#" class="keyword-field">@subject@&lt;/a> ' +
+ *                            '&lt;span class="slot-field">Store&lt;/span>' +
+ *                        '&lt;/li>',
+ *              attr: ['subject']
+ *          },
+ *          srch: {
+ *              element: '&lt;li class="srch">&lt;span class="keyword-field">@subject@&lt;/span>&lt;/li>',
+ *              attr: ['subject']
+ *          },
+ *          srch_in_department: {
+ *              element: '&lt;li class="inDepartment">' +
+ *                           '&lt;a href="#" class="keyword-field">@subject@&lt;/a> ' +
+ *                           '&lt;span class="slot-field">in &lt;/span>' +
+ *                           '&lt;span class="depart-field">@department@&lt;/span>' +
+ *                       '&lt;/li>',
+ *              attr: ['subject', 'department']
+ *          },
+ *          title: {
+ *              element: '&lt;li class="title">&lt;span>@title@&lt;/span>&lt;/li>',
+ *              attr: ['title']
+ *          },
+ *          defaults: {
+ *              element: '&lt;li class="srch">&lt;span class="keyword-field">@subject@&lt;/span>&lt;/li>',
+ *              attr: ['subject']
+ *          }
+ *      },
+ *
+ *      // Action attribute for each collection
+ *      'actions': [
+ *          "http://www.fashiongo.net/catalog.aspx",
+ *          "http://www.fashiongo.net/search2.aspx"
+ *      ],
+ *
+ *      // Set static options for each collection.
+ *      'staticParams':[
+ *          "qt=ProductName",
+ *          "at=TEST,bt=ACT"
+ *      ],
+ *
+ *      // Whether use title or not.
+ *      'useTitle': true,
+ *
+ *      // Form element that include search element
+ *      'formElement' : '#ac_form1',
+ *
+ *      // Cookie name for save state
+ *      'cookieName' : "usecookie",
+ *
+ *      // Class name for selected element
+ *      'mouseOverClass' : 'emp',
+ *
+ *      // Auto complete API
+ *      'searchUrl' : 'http://12.123.123.123:20011/ac',
+ *
+ *      // Auto complete API request config
+ *      'searchApi' : {
+ *          'st' : 1111,
+ *          'r_lt' : 1111,
+ *          'r_enc' : 'UTF-8',
+ *          'q_enc' : 'UTF-8',
+ *          'r_format' : 'json'
+ *      }
+ *  }
+ */
+var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
+    init: function(options) {
+        this.options = {};
+        this.isUse = true;
+        this.queries = null;
+        this.isIdle = true;
+
+        this._checkValidation(options);
+        this._setOptions(options);
+
+        this.dataManager = new DataManager(this, this.options);
+        this.inputManager = new InputManager(this, this.options);
+        this.resultManager = new ResultManager(this, this.options);
+
+        this.setToggleBtnImg(this.isUse);
+        this.setCookieValue(this.isUse);
+    },
+
+    /**
+     * Direction value for key
+     * @static
+     * @private
+     */
+    flowMap: {
+        'NEXT': 'next',
+        'PREV': 'prev',
+        'FIRST': 'first',
+        'LAST': 'last'
+    },
+
+    /**
+     * Interval for check update input
+     * @type {number}
+     * @default 300
+     */
+    watchInterval: 300,
+
+    /**
+     * Check required fields and validate fields.
+     * @param {Object} options component configurations
+     * @private
+     */
+    _checkValidation: function(options) {
+        var isExisty = tui.util.isExisty,
+            config = options.config;
+
+        if (!isExisty(config)) {
+            throw new Error('No configuration #' + config);
+        }
+
+        tui.util.forEach(requiredOptions, function(name) {
+            if (!isExisty(config[name])) {
+                throw new Error(name + 'does not not exist.');
+            }
+        });
+    },
+
+    /**
+     * Set component options
+     * @param {Object} options component configurations
+     * @private
+     */
+    _setOptions: function(options) {
+        var config = options.config,
+            cookieValue;
+
+        if (!config.toggleImg || !config.onoffTextElement) {
+            this.isUse = true;
+            delete config.onoffTextElement;
+        } else {
+            cookieValue = $.cookie(config.cookieName);
+            this.isUse = (cookieValue === 'use' || !cookieValue);
+        }
+        config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
+
+        if (tui.util.isFalsy(config.watchInterval)) {
+            config.watchInterval = this.watchInterval;
+        }
+
+        tui.util.forEach(config, function(value, name) {
+            if (rIsElementOption.test(name)) {
+                this.options[name] = $(value);
+            } else {
+                this.options[name] = value;
+            }
+        }, this);
+    },
+
+    /**
+     * Request data at api server with keyword
+     * @param {String} keyword The key word to send to Auto complete API
+     */
+    request: function(keyword) {
+        this.dataManager.request(keyword);
+    },
+
+    /**
+     * Return string in input element.
+     * @returns {String}
+     */
+    getValue: function() {
+        return this.inputManager.getValue();
+    },
+
+    /**
+     * Set inputManager's value to show at search element
+     * @param {String} keyword The string to show up at search element
+     */
+    setValue: function(keyword) {
+        this.inputManager.setValue(keyword);
+    },
+
+    /**
+     * Set additional parameters at inputManager.
+     * @param {string} paramStr String to be addition parameters.(saperator '&amp;')
+     * @param {string} index The index for setting key value
+     */
+    setParams: function(paramStr, index) {
+        this.inputManager.setParams(paramStr, index);
+    },
+
+    /**
+     * Request to draw result at resultManager with data from api server.
+     * @param {Array} dataArr Data array from api server
+     */
+    setServerData: function(dataArr) {
+        this.resultManager.draw(dataArr);
+    },
+
+    /**
+     * Set Cookie value with whether use auto complete or not
+     * @param {Boolean} isUse Whether use auto complete or not
+     */
+    setCookieValue: function(isUse) {
+        $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
+        this.isUse = isUse;
+        this.setToggleBtnImg(isUse);
+    },
+
+    /**
+     * Save matched queries from server.
+     * @param {Array} queries Result queries
+     */
+    setQueries: function(queries) {
+        this.queries = [].concat(queries);
+    },
+
+    /**
+     * Get whether use auto complete or not
+     * @api
+     * @returns {Boolean}
+     * @example
+     *  autoComplete.isUseAutoComplete(); => true|false
+     */
+    isUseAutoComplete: function() {
+        return this.isUse;
+    },
+
+    /**
+     * Whether show the result list area or not.
+     * @returns {Boolean}
+     */
+    isShowResultList: function() {
+        return this.resultManager.isShowResultList();
+    },
+
+    /**
+     * Change toggle button image by auto complete state
+     * @param {Boolean} isUse whether use auto complete or not
+     * @private
+     */
+    setToggleBtnImg: function(isUse) {
+        this.inputManager.setToggleBtnImg(isUse);
+    },
+
+    /**
+     * Hide search result list area
+     */
+    hideResultList: function() {
+        this.resultManager.hideResultList();
+    },
+
+    /**
+     * Show search result list area
+     */
+    showResultList: function() {
+        if (this.isUseAutoComplete()) {
+            this.resultManager.showResultList();
+        }
+    },
+
+    /**
+     * Move to next item in result list.
+     * @param {string} flow Direction to move.
+     * @private
+     */
+    moveNextResult: function(flow) {
+        this.resultManager.moveNextResult(flow);
+    },
+
+    /**
+     * Set text to auto complete switch
+     * @param {Boolean} isUse Whether use auto complete or not
+     * @private
+     */
+    changeOnOffText: function(isUse) {
+        this.resultManager.changeOnOffText(isUse);
+    },
+
+    /**
+     * Reset serachApi
+     * @api
+     * @param {Object} options searchApi option
+     * @example
+     *  autoComplete.setSearchApi({
+     *      'st' : 111,
+     *      'r_lt' : 111,
+     *      'r_enc' : 'UTF-8',
+     *      'q_enc' : 'UTF-8',
+     *      'r_format' : 'json'
+     *  });
+     */
+    setSearchApi: function(options) {
+        tui.util.extend(this.options.searchApi, options);
+    },
+
+    /**
+     * clear ready value and set idle state
+     */
+    clearReadyValue: function() {
+        if (tui.util.isExisty(this.readyValue)) {
+            this.request(this.readyValue);
+        } else {
+            this.isIdle = true;
+        }
+        this.readyValue = null;
+    }
+});
+tui.util.CustomEvents.mixin(AutoComplete);
+module.exports = AutoComplete;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://cloud.githubusercontent.com/assets/12269563/20029815/01133928-a39a-11e6-80f3-12500a91c755.png" style="width: 150px">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var element = document.getElementById(id); // do not use jquery selector
+
+        $(element).removeClass('hidden');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

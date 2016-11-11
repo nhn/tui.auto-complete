@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AutoComplete</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px">
+        <img src="https://cloud.githubusercontent.com/assets/12269563/20029815/01133928-a39a-11e6-80f3-12500a91c755.png" width="100%" height="100%">
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AutoComplete</a></h1>
+        
+            <span class="version">v1.1.3</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>API</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-sample1.html">Basic</a><div class="hidden" id="sample1_sub"></div></li><li><a href="tutorial-sample2.html">On/Off the auto-completion</a><div class="hidden" id="sample2_sub"></div></li><li><a href="tutorial-sample3.html">Dynamic searchApi option</a><div class="hidden" id="sample3_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AutoComplete.html">AutoComplete</a><div class="hidden" id="AutoComplete_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AutoComplete.html#watchInterval">watchInterval</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="AutoComplete.html#clearReadyValue">clearReadyValue</a></li><li><a href="AutoComplete.html#getValue">getValue</a></li><li><a href="AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="AutoComplete.html#request">request</a></li><li><a href="AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="AutoComplete.html#setParams">setParams</a></li><li><a href="AutoComplete.html#setQueries">setQueries</a></li><li><a href="AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="AutoComplete.html#setServerData">setServerData</a></li><li><a href="AutoComplete.html#setValue">setValue</a></li><li><a href="AutoComplete.html#showResultList">showResultList</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="AutoComplete.html#event:change">change</a></li><li><a href="AutoComplete.html#event:close">close</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Data is kind of manager module to request data at API with input queries.
+ * @author NHN Entertainment FE dev Lab. &lt;dl_javascript@nhnent.com>
+ */
+'use strict';
+
+var CALLBACK_NAME = 'dataCallback',
+    SERACH_QUERY_IDENTIFIER = 'q';
+
+var forEach = tui.util.forEach,
+    map = tui.util.map,
+    isEmpty = tui.util.isEmpty,
+    extend = tui.util.extend;
+
+/**
+ * Unit of auto complete connecting server.
+ * @ignore
+ * @constructor
+ */
+var Data = tui.util.defineClass(/**@lends Data.prototype */{
+    init: function(autoCompleteObj, options) {
+        this.autoCompleteObj = autoCompleteObj;
+        this.options = options;
+    },
+
+    /**
+     * Request data at api server use jsonp
+     * @param {String} keyword String to request at server
+     */
+    request: function(keyword) {
+        var rsKeyWrod = keyword.replace(/\s/g, ''),
+            acObj = this.autoCompleteObj,
+            keyData;
+
+        if (!keyword || !rsKeyWrod) {
+            acObj.hideResultList();
+            return;
+        }
+
+        this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
+        $.ajax(this.options.searchUrl, {
+            'dataType': 'jsonp',
+            'jsonpCallback': CALLBACK_NAME,
+            'data': this.options.searchApi,
+            'type': 'get',
+            'success': $.proxy(function(dataObj) {
+                try {
+                    keyData = this._getCollectionData(dataObj);
+                    acObj.setQueries(dataObj.query);
+                    acObj.setServerData(keyData);
+                    acObj.clearReadyValue();
+                } catch (e) {
+                    throw new Error('[DataManager] invalid response data.', e);
+                }
+            }, this)
+        });
+    },
+
+    /**
+     * Make collection data to display
+     * @param {object} dataObj Collection data
+     * @returns {Array}
+     * @private
+     */
+    _getCollectionData: function(dataObj) {
+        var collection = dataObj.collections,
+            itemDataList = [];
+
+        forEach(collection, function(itemSet) {
+            var keys;
+
+            if (isEmpty(itemSet.items)) {
+                return;
+            }
+
+            keys = this._getRedirectData(itemSet);
+            itemDataList.push({
+                type: 'title',
+                values: [itemSet.title]
+            });
+            itemDataList = itemDataList.concat(keys);
+        }, this);
+
+        return itemDataList;
+    },
+
+    /**
+     * Make item of collection to display
+     * @param {object} itemSet Item of collection data
+     * @private
+     * @returns {Array}
+     */
+    _getRedirectData: function(itemSet) {
+        var defaultData = {
+                type: itemSet.type,
+                index: itemSet.index,
+                dest: itemSet.destination
+            },
+            items = itemSet.items.slice(0, this.options.viewCount - 1);
+
+        items = map(items, function(item) {
+            return extend({
+                values: item
+            }, defaultData);
+        });
+
+        return items;
+    }
+});
+
+module.exports = Data;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://cloud.githubusercontent.com/assets/12269563/20029815/01133928-a39a-11e6-80f3-12500a91c755.png" style="width: 150px">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var element = document.getElementById(id); // do not use jquery selector
+
+        $(element).removeClass('hidden');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

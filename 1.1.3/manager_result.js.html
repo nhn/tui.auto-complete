@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AutoComplete</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 150px">
+        <img src="https://cloud.githubusercontent.com/assets/12269563/20029815/01133928-a39a-11e6-80f3-12500a91c755.png" width="100%" height="100%">
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AutoComplete</a></h1>
+        
+            <span class="version">v1.1.3</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>API</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-sample1.html">Basic</a><div class="hidden" id="sample1_sub"></div></li><li><a href="tutorial-sample2.html">On/Off the auto-completion</a><div class="hidden" id="sample2_sub"></div></li><li><a href="tutorial-sample3.html">Dynamic searchApi option</a><div class="hidden" id="sample3_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AutoComplete.html">AutoComplete</a><div class="hidden" id="AutoComplete_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AutoComplete.html#watchInterval">watchInterval</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="AutoComplete.html#clearReadyValue">clearReadyValue</a></li><li><a href="AutoComplete.html#getValue">getValue</a></li><li><a href="AutoComplete.html#hideResultList">hideResultList</a></li><li><a href="AutoComplete.html#isShowResultList">isShowResultList</a></li><li><a href="AutoComplete.html#isUseAutoComplete">isUseAutoComplete</a></li><li><a href="AutoComplete.html#request">request</a></li><li><a href="AutoComplete.html#setCookieValue">setCookieValue</a></li><li><a href="AutoComplete.html#setParams">setParams</a></li><li><a href="AutoComplete.html#setQueries">setQueries</a></li><li><a href="AutoComplete.html#setSearchApi">setSearchApi</a></li><li><a href="AutoComplete.html#setServerData">setServerData</a></li><li><a href="AutoComplete.html#setValue">setValue</a></li><li><a href="AutoComplete.html#showResultList">showResultList</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="AutoComplete.html#event:change">change</a></li><li><a href="AutoComplete.html#event:close">close</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
+ * @author  NHN entertainment FE dev team&lt;dl_javascript@nhnent.com>
+ */
+'use strict';
+var DEFAULT_VIEW_COUNT = 10,
+    WHITE_SPACES = '[\\s]*';
+
+var isEmpty = tui.util.isEmpty,
+    forEach = tui.util.forEach,
+    map = tui.util.map;
+
+var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
+    rWhiteSpace = '/\s+/g';
+
+/**
+ * Unit of auto complete that belong with search result list.
+ * Handle the submit data from resultList.
+ * See {@link Result.prototype._orderElement} which set the request data from arrow-key input
+ * @ignore
+ * @constructor
+ */
+var Result = tui.util.defineClass(/** @lends Result.prototype */{
+    init: function(autoCompleteObj, options) {
+        this.autoCompleteObj = autoCompleteObj;
+        this.options = options;
+
+        this.$resultList = options.resultListElement;
+        this.viewCount = options.viewCount || DEFAULT_VIEW_COUNT;
+        this.$onOffTxt = options.onoffTextElement;
+        this.mouseOverClass = options.mouseOverClass;
+        this.flowMap = autoCompleteObj.flowMap;
+
+        this._attachEvent();
+        this.$selectedElement = $();
+    },
+
+    /**
+     * Delete last result list
+     * @private
+     */
+    _deleteBeforeElement: function() {
+        this.$selectedElement = $();
+        this.$resultList
+            .hide()
+            .html('');
+    },
+
+    /**
+     * Draw result form api server
+     * @param {Array} dataArr Result data
+     */
+    draw: function(dataArr) {
+        var len = dataArr.length;
+
+        this._deleteBeforeElement();
+        if (len &lt; 1) {
+            this._hideBottomArea();
+        } else {
+            this._makeResultList(dataArr, len);
+        }
+        this.showResultList();
+    },
+
+    /**
+     * Make search result list element
+     * @param {Array} dataArr - Data array
+     * @param {number} len - Length of dataArray
+     * @private
+     */
+    _makeResultList: function(dataArr, len) {
+        var template = this.options.template,
+            listConfig = this.options.listConfig,
+            useTitle = (this.options.useTitle &amp;&amp; !!template.title),
+            tmpl, index, tmplValue, i, data;
+
+        for (i = 0; i &lt; len; i += 1) {
+            data = dataArr[i];
+            index = data.index;
+            tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;
+
+            if (data.type === 'title') {
+                tmpl = template.title;
+                if (!useTitle) {
+                    continue;
+                }
+            }
+            tmplValue = this._getTmplData(tmpl.attr, data);
+            $(this._applyTemplate(tmpl.element, tmplValue))
+                .data({
+                    'params': tmplValue.params,
+                    'index': index
+                })
+                .appendTo(this.$resultList);
+        }
+    },
+
+    /**
+     * Make template data
+     * @param {Array} attrs Template attributes
+     * @param {string|Object} data The data to make template
+     * @returns {Object} Template data
+     * @private
+     */
+    _getTmplData: function(attrs, data) {
+        var tmplValue = {},
+            values = data.values || null;
+
+        if (tui.util.isString(data)) {
+            tmplValue[attrs[0]] = data;
+            return tmplValue;
+        }
+
+        forEach(attrs, function(attr, idx) {
+            tmplValue[attr] = values[idx];
+        });
+        if (attrs.length &lt; values.length) {
+            tmplValue.params = values.slice(attrs.length);
+        }
+
+        return tmplValue;
+    },
+
+    /**
+     * Return whether result list show or not
+     * @returns {Boolean}
+     */
+    isShowResultList: function() {
+        return this.$resultList.css('display') === 'block';
+    },
+
+    /**
+     * Hide result list area
+     */
+    hideResultList: function() {
+        this.$resultList.hide();
+        this._hideBottomArea();
+        this.autoCompleteObj.isIdle = true;
+
+        /**
+         * Fired when hide the result list
+         * @event AutoComplete#close
+         */
+        this.autoCompleteObj.fire('close');
+    },
+
+    /**
+     * Show result list area
+     */
+    showResultList: function() {
+        this.$resultList.show();
+        this._showBottomArea();
+    },
+
+    /**
+     * Move focus to next item, change input element value as focus value.
+     * @param {string} flow Direction by key code
+     */
+    moveNextResult: function(flow) {
+        var $selectEl = this.$selectedElement,
+            keyword;
+
+        if (!isEmpty($selectEl)) {
+            $selectEl.removeClass(this.mouseOverClass);
+        }
+        $selectEl = this.$selectedElement = this._orderElement(flow);
+
+        keyword = $selectEl.find('.keyword-field').text();
+        if (keyword) {
+            $selectEl.addClass(this.mouseOverClass);
+            this.autoCompleteObj.setValue(keyword);
+            this._setSubmitOption();
+        } else {
+            this.moveNextResult(flow);
+        }
+    },
+
+    /**
+     * Chage text by whether auto complete use or not
+     * @param {Boolean} isUse on/off 여부
+     */
+    changeOnOffText: function(isUse) {
+        if (isUse) {
+            this.$onOffTxt.text('자동완성 끄기');
+        } else {
+            this.$onOffTxt.text('자동완성 켜기');
+        }
+    },
+
+
+    /**
+     * Attach auto complete event belongs with result list
+     * @private
+     */
+    _attachEvent: function() {
+        this.$resultList.on({
+            mouseover: $.proxy(this._onMouseOver, this),
+            click: $.proxy(this._onClick, this)
+        });
+
+        if (this.$onOffTxt) {
+            this.$onOffTxt.on('click', $.proxy(function() {
+                this._useAutoComplete();
+            }, this));
+        }
+
+        $(document).on('click', $.proxy(function() {
+            this.hideResultList();
+        }, this));
+    },
+
+    /**
+     * Highlight key word
+     * @param {string} tmplStr Template string
+     * @param {Object} dataObj Replace string map
+     * @returns {string}
+     * @private
+     */
+    _applyTemplate: function(tmplStr, dataObj) {
+        tui.util.forEach(dataObj, function(value, key) {
+            if (key === 'subject') {
+                value = this._highlight(value);
+            }
+            tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
+        }, this);
+
+        return tmplStr;
+    },
+
+    /**
+     * Return applied highlight effect key word
+     * (text: Nike air  /  query : [Nike] / Result : &lt;strong>Nike &lt;/strong>air
+     * text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 &lt;strong>rhdiddl&lt;/strong>와 &lt;strong>고양이&lt;/strong>
+     * @param {String} text Input string
+     * @returns {String}
+     * @private
+     */
+    _highlight: function(text) {
+        var queries = this.autoCompleteObj.queries,
+            returnStr;
+
+        tui.util.forEach(queries, function(query) {
+            if (!returnStr) {
+                returnStr = text;
+            }
+            returnStr = this._makeStrong(returnStr, query);
+        }, this);
+        return returnStr || text;
+    },
+
+    /**
+     * Contain text by strong tag
+     * @param {String} text Recommend search data  추천검색어 데이터
+     * @param {String} query Input keyword
+     * @returns {String}
+     * @private
+     */
+    _makeStrong: function(text, query) {
+        var tmpArr, regQuery;
+
+        if (!query || query.length &lt; 1) {
+            return text;
+        }
+
+        tmpArr = query.replace(rWhiteSpace, '').split('');
+        tmpArr = map(tmpArr, function(char) {
+            if (rIsSpeicalCharacters.test(char)) {
+                return '\\' + char;
+            }
+            return char;
+        });
+        regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
+
+        return text.replace(regQuery, function(match) {
+            return '&lt;strong>' + match + '&lt;/strong>';
+        });
+    },
+
+    /**
+     * Return the first result item
+     * @returns {jQuery}
+     * @private
+     */
+    _getFirst: function() {
+        return this._orderStage(this.flowMap.FIRST);
+    },
+
+    /**
+     * Return the last result item
+     * @returns {jQuery}
+     * @private
+     */
+    _getLast: function() {
+        return this._orderStage(this.flowMap.LAST);
+    },
+
+    /**
+     * Return whether first or last
+     * @param {string} type First/end element type
+     * @returns {jQuery}
+     * @private
+     */
+    _orderStage: function(type) {
+        var flowMap = this.flowMap,
+            $children = this.$resultList.children();
+
+        if (type === flowMap.FIRST) {
+            return $children.first();
+        } else if (type === flowMap.LAST) {
+            return $children.last();
+        }
+
+        return null;
+    },
+
+    /**
+     * Return previous or next element from resultList by direction
+     * @param {string} type The direction type for finding element
+     * @returns {jQuery}
+     * @private
+     */
+    _orderElement: function(type) {
+        var $selectedElement = this.$selectedElement,
+            $order;
+
+        if (type === this.flowMap.NEXT) {
+            $order = $selectedElement.next();
+            return $order.length ? $order : this._getFirst();
+        }
+        $order = $selectedElement.prev();
+        return $order.length ? $order : this._getLast();
+    },
+
+    /**
+     * Set whether auto complete use or not and change switch's state.
+     * @private
+     */
+    _useAutoComplete: function() {
+        var isUse = this.autoCompleteObj.isUseAutoComplete();
+        this.changeOnOffText(isUse);
+        this.autoCompleteObj.setCookieValue(isUse);
+    },
+
+    /**
+     * Show auto complete switch area
+     * @private
+     */
+    _showBottomArea: function() {
+        if (this.$onOffTxt) {
+            this.$onOffTxt.show();
+        }
+    },
+
+    /**
+     * Hide auto complete switch area
+     * @private
+     */
+    _hideBottomArea: function() {
+        if (this.$onOffTxt) {
+            this.$onOffTxt.hide();
+        }
+    },
+
+    /**
+     * Change action attribute of form element and set addition values in hidden type elements.
+     * (Called when click the &lt;li>)
+     * @param {element} [$target] Submit options target
+     * @private
+     *
+     */
+    _setSubmitOption: function($target) {
+        var $selectField = $target ? $($target).closest('li') : this.$selectedElement,
+            paramsString = $selectField.data('params'),
+            index = $selectField.data('index'),
+            config = this.options.listConfig[index],
+            action = this.options.actions[config.action],
+            $formElement = this.options.formElement;
+
+        $formElement.attr('action', action);
+        this._clearSubmitOption();
+        this.autoCompleteObj.setParams(paramsString, index);
+
+        /**
+         * Fired when the user's selected element in result list is changed
+         * @event AutoComplete#change
+         * @param {Object} data - Data for submit
+         *  @param {string} data.index - Index of collection
+         *  @param {string} data.action - Form action
+         *  @param {string} data.params - Parameters
+         */
+        this.autoCompleteObj.fire('change', {
+            index: index,
+            action: action,
+            params: paramsString
+        });
+    },
+
+    /**
+     * Reset form element.
+     * @private
+     */
+    _clearSubmitOption: function() {
+        var $formElement = this.options.formElement;
+
+        $formElement.find('.hidden-inputs').html('');
+    },
+
+    /**
+     * Result list mouseover event handler
+     * @param {Event} event Event instanse
+     * @private
+     */
+    _onMouseOver: function(event) {
+        var $target = $(event.target),
+            $arr = this.$resultList.find('li'),
+            $selectedItem = $target.closest('li');
+
+        $arr.removeClass(this.mouseOverClass);
+        if ($selectedItem.find('.keyword-field').length) {
+            $selectedItem.addClass(this.mouseOverClass);
+        }
+        this.$selectedElement = $target;
+    },
+
+    /**
+     * Result list click evnet handler
+     * Submit form element.
+     * @param {Event} event Event instanse
+     * @private
+     */
+    _onClick: function(event) {
+        var $target = $(event.target),
+            $formElement = this.options.formElement,
+            $selectField = $target.closest('li'),
+            $keywordField = $selectField.find('.keyword-field'),
+            selectedKeyword = $keywordField.text();
+
+        this.autoCompleteObj.setValue(selectedKeyword);
+        if (selectedKeyword) {
+            this._setSubmitOption($target);
+            $formElement.submit();
+        }
+    }
+});
+
+module.exports = Result;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://cloud.githubusercontent.com/assets/12269563/20029815/01133928-a39a-11e6-80f3-12500a91c755.png" style="width: 150px">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var element = document.getElementById(id); // do not use jquery selector
+
+        $(element).removeClass('hidden');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

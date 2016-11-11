@@ -44,7 +44,7 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
             'action': 0
         },
         '2': {
-            'template': 'srch_in_department',
+            'template': 'srch',
             'subQuerySet' : 2,
             'action': 1,
             'staticParams': 0
@@ -161,7 +161,7 @@ var Plane = { // 필수 항목만 나열한 config
             'action': 0
         },
         '2': {
-            'template': 'srch_in_department',
+            'template': 'srch',
             'subQuerySet' : 2,
             'action': 1,
             'staticParams': 0

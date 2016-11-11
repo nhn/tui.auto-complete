@@ -1,11 +1,11 @@
 {
   "sample1": {
-    "title" : "Defulat Example"
+    "title" : "Basic"
   },
   "sample2": {
-    "title": "Option Example"
+    "title": "On/Off the auto-completion"
   },
   "sample3": {
-    "title": "Change Option Example"
+    "title": "Dynamic searchApi option"
   }
 }
