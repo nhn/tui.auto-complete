@@ -1,7 +1,7 @@
 {
-  "name": "component-auto-complete",
+  "name": "tui-component-auto-complete",
   "authors": [
-    "NHN Ent. FE Dev team.<dl_javascript@nhnent.com>"
+    "NHN Ent. FE Dev Lab <dl_javascript@nhnent.com>"
   ],
   "license": "MIT",
   "ignore": [

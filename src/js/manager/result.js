@@ -17,6 +17,7 @@ var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
  * Unit of auto complete that belong with search result list.
  * Handle the submit data from resultList.
  * See {@link Result.prototype._orderElement} which set the request data from arrow-key input
+ * @ignore
  * @constructor
  */
 var Result = tui.util.defineClass(/** @lends Result.prototype */{
@@ -138,7 +139,6 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
         /**
          * Fired when hide the result list
-         * @api
          * @event AutoComplete#close
          */
         this.autoCompleteObj.fire('close');
@@ -382,7 +382,6 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
         /**
          * Fired when the user's selected element in result list is changed
-         * @api
          * @event AutoComplete#change
          * @param {Object} data - Data for submit
          *  @param {string} data.index - Index of collection

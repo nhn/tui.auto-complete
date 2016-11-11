@@ -5,14 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" type="text/css" href="css/default.css">
-    <title>자동완성 - 자동완성 끄기,켜기 기능 있는 유형</title>
+    <title>AutoComplete - Dynamic searchApi option</title>
     <style>
         #select-search-target {margin:30px 0 0 50px;position:absolute;}
     </style>
 </head>
 <body style="height:500px;width:1000px;">
-
-<div class="sampleWarp">
+<div class="sampleWarp code-html">
     <select id="select-search-target">
         <option value="0">All Categories</option>
         <option value="1">Women</option>
@@ -21,38 +20,35 @@
         <option value="4">Shoes</option>
     </select>
     <div class="formWrap">
-        <!-- 폼태그 -->
+        <!-- Form tag -->
         <form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
-            <!-- 검색창 -->
+            <!-- Searchbox -->
             <div class="inputBox">
                 <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
                 <img class="onoff" id="onoffBtn" src="img/btn_on.jpg" width="21" height="21">
                 <input type="hidden" id="org_query" name="org_query">
             </div>
 
-            <!-- 자동완성 검색결과 영역 -->
+            <!-- Search result -->
             <div class="suggestBox" id="ac_view1" style="width:269px;">
                 <div class="baseBox">
                     <ul class="_resultBox" style="display:none;">
                         <li><a href="#" onclick="return false;" title="">@txt@</a></li>
                     </ul>
-                    <p id="onofftext" class="bottom" style="display:none;">자동완성 끄기</p>
+                    <p id="onofftext" class="bottom" style="display:none;">Off the auto-completion</p>
                 </div>
             </div>
         </form>
     </div>
 </div>
-</body>
-
-<!-- include js -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/1.5.1/js.cookie.min.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/nhnent/tui.code-snippet/1.2.1/code-snippet.js"></script>
 <script type="text/javascript" src="autoConfig.js"></script>
-<script type="text/javascript" src="js/auto-complete.js"></script>
+<script type="text/javascript" src="../dist/tui-component-auto-complete.js"></script>
+<script class="code-js">
+    // See the "samples/autoConfig.js" having configurations
 
-<!-- 자동완성 생성 -->
-<script>
     var autoComp = new tui.component.AutoComplete({"config" : Default}),
         select = $('#select-search-target'),
         state = {
@@ -78,12 +74,11 @@
             }
         };
 
-    // select를 클릭할 때마다 요청 searchApi값을 변경한다.
+    // When click the select, change the searchApi option
     select.change(function(e) {
         var value = e.target.value;
         autoComp.setSearchApi(state[value]);
     });
 </script>
-
-
+</body>
 </html>

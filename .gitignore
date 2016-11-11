@@ -54,7 +54,6 @@ doc
 report
 mock/*.json
 
-karma.conf.local.js
 mock/*.nhn
 mock/api
 .tern-project

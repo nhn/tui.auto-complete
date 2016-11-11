@@ -24,10 +24,6 @@ module.exports = function(config) {
             'bower_components/js-cookie/jquery.cookie.js',
             //sources
             'src/js/**/*.js',
-            //'test/autocomplete.test.js',
-            //'test/datamanager.test.js',
-            //'test/inputmanager.test.js',
-            //'test/resultmanager.test.js',
             'test/preparation.js',
             'test/*.test.js',
             'test/fixtures/**/*'
@@ -79,7 +75,6 @@ module.exports = function(config) {
         autoWatch: true,
 
         browsers: [
-            'IE7',
             'IE8',
             'IE9',
             'IE10',
@@ -89,12 +84,6 @@ module.exports = function(config) {
         ],
 
         customLaunchers: {
-            'IE7': {
-                base: 'WebDriver',
-                config: webdriverConfig,
-                browserName: 'internet explorer',
-                version: 7
-            },
             'IE8': {
                 base: 'WebDriver',
                 config: webdriverConfig,

@@ -74,13 +74,6 @@ module.exports = function(config) {
 
         // define browsers
         customLaunchers: {
-            bs_ie7: {
-                base: 'BrowserStack',
-                os: 'Windows',
-                os_version: 'XP',
-                browser_version: '7.0',
-                browser: 'ie'
-            },
             bs_ie8: {
                 base: 'BrowserStack',
                 os: 'Windows',
@@ -119,21 +112,20 @@ module.exports = function(config) {
             bs_chrome_mac: {
                 base: 'BrowserStack',
                 os: 'OS X',
-                os_version: 'El Capitan',
+                os_version: 'sierra',
                 browser: 'chrome',
-                browser_version: '47.0'
+                browser_version: 'latest'
             },
             bs_firefox_mac: {
                 base: 'BrowserStack',
                 os: 'OS X',
-                os_version: 'El Capitan',
+                os_version: 'sierra',
                 browser: 'firefox',
-                browser_version: '43.0'
+                browser_version: 'latest'
             }
         },
 
         browsers: [
-            'bs_ie7',
             'bs_ie8',
             'bs_ie9',
             'bs_ie10',
@@ -142,6 +134,8 @@ module.exports = function(config) {
             'bs_chrome_mac',
             'bs_firefox_mac'
         ],
+
+        browserNoActivityTimeout: 20000,
 
         singleRun: true
     });

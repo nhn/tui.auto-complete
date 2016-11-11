@@ -7,6 +7,7 @@ var util = tui.util;
 
 /**
  * Unit of auto complete component that belong with input element.
+ * @ignore
  * @constructor
  */
 var Input = tui.util.defineClass(/**@lends Input.prototype */{

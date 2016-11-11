@@ -12,7 +12,7 @@ Display recommend word list, when you type search character in input element.
 ## Documentation
 * **API** : https://nhnent.github.io/tui.component.auto-complete/latest
 * **Tutorial** : https://github.com/nhnent/tui.component.auto-complete/wiki/Auto-Complete-Tutorial
-* **Sample** - https://nhnent.github.io/tui.component.auto-complete/latest/tutorial.html
+* **Sample** - https://nhnent.github.io/tui.component.auto-complete/latest/tutorial-sample1.html
 
 ## Sample Image
 ![autocomplete](https://cloud.githubusercontent.com/assets/11814228/8348687/f73f696c-1b50-11e5-88a4-d503fd1c05b6.png)
@@ -24,7 +24,7 @@ Display recommend word list, when you type search character in input element.
 
 ## Test environment
 * PC
-	* IE7~11
+	* IE8~11
 	* Chrome
 	* Firefox
 
