@@ -1,6 +1,6 @@
 /**
  * @fileoverview Data is kind of manager module to request data at API with input queries.
- * @author NHN Entertainment FE dev team. <dl_javascript@nhnent.com>
+ * @author NHN Entertainment FE dev Lab. <dl_javascript@nhnent.com>
  */
 'use strict';
 
@@ -14,6 +14,7 @@ var forEach = tui.util.forEach,
 
 /**
  * Unit of auto complete connecting server.
+ * @ignore
  * @constructor
  */
 var Data = tui.util.defineClass(/**@lends Data.prototype */{

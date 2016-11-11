@@ -1,1 +1,3 @@
-tui.util.defineNamespace('tui.component.AutoComplete', require('./src/js/autoComplete'), true);
+tui.util.defineNamespace('tui.component',{
+    AutoComplete: require('./src/js/autoComplete')
+});
