@@ -2,15 +2,14 @@
  * @fileOverview Input is kind of manager module to support input element events and all of input functions.
  * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
  */
-'use strict';
-var util = tui.util;
+var snippet = require('tui-code-snippet');
 
 /**
  * Unit of auto complete component that belong with input element.
  * @ignore
  * @constructor
  */
-var Input = tui.util.defineClass(/**@lends Input.prototype */{
+var Input = snippet.defineClass(/** @lends Input.prototype */{
     /**
      * keyboard Input KeyCode enum
      */
@@ -68,11 +67,11 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {number|string} index The index for subQuerySet in config
      */
     setParams: function(subQueryValues, index) {
-        if (subQueryValues && tui.util.isString(subQueryValues)) {
+        if (subQueryValues && snippet.isString(subQueryValues)) {
             subQueryValues = subQueryValues.split(',');
         }
 
-        if ((!subQueryValues || tui.util.isEmpty(subQueryValues))) {
+        if ((!subQueryValues || snippet.isEmpty(subQueryValues))) {
             return;
         }
         this._createParamSetByType(subQueryValues, index);
@@ -96,8 +95,9 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             this._createParamContainer();
         }
 
-        util.forEach(subQueryValues, function(value, idx) {
+        snippet.forEach(subQueryValues, function(value, idx) {
             var key = subQueryKeys[idx];
+
             this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
         }, this);
 
@@ -115,8 +115,9 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
         }
 
         staticParams = staticParams.split(',');
-        util.forEach(staticParams, function(value) {
+        snippet.forEach(staticParams, function(value) {
             var val = value.split('=');
+
             this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
         }, this);
     },
@@ -136,7 +137,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {Boolean} isUse 자동완성 사용 여부
      */
     setToggleBtnImg: function(isUse) {
-        if (!this.options.toggleImg || util.isEmpty(this.$toggleBtn)) {
+        if (!this.options.toggleImg || snippet.isEmpty(this.$toggleBtn)) {
             return;
         }
 
@@ -159,7 +160,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             click: $.proxy(this._onClick, this)
         });
 
-        if (!util.isEmpty(this.$toggleBtn)) {
+        if (!snippet.isEmpty(this.$toggleBtn)) {
             this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
         }
     },
@@ -180,7 +181,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @returns {boolean} False if no input-keyword or not use auto-complete
      */
     _onClick: function(event) {
-        //입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
+        // 입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
         if (!this.autoCompleteObj.getValue() ||
             !this.autoCompleteObj.isUseAutoComplete()) {
             return false;
@@ -190,6 +191,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             this.autoCompleteObj.showResultList();
         }
         event.stopPropagation();
+
         return true;
     },
 
@@ -198,7 +200,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @private
      */
     _onFocus: function() {
-        //setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
+        // setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
         this.intervalId = setInterval(
             $.proxy(this._onWatch, this),
             this.options.watchInterval
@@ -216,6 +218,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             this.autoCompleteObj.hideResultList();
             this.prevValue = '';
             this._setOrgQuery('');
+
             return;
         }
 
@@ -264,7 +267,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      * @param {Event} event keyDown Event instance
      * @private
      */
-    /*eslint-disable complexity*/
+    /* eslint-disable complexity */
     _onKeyDown: function(event) {
         var acObj = this.autoCompleteObj,
             flow, codeMap, flowMap;
@@ -300,7 +303,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
             this.isKeyMoving = false;
         }
     },
-    /*eslint-enable complexity*/
+    /* eslint-enable complexity */
 
     /**
      * Toggle button click event handler
@@ -309,6 +312,7 @@ var Input = tui.util.defineClass(/**@lends Input.prototype */{
      */
     _onClickToggle: function(event) {
         var curValue = this.getValue();
+
         event.stopPropagation();
 
         if (!this.autoCompleteObj.isUseAutoComplete()) {

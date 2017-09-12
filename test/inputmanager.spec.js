@@ -1,7 +1,5 @@
-'use strict';
 
-var AutoComplete = require('../src/js/autoComplete'),
-    InputManager = require('../src/js/manager/input');
+var AutoComplete = require('../src/js/autoComplete');
 
 describe('InputManager', function() {
     var im1,
@@ -9,6 +7,7 @@ describe('InputManager', function() {
 
     beforeEach(function() {
         var autocom;
+
         loadFixtures('expand.html');
 
         autocom = new AutoComplete({
@@ -69,7 +68,7 @@ describe('InputManager', function() {
     it('검색창 클릭시 리스트 영역 동작.', function() {
         var autocon = im1.autoCompleteObj,
             eventMock = {
-                stopPropagation: function(){}
+                stopPropagation: function() {}
             };
 
         spyOn(autocon, 'showResultList');
@@ -80,13 +79,12 @@ describe('InputManager', function() {
         im1._onClick(eventMock);
         expect(autocon.showResultList).toHaveBeenCalled();
 
-        autocon.resultManager.$resultList.css({ //Modify: (v1.1.2) Do not hide
+        autocon.resultManager.$resultList.css({ // Modify: (v1.1.2) Do not hide
             display: 'block'
         });
         im1._onClick(eventMock);
         expect(autocon.showResultList).toHaveBeenCalled();
     });
-
 
     it('자동완성 목록 사용하지 않을 경우 동작하지 않음.', function() {
         var autocon = im1.autoCompleteObj;
@@ -117,7 +115,6 @@ describe('InputManager', function() {
         }, 500);
     });
 
-
     it('onWatch', function() {
         spyOn(im1, '_onChange');
 
@@ -130,7 +127,7 @@ describe('InputManager', function() {
         expect(im1._onChange).toHaveBeenCalled();
     });
 
-    it('onWatch runned with resultManger moved flag', function () {
+    it('onWatch runned with resultManger moved flag', function() {
         spyOn(im1, '_onChange');
 
         im1.$searchBox.val('asdf');
@@ -146,6 +143,7 @@ describe('InputManager', function() {
 
     it('_onKeyDown with up key', function() {
         var autocon = im1.autoCompleteObj;
+
         autocon.isUse = true;
         autocon.resultManager.$resultList.css({
             display: 'block'
@@ -162,6 +160,7 @@ describe('InputManager', function() {
 
     it('_onKeyDown with down key', function() {
         var autocon = im1.autoCompleteObj;
+
         autocon.isUse = true;
         autocon.resultManager.$resultList.css({
             display: 'block'
@@ -178,6 +177,7 @@ describe('InputManager', function() {
 
     it('_onKeyDown with tab key', function() {
         var autocon = im1.autoCompleteObj;
+
         autocon.isUse = true;
         autocon.resultManager.$resultList.css({
             display: 'block'
@@ -197,6 +197,7 @@ describe('InputManager', function() {
 
     it('_onKeyDown with other key', function() {
         var autocon = im1.autoCompleteObj;
+
         autocon.isUse = true;
         autocon.resultManager.$resultList.css({
             display: 'block'
@@ -213,6 +214,7 @@ describe('InputManager', function() {
 
     it('_onKeyDown with down key, but not show resultList', function() {
         var autocon = im1.autoCompleteObj;
+
         autocon.isUse = true;
         autocon.resultManager.$resultList.css({
             display: 'none'
@@ -238,7 +240,5 @@ describe('InputManager', function() {
         im1._onClickToggle(eventMock);
 
         expect(autocon.isUse).toBe(false);
-
     });
-
 });

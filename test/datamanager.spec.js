@@ -1,4 +1,4 @@
-'use strict';
+
 var AutoComplete = require('../src/js/autoComplete'),
     DataManager = require('../src/js/manager/data');
 
@@ -8,6 +8,7 @@ describe('DataManager 생성 및 테스트', function() {
 
     beforeEach(function() {
         var ac;
+
         loadFixtures('expand.html');
         ac = new AutoComplete({
             config: global.Plane

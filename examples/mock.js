@@ -1,4 +1,4 @@
-var mock = {
+dataCallback({
     'collections': [
         {
             'index': 0,
@@ -54,36 +54,5 @@ var mock = {
     ],
     'query': ['s'],
     'ver': '1.0'
-};
-var nMock = {
-    'collections': [
-        {
-            'index': 0,
-            'items': [
-            ],
-            'title': 'Category',
-            'type': 'department'
-        },
-        {
-            'index': 1,
-            'items': [
-            ],
-            'title': 'Product in Category',
-            'type': 'srch_in_department'
-        },
-        {
-            'index': 2,
-            'items': [
-            ],
-            'title': 'Product',
-            'type': 'srch'
-        }
-    ],
-    'query': ['s'],
-    'ver': '1.0'
-};
-
-module.exports = {
-    mock: mock,
-    'n_mock': nMock
-};
+}
+);

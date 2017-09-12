@@ -2,16 +2,16 @@
  * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
  * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
  */
-'use strict';
+var snippet = require('tui-code-snippet');
 var DEFAULT_VIEW_COUNT = 10,
     WHITE_SPACES = '[\\s]*';
 
-var isEmpty = tui.util.isEmpty,
-    forEach = tui.util.forEach,
-    map = tui.util.map;
+var isEmpty = snippet.isEmpty,
+    forEach = snippet.forEach,
+    map = snippet.map;
 
 var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
-    rWhiteSpace = '/\s+/g';
+    rWhiteSpace = '/s+/g';
 
 /**
  * Unit of auto complete that belong with search result list.
@@ -20,7 +20,7 @@ var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
  * @ignore
  * @constructor
  */
-var Result = tui.util.defineClass(/** @lends Result.prototype */{
+var Result = snippet.defineClass(/** @lends Result.prototype */{
     init: function(autoCompleteObj, options) {
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
@@ -106,8 +106,9 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         var tmplValue = {},
             values = data.values || null;
 
-        if (tui.util.isString(data)) {
+        if (snippet.isString(data)) {
             tmplValue[attrs[0]] = data;
+
             return tmplValue;
         }
 
@@ -187,7 +188,6 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         }
     },
 
-
     /**
      * Attach auto complete event belongs with result list
      * @private
@@ -217,7 +217,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
-        tui.util.forEach(dataObj, function(value, key) {
+        snippet.forEach(dataObj, function(value, key) {
             if (key === 'subject') {
                 value = this._highlight(value);
             }
@@ -239,12 +239,13 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
         var queries = this.autoCompleteObj.queries,
             returnStr;
 
-        tui.util.forEach(queries, function(query) {
+        snippet.forEach(queries, function(query) {
             if (!returnStr) {
                 returnStr = text;
             }
             returnStr = this._makeStrong(returnStr, query);
         }, this);
+
         return returnStr || text;
     },
 
@@ -267,6 +268,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
             if (rIsSpeicalCharacters.test(char)) {
                 return '\\' + char;
             }
+
             return char;
         });
         regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
@@ -325,9 +327,11 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
 
         if (type === this.flowMap.NEXT) {
             $order = $selectedElement.next();
+
             return $order.length ? $order : this._getFirst();
         }
         $order = $selectedElement.prev();
+
         return $order.length ? $order : this._getLast();
     },
 
@@ -337,6 +341,7 @@ var Result = tui.util.defineClass(/** @lends Result.prototype */{
      */
     _useAutoComplete: function() {
         var isUse = this.autoCompleteObj.isUseAutoComplete();
+
         this.changeOnOffText(isUse);
         this.autoCompleteObj.setCookieValue(isUse);
     },
