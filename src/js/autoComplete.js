@@ -3,8 +3,9 @@
  * @version 1.1.2
  * @author NHN Entertainment FE Dev Team. <dl_javascript@nhnent.com>
 */
-'use strict';
-
+var snippet = require('tui-code-snippet');
+var Cookies = require('js-cookie');
+var $ = require('jquery');
 var DataManager = require('./manager/data'),
     InputManager = require('./manager/input'),
     ResultManager = require('./manager/result');
@@ -27,11 +28,12 @@ var requiredOptions = [
 /**
  * @constructor
  * @param {Object} options
- * @example
- *  var autoCompleteObj = new tui.component.AutoComplete({
- *     "config" : "Default"    // Dataset in autoConfig.js
- *  });
- * @example
+ * @example <caption>CommonJS</caption>
+ * var AutoComplete = require('tui-auto-complete');
+ * var autoComplete = new AutoComplete({'config': 'Default'});
+ * @example <caption>Global Namespace</caption>
+ * var autoComplete = new tui.AutoComplete({"config" : "Default"}); 
+ * @example <caption>Example of Configuration Object</caption>
  *  // The form of config file "autoConfig.js"
  *  var Default = {
  *      // Result element
@@ -162,7 +164,7 @@ var requiredOptions = [
  *      }
  *  }
  */
-var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
+var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
     init: function(options) {
         this.options = {};
         this.isUse = true;
@@ -205,14 +207,14 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @private
      */
     _checkValidation: function(options) {
-        var isExisty = tui.util.isExisty,
+        var isExisty = snippet.isExisty,
             config = options.config;
 
         if (!isExisty(config)) {
             throw new Error('No configuration #' + config);
         }
 
-        tui.util.forEach(requiredOptions, function(name) {
+        snippet.forEach(requiredOptions, function(name) {
             if (!isExisty(config[name])) {
                 throw new Error(name + 'does not not exist.');
             }
@@ -232,16 +234,16 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
             this.isUse = true;
             delete config.onoffTextElement;
         } else {
-            cookieValue = $.cookie(config.cookieName);
+            cookieValue = Cookies.get(config.cookieName);
             this.isUse = (cookieValue === 'use' || !cookieValue);
         }
         config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
 
-        if (tui.util.isFalsy(config.watchInterval)) {
+        if (snippet.isFalsy(config.watchInterval)) {
             config.watchInterval = this.watchInterval;
         }
 
-        tui.util.forEach(config, function(value, name) {
+        snippet.forEach(config, function(value, name) {
             if (rIsElementOption.test(name)) {
                 this.options[name] = $(value);
             } else {
@@ -296,7 +298,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      * @param {Boolean} isUse Whether use auto complete or not
      */
     setCookieValue: function(isUse) {
-        $.cookie(this.options.cookieName, isUse ? 'use' : 'notUse');
+        Cookies.set(this.options.cookieName, isUse ? 'use' : 'notUse');
         this.isUse = isUse;
         this.setToggleBtnImg(isUse);
     },
@@ -385,14 +387,14 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
      *  });
      */
     setSearchApi: function(options) {
-        tui.util.extend(this.options.searchApi, options);
+        snippet.extend(this.options.searchApi, options);
     },
 
     /**
      * clear ready value and set idle state
      */
     clearReadyValue: function() {
-        if (tui.util.isExisty(this.readyValue)) {
+        if (snippet.isExisty(this.readyValue)) {
             this.request(this.readyValue);
         } else {
             this.isIdle = true;
@@ -400,5 +402,7 @@ var AutoComplete = tui.util.defineClass(/**@lends AutoComplete.prototype */{
         this.readyValue = null;
     }
 });
-tui.util.CustomEvents.mixin(AutoComplete);
+
+snippet.CustomEvents.mixin(AutoComplete);
+
 module.exports = AutoComplete;

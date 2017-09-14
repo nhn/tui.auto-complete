@@ -1,4 +1,4 @@
-'use strict';
+
 var AutoComplete = require('../src/js/autoComplete');
 
 describe('ResultManager', function() {
@@ -7,6 +7,7 @@ describe('ResultManager', function() {
 
     beforeEach(function() {
         var ac;
+
         loadFixtures('expand.html');
         ac = new AutoComplete({
             config: global.Default
@@ -31,7 +32,6 @@ describe('ResultManager', function() {
 
         rm1.draw(data);
         expect(autocon.isShowResultList()).toBeTruthy();
-
     });
 
     it('draw data with no Title', function() {

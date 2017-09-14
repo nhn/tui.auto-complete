@@ -2,22 +2,22 @@
  * @fileoverview Data is kind of manager module to request data at API with input queries.
  * @author NHN Entertainment FE dev Lab. <dl_javascript@nhnent.com>
  */
-'use strict';
-
+var snippet = require('tui-code-snippet');
+var $ = require('jquery');
 var CALLBACK_NAME = 'dataCallback',
     SERACH_QUERY_IDENTIFIER = 'q';
 
-var forEach = tui.util.forEach,
-    map = tui.util.map,
-    isEmpty = tui.util.isEmpty,
-    extend = tui.util.extend;
+var forEach = snippet.forEach,
+    map = snippet.map,
+    isEmpty = snippet.isEmpty,
+    extend = snippet.extend;
 
 /**
  * Unit of auto complete connecting server.
  * @ignore
  * @constructor
  */
-var Data = tui.util.defineClass(/**@lends Data.prototype */{
+var Data = snippet.defineClass(/** @lends Data.prototype */{
     init: function(autoCompleteObj, options) {
         this.autoCompleteObj = autoCompleteObj;
         this.options = options;
@@ -34,6 +34,7 @@ var Data = tui.util.defineClass(/**@lends Data.prototype */{
 
         if (!keyword || !rsKeyWrod) {
             acObj.hideResultList();
+
             return;
         }
 

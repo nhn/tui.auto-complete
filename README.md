@@ -1,5 +1,5 @@
-Auto Complete
-===============
+# Auto Complete
+
 Search keyword auto complete component.<br>
 Display recommend word list, when you type search character in input element.
 
@@ -10,33 +10,70 @@ Display recommend word list, when you type search character in input element.
 * Submit by click result element or type enter key
 
 ## Documentation
-* **API** : https://nhnent.github.io/tui.component.auto-complete/latest
-* **Tutorial** : https://github.com/nhnent/tui.component.auto-complete/wiki/Auto-Complete-Tutorial
-* **Sample** - https://nhnent.github.io/tui.component.auto-complete/latest/tutorial-sample1.html
+* **API** : [https://nhnent.github.io/tui.auto-complete/latest](https://nhnent.github.io/tui.auto-complete/latest)
+* **Tutorial** : [https://github.com/nhnent/tui.auto-complete/wiki](https://github.com/nhnent/tui.auto-complete/wiki)
+* **Sample** - [https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic-usage.html](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic-usage.html)
 
 ## Sample Image
 ![autocomplete](https://cloud.githubusercontent.com/assets/11814228/8348687/f73f696c-1b50-11e5-88a4-d503fd1c05b6.png)
 
 ## Dependency
-* jquery: ~1.8.3
-* js-cookie: ~1.2.0
-* tui-code-snippet: ~1.2.0
+* [jquery](https://github.com/jquery/jquery): ^1.11.0
+* [js-cookie](https://github.com/js-cookie/js-cookie): ^1.2.0
+* [tui-code-snippet](https://github.com/nhnent/tui-code-snippet): ^1.2.5
 
 ## Test environment
-* PC
-	* IE8~11
-	* Chrome
-	* Firefox
+### PC
+* IE 8~11
+* Edge
+* Chrome
+* Firefox
+* Safari
 
-## Download/Install
-* Bower:
-   * latest : `bower install tui-component-auto-complete`
-   * each version : `bower install tui-component-auto-complete[#tag]`
-* Download: https://github.com/nhnent/tui.component.auto-complete
+## Usage
+### Use `npm`
 
-## LICENSE
-[MIT LICENSE](LICENSE)
+Install the latest version using `npm` command:
 
-## Sponsor
-* <img src="https://cloud.githubusercontent.com/assets/12269563/12287774/8cf4d2c0-ba12-11e5-9fa8-0a9c452cca05.png" height="30"><br>
- [BrowserStack](https://www.browserstack.com/) is a cloud based cross browser testing tool
+```
+$ npm install tui-auto-complete --save
+```
+
+or want to install the each version:
+
+```
+$ npm install tui-auto-complete@<version> --save
+```
+
+To access as module format in your code:
+
+```javascript
+var AutoComplete = require('tui-auto-complete');
+var instance = new AutoComplete(...);
+```
+
+### Use `bower`
+Install the latest version using `bower` command:
+
+```
+$ bower install tui-auto-complete
+```
+
+or want to install the each version:
+
+```
+$ bower install tui-auto-complete#<tag>
+```
+
+To access as namespace format in your code:
+
+```javascript
+var instance = new tui.AutoComplete(...);
+```
+
+### Download
+* [Download bundle files from `dist` folder](https://github.com/nhnent/tui.auto-complete/tree/production/dist)
+* [Download all sources for each version](https://github.com/nhnent/tui.auto-complete/releases)
+
+## License
+[MIT LICENSE](https://github.com/nhnent/tui.auto-complete/blob/master/LICENSE)
