@@ -1,11 +1,11 @@
 {
-  "sample1": {
+  "example01-basic-usage": {
     "title" : "Basic"
   },
-  "sample2": {
+  "example02-toggle-auto-completion": {
     "title": "On/Off the auto-completion"
   },
-  "sample3": {
+  "example03-dynamic-search-api": {
     "title": "Dynamic searchApi option"
   }
 }
