@@ -3,6 +3,7 @@
  * @author NHN Entertainment FE dev Lab. <dl_javascript@nhnent.com>
  */
 var snippet = require('tui-code-snippet');
+var $ = require('jquery');
 var CALLBACK_NAME = 'dataCallback',
     SERACH_QUERY_IDENTIFIER = 'q';
 

@@ -3,6 +3,7 @@
  * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
  */
 var snippet = require('tui-code-snippet');
+var $ = require('jquery');
 var DEFAULT_VIEW_COUNT = 10,
     WHITE_SPACES = '[\\s]*';
 

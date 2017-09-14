@@ -3,6 +3,7 @@
  * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
  */
 var snippet = require('tui-code-snippet');
+var $ = require('jquery');
 
 /**
  * Unit of auto complete component that belong with input element.

@@ -5,6 +5,7 @@
 */
 var snippet = require('tui-code-snippet');
 var Cookies = require('js-cookie');
+var $ = require('jquery');
 var DataManager = require('./manager/data'),
     InputManager = require('./manager/input'),
     ResultManager = require('./manager/result');

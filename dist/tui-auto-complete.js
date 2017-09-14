@@ -6,14 +6,14 @@
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("tui-code-snippet"), require("js-cookie"));
+		module.exports = factory(require("tui-code-snippet"), require("js-cookie"), require("jquery"));
 	else if(typeof define === 'function' && define.amd)
-		define(["tui-code-snippet", "js-cookie"], factory);
+		define(["tui-code-snippet", "js-cookie", "jquery"], factory);
 	else if(typeof exports === 'object')
-		exports["AutoComplete"] = factory(require("tui-code-snippet"), require("js-cookie"));
+		exports["AutoComplete"] = factory(require("tui-code-snippet"), require("js-cookie"), require("jquery"));
 	else
-		root["tui"] = root["tui"] || {}, root["tui"]["AutoComplete"] = factory((root["tui"] && root["tui"]["util"]), root["Cookies"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+		root["tui"] = root["tui"] || {}, root["tui"]["AutoComplete"] = factory((root["tui"] && root["tui"]["util"]), root["Cookies"], root["$"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -67,9 +67,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	*/
 	var snippet = __webpack_require__(1);
 	var Cookies = __webpack_require__(2);
-	var DataManager = __webpack_require__(3),
-	    InputManager = __webpack_require__(4),
-	    ResultManager = __webpack_require__(5);
+	var $ = __webpack_require__(3);
+	var DataManager = __webpack_require__(4),
+	    InputManager = __webpack_require__(5),
+	    ResultManager = __webpack_require__(6);
 
 	var DEFAULT_COOKIE_NAME = '_atcp_use_cookie';
 
@@ -483,6 +484,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -490,6 +497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @author NHN Entertainment FE dev Lab. <dl_javascript@nhnent.com>
 	 */
 	var snippet = __webpack_require__(1);
+	var $ = __webpack_require__(3);
 	var CALLBACK_NAME = 'dataCallback',
 	    SERACH_QUERY_IDENTIFIER = 'q';
 
@@ -599,7 +607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -607,6 +615,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
 	 */
 	var snippet = __webpack_require__(1);
+	var $ = __webpack_require__(3);
 
 	/**
 	 * Unit of auto complete component that belong with input element.
@@ -942,7 +951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -950,6 +959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
 	 */
 	var snippet = __webpack_require__(1);
+	var $ = __webpack_require__(3);
 	var DEFAULT_VIEW_COUNT = 10,
 	    WHITE_SPACES = '[\\s]*';
 
