@@ -43,8 +43,7 @@
 
 ## 🐾 Examples
 * [Basic](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic.html) : Example using default options.
-* [Toggle autocompletion](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example02-toggle-autocompletion.html) :
-Example of enabling or disabling autocompletion.
+* [Toggle autocompletion](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example02-toggle-autocompletion.html) : Example of enabling or disabling autocompletion.
 
 More examples can be found on the left sidebar of each example page, and have fun with it.
 
