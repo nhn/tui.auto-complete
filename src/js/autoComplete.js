@@ -298,6 +298,7 @@ function sendHostname() {
     if (hostnameSent) {
         return;
     }
+    hostnameSent = true;
 
     snippet.imagePing('https://www.google-analytics.com/collect', {
         v: 1,
@@ -307,7 +308,6 @@ function sendHostname() {
         dp: hostname,
         dh: 'auto-complete'
     });
-    hostnameSent = true;
 }
 
 module.exports = AutoComplete;
