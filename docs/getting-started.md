@@ -1,5 +1,5 @@
 ## Dependencies
-* [tui-code-snippet](https://github.com/nhnent/tui.code-snippet) >=1.2.5
+* [tui-code-snippet](https://github.com/nhnent/tui.code-snippet) >=1.3.0
 * [js-cookie](https://github.com/js-cookie/js-cookie) >=1.2.0 (If use 1.3.0 or more, You need to include the [JSON-js polyfill](https://github.com/douglascrockford/JSON-js))
 * [jquery](https://github.com/jquery/jquery) >=1.11.0
 

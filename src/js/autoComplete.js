@@ -25,9 +25,12 @@ var requiredOptions = [
     ],
     rIsElementOption = /element/i;
 
+var hostnameSent = false;
+
 /**
  * @constructor
  * @param {Object} options
+ * @param {Boolean} [options.usageStatistics=true] - Let us know the hostname. If you don't want to send the hostname, please set to false.
  * @example <caption>CommonJS</caption>
  * var AutoComplete = require('tui-auto-complete');
  * var autoComplete = new AutoComplete({'config': 'Default'});
@@ -38,6 +41,10 @@ var requiredOptions = [
  */
 var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
     init: function(options) {
+        options = snippet.extend({
+            usageStatistics: true
+        }, options);
+
         this.options = {};
         this.isUse = true;
         this.queries = null;
@@ -52,6 +59,10 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
 
         this.setToggleBtnImg(this.isUse);
         this.setCookieValue(this.isUse);
+
+        if (options.usageStatistics) {
+            sendHostname();
+        }
     },
 
     /**
@@ -276,5 +287,27 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
 });
 
 snippet.CustomEvents.mixin(AutoComplete);
+
+/**
+ * send hostname
+ * @ignore
+ */
+function sendHostname() {
+    var hostname = location.hostname;
+
+    if (hostnameSent) {
+        return;
+    }
+
+    snippet.imagePing('https://www.google-analytics.com/collect', {
+        v: 1,
+        t: 'event',
+        tid: 'UA-115377265-9',
+        cid: hostname,
+        dp: hostname,
+        dh: 'auto-complete'
+    });
+    hostnameSent = true;
+}
 
 module.exports = AutoComplete;
