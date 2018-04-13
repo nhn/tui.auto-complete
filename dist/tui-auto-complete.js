@@ -1,6 +1,6 @@
 /*!
  * tui-auto-complete.js
- * @version 2.0.0
+ * @version 2.1.0
  * @author NHNEnt FE Development Lab <dl_javascript@nhnent.com>
  * @license MIT
  */
@@ -87,19 +87,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ],
 	    rIsElementOption = /element/i;
 
+	var hostnameSent = false;
+
 	/**
 	 * @constructor
 	 * @param {Object} options
+	 * @param {Boolean} [options.usageStatistics=true] - Let us know the hostname. If you don't want to send the hostname, please set to false.
 	 * @example <caption>CommonJS</caption>
 	 * var AutoComplete = require('tui-auto-complete');
 	 * var autoComplete = new AutoComplete({'config': 'Default'});
 	 * @example <caption>Global Namespace</caption>
-	 * var autoComplete = new tui.AutoComplete({"config" : "Default"}); 
+	 * var autoComplete = new tui.AutoComplete({"config" : "Default"});
 	 * @example <caption>Arguments of AutoComplete Constructor</caption>
 	 * SAMPLE FILE: [AutoConfig.json]{@link http://nhnent.github.io/tui.auto-complete/latest/dist/src/js/autoComplete.js}
 	 */
 	var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
 	    init: function(options) {
+	        options = snippet.extend({
+	            usageStatistics: true
+	        }, options);
+
 	        this.options = {};
 	        this.isUse = true;
 	        this.queries = null;
@@ -114,6 +121,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.setToggleBtnImg(this.isUse);
 	        this.setCookieValue(this.isUse);
+
+	        if (options.usageStatistics) {
+	            sendHostname();
+	        }
 	    },
 
 	    /**
@@ -338,6 +349,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	snippet.CustomEvents.mixin(AutoComplete);
+
+	/**
+	 * send hostname
+	 * @ignore
+	 */
+	function sendHostname() {
+	    var hostname = location.hostname;
+
+	    if (hostnameSent) {
+	        return;
+	    }
+	    hostnameSent = true;
+
+	    snippet.imagePing('https://www.google-analytics.com/collect', {
+	        v: 1,
+	        t: 'event',
+	        tid: 'UA-115377265-9',
+	        cid: hostname,
+	        dp: hostname,
+	        dh: 'auto-complete'
+	    });
+	}
 
 	module.exports = AutoComplete;
 
