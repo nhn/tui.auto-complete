@@ -92,7 +92,7 @@ tui-auto-complete/
 ├─ latest/
 │  ├─ tui-auto-complete.js
 │  └─ tui-auto-complete.min.js
-├─ v3.3.0/
+├─ v2.1.0/
 │  ├─ ...
 ```
 
