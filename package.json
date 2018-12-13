@@ -1,6 +1,6 @@
 {
   "name": "tui-auto-complete",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/tui-auto-complete",
   "description": "TOAST UI Component: AutoComplete",
   "devDependencies": {
@@ -23,6 +23,7 @@
     "karma-webpack": "^1.8.0",
     "safe-umd-webpack-plugin": "0.0.2",
     "tui-jsdoc-template": "^1.1.0",
+    "tui-release-notes": "github:nhnent/tui.release-notes#v1.0.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.11.0"
   },
@@ -38,7 +39,8 @@
     "serve": "webpack-dev-server --inline --hot -d",
     "serve:ie8": "webpack-dev-server -d",
     "cpy-dist2doc": "mkdir -p doc/dist && cp -f -r dist doc",
-    "doc": "jsdoc -c jsdoc.conf.json && npm run cpy-dist2doc"
+    "doc": "jsdoc -c jsdoc.conf.json && npm run cpy-dist2doc",
+    "note": "tuie --tag=$(git describe --tags)"
   },
   "author": "NHNEnt FE Development Lab <dl_javascript@nhnent.com>",
   "license": "MIT",
