@@ -1,6 +1,6 @@
 /*!
  * tui-auto-complete.js
- * @version 2.1.1
+ * @version 2.1.2
  * @author NHNEnt FE Development Lab <dl_javascript@nhnent.com>
  * @license MIT
  */
@@ -87,8 +87,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ],
 	    rIsElementOption = /element/i;
 
-	var hostnameSent = false;
-
 	/**
 	 * @constructor
 	 * @param {Object} options
@@ -123,7 +121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.setCookieValue(this.isUse);
 
 	        if (options.usageStatistics) {
-	            sendHostname();
+	            snippet.sendHostname('auto-complete', 'UA-129987462-1');
 	        }
 	    },
 
@@ -349,28 +347,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	snippet.CustomEvents.mixin(AutoComplete);
-
-	/**
-	 * send hostname
-	 * @ignore
-	 */
-	function sendHostname() {
-	    var hostname = location.hostname;
-
-	    if (hostnameSent) {
-	        return;
-	    }
-	    hostnameSent = true;
-
-	    snippet.imagePing('https://www.google-analytics.com/collect', {
-	        v: 1,
-	        t: 'event',
-	        tid: 'UA-115377265-9',
-	        cid: hostname,
-	        dp: hostname,
-	        dh: 'auto-complete'
-	    });
-	}
 
 	module.exports = AutoComplete;
 
