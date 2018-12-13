@@ -86,26 +86,24 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         });
     });
 
-    // hostnameSent module scope variable can not be reset.
-    // maintain cases with xit as it always fail, if you want to test these cases, change xit to fit one by one
     describe('usageStatistics', function() {
         beforeEach(function() {
-            spyOn(snippet, 'imagePing');
+            spyOn(snippet, 'sendHostname');
         });
 
-        xit('should send hostname by default', function() {
+        it('should send hostname by default', function() {
             autoComplete = new AutoComplete({'config': global.Default});
 
-            expect(snippet.imagePing).toHaveBeenCalled();
+            expect(snippet.sendHostname).toHaveBeenCalled();
         });
 
-        xit('should not send hostname on usageStatistics option false', function() {
+        it('should not send hostname on usageStatistics option false', function() {
             autoComplete = new AutoComplete({
                 'config': global.Default,
                 usageStatistics: false
             });
 
-            expect(snippet.imagePing).not.toHaveBeenCalled();
+            expect(snippet.sendHostname).not.toHaveBeenCalled();
         });
     });
 });

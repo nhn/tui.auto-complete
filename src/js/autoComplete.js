@@ -25,8 +25,6 @@ var requiredOptions = [
     ],
     rIsElementOption = /element/i;
 
-var hostnameSent = false;
-
 /**
  * @constructor
  * @param {Object} options
@@ -61,7 +59,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
         this.setCookieValue(this.isUse);
 
         if (options.usageStatistics) {
-            sendHostname();
+            snippet.sendHostname('auto-complete', 'UA-129987462-1');
         }
     },
 
@@ -287,27 +285,5 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
 });
 
 snippet.CustomEvents.mixin(AutoComplete);
-
-/**
- * send hostname
- * @ignore
- */
-function sendHostname() {
-    var hostname = location.hostname;
-
-    if (hostnameSent) {
-        return;
-    }
-    hostnameSent = true;
-
-    snippet.imagePing('https://www.google-analytics.com/collect', {
-        v: 1,
-        t: 'event',
-        tid: 'UA-115377265-9',
-        cid: hostname,
-        dp: hostname,
-        dh: 'auto-complete'
-    });
-}
 
 module.exports = AutoComplete;
