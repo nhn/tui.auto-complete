@@ -1,6 +1,6 @@
 /*!
  * tui-auto-complete.js
- * @version 2.1.0
+ * @version 2.1.1
  * @author NHNEnt FE Development Lab <dl_javascript@nhnent.com>
  * @license MIT
  */
