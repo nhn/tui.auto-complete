@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <title>3. Dynamic search</title>
+    <style>
+        #select-search-target {margin:30px 0 0 50px;position:absolute;}
+    </style>
+</head>
+<body style="height:500px;width:1000px;">
+<div class="sampleWarp code-html">
+    <select id="select-search-target">
+        <option value="0">All Categories</option>
+        <option value="1">Women</option>
+        <option value="2">Men</option>
+        <option value="3">Children</option>
+        <option value="4">Shoes</option>
+    </select>
+    <div class="formWrap">
+        <!-- Form tag -->
+        <form id="ac_form1" method="get" action="http://www.popshoes.co.kr/app/product/search" onsubmit="">
+            <!-- Searchbox -->
+            <div class="inputBox">
+                <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
+                <img class="onoff" id="onoffBtn" src="img/btn_on.jpg" width="21" height="21">
+                <input type="hidden" id="org_query" name="org_query">
+            </div>
+
+            <!-- Search result -->
+            <div class="suggestBox" id="ac_view1" style="width:269px;">
+                <div class="baseBox">
+                    <ul class="_resultBox" style="display:none;">
+                        <li><a href="#" onclick="return false;" title="">@txt@</a></li>
+                    </ul>
+                    <p id="onofftext" class="bottom" style="display:none;">Off the auto-completion</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/1.5.1/js.cookie.min.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/v1.3.0/tui-code-snippet.min.js"></script>
+<script type="text/javascript" src="autoConfig.js"></script>
+<script type="text/javascript" src="../dist/tui-auto-complete.js"></script>
+<script class="code-js">
+    // See the "examples/autoConfig.js" having configurations
+
+    var autoComp = new tui.AutoComplete({"config" : Default}),
+        select = $('#select-search-target'),
+        state = {
+            "0": {
+                st: 1111,
+                r_lt: 1111
+            },
+            "1": {
+                st: 11111,
+                r_lt: 11111
+            },
+            "2": {
+                st: 110,
+                r_lt: 110
+            },
+            "3": {
+                st: 111,
+                r_lt: 101
+            },
+            "4": {
+                st: 1,
+                r_lt: 1
+            }
+        };
+
+    // When click the select, change the searchApi option
+    select.change(function(e) {
+        var value = e.target.value;
+        autoComp.setSearchApi(state[value]);
+    });
+</script>
+</body>
+</html>

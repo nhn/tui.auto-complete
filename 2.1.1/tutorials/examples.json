@@ -1,0 +1,11 @@
+{
+  "example01-basic": {
+    "title" : "1. Basic"
+  },
+  "example02-toggle-autocompletion": {
+    "title": "2. Toggle auto completion"
+  },
+  "example03-dynamic-search": {
+    "title": "3. Dynamic search"
+  }
+}
