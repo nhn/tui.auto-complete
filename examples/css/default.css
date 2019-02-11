@@ -1,10 +1,4 @@
 @charset "utf-8";
-* {
-    padding: 0;
-    margin: 0;
-}
-a {color:#262626;text-decoration:none}
-a:active {background-color:transparent}
 
 /* inputBox */
 .inputBox {position:absolute;top:1px;left:0;width:200px;padding:1px 1px 1px 1px;}
@@ -26,10 +20,10 @@ a:active {background-color:transparent}
 .suggestBox .baseBox li.title {color:#0000ff;}
 
 .sampleWarp, .link {height:500px; }
-.sampleWarp {width:500px; float:left; border:1px solid #eee; }
+.sampleWarp {width:500px; float:left; }
 .sampleWarp .formWrap { margin-left:50px; position:relative; margin-top:50px;}
 .sampleWarp form {margin:0 auto; display: block;}
-.link { width:400px; float:left; margin-left: 15px; border:1px solid #eee; text-align:center; }
+.link { width:400px; float:left; margin-left: 15px; text-align:center; }
 .link ul {margin:60px auto;}
 .link li {font-size:12px; text-decoration: underline;display:block;}
 .link h4 {display:block; margin:60px auto;}

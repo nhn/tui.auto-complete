@@ -304,16 +304,17 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _orderStage: function(type) {
-        var flowMap = this.flowMap,
-            $children = this.$resultList.children();
+        var flowMap = this.flowMap;
+        var $children = this.$resultList.children();
+        var reuslt = null;
 
         if (type === flowMap.FIRST) {
-            return $children.first();
+            reuslt = $children.first();
         } else if (type === flowMap.LAST) {
-            return $children.last();
+            reuslt = $children.last();
         }
 
-        return null;
+        return reuslt;
     },
 
     /**
