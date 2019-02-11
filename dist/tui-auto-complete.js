@@ -1,6 +1,6 @@
 /*!
  * tui-auto-complete.js
- * @version 2.1.2
+ * @version 2.1.3
  * @author NHNEnt FE Development Lab <dl_javascript@nhnent.com>
  * @license MIT
  */
@@ -1141,16 +1141,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @private
 	     */
 	    _orderStage: function(type) {
-	        var flowMap = this.flowMap,
-	            $children = this.$resultList.children();
+	        var flowMap = this.flowMap;
+	        var $children = this.$resultList.children();
+	        var reuslt = null;
 
 	        if (type === flowMap.FIRST) {
-	            return $children.first();
+	            reuslt = $children.first();
 	        } else if (type === flowMap.LAST) {
-	            return $children.last();
+	            reuslt = $children.last();
 	        }
 
-	        return null;
+	        return reuslt;
 	    },
 
 	    /**
