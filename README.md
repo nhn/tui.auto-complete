@@ -62,8 +62,8 @@ tui.usageStatistics = false;
 
 
 ## 🐾 Examples
-* [Basic](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic.html) : Example using default options.
-* [Toggle autocompletion](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example02-toggle-autocompletion.html) : Example of enabling or disabling autocompletion.
+* [Basic](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic) : Example using default options.
+* [Toggle autocompletion](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example02-toggle-autocompletion) : Example of enabling or disabling autocompletion.
 
 More examples can be found on the left sidebar of each example page, and have fun with it.
 
@@ -126,7 +126,7 @@ tui-auto-complete/
 ### HTML
 
 Add the container element to create the component as an option.
-See [here](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic.html#) for information about the added element.
+See [here](https://nhnent.github.io/tui.auto-complete/latest/tutorial-example01-basic) for information about the added element.
 
 
 ### JavaScript
@@ -156,7 +156,7 @@ var instance = new AutoComplete({ ... });
 instance.getValue();
 ```
 
-For more information about the API, please see [here](http://nhnent.github.io/tui.auto-complete/latest/AutoComplete.html).
+For more information about the API, please see [here](http://nhnent.github.io/tui.auto-complete/latest/AutoComplete).
 
 
 ## 🔧 Pull Request Steps
