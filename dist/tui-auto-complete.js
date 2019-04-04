@@ -1,7 +1,7 @@
 /*!
  * tui-auto-complete.js
- * @version 2.1.3
- * @author NHNEnt FE Development Lab <dl_javascript@nhnent.com>
+ * @version 2.1.4
+ * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -62,8 +62,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
-	 * @version 1.1.2
-	 * @author NHN Entertainment FE Dev Team. <dl_javascript@nhnent.com>
+	 * @author NHN FE Dev Lab. <dl_javascript@nhn.com>
 	*/
 	var snippet = __webpack_require__(1);
 	var Cookies = __webpack_require__(2);
@@ -375,7 +374,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * @fileoverview Data is kind of manager module to request data at API with input queries.
-	 * @author NHN Entertainment FE dev Lab. <dl_javascript@nhnent.com>
+	 * @author NHN FE dev Lab. <dl_javascript@nhn.com>
 	 */
 	var snippet = __webpack_require__(1);
 	var $ = __webpack_require__(3);
@@ -493,7 +492,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * @fileOverview Input is kind of manager module to support input element events and all of input functions.
-	 * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
+	 * @author NHN FE dev Lab <dl_javascript@nhn.com>
 	 */
 	var snippet = __webpack_require__(1);
 	var $ = __webpack_require__(3);
@@ -837,7 +836,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
-	 * @author  NHN entertainment FE dev team<dl_javascript@nhnent.com>
+	 * @author  NHN FE dev Lab<dl_javascript@nhn.com>
 	 */
 	var snippet = __webpack_require__(1);
 	var $ = __webpack_require__(3);
