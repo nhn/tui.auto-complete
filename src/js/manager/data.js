@@ -1,6 +1,6 @@
 /**
  * @fileoverview Data is kind of manager module to request data at API with input queries.
- * @author NHN Entertainment FE dev Lab. <dl_javascript@nhnent.com>
+ * @author NHN FE dev Lab. <dl_javascript@nhn.com>
  */
 var snippet = require('tui-code-snippet');
 var $ = require('jquery');

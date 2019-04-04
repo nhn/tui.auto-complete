@@ -1,6 +1,6 @@
 /**
  * @fileOverview Input is kind of manager module to support input element events and all of input functions.
- * @author NHN Entertainment FE dev team <dl_javascript@nhnent.com>
+ * @author NHN FE dev Lab <dl_javascript@nhn.com>
  */
 var snippet = require('tui-code-snippet');
 var $ = require('jquery');
