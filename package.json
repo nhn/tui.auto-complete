@@ -43,13 +43,14 @@
     "doc": "tuidoc",
     "note": "tuie --tag=$(git describe --tags)"
   },
-  "author": "NHNEnt FE Development Lab <dl_javascript@nhnent.com>",
+  "author": "NHN FE Development Lab <dl_javascript@nhn.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/nhnent/tui.auto-complete.git"
   },
   "keywords": [
+    "nhn",
     "nhnent",
     "tui",
     "ui component",
