@@ -34,7 +34,7 @@ var requiredOptions = [
  * @example <caption>Global Namespace</caption>
  * var autoComplete = new tui.AutoComplete({"config" : "Default"});
  * @example <caption>Arguments of AutoComplete Constructor</caption>
- * SAMPLE FILE: [AutoConfig.json]{@link http://nhnent.github.io/tui.auto-complete/latest/dist/src/js/autoComplete.js}
+ * SAMPLE FILE: [AutoConfig.json]{@link https://github.com/nhn/tui.auto-complete/blob/master/src/js/autoComplete.js}
  */
 var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
     init: function(options) {
