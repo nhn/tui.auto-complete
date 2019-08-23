@@ -1,6 +1,6 @@
 {
   "name": "tui-auto-complete",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "TOAST UI Component: AutoComplete",
   "main": "dist/tui-auto-complete",
   "files": [
@@ -12,7 +12,8 @@
     "bundle": "webpack && webpack -p",
     "serve": "webpack-dev-server --inline --hot -d",
     "serve:ie8": "webpack-dev-server -d",
-    "doc": "tuidoc && tuidoc --serv",
+    "doc:serve": "tuidoc --serv",
+    "doc": "tuidoc",
     "note": "tuie --tag=$(git describe --tags)"
   },
   "repository": {
