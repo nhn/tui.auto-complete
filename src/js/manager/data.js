@@ -5,22 +5,23 @@
 var snippet = require('tui-code-snippet');
 var $ = require('jquery');
 var CALLBACK_NAME = 'dataCallback',
-    SERACH_QUERY_IDENTIFIER = 'q';
+  SERACH_QUERY_IDENTIFIER = 'q';
 
 var forEach = snippet.forEach,
-    map = snippet.map,
-    isEmpty = snippet.isEmpty,
-    extend = snippet.extend;
+  map = snippet.map,
+  isEmpty = snippet.isEmpty,
+  extend = snippet.extend;
 
 /**
  * Unit of auto complete connecting server.
  * @ignore
  * @constructor
  */
-var Data = snippet.defineClass(/** @lends Data.prototype */{
+var Data = snippet.defineClass(
+  /** @lends Data.prototype */ {
     init: function(autoCompleteObj, options) {
-        this.autoCompleteObj = autoCompleteObj;
-        this.options = options;
+      this.autoCompleteObj = autoCompleteObj;
+      this.options = options;
     },
 
     /**
@@ -28,33 +29,33 @@ var Data = snippet.defineClass(/** @lends Data.prototype */{
      * @param {String} keyword String to request at server
      */
     request: function(keyword) {
-        var rsKeyWrod = keyword.replace(/\s/g, ''),
-            acObj = this.autoCompleteObj,
-            keyData;
+      var rsKeyWrod = keyword.replace(/\s/g, ''),
+        acObj = this.autoCompleteObj,
+        keyData;
 
-        if (!keyword || !rsKeyWrod) {
-            acObj.hideResultList();
+      if (!keyword || !rsKeyWrod) {
+        acObj.hideResultList();
 
-            return;
-        }
+        return;
+      }
 
-        this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
-        $.ajax(this.options.searchUrl, {
-            'dataType': 'jsonp',
-            'jsonpCallback': CALLBACK_NAME,
-            'data': this.options.searchApi,
-            'type': 'get',
-            'success': $.proxy(function(dataObj) {
-                try {
-                    keyData = this._getCollectionData(dataObj);
-                    acObj.setQueries(dataObj.query);
-                    acObj.setServerData(keyData);
-                    acObj.clearReadyValue();
-                } catch (e) {
-                    throw new Error('[DataManager] invalid response data.', e);
-                }
-            }, this)
-        });
+      this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
+      $.ajax(this.options.searchUrl, {
+        dataType: 'jsonp',
+        jsonpCallback: CALLBACK_NAME,
+        data: this.options.searchApi,
+        type: 'get',
+        success: $.proxy(function(dataObj) {
+          try {
+            keyData = this._getCollectionData(dataObj);
+            acObj.setQueries(dataObj.query);
+            acObj.setServerData(keyData);
+            acObj.clearReadyValue();
+          } catch (e) {
+            throw new Error('[DataManager] invalid response data.', e);
+          }
+        }, this)
+      });
     },
 
     /**
@@ -64,25 +65,29 @@ var Data = snippet.defineClass(/** @lends Data.prototype */{
      * @private
      */
     _getCollectionData: function(dataObj) {
-        var collection = dataObj.collections,
-            itemDataList = [];
+      var collection = dataObj.collections,
+        itemDataList = [];
 
-        forEach(collection, function(itemSet) {
-            var keys;
+      forEach(
+        collection,
+        function(itemSet) {
+          var keys;
 
-            if (isEmpty(itemSet.items)) {
-                return;
-            }
+          if (isEmpty(itemSet.items)) {
+            return;
+          }
 
-            keys = this._getRedirectData(itemSet);
-            itemDataList.push({
-                type: 'title',
-                values: [itemSet.title]
-            });
-            itemDataList = itemDataList.concat(keys);
-        }, this);
+          keys = this._getRedirectData(itemSet);
+          itemDataList.push({
+            type: 'title',
+            values: [itemSet.title]
+          });
+          itemDataList = itemDataList.concat(keys);
+        },
+        this
+      );
 
-        return itemDataList;
+      return itemDataList;
     },
 
     /**
@@ -92,21 +97,25 @@ var Data = snippet.defineClass(/** @lends Data.prototype */{
      * @returns {Array}
      */
     _getRedirectData: function(itemSet) {
-        var defaultData = {
-                type: itemSet.type,
-                index: itemSet.index,
-                dest: itemSet.destination
-            },
-            items = itemSet.items.slice(0, this.options.viewCount - 1);
+      var defaultData = {
+          type: itemSet.type,
+          index: itemSet.index,
+          dest: itemSet.destination
+        },
+        items = itemSet.items.slice(0, this.options.viewCount - 1);
 
-        items = map(items, function(item) {
-            return extend({
-                values: item
-            }, defaultData);
-        });
+      items = map(items, function(item) {
+        return extend(
+          {
+            values: item
+          },
+          defaultData
+        );
+      });
 
-        return items;
+      return items;
     }
-});
+  }
+);
 
 module.exports = Data;
