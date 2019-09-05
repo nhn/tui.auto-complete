@@ -10,23 +10,16 @@
 
 ## 🚩 Table of Contents
 * [Collect statistics on the use of open source](#collect-statistics-on-the-use-of-open-source)
-* [Browser Support](#-browser-support)
+* [Documents](#-documents)
 * [Features](#-features)
 * [Examples](#-examples)
 * [Install](#-install)
-    * [Via Package Manager](#via-package-manager)
-    * [Via Contents Delivery Network (CDN)](#via-contents-delivery-network-cdn)
-    * [Download Source Files](#download-source-files)
 * [Usage](#-usage)
-    * [HTML](#html)
-    * [JavaScript](#javascript)
-* [Pull Request Steps](#-pull-request-steps)
-    * [Setup](#setup)
-    * [Develop](#develop)
-    * [Pull Request Steps](#pull-request)
-* [Documents](#-documents)
-* [Contributing](#-contributing)
 * [Dependency](#-dependency)
+* [Browser Support](#-browser-support)
+* [Pull Request Steps](#-pull-request-steps)
+* [Contributing](#-contributing)
+* [TOAST UI Family](#-toast-ui-family)
 * [License](#-license)
 
 
@@ -49,10 +42,13 @@ tui.usageStatistics = false;
 ```
 
 
-## 🌏 Browser Support
-| <img src="https://user-images.githubusercontent.com/1215767/34348387-a2e64588-ea4d-11e7-8267-a43365103afe.png" alt="Chrome" width="16px" height="16px" /> Chrome | <img src="https://user-images.githubusercontent.com/1215767/34348590-250b3ca2-ea4f-11e7-9efb-da953359321f.png" alt="IE" width="16px" height="16px" /> Internet Explorer | <img src="https://user-images.githubusercontent.com/1215767/34348380-93e77ae8-ea4d-11e7-8696-9a989ddbbbf5.png" alt="Edge" width="16px" height="16px" /> Edge | <img src="https://user-images.githubusercontent.com/1215767/34348394-a981f892-ea4d-11e7-9156-d128d58386b9.png" alt="Safari" width="16px" height="16px" /> Safari | <img src="https://user-images.githubusercontent.com/1215767/34348383-9e7ed492-ea4d-11e7-910c-03b39d52f496.png" alt="Firefox" width="16px" height="16px" /> Firefox |
-| :---------: | :---------: | :---------: | :---------: | :---------: |
-| Yes | 8+ | Yes | Yes | Yes |
+## 📙 Documents
+* [Getting Started](https://github.com/nhn/tui.auto-complete/blob/production/docs/getting-started.md)
+* [Tutorials](https://github.com/nhn/tui.auto-complete/tree/production/docs)
+* [APIs](https://nhn.github.io/tui.auto-complete/latest)
+
+You can also see the older versions of API page on the [releases page](https://github.com/nhn/tui.auto-complete/releases).
+
 
 ## 🎨 Features
 * Displays suggested words using Ajax with the server API.
@@ -66,7 +62,6 @@ tui.usageStatistics = false;
 * [Toggle autocompletion](https://nhn.github.io/tui.auto-complete/latest/tutorial-example02-toggle-autocompletion) : Example of enabling or disabling autocompletion.
 
 More examples can be found on the left sidebar of each example page, and have fun with it.
-
 
 
 ## 💾 Install
@@ -159,6 +154,18 @@ instance.getValue();
 For more information about the API, please see [here](http://nhn.github.io/tui.auto-complete/latest/AutoComplete).
 
 
+## 🔩 Dependency
+* [tui-code-snippet](https://github.com/nhn/tui.code-snippet) >=1.5.0
+* [js-cookie](https://github.com/js-cookie/js-cookie) >=1.2.0 (If use 1.3.0 or more, You need to include the [JSON-js polyfill](https://github.com/douglascrockford/JSON-js))
+* [jquery](https://github.com/jquery/jquery) >=1.11.0
+
+
+## 🌏 Browser Support
+| <img src="https://user-images.githubusercontent.com/1215767/34348387-a2e64588-ea4d-11e7-8267-a43365103afe.png" alt="Chrome" width="16px" height="16px" /> Chrome | <img src="https://user-images.githubusercontent.com/1215767/34348590-250b3ca2-ea4f-11e7-9efb-da953359321f.png" alt="IE" width="16px" height="16px" /> Internet Explorer | <img src="https://user-images.githubusercontent.com/1215767/34348380-93e77ae8-ea4d-11e7-8696-9a989ddbbbf5.png" alt="Edge" width="16px" height="16px" /> Edge | <img src="https://user-images.githubusercontent.com/1215767/34348394-a981f892-ea4d-11e7-9156-d128d58386b9.png" alt="Safari" width="16px" height="16px" /> Safari | <img src="https://user-images.githubusercontent.com/1215767/34348383-9e7ed492-ea4d-11e7-910c-03b39d52f496.png" alt="Firefox" width="16px" height="16px" /> Firefox |
+| :---------: | :---------: | :---------: | :---------: | :---------: |
+| Yes | 8+ | Yes | Yes | Yes |
+
+
 ## 🔧 Pull Request Steps
 
 TOAST UI products are open source, so you can create a pull request(PR) after you fix issues.
@@ -204,14 +211,6 @@ If it has no error, commit and then push it!
 For more information on PR's step, please see links of Contributing section.
 
 
-## 📙 Documents
-* [Getting Started](https://github.com/nhn/tui.auto-complete/blob/production/docs/getting-started.md)
-* [Tutorials](https://github.com/nhn/tui.auto-complete/tree/production/docs)
-* [APIs](https://nhn.github.io/tui.auto-complete/latest)
-
-You can also see the older versions of API page on the [releases page](https://github.com/nhn/tui.auto-complete/releases).
-
-
 ## 💬 Contributing
 * [Code of Conduct](https://github.com/nhn/tui.auto-complete/blob/production/CODE_OF_CONDUCT.md)
 * [Contributing guideline](https://github.com/nhn/tui.auto-complete/blob/production/CONTRIBUTING.md)
@@ -219,10 +218,14 @@ You can also see the older versions of API page on the [releases page](https://g
 * [Commit convention](https://github.com/nhn/tui.auto-complete/blob/production/docs/COMMIT_MESSAGE_CONVENTION.md)
 
 
-## 🔩 Dependency
-* [tui-code-snippet](https://github.com/nhn/tui.code-snippet) >=1.5.0
-* [js-cookie](https://github.com/js-cookie/js-cookie) >=1.2.0 (If use 1.3.0 or more, You need to include the [JSON-js polyfill](https://github.com/douglascrockford/JSON-js))
-* [jquery](https://github.com/jquery/jquery) >=1.11.0
+## 🍞 TOAST UI Family
+
+* [TOAST UI Editor](https://github.com/nhn/tui.editor)
+* [TOAST UI Calendar](https://github.com/nhn/tui.calendar)
+* [TOAST UI Chart](https://github.com/nhn/tui.chart)
+* [TOAST UI Image-Editor](https://github.com/nhn/tui.image-editor)
+* [TOAST UI Grid](https://github.com/nhn/tui.grid)
+* [TOAST UI Components](https://github.com/nhn)
 
 
 ## 📜 License
