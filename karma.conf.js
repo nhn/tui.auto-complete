@@ -137,7 +137,9 @@ module.exports = function(config) {
           {
             test: /\.js$/,
             exclude: /(bower_components|node_modules)/,
-            loader: 'eslint-loader'
+            loader: 'eslint-loader',
+            enforce: 'pre',
+            
           }
         ]
       }
