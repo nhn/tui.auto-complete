@@ -11,7 +11,7 @@ module.exports = function(env, argv) {
   var isProduction = argv.mode === 'production';
   var FILENAME = pkg.name + (isProduction ? '.min.js' : '.js');
   var BANNER = [
-    FILENAME,
+    'TOAST UI Auto Complete',
     '@version ' + pkg.version,
     '@author ' + pkg.author,
     '@license ' + pkg.license
