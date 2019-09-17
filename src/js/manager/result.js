@@ -5,14 +5,14 @@
 var snippet = require('tui-code-snippet');
 var $ = require('jquery');
 var DEFAULT_VIEW_COUNT = 10,
-    WHITE_SPACES = '[\\s]*';
+  WHITE_SPACES = '[\\s]*';
 
 var isEmpty = snippet.isEmpty,
-    forEach = snippet.forEach,
-    map = snippet.map;
+  forEach = snippet.forEach,
+  map = snippet.map;
 
 var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
-    rWhiteSpace = '/s+/g';
+  rWhiteSpace = '/s+/g';
 
 /**
  * Unit of auto complete that belong with search result list.
@@ -21,19 +21,20 @@ var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
  * @ignore
  * @constructor
  */
-var Result = snippet.defineClass(/** @lends Result.prototype */{
+var Result = snippet.defineClass(
+  /** @lends Result.prototype */ {
     init: function(autoCompleteObj, options) {
-        this.autoCompleteObj = autoCompleteObj;
-        this.options = options;
+      this.autoCompleteObj = autoCompleteObj;
+      this.options = options;
 
-        this.$resultList = options.resultListElement;
-        this.viewCount = options.viewCount || DEFAULT_VIEW_COUNT;
-        this.$onOffTxt = options.onoffTextElement;
-        this.mouseOverClass = options.mouseOverClass;
-        this.flowMap = autoCompleteObj.flowMap;
+      this.$resultList = options.resultListElement;
+      this.viewCount = options.viewCount || DEFAULT_VIEW_COUNT;
+      this.$onOffTxt = options.onoffTextElement;
+      this.mouseOverClass = options.mouseOverClass;
+      this.flowMap = autoCompleteObj.flowMap;
 
-        this._attachEvent();
-        this.$selectedElement = $();
+      this._attachEvent();
+      this.$selectedElement = $();
     },
 
     /**
@@ -41,10 +42,8 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _deleteBeforeElement: function() {
-        this.$selectedElement = $();
-        this.$resultList
-            .hide()
-            .html('');
+      this.$selectedElement = $();
+      this.$resultList.hide().html('');
     },
 
     /**
@@ -52,15 +51,15 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @param {Array} dataArr Result data
      */
     draw: function(dataArr) {
-        var len = dataArr.length;
+      var len = dataArr.length;
 
-        this._deleteBeforeElement();
-        if (len < 1) {
-            this._hideBottomArea();
-        } else {
-            this._makeResultList(dataArr, len);
-        }
-        this.showResultList();
+      this._deleteBeforeElement();
+      if (len < 1) {
+        this._hideBottomArea();
+      } else {
+        this._makeResultList(dataArr, len);
+      }
+      this.showResultList();
     },
 
     /**
@@ -70,30 +69,34 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _makeResultList: function(dataArr, len) {
-        var template = this.options.template,
-            listConfig = this.options.listConfig,
-            useTitle = (this.options.useTitle && !!template.title),
-            tmpl, index, tmplValue, i, data;
+      var template = this.options.template,
+        listConfig = this.options.listConfig,
+        useTitle = this.options.useTitle && !!template.title,
+        tmpl,
+        index,
+        tmplValue,
+        i,
+        data;
 
-        for (i = 0; i < len; i += 1) {
-            data = dataArr[i];
-            index = data.index;
-            tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;
+      for (i = 0; i < len; i += 1) {
+        data = dataArr[i];
+        index = data.index;
+        tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;
 
-            if (data.type === 'title') {
-                tmpl = template.title;
-                if (!useTitle) {
-                    continue;
-                }
-            }
-            tmplValue = this._getTmplData(tmpl.attr, data);
-            $(this._applyTemplate(tmpl.element, tmplValue))
-                .data({
-                    'params': tmplValue.params,
-                    'index': index
-                })
-                .appendTo(this.$resultList);
+        if (data.type === 'title') {
+          tmpl = template.title;
+          if (!useTitle) {
+            continue;
+          }
         }
+        tmplValue = this._getTmplData(tmpl.attr, data);
+        $(this._applyTemplate(tmpl.element, tmplValue))
+          .data({
+            params: tmplValue.params,
+            index: index
+          })
+          .appendTo(this.$resultList);
+      }
     },
 
     /**
@@ -104,23 +107,23 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _getTmplData: function(attrs, data) {
-        var tmplValue = {},
-            values = data.values || null;
+      var tmplValue = {},
+        values = data.values || null;
 
-        if (snippet.isString(data)) {
-            tmplValue[attrs[0]] = data;
-
-            return tmplValue;
-        }
-
-        forEach(attrs, function(attr, idx) {
-            tmplValue[attr] = values[idx];
-        });
-        if (attrs.length < values.length) {
-            tmplValue.params = values.slice(attrs.length);
-        }
+      if (snippet.isString(data)) {
+        tmplValue[attrs[0]] = data;
 
         return tmplValue;
+      }
+
+      forEach(attrs, function(attr, idx) {
+        tmplValue[attr] = values[idx];
+      });
+      if (attrs.length < values.length) {
+        tmplValue.params = values.slice(attrs.length);
+      }
+
+      return tmplValue;
     },
 
     /**
@@ -128,30 +131,30 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @returns {Boolean}
      */
     isShowResultList: function() {
-        return this.$resultList.css('display') === 'block';
+      return this.$resultList.css('display') === 'block';
     },
 
     /**
      * Hide result list area
      */
     hideResultList: function() {
-        this.$resultList.hide();
-        this._hideBottomArea();
-        this.autoCompleteObj.isIdle = true;
+      this.$resultList.hide();
+      this._hideBottomArea();
+      this.autoCompleteObj.isIdle = true;
 
-        /**
-         * Fired when hide the result list
-         * @event AutoComplete#close
-         */
-        this.autoCompleteObj.fire('close');
+      /**
+       * Fired when hide the result list
+       * @event AutoComplete#close
+       */
+      this.autoCompleteObj.fire('close');
     },
 
     /**
      * Show result list area
      */
     showResultList: function() {
-        this.$resultList.show();
-        this._showBottomArea();
+      this.$resultList.show();
+      this._showBottomArea();
     },
 
     /**
@@ -159,22 +162,22 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @param {string} flow Direction by key code
      */
     moveNextResult: function(flow) {
-        var $selectEl = this.$selectedElement,
-            keyword;
+      var $selectEl = this.$selectedElement,
+        keyword;
 
-        if (!isEmpty($selectEl)) {
-            $selectEl.removeClass(this.mouseOverClass);
-        }
-        $selectEl = this.$selectedElement = this._orderElement(flow);
+      if (!isEmpty($selectEl)) {
+        $selectEl.removeClass(this.mouseOverClass);
+      }
+      $selectEl = this.$selectedElement = this._orderElement(flow);
 
-        keyword = $selectEl.find('.keyword-field').text();
-        if (keyword) {
-            $selectEl.addClass(this.mouseOverClass);
-            this.autoCompleteObj.setValue(keyword);
-            this._setSubmitOption();
-        } else {
-            this.moveNextResult(flow);
-        }
+      keyword = $selectEl.find('.keyword-field').text();
+      if (keyword) {
+        $selectEl.addClass(this.mouseOverClass);
+        this.autoCompleteObj.setValue(keyword);
+        this._setSubmitOption();
+      } else {
+        this.moveNextResult(flow);
+      }
     },
 
     /**
@@ -182,11 +185,11 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @param {Boolean} isUse on/off 여부
      */
     changeOnOffText: function(isUse) {
-        if (isUse) {
-            this.$onOffTxt.text('자동완성 끄기');
-        } else {
-            this.$onOffTxt.text('자동완성 켜기');
-        }
+      if (isUse) {
+        this.$onOffTxt.text('자동완성 끄기');
+      } else {
+        this.$onOffTxt.text('자동완성 켜기');
+      }
     },
 
     /**
@@ -194,20 +197,26 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _attachEvent: function() {
-        this.$resultList.on({
-            mouseover: $.proxy(this._onMouseOver, this),
-            click: $.proxy(this._onClick, this)
-        });
+      this.$resultList.on({
+        mouseover: $.proxy(this._onMouseOver, this),
+        click: $.proxy(this._onClick, this)
+      });
 
-        if (this.$onOffTxt) {
-            this.$onOffTxt.on('click', $.proxy(function() {
-                this._useAutoComplete();
-            }, this));
-        }
+      if (this.$onOffTxt) {
+        this.$onOffTxt.on(
+          'click',
+          $.proxy(function() {
+            this._useAutoComplete();
+          }, this)
+        );
+      }
 
-        $(document).on('click', $.proxy(function() {
-            this.hideResultList();
-        }, this));
+      $(document).on(
+        'click',
+        $.proxy(function() {
+          this.hideResultList();
+        }, this)
+      );
     },
 
     /**
@@ -218,14 +227,18 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
-        snippet.forEach(dataObj, function(value, key) {
-            if (key === 'subject') {
-                value = this._highlight(value);
-            }
-            tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
-        }, this);
+      snippet.forEach(
+        dataObj,
+        function(value, key) {
+          if (key === 'subject') {
+            value = this._highlight(value);
+          }
+          tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
+        },
+        this
+      );
 
-        return tmplStr;
+      return tmplStr;
     },
 
     /**
@@ -237,17 +250,21 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _highlight: function(text) {
-        var queries = this.autoCompleteObj.queries,
-            returnStr;
+      var queries = this.autoCompleteObj.queries,
+        returnStr;
 
-        snippet.forEach(queries, function(query) {
-            if (!returnStr) {
-                returnStr = text;
-            }
-            returnStr = this._makeStrong(returnStr, query);
-        }, this);
+      snippet.forEach(
+        queries,
+        function(query) {
+          if (!returnStr) {
+            returnStr = text;
+          }
+          returnStr = this._makeStrong(returnStr, query);
+        },
+        this
+      );
 
-        return returnStr || text;
+      return returnStr || text;
     },
 
     /**
@@ -258,25 +275,25 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _makeStrong: function(text, query) {
-        var tmpArr, regQuery;
+      var tmpArr, regQuery;
 
-        if (!query || query.length < 1) {
-            return text;
+      if (!query || query.length < 1) {
+        return text;
+      }
+
+      tmpArr = query.replace(rWhiteSpace, '').split('');
+      tmpArr = map(tmpArr, function(char) {
+        if (rIsSpeicalCharacters.test(char)) {
+          return '\\' + char;
         }
 
-        tmpArr = query.replace(rWhiteSpace, '').split('');
-        tmpArr = map(tmpArr, function(char) {
-            if (rIsSpeicalCharacters.test(char)) {
-                return '\\' + char;
-            }
+        return char;
+      });
+      regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
 
-            return char;
-        });
-        regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
-
-        return text.replace(regQuery, function(match) {
-            return '<strong>' + match + '</strong>';
-        });
+      return text.replace(regQuery, function(match) {
+        return '<strong>' + match + '</strong>';
+      });
     },
 
     /**
@@ -285,7 +302,7 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _getFirst: function() {
-        return this._orderStage(this.flowMap.FIRST);
+      return this._orderStage(this.flowMap.FIRST);
     },
 
     /**
@@ -294,7 +311,7 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _getLast: function() {
-        return this._orderStage(this.flowMap.LAST);
+      return this._orderStage(this.flowMap.LAST);
     },
 
     /**
@@ -304,17 +321,17 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _orderStage: function(type) {
-        var flowMap = this.flowMap;
-        var $children = this.$resultList.children();
-        var reuslt = null;
+      var flowMap = this.flowMap;
+      var $children = this.$resultList.children();
+      var reuslt = null;
 
-        if (type === flowMap.FIRST) {
-            reuslt = $children.first();
-        } else if (type === flowMap.LAST) {
-            reuslt = $children.last();
-        }
+      if (type === flowMap.FIRST) {
+        reuslt = $children.first();
+      } else if (type === flowMap.LAST) {
+        reuslt = $children.last();
+      }
 
-        return reuslt;
+      return reuslt;
     },
 
     /**
@@ -324,17 +341,17 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _orderElement: function(type) {
-        var $selectedElement = this.$selectedElement,
-            $order;
+      var $selectedElement = this.$selectedElement,
+        $order;
 
-        if (type === this.flowMap.NEXT) {
-            $order = $selectedElement.next();
+      if (type === this.flowMap.NEXT) {
+        $order = $selectedElement.next();
 
-            return $order.length ? $order : this._getFirst();
-        }
-        $order = $selectedElement.prev();
+        return $order.length ? $order : this._getFirst();
+      }
+      $order = $selectedElement.prev();
 
-        return $order.length ? $order : this._getLast();
+      return $order.length ? $order : this._getLast();
     },
 
     /**
@@ -342,10 +359,10 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _useAutoComplete: function() {
-        var isUse = this.autoCompleteObj.isUseAutoComplete();
+      var isUse = this.autoCompleteObj.isUseAutoComplete();
 
-        this.changeOnOffText(isUse);
-        this.autoCompleteObj.setCookieValue(isUse);
+      this.changeOnOffText(isUse);
+      this.autoCompleteObj.setCookieValue(isUse);
     },
 
     /**
@@ -353,9 +370,9 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _showBottomArea: function() {
-        if (this.$onOffTxt) {
-            this.$onOffTxt.show();
-        }
+      if (this.$onOffTxt) {
+        this.$onOffTxt.show();
+      }
     },
 
     /**
@@ -363,9 +380,9 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _hideBottomArea: function() {
-        if (this.$onOffTxt) {
-            this.$onOffTxt.hide();
-        }
+      if (this.$onOffTxt) {
+        this.$onOffTxt.hide();
+      }
     },
 
     /**
@@ -376,30 +393,30 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      *
      */
     _setSubmitOption: function($target) {
-        var $selectField = $target ? $($target).closest('li') : this.$selectedElement,
-            paramsString = $selectField.data('params'),
-            index = $selectField.data('index'),
-            config = this.options.listConfig[index],
-            action = this.options.actions[config.action],
-            $formElement = this.options.formElement;
+      var $selectField = $target ? $($target).closest('li') : this.$selectedElement,
+        paramsString = $selectField.data('params'),
+        index = $selectField.data('index'),
+        config = this.options.listConfig[index],
+        action = this.options.actions[config.action],
+        $formElement = this.options.formElement;
 
-        $formElement.attr('action', action);
-        this._clearSubmitOption();
-        this.autoCompleteObj.setParams(paramsString, index);
+      $formElement.attr('action', action);
+      this._clearSubmitOption();
+      this.autoCompleteObj.setParams(paramsString, index);
 
-        /**
-         * Fired when the user's selected element in result list is changed
-         * @event AutoComplete#change
-         * @param {Object} data - Data for submit
-         *  @param {string} data.index - Index of collection
-         *  @param {string} data.action - Form action
-         *  @param {string} data.params - Parameters
-         */
-        this.autoCompleteObj.fire('change', {
-            index: index,
-            action: action,
-            params: paramsString
-        });
+      /**
+       * Fired when the user's selected element in result list is changed
+       * @event AutoComplete#change
+       * @param {Object} data - Data for submit
+       *  @param {string} data.index - Index of collection
+       *  @param {string} data.action - Form action
+       *  @param {string} data.params - Parameters
+       */
+      this.autoCompleteObj.fire('change', {
+        index: index,
+        action: action,
+        params: paramsString
+      });
     },
 
     /**
@@ -407,9 +424,9 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _clearSubmitOption: function() {
-        var $formElement = this.options.formElement;
+      var $formElement = this.options.formElement;
 
-        $formElement.find('.hidden-inputs').html('');
+      $formElement.find('.hidden-inputs').html('');
     },
 
     /**
@@ -418,15 +435,15 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _onMouseOver: function(event) {
-        var $target = $(event.target),
-            $arr = this.$resultList.find('li'),
-            $selectedItem = $target.closest('li');
+      var $target = $(event.target),
+        $arr = this.$resultList.find('li'),
+        $selectedItem = $target.closest('li');
 
-        $arr.removeClass(this.mouseOverClass);
-        if ($selectedItem.find('.keyword-field').length) {
-            $selectedItem.addClass(this.mouseOverClass);
-        }
-        this.$selectedElement = $target;
+      $arr.removeClass(this.mouseOverClass);
+      if ($selectedItem.find('.keyword-field').length) {
+        $selectedItem.addClass(this.mouseOverClass);
+      }
+      this.$selectedElement = $target;
     },
 
     /**
@@ -436,18 +453,19 @@ var Result = snippet.defineClass(/** @lends Result.prototype */{
      * @private
      */
     _onClick: function(event) {
-        var $target = $(event.target),
-            $formElement = this.options.formElement,
-            $selectField = $target.closest('li'),
-            $keywordField = $selectField.find('.keyword-field'),
-            selectedKeyword = $keywordField.text();
+      var $target = $(event.target),
+        $formElement = this.options.formElement,
+        $selectField = $target.closest('li'),
+        $keywordField = $selectField.find('.keyword-field'),
+        selectedKeyword = $keywordField.text();
 
-        this.autoCompleteObj.setValue(selectedKeyword);
-        if (selectedKeyword) {
-            this._setSubmitOption($target);
-            $formElement.submit();
-        }
+      this.autoCompleteObj.setValue(selectedKeyword);
+      if (selectedKeyword) {
+        this._setSubmitOption($target);
+        $formElement.submit();
+      }
     }
-});
+  }
+);
 
 module.exports = Result;

@@ -1,28 +1,28 @@
 /**
  * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
  * @author NHN FE Dev Lab. <dl_javascript@nhn.com>
-*/
+ */
 var snippet = require('tui-code-snippet');
 var Cookies = require('js-cookie');
 var $ = require('jquery');
 var DataManager = require('./manager/data'),
-    InputManager = require('./manager/input'),
-    ResultManager = require('./manager/result');
+  InputManager = require('./manager/input'),
+  ResultManager = require('./manager/result');
 
 var DEFAULT_COOKIE_NAME = '_atcp_use_cookie';
 
 var requiredOptions = [
-        'resultListElement',
-        'searchBoxElement',
-        'orgQueryElement',
-        'formElement',
-        'subQuerySet',
-        'template',
-        'listConfig',
-        'actions',
-        'searchUrl'
-    ],
-    rIsElementOption = /element/i;
+    'resultListElement',
+    'searchBoxElement',
+    'orgQueryElement',
+    'formElement',
+    'subQuerySet',
+    'template',
+    'listConfig',
+    'actions',
+    'searchUrl'
+  ],
+  rIsElementOption = /element/i;
 
 /**
  * @constructor
@@ -34,32 +34,36 @@ var requiredOptions = [
  * @example <caption>Global Namespace</caption>
  * var autoComplete = new tui.AutoComplete({"config" : "Default"});
  * @example <caption>Arguments of AutoComplete Constructor</caption>
- * SAMPLE FILE: [AutoConfig.json]{@link http://nhnent.github.io/tui.auto-complete/latest/dist/src/js/autoComplete.js}
+ * SAMPLE FILE: [AutoConfig.json]{@link https://github.com/nhn/tui.auto-complete/blob/master/src/js/autoComplete.js}
  */
-var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
+var AutoComplete = snippet.defineClass(
+  /** @lends AutoComplete.prototype */ {
     init: function(options) {
-        options = snippet.extend({
-            usageStatistics: true
-        }, options);
+      options = snippet.extend(
+        {
+          usageStatistics: true
+        },
+        options
+      );
 
-        this.options = {};
-        this.isUse = true;
-        this.queries = null;
-        this.isIdle = true;
+      this.options = {};
+      this.isUse = true;
+      this.queries = null;
+      this.isIdle = true;
 
-        this._checkValidation(options);
-        this._setOptions(options);
+      this._checkValidation(options);
+      this._setOptions(options);
 
-        this.dataManager = new DataManager(this, this.options);
-        this.inputManager = new InputManager(this, this.options);
-        this.resultManager = new ResultManager(this, this.options);
+      this.dataManager = new DataManager(this, this.options);
+      this.inputManager = new InputManager(this, this.options);
+      this.resultManager = new ResultManager(this, this.options);
 
-        this.setToggleBtnImg(this.isUse);
-        this.setCookieValue(this.isUse);
+      this.setToggleBtnImg(this.isUse);
+      this.setCookieValue(this.isUse);
 
-        if (options.usageStatistics) {
-            snippet.sendHostname('auto-complete', 'UA-129987462-1');
-        }
+      if (options.usageStatistics) {
+        snippet.sendHostname('auto-complete', 'UA-129987462-1');
+      }
     },
 
     /**
@@ -68,10 +72,10 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @private
      */
     flowMap: {
-        'NEXT': 'next',
-        'PREV': 'prev',
-        'FIRST': 'first',
-        'LAST': 'last'
+      NEXT: 'next',
+      PREV: 'prev',
+      FIRST: 'first',
+      LAST: 'last'
     },
 
     /**
@@ -87,18 +91,18 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @private
      */
     _checkValidation: function(options) {
-        var isExisty = snippet.isExisty,
-            config = options.config;
+      var isExisty = snippet.isExisty,
+        config = options.config;
 
-        if (!isExisty(config)) {
-            throw new Error('No configuration #' + config);
+      if (!isExisty(config)) {
+        throw new Error('No configuration #' + config);
+      }
+
+      snippet.forEach(requiredOptions, function(name) {
+        if (!isExisty(config[name])) {
+          throw new Error(name + 'does not not exist.');
         }
-
-        snippet.forEach(requiredOptions, function(name) {
-            if (!isExisty(config[name])) {
-                throw new Error(name + 'does not not exist.');
-            }
-        });
+      });
     },
 
     /**
@@ -107,29 +111,33 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @private
      */
     _setOptions: function(options) {
-        var config = options.config,
-            cookieValue;
+      var config = options.config,
+        cookieValue;
 
-        if (!config.toggleImg || !config.onoffTextElement) {
-            this.isUse = true;
-            delete config.onoffTextElement;
-        } else {
-            cookieValue = Cookies.get(config.cookieName);
-            this.isUse = (cookieValue === 'use' || !cookieValue);
-        }
-        config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
+      if (!config.toggleImg || !config.onoffTextElement) {
+        this.isUse = true;
+        delete config.onoffTextElement;
+      } else {
+        cookieValue = Cookies.get(config.cookieName);
+        this.isUse = cookieValue === 'use' || !cookieValue;
+      }
+      config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
 
-        if (snippet.isFalsy(config.watchInterval)) {
-            config.watchInterval = this.watchInterval;
-        }
+      if (snippet.isFalsy(config.watchInterval)) {
+        config.watchInterval = this.watchInterval;
+      }
 
-        snippet.forEach(config, function(value, name) {
-            if (rIsElementOption.test(name)) {
-                this.options[name] = $(value);
-            } else {
-                this.options[name] = value;
-            }
-        }, this);
+      snippet.forEach(
+        config,
+        function(value, name) {
+          if (rIsElementOption.test(name)) {
+            this.options[name] = $(value);
+          } else {
+            this.options[name] = value;
+          }
+        },
+        this
+      );
     },
 
     /**
@@ -137,7 +145,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @param {String} keyword The key word to send to Auto complete API
      */
     request: function(keyword) {
-        this.dataManager.request(keyword);
+      this.dataManager.request(keyword);
     },
 
     /**
@@ -145,7 +153,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @returns {String}
      */
     getValue: function() {
-        return this.inputManager.getValue();
+      return this.inputManager.getValue();
     },
 
     /**
@@ -153,7 +161,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @param {String} keyword The string to show up at search element
      */
     setValue: function(keyword) {
-        this.inputManager.setValue(keyword);
+      this.inputManager.setValue(keyword);
     },
 
     /**
@@ -162,7 +170,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @param {string} index The index for setting key value
      */
     setParams: function(paramStr, index) {
-        this.inputManager.setParams(paramStr, index);
+      this.inputManager.setParams(paramStr, index);
     },
 
     /**
@@ -170,7 +178,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @param {Array} dataArr Data array from api server
      */
     setServerData: function(dataArr) {
-        this.resultManager.draw(dataArr);
+      this.resultManager.draw(dataArr);
     },
 
     /**
@@ -178,9 +186,9 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @param {Boolean} isUse Whether use auto complete or not
      */
     setCookieValue: function(isUse) {
-        Cookies.set(this.options.cookieName, isUse ? 'use' : 'notUse');
-        this.isUse = isUse;
-        this.setToggleBtnImg(isUse);
+      Cookies.set(this.options.cookieName, isUse ? 'use' : 'notUse');
+      this.isUse = isUse;
+      this.setToggleBtnImg(isUse);
     },
 
     /**
@@ -188,7 +196,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @param {Array} queries Result queries
      */
     setQueries: function(queries) {
-        this.queries = [].concat(queries);
+      this.queries = [].concat(queries);
     },
 
     /**
@@ -199,7 +207,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      *  autoComplete.isUseAutoComplete(); => true|false
      */
     isUseAutoComplete: function() {
-        return this.isUse;
+      return this.isUse;
     },
 
     /**
@@ -207,7 +215,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @returns {Boolean}
      */
     isShowResultList: function() {
-        return this.resultManager.isShowResultList();
+      return this.resultManager.isShowResultList();
     },
 
     /**
@@ -216,23 +224,23 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @private
      */
     setToggleBtnImg: function(isUse) {
-        this.inputManager.setToggleBtnImg(isUse);
+      this.inputManager.setToggleBtnImg(isUse);
     },
 
     /**
      * Hide search result list area
      */
     hideResultList: function() {
-        this.resultManager.hideResultList();
+      this.resultManager.hideResultList();
     },
 
     /**
      * Show search result list area
      */
     showResultList: function() {
-        if (this.isUseAutoComplete()) {
-            this.resultManager.showResultList();
-        }
+      if (this.isUseAutoComplete()) {
+        this.resultManager.showResultList();
+      }
     },
 
     /**
@@ -241,7 +249,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @private
      */
     moveNextResult: function(flow) {
-        this.resultManager.moveNextResult(flow);
+      this.resultManager.moveNextResult(flow);
     },
 
     /**
@@ -250,7 +258,7 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      * @private
      */
     changeOnOffText: function(isUse) {
-        this.resultManager.changeOnOffText(isUse);
+      this.resultManager.changeOnOffText(isUse);
     },
 
     /**
@@ -267,21 +275,22 @@ var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
      *  });
      */
     setSearchApi: function(options) {
-        snippet.extend(this.options.searchApi, options);
+      snippet.extend(this.options.searchApi, options);
     },
 
     /**
      * clear ready value and set idle state
      */
     clearReadyValue: function() {
-        if (snippet.isExisty(this.readyValue)) {
-            this.request(this.readyValue);
-        } else {
-            this.isIdle = true;
-        }
-        this.readyValue = null;
+      if (snippet.isExisty(this.readyValue)) {
+        this.request(this.readyValue);
+      } else {
+        this.isIdle = true;
+      }
+      this.readyValue = null;
     }
-});
+  }
+);
 
 snippet.CustomEvents.mixin(AutoComplete);
 
