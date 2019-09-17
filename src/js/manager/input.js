@@ -10,15 +10,16 @@ var $ = require('jquery');
  * @ignore
  * @constructor
  */
-var Input = snippet.defineClass(/** @lends Input.prototype */{
+var Input = snippet.defineClass(
+  /** @lends Input.prototype */ {
     /**
      * keyboard Input KeyCode enum
      */
     keyCodeMap: {
-        'TAB': 9,
-        'UP_ARROW': 38,
-        'DOWN_ARROW': 40,
-        'ESC': 27
+      TAB: 9,
+      UP_ARROW: 38,
+      DOWN_ARROW: 40,
+      ESC: 27
     },
 
     /**
@@ -27,23 +28,23 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @param {object} options auto complete options
      */
     init: function(autoCompleteObj, options) {
-        this.autoCompleteObj = autoCompleteObj;
-        this.options = options;
+      this.autoCompleteObj = autoCompleteObj;
+      this.options = options;
 
-        /**
-         * Flag to distinguish new changed inputValue from moving-value in resultList
-         * @type {boolean}
-         */
-        this.isKeyMoving = false;
+      /**
+       * Flag to distinguish new changed inputValue from moving-value in resultList
+       * @type {boolean}
+       */
+      this.isKeyMoving = false;
 
-        // Save elements from configuration.
-        this.$searchBox = this.options.searchBoxElement;
-        this.$toggleBtn = this.options.toggleBtnElement;
-        this.$orgQuery = this.options.orgQueryElement;
-        this.$formElement = this.options.formElement;
-        this.prevValue = '';
+      // Save elements from configuration.
+      this.$searchBox = this.options.searchBoxElement;
+      this.$toggleBtn = this.options.toggleBtnElement;
+      this.$orgQuery = this.options.orgQueryElement;
+      this.$formElement = this.options.formElement;
+      this.prevValue = '';
 
-        this._attachEvent();
+      this._attachEvent();
     },
 
     /**
@@ -51,7 +52,7 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @returns {String} Searchbox value
      */
     getValue: function() {
-        return this.$searchBox.val();
+      return this.$searchBox.val();
     },
 
     /**
@@ -59,7 +60,7 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @param {String} str The keyword to set value.
      */
     setValue: function(str) {
-        this.$searchBox.val(str);
+      this.$searchBox.val(str);
     },
 
     /**
@@ -68,14 +69,14 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @param {number|string} index The index for subQuerySet in config
      */
     setParams: function(subQueryValues, index) {
-        if (subQueryValues && snippet.isString(subQueryValues)) {
-            subQueryValues = subQueryValues.split(',');
-        }
+      if (subQueryValues && snippet.isString(subQueryValues)) {
+        subQueryValues = subQueryValues.split(',');
+      }
 
-        if ((!subQueryValues || snippet.isEmpty(subQueryValues))) {
-            return;
-        }
-        this._createParamSetByType(subQueryValues, index);
+      if (!subQueryValues || snippet.isEmpty(subQueryValues)) {
+        return;
+      }
+      this._createParamSetByType(subQueryValues, index);
     },
 
     /**
@@ -85,24 +86,30 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _createParamSetByType: function(subQueryValues, index) {
-        var options = this.options,
-            listConfig = options.listConfig[index],
-            subQuerySetIndex = listConfig.subQuerySet,
-            staticParamsIndex = listConfig.staticParams,
-            subQueryKeys = options.subQuerySet[subQuerySetIndex],
-            staticParams = options.staticParams[staticParamsIndex];
+      var options = this.options,
+        listConfig = options.listConfig[index],
+        subQuerySetIndex = listConfig.subQuerySet,
+        staticParamsIndex = listConfig.staticParams,
+        subQueryKeys = options.subQuerySet[subQuerySetIndex],
+        staticParams = options.staticParams[staticParamsIndex];
 
-        if (!this.hiddens) {
-            this._createParamContainer();
-        }
+      if (!this.hiddens) {
+        this._createParamContainer();
+      }
 
-        snippet.forEach(subQueryValues, function(value, idx) {
-            var key = subQueryKeys[idx];
+      snippet.forEach(
+        subQueryValues,
+        function(value, idx) {
+          var key = subQueryKeys[idx];
 
-            this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
-        }, this);
+          this.hiddens.append(
+            $('<input type="hidden" name="' + key + '" value="' + value + '" />')
+          );
+        },
+        this
+      );
 
-        this._createStaticParams(staticParams);
+      this._createStaticParams(staticParams);
     },
 
     /**
@@ -111,16 +118,22 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _createStaticParams: function(staticParams) {
-        if (!staticParams) {
-            return;
-        }
+      if (!staticParams) {
+        return;
+      }
 
-        staticParams = staticParams.split(',');
-        snippet.forEach(staticParams, function(value) {
-            var val = value.split('=');
+      staticParams = staticParams.split(',');
+      snippet.forEach(
+        staticParams,
+        function(value) {
+          var val = value.split('=');
 
-            this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
-        }, this);
+          this.hiddens.append(
+            $('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />')
+          );
+        },
+        this
+      );
     },
 
     /**
@@ -128,9 +141,9 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _createParamContainer: function() {
-        this.hiddens = $('<div class="hidden-inputs"></div>')
-            .hide()
-            .appendTo(this.$formElement);
+      this.hiddens = $('<div class="hidden-inputs"></div>')
+        .hide()
+        .appendTo(this.$formElement);
     },
 
     /**
@@ -138,15 +151,15 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @param {Boolean} isUse 자동완성 사용 여부
      */
     setToggleBtnImg: function(isUse) {
-        if (!this.options.toggleImg || snippet.isEmpty(this.$toggleBtn)) {
-            return;
-        }
+      if (!this.options.toggleImg || snippet.isEmpty(this.$toggleBtn)) {
+        return;
+      }
 
-        if (isUse) {
-            this.$toggleBtn.attr('src', this.options.toggleImg.on);
-        } else {
-            this.$toggleBtn.attr('src', this.options.toggleImg.off);
-        }
+      if (isUse) {
+        this.$toggleBtn.attr('src', this.options.toggleImg.on);
+      } else {
+        this.$toggleBtn.attr('src', this.options.toggleImg.off);
+      }
     },
 
     /**
@@ -154,16 +167,16 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _attachEvent: function() {
-        this.$searchBox.on({
-            focus: $.proxy(this._onFocus, this),
-            blur: $.proxy(this._onBlur, this),
-            keydown: $.proxy(this._onKeyDown, this),
-            click: $.proxy(this._onClick, this)
-        });
+      this.$searchBox.on({
+        focus: $.proxy(this._onFocus, this),
+        blur: $.proxy(this._onBlur, this),
+        keydown: $.proxy(this._onKeyDown, this),
+        click: $.proxy(this._onClick, this)
+      });
 
-        if (!snippet.isEmpty(this.$toggleBtn)) {
-            this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
-        }
+      if (!snippet.isEmpty(this.$toggleBtn)) {
+        this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
+      }
     },
 
     /**
@@ -172,7 +185,7 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _setOrgQuery: function(str) {
-        this.$orgQuery.val(str);
+      this.$orgQuery.val(str);
     },
 
     /**
@@ -182,18 +195,17 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @returns {boolean} False if no input-keyword or not use auto-complete
      */
     _onClick: function(event) {
-        // 입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
-        if (!this.autoCompleteObj.getValue() ||
-            !this.autoCompleteObj.isUseAutoComplete()) {
-            return false;
-        }
+      // 입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
+      if (!this.autoCompleteObj.getValue() || !this.autoCompleteObj.isUseAutoComplete()) {
+        return false;
+      }
 
-        if (!this.autoCompleteObj.isShowResultList()) {
-            this.autoCompleteObj.showResultList();
-        }
-        event.stopPropagation();
+      if (!this.autoCompleteObj.isShowResultList()) {
+        this.autoCompleteObj.showResultList();
+      }
+      event.stopPropagation();
 
-        return true;
+      return true;
     },
 
     /**
@@ -201,11 +213,8 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _onFocus: function() {
-        // setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
-        this.intervalId = setInterval(
-            $.proxy(this._onWatch, this),
-            this.options.watchInterval
-        );
+      // setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
+      this.intervalId = setInterval($.proxy(this._onWatch, this), this.options.watchInterval);
     },
 
     /**
@@ -213,22 +222,22 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _onWatch: function() {
-        var searchBoxValue = this.getValue();
+      var searchBoxValue = this.getValue();
 
-        if (!searchBoxValue) {
-            this.autoCompleteObj.hideResultList();
-            this.prevValue = '';
-            this._setOrgQuery('');
+      if (!searchBoxValue) {
+        this.autoCompleteObj.hideResultList();
+        this.prevValue = '';
+        this._setOrgQuery('');
 
-            return;
-        }
+        return;
+      }
 
-        if (this.isKeyMoving) {
-            this._setOrgQuery(searchBoxValue);
-            this.prevValue = searchBoxValue;
-        } else if (this.prevValue !== searchBoxValue) {
-            this._onChange();
-        }
+      if (this.isKeyMoving) {
+        this._setOrgQuery(searchBoxValue);
+        this.prevValue = searchBoxValue;
+      } else if (this.prevValue !== searchBoxValue) {
+        this._onChange();
+      }
     },
 
     /**
@@ -236,21 +245,21 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _onChange: function() {
-        var acObj = this.autoCompleteObj,
-            searchBoxValue = this.getValue();
+      var acObj = this.autoCompleteObj,
+        searchBoxValue = this.getValue();
 
-        if (!this.autoCompleteObj.isUseAutoComplete()) {
-            return;
-        }
+      if (!this.autoCompleteObj.isUseAutoComplete()) {
+        return;
+      }
 
-        if (acObj.isIdle) {
-            acObj.isIdle = false;
-            acObj.request(searchBoxValue);
-        } else {
-            acObj.readyValue = searchBoxValue;
-            acObj.showResultList();
-        }
-        this.prevValue = searchBoxValue;
+      if (acObj.isIdle) {
+        acObj.isIdle = false;
+        acObj.request(searchBoxValue);
+      } else {
+        acObj.readyValue = searchBoxValue;
+        acObj.showResultList();
+      }
+      this.prevValue = searchBoxValue;
     },
 
     /**
@@ -258,8 +267,8 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _onBlur: function() {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
+      clearInterval(this.intervalId);
+      this.intervalId = null;
     },
 
     /**
@@ -270,39 +279,41 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      */
     /* eslint-disable complexity */
     _onKeyDown: function(event) {
-        var acObj = this.autoCompleteObj,
-            flow, codeMap, flowMap;
+      var acObj = this.autoCompleteObj,
+        flow,
+        codeMap,
+        flowMap;
 
-        if (!acObj.isUseAutoComplete() || !acObj.isShowResultList()) {
-            return;
-        }
+      if (!acObj.isUseAutoComplete() || !acObj.isShowResultList()) {
+        return;
+      }
 
-        codeMap = this.keyCodeMap;
-        flowMap = acObj.flowMap;
-        switch (event.keyCode) {
-            case codeMap.TAB:
-                event.preventDefault();
-                flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;
-                break;
-            case codeMap.DOWN_ARROW:
-                flow = flowMap.NEXT;
-                break;
-            case codeMap.UP_ARROW:
-                flow = flowMap.PREV;
-                break;
-            case codeMap.ESC:
-                acObj.hideResultList();
-                break;
-            default:
-                break;
-        }
+      codeMap = this.keyCodeMap;
+      flowMap = acObj.flowMap;
+      switch (event.keyCode) {
+        case codeMap.TAB:
+          event.preventDefault();
+          flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;
+          break;
+        case codeMap.DOWN_ARROW:
+          flow = flowMap.NEXT;
+          break;
+        case codeMap.UP_ARROW:
+          flow = flowMap.PREV;
+          break;
+        case codeMap.ESC:
+          acObj.hideResultList();
+          break;
+        default:
+          break;
+      }
 
-        if (flow) {
-            this.isKeyMoving = true;
-            acObj.moveNextResult(flow);
-        } else {
-            this.isKeyMoving = false;
-        }
+      if (flow) {
+        this.isKeyMoving = true;
+        acObj.moveNextResult(flow);
+      } else {
+        this.isKeyMoving = false;
+      }
     },
     /* eslint-enable complexity */
 
@@ -312,27 +323,28 @@ var Input = snippet.defineClass(/** @lends Input.prototype */{
      * @private
      */
     _onClickToggle: function(event) {
-        var curValue = this.getValue();
+      var curValue = this.getValue();
 
-        event.stopPropagation();
+      event.stopPropagation();
 
-        if (!this.autoCompleteObj.isUseAutoComplete()) {
-            this.autoCompleteObj.setCookieValue(true);
-            this.autoCompleteObj.changeOnOffText(true);
-            if (!curValue) {
-                return;
-            }
-            if (this.prevValue !== curValue) {
-                this.autoCompleteObj.request(curValue);
-            } else {
-                this.autoCompleteObj.showResultList();
-            }
-        } else {
-            this.autoCompleteObj.setCookieValue(false);
-            this.autoCompleteObj.changeOnOffText(false);
-            this.autoCompleteObj.hideResultList();
+      if (!this.autoCompleteObj.isUseAutoComplete()) {
+        this.autoCompleteObj.setCookieValue(true);
+        this.autoCompleteObj.changeOnOffText(true);
+        if (!curValue) {
+          return;
         }
+        if (this.prevValue !== curValue) {
+          this.autoCompleteObj.request(curValue);
+        } else {
+          this.autoCompleteObj.showResultList();
+        }
+      } else {
+        this.autoCompleteObj.setCookieValue(false);
+        this.autoCompleteObj.changeOnOffText(false);
+        this.autoCompleteObj.hideResultList();
+      }
     }
-});
+  }
+);
 
 module.exports = Input;
