@@ -1,6 +1,6 @@
 {
   "name": "tui-auto-complete",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "TOAST UI Component: AutoComplete",
   "main": "dist/tui-auto-complete",
   "files": [
