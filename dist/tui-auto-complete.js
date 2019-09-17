@@ -1,1295 +1,183 @@
 /*!
- * tui-auto-complete.js
- * @version 2.1.4
+ * TOAST UI Auto Complete
+ * @version 2.1.5
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("tui-code-snippet"), require("js-cookie"), require("jquery"));
+		module.exports = factory(require("jquery"), require("js-cookie"), require("tui-code-snippet"));
 	else if(typeof define === 'function' && define.amd)
-		define(["tui-code-snippet", "js-cookie", "jquery"], factory);
+		define(["jquery", "js-cookie", "tui-code-snippet"], factory);
 	else if(typeof exports === 'object')
-		exports["AutoComplete"] = factory(require("tui-code-snippet"), require("js-cookie"), require("jquery"));
+		exports["AutoComplete"] = factory(require("jquery"), require("js-cookie"), require("tui-code-snippet"));
 	else
-		root["tui"] = root["tui"] || {}, root["tui"]["AutoComplete"] = factory((root["tui"] && root["tui"]["util"]), root["Cookies"], root["$"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
+		root["tui"] = root["tui"] || {}, root["tui"]["AutoComplete"] = factory(root["$"], root["Cookies"], root["tui"]["util"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_jquery__, __WEBPACK_EXTERNAL_MODULE_js_cookie__, __WEBPACK_EXTERNAL_MODULE_tui_code_snippet__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-
+/******/ 		module.l = true;
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "dist/";
-
+/******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/autoComplete.js");
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ "./src/js/autoComplete.js":
+/*!********************************!*\
+  !*** ./src/js/autoComplete.js ***!
+  \********************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/**
-	 * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
-	 * @author NHN FE Dev Lab. <dl_javascript@nhn.com>
-	*/
-	var snippet = __webpack_require__(1);
-	var Cookies = __webpack_require__(2);
-	var $ = __webpack_require__(3);
-	var DataManager = __webpack_require__(4),
-	    InputManager = __webpack_require__(5),
-	    ResultManager = __webpack_require__(6);
-
-	var DEFAULT_COOKIE_NAME = '_atcp_use_cookie';
-
-	var requiredOptions = [
-	        'resultListElement',
-	        'searchBoxElement',
-	        'orgQueryElement',
-	        'formElement',
-	        'subQuerySet',
-	        'template',
-	        'listConfig',
-	        'actions',
-	        'searchUrl'
-	    ],
-	    rIsElementOption = /element/i;
-
-	/**
-	 * @constructor
-	 * @param {Object} options
-	 * @param {Boolean} [options.usageStatistics=true] - Let us know the hostname. If you don't want to send the hostname, please set to false.
-	 * @example <caption>CommonJS</caption>
-	 * var AutoComplete = require('tui-auto-complete');
-	 * var autoComplete = new AutoComplete({'config': 'Default'});
-	 * @example <caption>Global Namespace</caption>
-	 * var autoComplete = new tui.AutoComplete({"config" : "Default"});
-	 * @example <caption>Arguments of AutoComplete Constructor</caption>
-	 * SAMPLE FILE: [AutoConfig.json]{@link http://nhnent.github.io/tui.auto-complete/latest/dist/src/js/autoComplete.js}
-	 */
-	var AutoComplete = snippet.defineClass(/** @lends AutoComplete.prototype */{
-	    init: function(options) {
-	        options = snippet.extend({
-	            usageStatistics: true
-	        }, options);
-
-	        this.options = {};
-	        this.isUse = true;
-	        this.queries = null;
-	        this.isIdle = true;
-
-	        this._checkValidation(options);
-	        this._setOptions(options);
-
-	        this.dataManager = new DataManager(this, this.options);
-	        this.inputManager = new InputManager(this, this.options);
-	        this.resultManager = new ResultManager(this, this.options);
-
-	        this.setToggleBtnImg(this.isUse);
-	        this.setCookieValue(this.isUse);
-
-	        if (options.usageStatistics) {
-	            snippet.sendHostname('auto-complete', 'UA-129987462-1');
-	        }
-	    },
-
-	    /**
-	     * Direction value for key
-	     * @static
-	     * @private
-	     */
-	    flowMap: {
-	        'NEXT': 'next',
-	        'PREV': 'prev',
-	        'FIRST': 'first',
-	        'LAST': 'last'
-	    },
-
-	    /**
-	     * Interval for check update input
-	     * @type {number}
-	     * @default 300
-	     */
-	    watchInterval: 300,
-
-	    /**
-	     * Check required fields and validate fields.
-	     * @param {Object} options component configurations
-	     * @private
-	     */
-	    _checkValidation: function(options) {
-	        var isExisty = snippet.isExisty,
-	            config = options.config;
-
-	        if (!isExisty(config)) {
-	            throw new Error('No configuration #' + config);
-	        }
-
-	        snippet.forEach(requiredOptions, function(name) {
-	            if (!isExisty(config[name])) {
-	                throw new Error(name + 'does not not exist.');
-	            }
-	        });
-	    },
-
-	    /**
-	     * Set component options
-	     * @param {Object} options component configurations
-	     * @private
-	     */
-	    _setOptions: function(options) {
-	        var config = options.config,
-	            cookieValue;
-
-	        if (!config.toggleImg || !config.onoffTextElement) {
-	            this.isUse = true;
-	            delete config.onoffTextElement;
-	        } else {
-	            cookieValue = Cookies.get(config.cookieName);
-	            this.isUse = (cookieValue === 'use' || !cookieValue);
-	        }
-	        config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
-
-	        if (snippet.isFalsy(config.watchInterval)) {
-	            config.watchInterval = this.watchInterval;
-	        }
-
-	        snippet.forEach(config, function(value, name) {
-	            if (rIsElementOption.test(name)) {
-	                this.options[name] = $(value);
-	            } else {
-	                this.options[name] = value;
-	            }
-	        }, this);
-	    },
-
-	    /**
-	     * Request data at api server with keyword
-	     * @param {String} keyword The key word to send to Auto complete API
-	     */
-	    request: function(keyword) {
-	        this.dataManager.request(keyword);
-	    },
-
-	    /**
-	     * Return string in input element.
-	     * @returns {String}
-	     */
-	    getValue: function() {
-	        return this.inputManager.getValue();
-	    },
-
-	    /**
-	     * Set inputManager's value to show at search element
-	     * @param {String} keyword The string to show up at search element
-	     */
-	    setValue: function(keyword) {
-	        this.inputManager.setValue(keyword);
-	    },
-
-	    /**
-	     * Set additional parameters at inputManager.
-	     * @param {string} paramStr String to be addition parameters.(saperator '&')
-	     * @param {string} index The index for setting key value
-	     */
-	    setParams: function(paramStr, index) {
-	        this.inputManager.setParams(paramStr, index);
-	    },
-
-	    /**
-	     * Request to draw result at resultManager with data from api server.
-	     * @param {Array} dataArr Data array from api server
-	     */
-	    setServerData: function(dataArr) {
-	        this.resultManager.draw(dataArr);
-	    },
-
-	    /**
-	     * Set Cookie value with whether use auto complete or not
-	     * @param {Boolean} isUse Whether use auto complete or not
-	     */
-	    setCookieValue: function(isUse) {
-	        Cookies.set(this.options.cookieName, isUse ? 'use' : 'notUse');
-	        this.isUse = isUse;
-	        this.setToggleBtnImg(isUse);
-	    },
-
-	    /**
-	     * Save matched queries from server.
-	     * @param {Array} queries Result queries
-	     */
-	    setQueries: function(queries) {
-	        this.queries = [].concat(queries);
-	    },
-
-	    /**
-	     * Get whether use auto complete or not
-	     * @api
-	     * @returns {Boolean}
-	     * @example
-	     *  autoComplete.isUseAutoComplete(); => true|false
-	     */
-	    isUseAutoComplete: function() {
-	        return this.isUse;
-	    },
-
-	    /**
-	     * Whether show the result list area or not.
-	     * @returns {Boolean}
-	     */
-	    isShowResultList: function() {
-	        return this.resultManager.isShowResultList();
-	    },
-
-	    /**
-	     * Change toggle button image by auto complete state
-	     * @param {Boolean} isUse whether use auto complete or not
-	     * @private
-	     */
-	    setToggleBtnImg: function(isUse) {
-	        this.inputManager.setToggleBtnImg(isUse);
-	    },
-
-	    /**
-	     * Hide search result list area
-	     */
-	    hideResultList: function() {
-	        this.resultManager.hideResultList();
-	    },
-
-	    /**
-	     * Show search result list area
-	     */
-	    showResultList: function() {
-	        if (this.isUseAutoComplete()) {
-	            this.resultManager.showResultList();
-	        }
-	    },
-
-	    /**
-	     * Move to next item in result list.
-	     * @param {string} flow Direction to move.
-	     * @private
-	     */
-	    moveNextResult: function(flow) {
-	        this.resultManager.moveNextResult(flow);
-	    },
-
-	    /**
-	     * Set text to auto complete switch
-	     * @param {Boolean} isUse Whether use auto complete or not
-	     * @private
-	     */
-	    changeOnOffText: function(isUse) {
-	        this.resultManager.changeOnOffText(isUse);
-	    },
-
-	    /**
-	     * Reset serachApi
-	     * @api
-	     * @param {Object} options searchApi option
-	     * @example
-	     *  autoComplete.setSearchApi({
-	     *      'st' : 111,
-	     *      'r_lt' : 111,
-	     *      'r_enc' : 'UTF-8',
-	     *      'q_enc' : 'UTF-8',
-	     *      'r_format' : 'json'
-	     *  });
-	     */
-	    setSearchApi: function(options) {
-	        snippet.extend(this.options.searchApi, options);
-	    },
-
-	    /**
-	     * clear ready value and set idle state
-	     */
-	    clearReadyValue: function() {
-	        if (snippet.isExisty(this.readyValue)) {
-	            this.request(this.readyValue);
-	        } else {
-	            this.isIdle = true;
-	        }
-	        this.readyValue = null;
-	    }
-	});
-
-	snippet.CustomEvents.mixin(AutoComplete);
-
-	module.exports = AutoComplete;
-
+eval("/**\n * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.\n * @author NHN FE Dev Lab. <dl_javascript@nhn.com>\n */\nvar snippet = __webpack_require__(/*! tui-code-snippet */ \"tui-code-snippet\");\nvar Cookies = __webpack_require__(/*! js-cookie */ \"js-cookie\");\nvar $ = __webpack_require__(/*! jquery */ \"jquery\");\nvar DataManager = __webpack_require__(/*! ./manager/data */ \"./src/js/manager/data.js\"),\n  InputManager = __webpack_require__(/*! ./manager/input */ \"./src/js/manager/input.js\"),\n  ResultManager = __webpack_require__(/*! ./manager/result */ \"./src/js/manager/result.js\");\n\nvar DEFAULT_COOKIE_NAME = '_atcp_use_cookie';\n\nvar requiredOptions = [\n    'resultListElement',\n    'searchBoxElement',\n    'orgQueryElement',\n    'formElement',\n    'subQuerySet',\n    'template',\n    'listConfig',\n    'actions',\n    'searchUrl'\n  ],\n  rIsElementOption = /element/i;\n\n/**\n * @constructor\n * @param {Object} options\n * @param {Boolean} [options.usageStatistics=true] - Let us know the hostname. If you don't want to send the hostname, please set to false.\n * @example <caption>CommonJS</caption>\n * var AutoComplete = require('tui-auto-complete');\n * var autoComplete = new AutoComplete({'config': 'Default'});\n * @example <caption>Global Namespace</caption>\n * var autoComplete = new tui.AutoComplete({\"config\" : \"Default\"});\n * @example <caption>Arguments of AutoComplete Constructor</caption>\n * SAMPLE FILE: [AutoConfig.json]{@link https://github.com/nhn/tui.auto-complete/blob/master/src/js/autoComplete.js}\n */\nvar AutoComplete = snippet.defineClass(\n  /** @lends AutoComplete.prototype */ {\n    init: function(options) {\n      options = snippet.extend(\n        {\n          usageStatistics: true\n        },\n        options\n      );\n\n      this.options = {};\n      this.isUse = true;\n      this.queries = null;\n      this.isIdle = true;\n\n      this._checkValidation(options);\n      this._setOptions(options);\n\n      this.dataManager = new DataManager(this, this.options);\n      this.inputManager = new InputManager(this, this.options);\n      this.resultManager = new ResultManager(this, this.options);\n\n      this.setToggleBtnImg(this.isUse);\n      this.setCookieValue(this.isUse);\n\n      if (options.usageStatistics) {\n        snippet.sendHostname('auto-complete', 'UA-129987462-1');\n      }\n    },\n\n    /**\n     * Direction value for key\n     * @static\n     * @private\n     */\n    flowMap: {\n      NEXT: 'next',\n      PREV: 'prev',\n      FIRST: 'first',\n      LAST: 'last'\n    },\n\n    /**\n     * Interval for check update input\n     * @type {number}\n     * @default 300\n     */\n    watchInterval: 300,\n\n    /**\n     * Check required fields and validate fields.\n     * @param {Object} options component configurations\n     * @private\n     */\n    _checkValidation: function(options) {\n      var isExisty = snippet.isExisty,\n        config = options.config;\n\n      if (!isExisty(config)) {\n        throw new Error('No configuration #' + config);\n      }\n\n      snippet.forEach(requiredOptions, function(name) {\n        if (!isExisty(config[name])) {\n          throw new Error(name + 'does not not exist.');\n        }\n      });\n    },\n\n    /**\n     * Set component options\n     * @param {Object} options component configurations\n     * @private\n     */\n    _setOptions: function(options) {\n      var config = options.config,\n        cookieValue;\n\n      if (!config.toggleImg || !config.onoffTextElement) {\n        this.isUse = true;\n        delete config.onoffTextElement;\n      } else {\n        cookieValue = Cookies.get(config.cookieName);\n        this.isUse = cookieValue === 'use' || !cookieValue;\n      }\n      config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;\n\n      if (snippet.isFalsy(config.watchInterval)) {\n        config.watchInterval = this.watchInterval;\n      }\n\n      snippet.forEach(\n        config,\n        function(value, name) {\n          if (rIsElementOption.test(name)) {\n            this.options[name] = $(value);\n          } else {\n            this.options[name] = value;\n          }\n        },\n        this\n      );\n    },\n\n    /**\n     * Request data at api server with keyword\n     * @param {String} keyword The key word to send to Auto complete API\n     */\n    request: function(keyword) {\n      this.dataManager.request(keyword);\n    },\n\n    /**\n     * Return string in input element.\n     * @returns {String}\n     */\n    getValue: function() {\n      return this.inputManager.getValue();\n    },\n\n    /**\n     * Set inputManager's value to show at search element\n     * @param {String} keyword The string to show up at search element\n     */\n    setValue: function(keyword) {\n      this.inputManager.setValue(keyword);\n    },\n\n    /**\n     * Set additional parameters at inputManager.\n     * @param {string} paramStr String to be addition parameters.(saperator '&')\n     * @param {string} index The index for setting key value\n     */\n    setParams: function(paramStr, index) {\n      this.inputManager.setParams(paramStr, index);\n    },\n\n    /**\n     * Request to draw result at resultManager with data from api server.\n     * @param {Array} dataArr Data array from api server\n     */\n    setServerData: function(dataArr) {\n      this.resultManager.draw(dataArr);\n    },\n\n    /**\n     * Set Cookie value with whether use auto complete or not\n     * @param {Boolean} isUse Whether use auto complete or not\n     */\n    setCookieValue: function(isUse) {\n      Cookies.set(this.options.cookieName, isUse ? 'use' : 'notUse');\n      this.isUse = isUse;\n      this.setToggleBtnImg(isUse);\n    },\n\n    /**\n     * Save matched queries from server.\n     * @param {Array} queries Result queries\n     */\n    setQueries: function(queries) {\n      this.queries = [].concat(queries);\n    },\n\n    /**\n     * Get whether use auto complete or not\n     * @api\n     * @returns {Boolean}\n     * @example\n     *  autoComplete.isUseAutoComplete(); => true|false\n     */\n    isUseAutoComplete: function() {\n      return this.isUse;\n    },\n\n    /**\n     * Whether show the result list area or not.\n     * @returns {Boolean}\n     */\n    isShowResultList: function() {\n      return this.resultManager.isShowResultList();\n    },\n\n    /**\n     * Change toggle button image by auto complete state\n     * @param {Boolean} isUse whether use auto complete or not\n     * @private\n     */\n    setToggleBtnImg: function(isUse) {\n      this.inputManager.setToggleBtnImg(isUse);\n    },\n\n    /**\n     * Hide search result list area\n     */\n    hideResultList: function() {\n      this.resultManager.hideResultList();\n    },\n\n    /**\n     * Show search result list area\n     */\n    showResultList: function() {\n      if (this.isUseAutoComplete()) {\n        this.resultManager.showResultList();\n      }\n    },\n\n    /**\n     * Move to next item in result list.\n     * @param {string} flow Direction to move.\n     * @private\n     */\n    moveNextResult: function(flow) {\n      this.resultManager.moveNextResult(flow);\n    },\n\n    /**\n     * Set text to auto complete switch\n     * @param {Boolean} isUse Whether use auto complete or not\n     * @private\n     */\n    changeOnOffText: function(isUse) {\n      this.resultManager.changeOnOffText(isUse);\n    },\n\n    /**\n     * Reset serachApi\n     * @api\n     * @param {Object} options searchApi option\n     * @example\n     *  autoComplete.setSearchApi({\n     *      'st' : 111,\n     *      'r_lt' : 111,\n     *      'r_enc' : 'UTF-8',\n     *      'q_enc' : 'UTF-8',\n     *      'r_format' : 'json'\n     *  });\n     */\n    setSearchApi: function(options) {\n      snippet.extend(this.options.searchApi, options);\n    },\n\n    /**\n     * clear ready value and set idle state\n     */\n    clearReadyValue: function() {\n      if (snippet.isExisty(this.readyValue)) {\n        this.request(this.readyValue);\n      } else {\n        this.isIdle = true;\n      }\n      this.readyValue = null;\n    }\n  }\n);\n\nsnippet.CustomEvents.mixin(AutoComplete);\n\nmodule.exports = AutoComplete;\n\n\n//# sourceURL=webpack://tui.AutoComplete/./src/js/autoComplete.js?");
 
 /***/ }),
-/* 1 */
+
+/***/ "./src/js/manager/data.js":
+/*!********************************!*\
+  !*** ./src/js/manager/data.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/**\n * @fileoverview Data is kind of manager module to request data at API with input queries.\n * @author NHN FE dev Lab. <dl_javascript@nhn.com>\n */\nvar snippet = __webpack_require__(/*! tui-code-snippet */ \"tui-code-snippet\");\nvar $ = __webpack_require__(/*! jquery */ \"jquery\");\nvar CALLBACK_NAME = 'dataCallback',\n  SERACH_QUERY_IDENTIFIER = 'q';\n\nvar forEach = snippet.forEach,\n  map = snippet.map,\n  isEmpty = snippet.isEmpty,\n  extend = snippet.extend;\n\n/**\n * Unit of auto complete connecting server.\n * @ignore\n * @constructor\n */\nvar Data = snippet.defineClass(\n  /** @lends Data.prototype */ {\n    init: function(autoCompleteObj, options) {\n      this.autoCompleteObj = autoCompleteObj;\n      this.options = options;\n    },\n\n    /**\n     * Request data at api server use jsonp\n     * @param {String} keyword String to request at server\n     */\n    request: function(keyword) {\n      var rsKeyWrod = keyword.replace(/\\s/g, ''),\n        acObj = this.autoCompleteObj,\n        keyData;\n\n      if (!keyword || !rsKeyWrod) {\n        acObj.hideResultList();\n\n        return;\n      }\n\n      this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;\n      $.ajax(this.options.searchUrl, {\n        dataType: 'jsonp',\n        jsonpCallback: CALLBACK_NAME,\n        data: this.options.searchApi,\n        type: 'get',\n        success: $.proxy(function(dataObj) {\n          try {\n            keyData = this._getCollectionData(dataObj);\n            acObj.setQueries(dataObj.query);\n            acObj.setServerData(keyData);\n            acObj.clearReadyValue();\n          } catch (e) {\n            throw new Error('[DataManager] invalid response data.', e);\n          }\n        }, this)\n      });\n    },\n\n    /**\n     * Make collection data to display\n     * @param {object} dataObj Collection data\n     * @returns {Array}\n     * @private\n     */\n    _getCollectionData: function(dataObj) {\n      var collection = dataObj.collections,\n        itemDataList = [];\n\n      forEach(\n        collection,\n        function(itemSet) {\n          var keys;\n\n          if (isEmpty(itemSet.items)) {\n            return;\n          }\n\n          keys = this._getRedirectData(itemSet);\n          itemDataList.push({\n            type: 'title',\n            values: [itemSet.title]\n          });\n          itemDataList = itemDataList.concat(keys);\n        },\n        this\n      );\n\n      return itemDataList;\n    },\n\n    /**\n     * Make item of collection to display\n     * @param {object} itemSet Item of collection data\n     * @private\n     * @returns {Array}\n     */\n    _getRedirectData: function(itemSet) {\n      var defaultData = {\n          type: itemSet.type,\n          index: itemSet.index,\n          dest: itemSet.destination\n        },\n        items = itemSet.items.slice(0, this.options.viewCount - 1);\n\n      items = map(items, function(item) {\n        return extend(\n          {\n            values: item\n          },\n          defaultData\n        );\n      });\n\n      return items;\n    }\n  }\n);\n\nmodule.exports = Data;\n\n\n//# sourceURL=webpack://tui.AutoComplete/./src/js/manager/data.js?");
+
+/***/ }),
+
+/***/ "./src/js/manager/input.js":
+/*!*********************************!*\
+  !*** ./src/js/manager/input.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/**\n * @fileOverview Input is kind of manager module to support input element events and all of input functions.\n * @author NHN FE dev Lab <dl_javascript@nhn.com>\n */\nvar snippet = __webpack_require__(/*! tui-code-snippet */ \"tui-code-snippet\");\nvar $ = __webpack_require__(/*! jquery */ \"jquery\");\n\n/**\n * Unit of auto complete component that belong with input element.\n * @ignore\n * @constructor\n */\nvar Input = snippet.defineClass(\n  /** @lends Input.prototype */ {\n    /**\n     * keyboard Input KeyCode enum\n     */\n    keyCodeMap: {\n      TAB: 9,\n      UP_ARROW: 38,\n      DOWN_ARROW: 40,\n      ESC: 27\n    },\n\n    /**\n     * Initialize\n     * @param {Object} autoCompleteObj AutoComplete instance\n     * @param {object} options auto complete options\n     */\n    init: function(autoCompleteObj, options) {\n      this.autoCompleteObj = autoCompleteObj;\n      this.options = options;\n\n      /**\n       * Flag to distinguish new changed inputValue from moving-value in resultList\n       * @type {boolean}\n       */\n      this.isKeyMoving = false;\n\n      // Save elements from configuration.\n      this.$searchBox = this.options.searchBoxElement;\n      this.$toggleBtn = this.options.toggleBtnElement;\n      this.$orgQuery = this.options.orgQueryElement;\n      this.$formElement = this.options.formElement;\n      this.prevValue = '';\n\n      this._attachEvent();\n    },\n\n    /**\n     * Return input element value\n     * @returns {String} Searchbox value\n     */\n    getValue: function() {\n      return this.$searchBox.val();\n    },\n\n    /**\n     * Set keyword to input element\n     * @param {String} str The keyword to set value.\n     */\n    setValue: function(str) {\n      this.$searchBox.val(str);\n    },\n\n    /**\n     * Read config files parameter option and set parameter.\n     * @param {Array|string} subQueryValues The subQueryValues from resultList\n     * @param {number|string} index The index for subQuerySet in config\n     */\n    setParams: function(subQueryValues, index) {\n      if (subQueryValues && snippet.isString(subQueryValues)) {\n        subQueryValues = subQueryValues.split(',');\n      }\n\n      if (!subQueryValues || snippet.isEmpty(subQueryValues)) {\n        return;\n      }\n      this._createParamSetByType(subQueryValues, index);\n    },\n\n    /**\n     * Create inputElement by type\n     * @param {Array|string} subQueryValues The subQueryValues from resultList\n     * @param {number|string} index The index for subQuerySet in config\n     * @private\n     */\n    _createParamSetByType: function(subQueryValues, index) {\n      var options = this.options,\n        listConfig = options.listConfig[index],\n        subQuerySetIndex = listConfig.subQuerySet,\n        staticParamsIndex = listConfig.staticParams,\n        subQueryKeys = options.subQuerySet[subQuerySetIndex],\n        staticParams = options.staticParams[staticParamsIndex];\n\n      if (!this.hiddens) {\n        this._createParamContainer();\n      }\n\n      snippet.forEach(\n        subQueryValues,\n        function(value, idx) {\n          var key = subQueryKeys[idx];\n\n          this.hiddens.append(\n            $('<input type=\"hidden\" name=\"' + key + '\" value=\"' + value + '\" />')\n          );\n        },\n        this\n      );\n\n      this._createStaticParams(staticParams);\n    },\n\n    /**\n     * Create static parameters\n     * @param {string} staticParams Static parameters\n     * @private\n     */\n    _createStaticParams: function(staticParams) {\n      if (!staticParams) {\n        return;\n      }\n\n      staticParams = staticParams.split(',');\n      snippet.forEach(\n        staticParams,\n        function(value) {\n          var val = value.split('=');\n\n          this.hiddens.append(\n            $('<input type=\"hidden\" name=\"' + val[0] + '\" value=\"' + val[1] + '\" />')\n          );\n        },\n        this\n      );\n    },\n\n    /**\n     * Create wrapper that become container of hidden elements.\n     * @private\n     */\n    _createParamContainer: function() {\n      this.hiddens = $('<div class=\"hidden-inputs\"></div>')\n        .hide()\n        .appendTo(this.$formElement);\n    },\n\n    /**\n     * Change toggle button image.\n     * @param {Boolean} isUse 자동완성 사용 여부\n     */\n    setToggleBtnImg: function(isUse) {\n      if (!this.options.toggleImg || snippet.isEmpty(this.$toggleBtn)) {\n        return;\n      }\n\n      if (isUse) {\n        this.$toggleBtn.attr('src', this.options.toggleImg.on);\n      } else {\n        this.$toggleBtn.attr('src', this.options.toggleImg.off);\n      }\n    },\n\n    /**\n     * Event binding\n     * @private\n     */\n    _attachEvent: function() {\n      this.$searchBox.on({\n        focus: $.proxy(this._onFocus, this),\n        blur: $.proxy(this._onBlur, this),\n        keydown: $.proxy(this._onKeyDown, this),\n        click: $.proxy(this._onClick, this)\n      });\n\n      if (!snippet.isEmpty(this.$toggleBtn)) {\n        this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));\n      }\n    },\n\n    /**\n     * Save user query into hidden element.\n     * @param {String} str The string typed by user\n     * @private\n     */\n    _setOrgQuery: function(str) {\n      this.$orgQuery.val(str);\n    },\n\n    /**\n     * Input element onclick event handler\n     * @private\n     * @param {MouseEvent} event Mouse event\n     * @returns {boolean} False if no input-keyword or not use auto-complete\n     */\n    _onClick: function(event) {\n      // 입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.\n      if (!this.autoCompleteObj.getValue() || !this.autoCompleteObj.isUseAutoComplete()) {\n        return false;\n      }\n\n      if (!this.autoCompleteObj.isShowResultList()) {\n        this.autoCompleteObj.showResultList();\n      }\n      event.stopPropagation();\n\n      return true;\n    },\n\n    /**\n     * Input element focus event handler\n     * @private\n     */\n    _onFocus: function() {\n      // setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.\n      this.intervalId = setInterval($.proxy(this._onWatch, this), this.options.watchInterval);\n    },\n\n    /**\n     * Roop for check update input element\n     * @private\n     */\n    _onWatch: function() {\n      var searchBoxValue = this.getValue();\n\n      if (!searchBoxValue) {\n        this.autoCompleteObj.hideResultList();\n        this.prevValue = '';\n        this._setOrgQuery('');\n\n        return;\n      }\n\n      if (this.isKeyMoving) {\n        this._setOrgQuery(searchBoxValue);\n        this.prevValue = searchBoxValue;\n      } else if (this.prevValue !== searchBoxValue) {\n        this._onChange();\n      }\n    },\n\n    /**\n     * Input element onchange event handler\n     * @private\n     */\n    _onChange: function() {\n      var acObj = this.autoCompleteObj,\n        searchBoxValue = this.getValue();\n\n      if (!this.autoCompleteObj.isUseAutoComplete()) {\n        return;\n      }\n\n      if (acObj.isIdle) {\n        acObj.isIdle = false;\n        acObj.request(searchBoxValue);\n      } else {\n        acObj.readyValue = searchBoxValue;\n        acObj.showResultList();\n      }\n      this.prevValue = searchBoxValue;\n    },\n\n    /**\n     * Input element blur event handler\n     * @private\n     */\n    _onBlur: function() {\n      clearInterval(this.intervalId);\n      this.intervalId = null;\n    },\n\n    /**\n     * Input element keydown event handler\n     * Set actino by input value\n     * @param {Event} event keyDown Event instance\n     * @private\n     */\n    /* eslint-disable complexity */\n    _onKeyDown: function(event) {\n      var acObj = this.autoCompleteObj,\n        flow,\n        codeMap,\n        flowMap;\n\n      if (!acObj.isUseAutoComplete() || !acObj.isShowResultList()) {\n        return;\n      }\n\n      codeMap = this.keyCodeMap;\n      flowMap = acObj.flowMap;\n      switch (event.keyCode) {\n        case codeMap.TAB:\n          event.preventDefault();\n          flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;\n          break;\n        case codeMap.DOWN_ARROW:\n          flow = flowMap.NEXT;\n          break;\n        case codeMap.UP_ARROW:\n          flow = flowMap.PREV;\n          break;\n        case codeMap.ESC:\n          acObj.hideResultList();\n          break;\n        default:\n          break;\n      }\n\n      if (flow) {\n        this.isKeyMoving = true;\n        acObj.moveNextResult(flow);\n      } else {\n        this.isKeyMoving = false;\n      }\n    },\n    /* eslint-enable complexity */\n\n    /**\n     * Toggle button click event handler\n     * @param {MouseEvent} event Mouse click event\n     * @private\n     */\n    _onClickToggle: function(event) {\n      var curValue = this.getValue();\n\n      event.stopPropagation();\n\n      if (!this.autoCompleteObj.isUseAutoComplete()) {\n        this.autoCompleteObj.setCookieValue(true);\n        this.autoCompleteObj.changeOnOffText(true);\n        if (!curValue) {\n          return;\n        }\n        if (this.prevValue !== curValue) {\n          this.autoCompleteObj.request(curValue);\n        } else {\n          this.autoCompleteObj.showResultList();\n        }\n      } else {\n        this.autoCompleteObj.setCookieValue(false);\n        this.autoCompleteObj.changeOnOffText(false);\n        this.autoCompleteObj.hideResultList();\n      }\n    }\n  }\n);\n\nmodule.exports = Input;\n\n\n//# sourceURL=webpack://tui.AutoComplete/./src/js/manager/input.js?");
+
+/***/ }),
+
+/***/ "./src/js/manager/result.js":
+/*!**********************************!*\
+  !*** ./src/js/manager/result.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/**\n * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.\n * @author  NHN FE dev Lab<dl_javascript@nhn.com>\n */\nvar snippet = __webpack_require__(/*! tui-code-snippet */ \"tui-code-snippet\");\nvar $ = __webpack_require__(/*! jquery */ \"jquery\");\nvar DEFAULT_VIEW_COUNT = 10,\n  WHITE_SPACES = '[\\\\s]*';\n\nvar isEmpty = snippet.isEmpty,\n  forEach = snippet.forEach,\n  map = snippet.map;\n\nvar rIsSpeicalCharacters = /[\\\\^$.*+?()[\\]{}|]/,\n  rWhiteSpace = '/s+/g';\n\n/**\n * Unit of auto complete that belong with search result list.\n * Handle the submit data from resultList.\n * See {@link Result.prototype._orderElement} which set the request data from arrow-key input\n * @ignore\n * @constructor\n */\nvar Result = snippet.defineClass(\n  /** @lends Result.prototype */ {\n    init: function(autoCompleteObj, options) {\n      this.autoCompleteObj = autoCompleteObj;\n      this.options = options;\n\n      this.$resultList = options.resultListElement;\n      this.viewCount = options.viewCount || DEFAULT_VIEW_COUNT;\n      this.$onOffTxt = options.onoffTextElement;\n      this.mouseOverClass = options.mouseOverClass;\n      this.flowMap = autoCompleteObj.flowMap;\n\n      this._attachEvent();\n      this.$selectedElement = $();\n    },\n\n    /**\n     * Delete last result list\n     * @private\n     */\n    _deleteBeforeElement: function() {\n      this.$selectedElement = $();\n      this.$resultList.hide().html('');\n    },\n\n    /**\n     * Draw result form api server\n     * @param {Array} dataArr Result data\n     */\n    draw: function(dataArr) {\n      var len = dataArr.length;\n\n      this._deleteBeforeElement();\n      if (len < 1) {\n        this._hideBottomArea();\n      } else {\n        this._makeResultList(dataArr, len);\n      }\n      this.showResultList();\n    },\n\n    /**\n     * Make search result list element\n     * @param {Array} dataArr - Data array\n     * @param {number} len - Length of dataArray\n     * @private\n     */\n    _makeResultList: function(dataArr, len) {\n      var template = this.options.template,\n        listConfig = this.options.listConfig,\n        useTitle = this.options.useTitle && !!template.title,\n        tmpl,\n        index,\n        tmplValue,\n        i,\n        data;\n\n      for (i = 0; i < len; i += 1) {\n        data = dataArr[i];\n        index = data.index;\n        tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;\n\n        if (data.type === 'title') {\n          tmpl = template.title;\n          if (!useTitle) {\n            continue;\n          }\n        }\n        tmplValue = this._getTmplData(tmpl.attr, data);\n        $(this._applyTemplate(tmpl.element, tmplValue))\n          .data({\n            params: tmplValue.params,\n            index: index\n          })\n          .appendTo(this.$resultList);\n      }\n    },\n\n    /**\n     * Make template data\n     * @param {Array} attrs Template attributes\n     * @param {string|Object} data The data to make template\n     * @returns {Object} Template data\n     * @private\n     */\n    _getTmplData: function(attrs, data) {\n      var tmplValue = {},\n        values = data.values || null;\n\n      if (snippet.isString(data)) {\n        tmplValue[attrs[0]] = data;\n\n        return tmplValue;\n      }\n\n      forEach(attrs, function(attr, idx) {\n        tmplValue[attr] = values[idx];\n      });\n      if (attrs.length < values.length) {\n        tmplValue.params = values.slice(attrs.length);\n      }\n\n      return tmplValue;\n    },\n\n    /**\n     * Return whether result list show or not\n     * @returns {Boolean}\n     */\n    isShowResultList: function() {\n      return this.$resultList.css('display') === 'block';\n    },\n\n    /**\n     * Hide result list area\n     */\n    hideResultList: function() {\n      this.$resultList.hide();\n      this._hideBottomArea();\n      this.autoCompleteObj.isIdle = true;\n\n      /**\n       * Fired when hide the result list\n       * @event AutoComplete#close\n       */\n      this.autoCompleteObj.fire('close');\n    },\n\n    /**\n     * Show result list area\n     */\n    showResultList: function() {\n      this.$resultList.show();\n      this._showBottomArea();\n    },\n\n    /**\n     * Move focus to next item, change input element value as focus value.\n     * @param {string} flow Direction by key code\n     */\n    moveNextResult: function(flow) {\n      var $selectEl = this.$selectedElement,\n        keyword;\n\n      if (!isEmpty($selectEl)) {\n        $selectEl.removeClass(this.mouseOverClass);\n      }\n      $selectEl = this.$selectedElement = this._orderElement(flow);\n\n      keyword = $selectEl.find('.keyword-field').text();\n      if (keyword) {\n        $selectEl.addClass(this.mouseOverClass);\n        this.autoCompleteObj.setValue(keyword);\n        this._setSubmitOption();\n      } else {\n        this.moveNextResult(flow);\n      }\n    },\n\n    /**\n     * Chage text by whether auto complete use or not\n     * @param {Boolean} isUse on/off 여부\n     */\n    changeOnOffText: function(isUse) {\n      if (isUse) {\n        this.$onOffTxt.text('자동완성 끄기');\n      } else {\n        this.$onOffTxt.text('자동완성 켜기');\n      }\n    },\n\n    /**\n     * Attach auto complete event belongs with result list\n     * @private\n     */\n    _attachEvent: function() {\n      this.$resultList.on({\n        mouseover: $.proxy(this._onMouseOver, this),\n        click: $.proxy(this._onClick, this)\n      });\n\n      if (this.$onOffTxt) {\n        this.$onOffTxt.on(\n          'click',\n          $.proxy(function() {\n            this._useAutoComplete();\n          }, this)\n        );\n      }\n\n      $(document).on(\n        'click',\n        $.proxy(function() {\n          this.hideResultList();\n        }, this)\n      );\n    },\n\n    /**\n     * Highlight key word\n     * @param {string} tmplStr Template string\n     * @param {Object} dataObj Replace string map\n     * @returns {string}\n     * @private\n     */\n    _applyTemplate: function(tmplStr, dataObj) {\n      snippet.forEach(\n        dataObj,\n        function(value, key) {\n          if (key === 'subject') {\n            value = this._highlight(value);\n          }\n          tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);\n        },\n        this\n      );\n\n      return tmplStr;\n    },\n\n    /**\n     * Return applied highlight effect key word\n     * (text: Nike air  /  query : [Nike] / Result : <strong>Nike </strong>air\n     * text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 <strong>rhdiddl</strong>와 <strong>고양이</strong>\n     * @param {String} text Input string\n     * @returns {String}\n     * @private\n     */\n    _highlight: function(text) {\n      var queries = this.autoCompleteObj.queries,\n        returnStr;\n\n      snippet.forEach(\n        queries,\n        function(query) {\n          if (!returnStr) {\n            returnStr = text;\n          }\n          returnStr = this._makeStrong(returnStr, query);\n        },\n        this\n      );\n\n      return returnStr || text;\n    },\n\n    /**\n     * Contain text by strong tag\n     * @param {String} text Recommend search data  추천검색어 데이터\n     * @param {String} query Input keyword\n     * @returns {String}\n     * @private\n     */\n    _makeStrong: function(text, query) {\n      var tmpArr, regQuery;\n\n      if (!query || query.length < 1) {\n        return text;\n      }\n\n      tmpArr = query.replace(rWhiteSpace, '').split('');\n      tmpArr = map(tmpArr, function(char) {\n        if (rIsSpeicalCharacters.test(char)) {\n          return '\\\\' + char;\n        }\n\n        return char;\n      });\n      regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');\n\n      return text.replace(regQuery, function(match) {\n        return '<strong>' + match + '</strong>';\n      });\n    },\n\n    /**\n     * Return the first result item\n     * @returns {jQuery}\n     * @private\n     */\n    _getFirst: function() {\n      return this._orderStage(this.flowMap.FIRST);\n    },\n\n    /**\n     * Return the last result item\n     * @returns {jQuery}\n     * @private\n     */\n    _getLast: function() {\n      return this._orderStage(this.flowMap.LAST);\n    },\n\n    /**\n     * Return whether first or last\n     * @param {string} type First/end element type\n     * @returns {jQuery}\n     * @private\n     */\n    _orderStage: function(type) {\n      var flowMap = this.flowMap;\n      var $children = this.$resultList.children();\n      var reuslt = null;\n\n      if (type === flowMap.FIRST) {\n        reuslt = $children.first();\n      } else if (type === flowMap.LAST) {\n        reuslt = $children.last();\n      }\n\n      return reuslt;\n    },\n\n    /**\n     * Return previous or next element from resultList by direction\n     * @param {string} type The direction type for finding element\n     * @returns {jQuery}\n     * @private\n     */\n    _orderElement: function(type) {\n      var $selectedElement = this.$selectedElement,\n        $order;\n\n      if (type === this.flowMap.NEXT) {\n        $order = $selectedElement.next();\n\n        return $order.length ? $order : this._getFirst();\n      }\n      $order = $selectedElement.prev();\n\n      return $order.length ? $order : this._getLast();\n    },\n\n    /**\n     * Set whether auto complete use or not and change switch's state.\n     * @private\n     */\n    _useAutoComplete: function() {\n      var isUse = this.autoCompleteObj.isUseAutoComplete();\n\n      this.changeOnOffText(isUse);\n      this.autoCompleteObj.setCookieValue(isUse);\n    },\n\n    /**\n     * Show auto complete switch area\n     * @private\n     */\n    _showBottomArea: function() {\n      if (this.$onOffTxt) {\n        this.$onOffTxt.show();\n      }\n    },\n\n    /**\n     * Hide auto complete switch area\n     * @private\n     */\n    _hideBottomArea: function() {\n      if (this.$onOffTxt) {\n        this.$onOffTxt.hide();\n      }\n    },\n\n    /**\n     * Change action attribute of form element and set addition values in hidden type elements.\n     * (Called when click the <li>)\n     * @param {element} [$target] Submit options target\n     * @private\n     *\n     */\n    _setSubmitOption: function($target) {\n      var $selectField = $target ? $($target).closest('li') : this.$selectedElement,\n        paramsString = $selectField.data('params'),\n        index = $selectField.data('index'),\n        config = this.options.listConfig[index],\n        action = this.options.actions[config.action],\n        $formElement = this.options.formElement;\n\n      $formElement.attr('action', action);\n      this._clearSubmitOption();\n      this.autoCompleteObj.setParams(paramsString, index);\n\n      /**\n       * Fired when the user's selected element in result list is changed\n       * @event AutoComplete#change\n       * @param {Object} data - Data for submit\n       *  @param {string} data.index - Index of collection\n       *  @param {string} data.action - Form action\n       *  @param {string} data.params - Parameters\n       */\n      this.autoCompleteObj.fire('change', {\n        index: index,\n        action: action,\n        params: paramsString\n      });\n    },\n\n    /**\n     * Reset form element.\n     * @private\n     */\n    _clearSubmitOption: function() {\n      var $formElement = this.options.formElement;\n\n      $formElement.find('.hidden-inputs').html('');\n    },\n\n    /**\n     * Result list mouseover event handler\n     * @param {Event} event Event instanse\n     * @private\n     */\n    _onMouseOver: function(event) {\n      var $target = $(event.target),\n        $arr = this.$resultList.find('li'),\n        $selectedItem = $target.closest('li');\n\n      $arr.removeClass(this.mouseOverClass);\n      if ($selectedItem.find('.keyword-field').length) {\n        $selectedItem.addClass(this.mouseOverClass);\n      }\n      this.$selectedElement = $target;\n    },\n\n    /**\n     * Result list click evnet handler\n     * Submit form element.\n     * @param {Event} event Event instanse\n     * @private\n     */\n    _onClick: function(event) {\n      var $target = $(event.target),\n        $formElement = this.options.formElement,\n        $selectField = $target.closest('li'),\n        $keywordField = $selectField.find('.keyword-field'),\n        selectedKeyword = $keywordField.text();\n\n      this.autoCompleteObj.setValue(selectedKeyword);\n      if (selectedKeyword) {\n        this._setSubmitOption($target);\n        $formElement.submit();\n      }\n    }\n  }\n);\n\nmodule.exports = Result;\n\n\n//# sourceURL=webpack://tui.AutoComplete/./src/js/manager/result.js?");
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************************************************************************!*\
+  !*** external {"commonjs":"jquery","commonjs2":"jquery","amd":"jquery","root":"$"} ***!
+  \*************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+eval("module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;\n\n//# sourceURL=webpack://tui.AutoComplete/external_%7B%22commonjs%22:%22jquery%22,%22commonjs2%22:%22jquery%22,%22amd%22:%22jquery%22,%22root%22:%22$%22%7D?");
 
 /***/ }),
-/* 2 */
+
+/***/ "js-cookie":
+/*!****************************************************************************************************!*\
+  !*** external {"commonjs":"js-cookie","commonjs2":"js-cookie","amd":"js-cookie","root":"Cookies"} ***!
+  \****************************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+eval("module.exports = __WEBPACK_EXTERNAL_MODULE_js_cookie__;\n\n//# sourceURL=webpack://tui.AutoComplete/external_%7B%22commonjs%22:%22js-cookie%22,%22commonjs2%22:%22js-cookie%22,%22amd%22:%22js-cookie%22,%22root%22:%22Cookies%22%7D?");
 
 /***/ }),
-/* 3 */
+
+/***/ "tui-code-snippet":
+/*!******************************************************************************************************************************!*\
+  !*** external {"commonjs":"tui-code-snippet","commonjs2":"tui-code-snippet","amd":"tui-code-snippet","root":["tui","util"]} ***!
+  \******************************************************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * @fileoverview Data is kind of manager module to request data at API with input queries.
-	 * @author NHN FE dev Lab. <dl_javascript@nhn.com>
-	 */
-	var snippet = __webpack_require__(1);
-	var $ = __webpack_require__(3);
-	var CALLBACK_NAME = 'dataCallback',
-	    SERACH_QUERY_IDENTIFIER = 'q';
-
-	var forEach = snippet.forEach,
-	    map = snippet.map,
-	    isEmpty = snippet.isEmpty,
-	    extend = snippet.extend;
-
-	/**
-	 * Unit of auto complete connecting server.
-	 * @ignore
-	 * @constructor
-	 */
-	var Data = snippet.defineClass(/** @lends Data.prototype */{
-	    init: function(autoCompleteObj, options) {
-	        this.autoCompleteObj = autoCompleteObj;
-	        this.options = options;
-	    },
-
-	    /**
-	     * Request data at api server use jsonp
-	     * @param {String} keyword String to request at server
-	     */
-	    request: function(keyword) {
-	        var rsKeyWrod = keyword.replace(/\s/g, ''),
-	            acObj = this.autoCompleteObj,
-	            keyData;
-
-	        if (!keyword || !rsKeyWrod) {
-	            acObj.hideResultList();
-
-	            return;
-	        }
-
-	        this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
-	        $.ajax(this.options.searchUrl, {
-	            'dataType': 'jsonp',
-	            'jsonpCallback': CALLBACK_NAME,
-	            'data': this.options.searchApi,
-	            'type': 'get',
-	            'success': $.proxy(function(dataObj) {
-	                try {
-	                    keyData = this._getCollectionData(dataObj);
-	                    acObj.setQueries(dataObj.query);
-	                    acObj.setServerData(keyData);
-	                    acObj.clearReadyValue();
-	                } catch (e) {
-	                    throw new Error('[DataManager] invalid response data.', e);
-	                }
-	            }, this)
-	        });
-	    },
-
-	    /**
-	     * Make collection data to display
-	     * @param {object} dataObj Collection data
-	     * @returns {Array}
-	     * @private
-	     */
-	    _getCollectionData: function(dataObj) {
-	        var collection = dataObj.collections,
-	            itemDataList = [];
-
-	        forEach(collection, function(itemSet) {
-	            var keys;
-
-	            if (isEmpty(itemSet.items)) {
-	                return;
-	            }
-
-	            keys = this._getRedirectData(itemSet);
-	            itemDataList.push({
-	                type: 'title',
-	                values: [itemSet.title]
-	            });
-	            itemDataList = itemDataList.concat(keys);
-	        }, this);
-
-	        return itemDataList;
-	    },
-
-	    /**
-	     * Make item of collection to display
-	     * @param {object} itemSet Item of collection data
-	     * @private
-	     * @returns {Array}
-	     */
-	    _getRedirectData: function(itemSet) {
-	        var defaultData = {
-	                type: itemSet.type,
-	                index: itemSet.index,
-	                dest: itemSet.destination
-	            },
-	            items = itemSet.items.slice(0, this.options.viewCount - 1);
-
-	        items = map(items, function(item) {
-	            return extend({
-	                values: item
-	            }, defaultData);
-	        });
-
-	        return items;
-	    }
-	});
-
-	module.exports = Data;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * @fileOverview Input is kind of manager module to support input element events and all of input functions.
-	 * @author NHN FE dev Lab <dl_javascript@nhn.com>
-	 */
-	var snippet = __webpack_require__(1);
-	var $ = __webpack_require__(3);
-
-	/**
-	 * Unit of auto complete component that belong with input element.
-	 * @ignore
-	 * @constructor
-	 */
-	var Input = snippet.defineClass(/** @lends Input.prototype */{
-	    /**
-	     * keyboard Input KeyCode enum
-	     */
-	    keyCodeMap: {
-	        'TAB': 9,
-	        'UP_ARROW': 38,
-	        'DOWN_ARROW': 40,
-	        'ESC': 27
-	    },
-
-	    /**
-	     * Initialize
-	     * @param {Object} autoCompleteObj AutoComplete instance
-	     * @param {object} options auto complete options
-	     */
-	    init: function(autoCompleteObj, options) {
-	        this.autoCompleteObj = autoCompleteObj;
-	        this.options = options;
-
-	        /**
-	         * Flag to distinguish new changed inputValue from moving-value in resultList
-	         * @type {boolean}
-	         */
-	        this.isKeyMoving = false;
-
-	        // Save elements from configuration.
-	        this.$searchBox = this.options.searchBoxElement;
-	        this.$toggleBtn = this.options.toggleBtnElement;
-	        this.$orgQuery = this.options.orgQueryElement;
-	        this.$formElement = this.options.formElement;
-	        this.prevValue = '';
-
-	        this._attachEvent();
-	    },
-
-	    /**
-	     * Return input element value
-	     * @returns {String} Searchbox value
-	     */
-	    getValue: function() {
-	        return this.$searchBox.val();
-	    },
-
-	    /**
-	     * Set keyword to input element
-	     * @param {String} str The keyword to set value.
-	     */
-	    setValue: function(str) {
-	        this.$searchBox.val(str);
-	    },
-
-	    /**
-	     * Read config files parameter option and set parameter.
-	     * @param {Array|string} subQueryValues The subQueryValues from resultList
-	     * @param {number|string} index The index for subQuerySet in config
-	     */
-	    setParams: function(subQueryValues, index) {
-	        if (subQueryValues && snippet.isString(subQueryValues)) {
-	            subQueryValues = subQueryValues.split(',');
-	        }
-
-	        if ((!subQueryValues || snippet.isEmpty(subQueryValues))) {
-	            return;
-	        }
-	        this._createParamSetByType(subQueryValues, index);
-	    },
-
-	    /**
-	     * Create inputElement by type
-	     * @param {Array|string} subQueryValues The subQueryValues from resultList
-	     * @param {number|string} index The index for subQuerySet in config
-	     * @private
-	     */
-	    _createParamSetByType: function(subQueryValues, index) {
-	        var options = this.options,
-	            listConfig = options.listConfig[index],
-	            subQuerySetIndex = listConfig.subQuerySet,
-	            staticParamsIndex = listConfig.staticParams,
-	            subQueryKeys = options.subQuerySet[subQuerySetIndex],
-	            staticParams = options.staticParams[staticParamsIndex];
-
-	        if (!this.hiddens) {
-	            this._createParamContainer();
-	        }
-
-	        snippet.forEach(subQueryValues, function(value, idx) {
-	            var key = subQueryKeys[idx];
-
-	            this.hiddens.append($('<input type="hidden" name="' + key + '" value="' + value + '" />'));
-	        }, this);
-
-	        this._createStaticParams(staticParams);
-	    },
-
-	    /**
-	     * Create static parameters
-	     * @param {string} staticParams Static parameters
-	     * @private
-	     */
-	    _createStaticParams: function(staticParams) {
-	        if (!staticParams) {
-	            return;
-	        }
-
-	        staticParams = staticParams.split(',');
-	        snippet.forEach(staticParams, function(value) {
-	            var val = value.split('=');
-
-	            this.hiddens.append($('<input type="hidden" name="' + val[0] + '" value="' + val[1] + '" />'));
-	        }, this);
-	    },
-
-	    /**
-	     * Create wrapper that become container of hidden elements.
-	     * @private
-	     */
-	    _createParamContainer: function() {
-	        this.hiddens = $('<div class="hidden-inputs"></div>')
-	            .hide()
-	            .appendTo(this.$formElement);
-	    },
-
-	    /**
-	     * Change toggle button image.
-	     * @param {Boolean} isUse 자동완성 사용 여부
-	     */
-	    setToggleBtnImg: function(isUse) {
-	        if (!this.options.toggleImg || snippet.isEmpty(this.$toggleBtn)) {
-	            return;
-	        }
-
-	        if (isUse) {
-	            this.$toggleBtn.attr('src', this.options.toggleImg.on);
-	        } else {
-	            this.$toggleBtn.attr('src', this.options.toggleImg.off);
-	        }
-	    },
-
-	    /**
-	     * Event binding
-	     * @private
-	     */
-	    _attachEvent: function() {
-	        this.$searchBox.on({
-	            focus: $.proxy(this._onFocus, this),
-	            blur: $.proxy(this._onBlur, this),
-	            keydown: $.proxy(this._onKeyDown, this),
-	            click: $.proxy(this._onClick, this)
-	        });
-
-	        if (!snippet.isEmpty(this.$toggleBtn)) {
-	            this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
-	        }
-	    },
-
-	    /**
-	     * Save user query into hidden element.
-	     * @param {String} str The string typed by user
-	     * @private
-	     */
-	    _setOrgQuery: function(str) {
-	        this.$orgQuery.val(str);
-	    },
-
-	    /**
-	     * Input element onclick event handler
-	     * @private
-	     * @param {MouseEvent} event Mouse event
-	     * @returns {boolean} False if no input-keyword or not use auto-complete
-	     */
-	    _onClick: function(event) {
-	        // 입력된 키워드가 없거나 자동완성 기능 사용하지 않으면 펼칠 필요 없으므로 그냥 리턴하고 끝.
-	        if (!this.autoCompleteObj.getValue() ||
-	            !this.autoCompleteObj.isUseAutoComplete()) {
-	            return false;
-	        }
-
-	        if (!this.autoCompleteObj.isShowResultList()) {
-	            this.autoCompleteObj.showResultList();
-	        }
-	        event.stopPropagation();
-
-	        return true;
-	    },
-
-	    /**
-	     * Input element focus event handler
-	     * @private
-	     */
-	    _onFocus: function() {
-	        // setInterval 설정해서 일정 시간 주기로 _onWatch 함수를 실행한다.
-	        this.intervalId = setInterval(
-	            $.proxy(this._onWatch, this),
-	            this.options.watchInterval
-	        );
-	    },
-
-	    /**
-	     * Roop for check update input element
-	     * @private
-	     */
-	    _onWatch: function() {
-	        var searchBoxValue = this.getValue();
-
-	        if (!searchBoxValue) {
-	            this.autoCompleteObj.hideResultList();
-	            this.prevValue = '';
-	            this._setOrgQuery('');
-
-	            return;
-	        }
-
-	        if (this.isKeyMoving) {
-	            this._setOrgQuery(searchBoxValue);
-	            this.prevValue = searchBoxValue;
-	        } else if (this.prevValue !== searchBoxValue) {
-	            this._onChange();
-	        }
-	    },
-
-	    /**
-	     * Input element onchange event handler
-	     * @private
-	     */
-	    _onChange: function() {
-	        var acObj = this.autoCompleteObj,
-	            searchBoxValue = this.getValue();
-
-	        if (!this.autoCompleteObj.isUseAutoComplete()) {
-	            return;
-	        }
-
-	        if (acObj.isIdle) {
-	            acObj.isIdle = false;
-	            acObj.request(searchBoxValue);
-	        } else {
-	            acObj.readyValue = searchBoxValue;
-	            acObj.showResultList();
-	        }
-	        this.prevValue = searchBoxValue;
-	    },
-
-	    /**
-	     * Input element blur event handler
-	     * @private
-	     */
-	    _onBlur: function() {
-	        clearInterval(this.intervalId);
-	        this.intervalId = null;
-	    },
-
-	    /**
-	     * Input element keydown event handler
-	     * Set actino by input value
-	     * @param {Event} event keyDown Event instance
-	     * @private
-	     */
-	    /* eslint-disable complexity */
-	    _onKeyDown: function(event) {
-	        var acObj = this.autoCompleteObj,
-	            flow, codeMap, flowMap;
-
-	        if (!acObj.isUseAutoComplete() || !acObj.isShowResultList()) {
-	            return;
-	        }
-
-	        codeMap = this.keyCodeMap;
-	        flowMap = acObj.flowMap;
-	        switch (event.keyCode) {
-	            case codeMap.TAB:
-	                event.preventDefault();
-	                flow = event.shiftKey ? flowMap.NEXT : flowMap.PREV;
-	                break;
-	            case codeMap.DOWN_ARROW:
-	                flow = flowMap.NEXT;
-	                break;
-	            case codeMap.UP_ARROW:
-	                flow = flowMap.PREV;
-	                break;
-	            case codeMap.ESC:
-	                acObj.hideResultList();
-	                break;
-	            default:
-	                break;
-	        }
-
-	        if (flow) {
-	            this.isKeyMoving = true;
-	            acObj.moveNextResult(flow);
-	        } else {
-	            this.isKeyMoving = false;
-	        }
-	    },
-	    /* eslint-enable complexity */
-
-	    /**
-	     * Toggle button click event handler
-	     * @param {MouseEvent} event Mouse click event
-	     * @private
-	     */
-	    _onClickToggle: function(event) {
-	        var curValue = this.getValue();
-
-	        event.stopPropagation();
-
-	        if (!this.autoCompleteObj.isUseAutoComplete()) {
-	            this.autoCompleteObj.setCookieValue(true);
-	            this.autoCompleteObj.changeOnOffText(true);
-	            if (!curValue) {
-	                return;
-	            }
-	            if (this.prevValue !== curValue) {
-	                this.autoCompleteObj.request(curValue);
-	            } else {
-	                this.autoCompleteObj.showResultList();
-	            }
-	        } else {
-	            this.autoCompleteObj.setCookieValue(false);
-	            this.autoCompleteObj.changeOnOffText(false);
-	            this.autoCompleteObj.hideResultList();
-	        }
-	    }
-	});
-
-	module.exports = Input;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
-	 * @author  NHN FE dev Lab<dl_javascript@nhn.com>
-	 */
-	var snippet = __webpack_require__(1);
-	var $ = __webpack_require__(3);
-	var DEFAULT_VIEW_COUNT = 10,
-	    WHITE_SPACES = '[\\s]*';
-
-	var isEmpty = snippet.isEmpty,
-	    forEach = snippet.forEach,
-	    map = snippet.map;
-
-	var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
-	    rWhiteSpace = '/s+/g';
-
-	/**
-	 * Unit of auto complete that belong with search result list.
-	 * Handle the submit data from resultList.
-	 * See {@link Result.prototype._orderElement} which set the request data from arrow-key input
-	 * @ignore
-	 * @constructor
-	 */
-	var Result = snippet.defineClass(/** @lends Result.prototype */{
-	    init: function(autoCompleteObj, options) {
-	        this.autoCompleteObj = autoCompleteObj;
-	        this.options = options;
-
-	        this.$resultList = options.resultListElement;
-	        this.viewCount = options.viewCount || DEFAULT_VIEW_COUNT;
-	        this.$onOffTxt = options.onoffTextElement;
-	        this.mouseOverClass = options.mouseOverClass;
-	        this.flowMap = autoCompleteObj.flowMap;
-
-	        this._attachEvent();
-	        this.$selectedElement = $();
-	    },
-
-	    /**
-	     * Delete last result list
-	     * @private
-	     */
-	    _deleteBeforeElement: function() {
-	        this.$selectedElement = $();
-	        this.$resultList
-	            .hide()
-	            .html('');
-	    },
-
-	    /**
-	     * Draw result form api server
-	     * @param {Array} dataArr Result data
-	     */
-	    draw: function(dataArr) {
-	        var len = dataArr.length;
-
-	        this._deleteBeforeElement();
-	        if (len < 1) {
-	            this._hideBottomArea();
-	        } else {
-	            this._makeResultList(dataArr, len);
-	        }
-	        this.showResultList();
-	    },
-
-	    /**
-	     * Make search result list element
-	     * @param {Array} dataArr - Data array
-	     * @param {number} len - Length of dataArray
-	     * @private
-	     */
-	    _makeResultList: function(dataArr, len) {
-	        var template = this.options.template,
-	            listConfig = this.options.listConfig,
-	            useTitle = (this.options.useTitle && !!template.title),
-	            tmpl, index, tmplValue, i, data;
-
-	        for (i = 0; i < len; i += 1) {
-	            data = dataArr[i];
-	            index = data.index;
-	            tmpl = listConfig[index] ? template[listConfig[index].template] : template.defaults;
-
-	            if (data.type === 'title') {
-	                tmpl = template.title;
-	                if (!useTitle) {
-	                    continue;
-	                }
-	            }
-	            tmplValue = this._getTmplData(tmpl.attr, data);
-	            $(this._applyTemplate(tmpl.element, tmplValue))
-	                .data({
-	                    'params': tmplValue.params,
-	                    'index': index
-	                })
-	                .appendTo(this.$resultList);
-	        }
-	    },
-
-	    /**
-	     * Make template data
-	     * @param {Array} attrs Template attributes
-	     * @param {string|Object} data The data to make template
-	     * @returns {Object} Template data
-	     * @private
-	     */
-	    _getTmplData: function(attrs, data) {
-	        var tmplValue = {},
-	            values = data.values || null;
-
-	        if (snippet.isString(data)) {
-	            tmplValue[attrs[0]] = data;
-
-	            return tmplValue;
-	        }
-
-	        forEach(attrs, function(attr, idx) {
-	            tmplValue[attr] = values[idx];
-	        });
-	        if (attrs.length < values.length) {
-	            tmplValue.params = values.slice(attrs.length);
-	        }
-
-	        return tmplValue;
-	    },
-
-	    /**
-	     * Return whether result list show or not
-	     * @returns {Boolean}
-	     */
-	    isShowResultList: function() {
-	        return this.$resultList.css('display') === 'block';
-	    },
-
-	    /**
-	     * Hide result list area
-	     */
-	    hideResultList: function() {
-	        this.$resultList.hide();
-	        this._hideBottomArea();
-	        this.autoCompleteObj.isIdle = true;
-
-	        /**
-	         * Fired when hide the result list
-	         * @event AutoComplete#close
-	         */
-	        this.autoCompleteObj.fire('close');
-	    },
-
-	    /**
-	     * Show result list area
-	     */
-	    showResultList: function() {
-	        this.$resultList.show();
-	        this._showBottomArea();
-	    },
-
-	    /**
-	     * Move focus to next item, change input element value as focus value.
-	     * @param {string} flow Direction by key code
-	     */
-	    moveNextResult: function(flow) {
-	        var $selectEl = this.$selectedElement,
-	            keyword;
-
-	        if (!isEmpty($selectEl)) {
-	            $selectEl.removeClass(this.mouseOverClass);
-	        }
-	        $selectEl = this.$selectedElement = this._orderElement(flow);
-
-	        keyword = $selectEl.find('.keyword-field').text();
-	        if (keyword) {
-	            $selectEl.addClass(this.mouseOverClass);
-	            this.autoCompleteObj.setValue(keyword);
-	            this._setSubmitOption();
-	        } else {
-	            this.moveNextResult(flow);
-	        }
-	    },
-
-	    /**
-	     * Chage text by whether auto complete use or not
-	     * @param {Boolean} isUse on/off 여부
-	     */
-	    changeOnOffText: function(isUse) {
-	        if (isUse) {
-	            this.$onOffTxt.text('자동완성 끄기');
-	        } else {
-	            this.$onOffTxt.text('자동완성 켜기');
-	        }
-	    },
-
-	    /**
-	     * Attach auto complete event belongs with result list
-	     * @private
-	     */
-	    _attachEvent: function() {
-	        this.$resultList.on({
-	            mouseover: $.proxy(this._onMouseOver, this),
-	            click: $.proxy(this._onClick, this)
-	        });
-
-	        if (this.$onOffTxt) {
-	            this.$onOffTxt.on('click', $.proxy(function() {
-	                this._useAutoComplete();
-	            }, this));
-	        }
-
-	        $(document).on('click', $.proxy(function() {
-	            this.hideResultList();
-	        }, this));
-	    },
-
-	    /**
-	     * Highlight key word
-	     * @param {string} tmplStr Template string
-	     * @param {Object} dataObj Replace string map
-	     * @returns {string}
-	     * @private
-	     */
-	    _applyTemplate: function(tmplStr, dataObj) {
-	        snippet.forEach(dataObj, function(value, key) {
-	            if (key === 'subject') {
-	                value = this._highlight(value);
-	            }
-	            tmplStr = tmplStr.replace(new RegExp('@' + key + '@', 'g'), value);
-	        }, this);
-
-	        return tmplStr;
-	    },
-
-	    /**
-	     * Return applied highlight effect key word
-	     * (text: Nike air  /  query : [Nike] / Result : <strong>Nike </strong>air
-	     * text : 'rhdiddl와 고양이' / query :  [rhdiddl, 고양이] / 리턴결과 <strong>rhdiddl</strong>와 <strong>고양이</strong>
-	     * @param {String} text Input string
-	     * @returns {String}
-	     * @private
-	     */
-	    _highlight: function(text) {
-	        var queries = this.autoCompleteObj.queries,
-	            returnStr;
-
-	        snippet.forEach(queries, function(query) {
-	            if (!returnStr) {
-	                returnStr = text;
-	            }
-	            returnStr = this._makeStrong(returnStr, query);
-	        }, this);
-
-	        return returnStr || text;
-	    },
-
-	    /**
-	     * Contain text by strong tag
-	     * @param {String} text Recommend search data  추천검색어 데이터
-	     * @param {String} query Input keyword
-	     * @returns {String}
-	     * @private
-	     */
-	    _makeStrong: function(text, query) {
-	        var tmpArr, regQuery;
-
-	        if (!query || query.length < 1) {
-	            return text;
-	        }
-
-	        tmpArr = query.replace(rWhiteSpace, '').split('');
-	        tmpArr = map(tmpArr, function(char) {
-	            if (rIsSpeicalCharacters.test(char)) {
-	                return '\\' + char;
-	            }
-
-	            return char;
-	        });
-	        regQuery = new RegExp(tmpArr.join(WHITE_SPACES), 'gi');
-
-	        return text.replace(regQuery, function(match) {
-	            return '<strong>' + match + '</strong>';
-	        });
-	    },
-
-	    /**
-	     * Return the first result item
-	     * @returns {jQuery}
-	     * @private
-	     */
-	    _getFirst: function() {
-	        return this._orderStage(this.flowMap.FIRST);
-	    },
-
-	    /**
-	     * Return the last result item
-	     * @returns {jQuery}
-	     * @private
-	     */
-	    _getLast: function() {
-	        return this._orderStage(this.flowMap.LAST);
-	    },
-
-	    /**
-	     * Return whether first or last
-	     * @param {string} type First/end element type
-	     * @returns {jQuery}
-	     * @private
-	     */
-	    _orderStage: function(type) {
-	        var flowMap = this.flowMap;
-	        var $children = this.$resultList.children();
-	        var reuslt = null;
-
-	        if (type === flowMap.FIRST) {
-	            reuslt = $children.first();
-	        } else if (type === flowMap.LAST) {
-	            reuslt = $children.last();
-	        }
-
-	        return reuslt;
-	    },
-
-	    /**
-	     * Return previous or next element from resultList by direction
-	     * @param {string} type The direction type for finding element
-	     * @returns {jQuery}
-	     * @private
-	     */
-	    _orderElement: function(type) {
-	        var $selectedElement = this.$selectedElement,
-	            $order;
-
-	        if (type === this.flowMap.NEXT) {
-	            $order = $selectedElement.next();
-
-	            return $order.length ? $order : this._getFirst();
-	        }
-	        $order = $selectedElement.prev();
-
-	        return $order.length ? $order : this._getLast();
-	    },
-
-	    /**
-	     * Set whether auto complete use or not and change switch's state.
-	     * @private
-	     */
-	    _useAutoComplete: function() {
-	        var isUse = this.autoCompleteObj.isUseAutoComplete();
-
-	        this.changeOnOffText(isUse);
-	        this.autoCompleteObj.setCookieValue(isUse);
-	    },
-
-	    /**
-	     * Show auto complete switch area
-	     * @private
-	     */
-	    _showBottomArea: function() {
-	        if (this.$onOffTxt) {
-	            this.$onOffTxt.show();
-	        }
-	    },
-
-	    /**
-	     * Hide auto complete switch area
-	     * @private
-	     */
-	    _hideBottomArea: function() {
-	        if (this.$onOffTxt) {
-	            this.$onOffTxt.hide();
-	        }
-	    },
-
-	    /**
-	     * Change action attribute of form element and set addition values in hidden type elements.
-	     * (Called when click the <li>)
-	     * @param {element} [$target] Submit options target
-	     * @private
-	     *
-	     */
-	    _setSubmitOption: function($target) {
-	        var $selectField = $target ? $($target).closest('li') : this.$selectedElement,
-	            paramsString = $selectField.data('params'),
-	            index = $selectField.data('index'),
-	            config = this.options.listConfig[index],
-	            action = this.options.actions[config.action],
-	            $formElement = this.options.formElement;
-
-	        $formElement.attr('action', action);
-	        this._clearSubmitOption();
-	        this.autoCompleteObj.setParams(paramsString, index);
-
-	        /**
-	         * Fired when the user's selected element in result list is changed
-	         * @event AutoComplete#change
-	         * @param {Object} data - Data for submit
-	         *  @param {string} data.index - Index of collection
-	         *  @param {string} data.action - Form action
-	         *  @param {string} data.params - Parameters
-	         */
-	        this.autoCompleteObj.fire('change', {
-	            index: index,
-	            action: action,
-	            params: paramsString
-	        });
-	    },
-
-	    /**
-	     * Reset form element.
-	     * @private
-	     */
-	    _clearSubmitOption: function() {
-	        var $formElement = this.options.formElement;
-
-	        $formElement.find('.hidden-inputs').html('');
-	    },
-
-	    /**
-	     * Result list mouseover event handler
-	     * @param {Event} event Event instanse
-	     * @private
-	     */
-	    _onMouseOver: function(event) {
-	        var $target = $(event.target),
-	            $arr = this.$resultList.find('li'),
-	            $selectedItem = $target.closest('li');
-
-	        $arr.removeClass(this.mouseOverClass);
-	        if ($selectedItem.find('.keyword-field').length) {
-	            $selectedItem.addClass(this.mouseOverClass);
-	        }
-	        this.$selectedElement = $target;
-	    },
-
-	    /**
-	     * Result list click evnet handler
-	     * Submit form element.
-	     * @param {Event} event Event instanse
-	     * @private
-	     */
-	    _onClick: function(event) {
-	        var $target = $(event.target),
-	            $formElement = this.options.formElement,
-	            $selectField = $target.closest('li'),
-	            $keywordField = $selectField.find('.keyword-field'),
-	            selectedKeyword = $keywordField.text();
-
-	        this.autoCompleteObj.setValue(selectedKeyword);
-	        if (selectedKeyword) {
-	            this._setSubmitOption($target);
-	            $formElement.submit();
-	        }
-	    }
-	});
-
-	module.exports = Result;
-
+eval("module.exports = __WEBPACK_EXTERNAL_MODULE_tui_code_snippet__;\n\n//# sourceURL=webpack://tui.AutoComplete/external_%7B%22commonjs%22:%22tui-code-snippet%22,%22commonjs2%22:%22tui-code-snippet%22,%22amd%22:%22tui-code-snippet%22,%22root%22:%5B%22tui%22,%22util%22%5D%7D?");
 
 /***/ })
-/******/ ])
+
+/******/ });
 });
-;
