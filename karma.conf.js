@@ -117,11 +117,10 @@ module.exports = function(config) {
         pattern: 'test/fixtures/*.html',
         included: false
       },
-      'test/preparation.js',
       'test/*.spec.js'
     ],
     preprocessors: {
-      'test/*.js': ['webpack', 'sourcemap']
+      'test/*.spec.js': ['webpack', 'sourcemap']
     },
     reporters: ['dots'],
     webpack: {

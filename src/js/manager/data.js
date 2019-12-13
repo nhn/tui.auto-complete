@@ -1,23 +1,24 @@
 /**
  * @fileoverview Data is kind of manager module to request data at API with input queries.
- * @author NHN FE dev Lab. <dl_javascript@nhn.com>
+ * @author NHN. FE Development Lab <dl_javascript@nhn.com>
  */
-var snippet = require('tui-code-snippet');
+
+var forEachOwnProperties = require('tui-code-snippet/collection/forEachOwnProperties');
+var defineClass = require('tui-code-snippet/defineClass/defineClass');
+var extend = require('tui-code-snippet/object/extend');
+var isEmpty = require('tui-code-snippet/type/isEmpty');
+var map = require('../util').map;
+
 var $ = require('jquery');
 var CALLBACK_NAME = 'dataCallback',
   SERACH_QUERY_IDENTIFIER = 'q';
-
-var forEach = snippet.forEach,
-  map = snippet.map,
-  isEmpty = snippet.isEmpty,
-  extend = snippet.extend;
 
 /**
  * Unit of auto complete connecting server.
  * @ignore
  * @constructor
  */
-var Data = snippet.defineClass(
+var Data = defineClass(
   /** @lends Data.prototype */ {
     init: function(autoCompleteObj, options) {
       this.autoCompleteObj = autoCompleteObj;
@@ -68,7 +69,7 @@ var Data = snippet.defineClass(
       var collection = dataObj.collections,
         itemDataList = [];
 
-      forEach(
+      forEachOwnProperties(
         collection,
         function(itemSet) {
           var keys;

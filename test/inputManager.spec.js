@@ -1,34 +1,30 @@
 var AutoComplete = require('../src/js/autoComplete');
+var defaultConfig = require('./autoConfig').defaultConfig;
 
 describe('InputManager', function() {
-  var im1,
-    global = tui.test.global;
+  var im1;
+
+  beforeAll(function() {
+    jasmine.getFixtures().fixturesPath = 'base/test/fixtures';
+  });
 
   beforeEach(function() {
     var autocom;
-
     loadFixtures('expand.html');
 
-    autocom = new AutoComplete({
-      config: global.Default
-    });
+    autocom = new AutoComplete({ config: defaultConfig });
     im1 = autocom.inputManager;
   });
 
-  it('to be defined', function() {
-    expect(im1).toBeDefined();
-    expect(im1.options).toBeDefined();
-  });
-
-  it('getValue', function() {
+  it('should get a value.', function() {
     im1.$searchBox.val('s');
     expect(im1.getValue()).toBe('s');
   });
 
-  it('setParams with array', function() {
-    var opt = ['a', 'b'],
-      index = '0',
-      inputs;
+  it('should set parameters with an array.', function() {
+    var opt = ['a', 'b'];
+    var index = '0';
+    var inputs;
 
     im1.setParams(opt, index);
     inputs = im1.hiddens.find('input');
@@ -36,10 +32,10 @@ describe('InputManager', function() {
     expect(inputs.length).toBe(2);
   });
 
-  it('setParams with string and staticParams', function() {
-    var opt = 'a,b',
-      index = '2',
-      inputs;
+  it('should set parameters with string and staticParams', function() {
+    var opt = 'a,b';
+    var index = '2';
+    var inputs;
 
     im1.setParams(opt, index);
     inputs = im1.hiddens.find('input');
@@ -47,16 +43,16 @@ describe('InputManager', function() {
     expect(inputs.length).toBe(3);
   });
 
-  it('setParams with noting', function() {
-    var opt = '',
-      index = '0';
+  it('should set parameters with empty string.', function() {
+    var opt = '';
+    var index = '0';
 
     im1.setParams(opt, index);
 
     expect(im1.hiddens).not.toBeDefined();
   });
 
-  it('_setOrgQuery', function() {
+  it('should save user queries by _setOrgQuery.', function() {
     var query = 'asdf';
 
     im1._setOrgQuery(query);
@@ -64,11 +60,11 @@ describe('InputManager', function() {
     expect(im1.$orgQuery.val()).toBe(query);
   });
 
-  it('검색창 클릭시 리스트 영역 동작.', function() {
-    var autocon = im1.autoCompleteObj,
-      eventMock = {
-        stopPropagation: function() {}
-      };
+  it('should show the result list when click the search bar.', function() {
+    var autocon = im1.autoCompleteObj;
+    var eventMock = {
+      stopPropagation: function() {}
+    };
 
     spyOn(autocon, 'showResultList');
 
@@ -79,14 +75,13 @@ describe('InputManager', function() {
     expect(autocon.showResultList).toHaveBeenCalled();
 
     autocon.resultManager.$resultList.css({
-      // Modify: (v1.1.2) Do not hide
       display: 'block'
     });
     im1._onClick(eventMock);
     expect(autocon.showResultList).toHaveBeenCalled();
   });
 
-  it('자동완성 목록 사용하지 않을 경우 동작하지 않음.', function() {
+  it('should not show and hide the result list when turn off the auto-complete.', function() {
     var autocon = im1.autoCompleteObj;
 
     spyOn(autocon, 'showResultList');
@@ -101,7 +96,7 @@ describe('InputManager', function() {
     expect(autocon.hideResultList).not.toHaveBeenCalled();
   });
 
-  it('_onFocus, onWatch', function(done) {
+  it('should watch the input element when it is focused.', function(done) {
     im1.$searchBox.val('focus');
 
     spyOn(im1, '_onWatch');
@@ -115,7 +110,7 @@ describe('InputManager', function() {
     }, 500);
   });
 
-  it('onWatch', function() {
+  it('should watch to check update the input element.', function() {
     spyOn(im1, '_onChange');
 
     im1.$searchBox.val('focus');
@@ -127,7 +122,7 @@ describe('InputManager', function() {
     expect(im1._onChange).toHaveBeenCalled();
   });
 
-  it('onWatch runned with resultManger moved flag', function() {
+  it('should watch if resultManager\'s isMoved is true.', function() {
     spyOn(im1, '_onChange');
 
     im1.$searchBox.val('asdf');
@@ -141,7 +136,7 @@ describe('InputManager', function() {
     expect(im1._onChange).toHaveBeenCalled();
   });
 
-  it('_onKeyDown with up key', function() {
+  it('should move to next result when press the up arrow key.', function() {
     var autocon = im1.autoCompleteObj;
 
     autocon.isUse = true;
@@ -158,7 +153,7 @@ describe('InputManager', function() {
     expect(autocon.moveNextResult).toHaveBeenCalled();
   });
 
-  it('_onKeyDown with down key', function() {
+  it('should move to next result when press the down arrow key.', function() {
     var autocon = im1.autoCompleteObj;
 
     autocon.isUse = true;
@@ -175,7 +170,7 @@ describe('InputManager', function() {
     expect(autocon.moveNextResult).toHaveBeenCalled();
   });
 
-  it('_onKeyDown with tab key', function() {
+  it('should move to next result when press the tab key.', function() {
     var autocon = im1.autoCompleteObj;
 
     autocon.isUse = true;
@@ -193,7 +188,7 @@ describe('InputManager', function() {
     expect(autocon.moveNextResult).toHaveBeenCalled();
   });
 
-  it('_onKeyDown with other key', function() {
+  it('should not move to next result when press others.', function() {
     var autocon = im1.autoCompleteObj;
 
     autocon.isUse = true;
@@ -210,7 +205,7 @@ describe('InputManager', function() {
     expect(autocon.moveNextResult).not.toHaveBeenCalled();
   });
 
-  it('_onKeyDown with down key, but not show resultList', function() {
+  it('should not move in the result list when the result list is hidden.', function() {
     var autocon = im1.autoCompleteObj;
 
     autocon.isUse = true;
@@ -228,11 +223,11 @@ describe('InputManager', function() {
     expect(autocon.moveNextResult).not.toHaveBeenCalled();
   });
 
-  it('_onClickToggle when autoComplete is using, turn off autoComplete', function() {
+  it('should toggle the button to turn on and off the auto-complete.', function() {
     var eventMock = {
-        stopPropagation: function() {}
-      },
-      autocon = im1.autoCompleteObj;
+      stopPropagation: function() {}
+    };
+    var autocon = im1.autoCompleteObj;
 
     autocon.isUse = true;
     im1._onClickToggle(eventMock);

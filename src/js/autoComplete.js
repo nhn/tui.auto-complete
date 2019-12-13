@@ -1,8 +1,16 @@
 /**
  * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
- * @author NHN FE Dev Lab. <dl_javascript@nhn.com>
+ * @author NHN. FE Development Lab <dl_javascript@nhn.com>
  */
-var snippet = require('tui-code-snippet');
+
+var defineClass = require('tui-code-snippet/defineClass/defineClass');
+var forEachOwnProperties = require('tui-code-snippet/collection/forEachOwnProperties');
+var CustomEvents = require('tui-code-snippet/customEvents/customEvents');
+var extend = require('tui-code-snippet/object/extend');
+var isFalsy = require('tui-code-snippet/type/isFalsy');
+var isExisty = require('tui-code-snippet/type/isExisty');
+var util = require('./util');
+
 var Cookies = require('js-cookie');
 var $ = require('jquery');
 var DataManager = require('./manager/data'),
@@ -36,10 +44,10 @@ var requiredOptions = [
  * @example <caption>Arguments of AutoComplete Constructor</caption>
  * SAMPLE FILE: [AutoConfig.json]{@link https://github.com/nhn/tui.auto-complete/blob/master/src/js/autoComplete.js}
  */
-var AutoComplete = snippet.defineClass(
+var AutoComplete = defineClass(
   /** @lends AutoComplete.prototype */ {
     init: function(options) {
-      options = snippet.extend(
+      options = extend(
         {
           usageStatistics: true
         },
@@ -62,7 +70,7 @@ var AutoComplete = snippet.defineClass(
       this.setCookieValue(this.isUse);
 
       if (options.usageStatistics) {
-        snippet.sendHostname('auto-complete', 'UA-129987462-1');
+        util.sendHostName();
       }
     },
 
@@ -91,14 +99,13 @@ var AutoComplete = snippet.defineClass(
      * @private
      */
     _checkValidation: function(options) {
-      var isExisty = snippet.isExisty,
-        config = options.config;
+      var config = options.config;
 
       if (!isExisty(config)) {
         throw new Error('No configuration #' + config);
       }
 
-      snippet.forEach(requiredOptions, function(name) {
+      forEachOwnProperties(requiredOptions, function(name) {
         if (!isExisty(config[name])) {
           throw new Error(name + 'does not not exist.');
         }
@@ -123,11 +130,11 @@ var AutoComplete = snippet.defineClass(
       }
       config.cookieName = config.cookieName || DEFAULT_COOKIE_NAME;
 
-      if (snippet.isFalsy(config.watchInterval)) {
+      if (isFalsy(config.watchInterval)) {
         config.watchInterval = this.watchInterval;
       }
 
-      snippet.forEach(
+      forEachOwnProperties(
         config,
         function(value, name) {
           if (rIsElementOption.test(name)) {
@@ -275,14 +282,14 @@ var AutoComplete = snippet.defineClass(
      *  });
      */
     setSearchApi: function(options) {
-      snippet.extend(this.options.searchApi, options);
+      extend(this.options.searchApi, options);
     },
 
     /**
      * clear ready value and set idle state
      */
     clearReadyValue: function() {
-      if (snippet.isExisty(this.readyValue)) {
+      if (isExisty(this.readyValue)) {
         this.request(this.readyValue);
       } else {
         this.isIdle = true;
@@ -292,6 +299,6 @@ var AutoComplete = snippet.defineClass(
   }
 );
 
-snippet.CustomEvents.mixin(AutoComplete);
+CustomEvents.mixin(AutoComplete);
 
 module.exports = AutoComplete;

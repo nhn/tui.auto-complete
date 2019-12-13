@@ -1,8 +1,13 @@
 /**
  * @fileOverview Input is kind of manager module to support input element events and all of input functions.
- * @author NHN FE dev Lab <dl_javascript@nhn.com>
+ * @author NHN. FE Development Lab <dl_javascript@nhn.com>
  */
-var snippet = require('tui-code-snippet');
+
+var forEachArray = require('tui-code-snippet/collection/forEachArray');
+var defineClass = require('tui-code-snippet/defineClass/defineClass');
+var isEmpty = require('tui-code-snippet/type/isEmpty');
+var isString = require('tui-code-snippet/type/isString');
+
 var $ = require('jquery');
 
 /**
@@ -10,7 +15,7 @@ var $ = require('jquery');
  * @ignore
  * @constructor
  */
-var Input = snippet.defineClass(
+var Input = defineClass(
   /** @lends Input.prototype */ {
     /**
      * keyboard Input KeyCode enum
@@ -69,11 +74,11 @@ var Input = snippet.defineClass(
      * @param {number|string} index The index for subQuerySet in config
      */
     setParams: function(subQueryValues, index) {
-      if (subQueryValues && snippet.isString(subQueryValues)) {
+      if (subQueryValues && isString(subQueryValues)) {
         subQueryValues = subQueryValues.split(',');
       }
 
-      if (!subQueryValues || snippet.isEmpty(subQueryValues)) {
+      if (!subQueryValues || isEmpty(subQueryValues)) {
         return;
       }
       this._createParamSetByType(subQueryValues, index);
@@ -97,7 +102,7 @@ var Input = snippet.defineClass(
         this._createParamContainer();
       }
 
-      snippet.forEach(
+      forEachArray(
         subQueryValues,
         function(value, idx) {
           var key = subQueryKeys[idx];
@@ -123,7 +128,7 @@ var Input = snippet.defineClass(
       }
 
       staticParams = staticParams.split(',');
-      snippet.forEach(
+      forEachArray(
         staticParams,
         function(value) {
           var val = value.split('=');
@@ -151,7 +156,7 @@ var Input = snippet.defineClass(
      * @param {Boolean} isUse 자동완성 사용 여부
      */
     setToggleBtnImg: function(isUse) {
-      if (!this.options.toggleImg || snippet.isEmpty(this.$toggleBtn)) {
+      if (!this.options.toggleImg || isEmpty(this.$toggleBtn)) {
         return;
       }
 
@@ -174,7 +179,7 @@ var Input = snippet.defineClass(
         click: $.proxy(this._onClick, this)
       });
 
-      if (!snippet.isEmpty(this.$toggleBtn)) {
+      if (!isEmpty(this.$toggleBtn)) {
         this.$toggleBtn.on('click', $.proxy(this._onClickToggle, this));
       }
     },
@@ -218,7 +223,7 @@ var Input = snippet.defineClass(
     },
 
     /**
-     * Roop for check update input element
+     * Loop for check update input element
      * @private
      */
     _onWatch: function() {

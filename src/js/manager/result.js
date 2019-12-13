@@ -1,15 +1,18 @@
 /**
  * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
- * @author  NHN FE dev Lab<dl_javascript@nhn.com>
+ * @author NHN. FE Development Lab <dl_javascript@nhn.com>
  */
-var snippet = require('tui-code-snippet');
+
+var forEachArray = require('tui-code-snippet/collection/forEachArray');
+var forEachOwnProperties = require('tui-code-snippet/collection/forEachOwnProperties');
+var defineClass = require('tui-code-snippet/defineClass/defineClass');
+var isEmpty = require('tui-code-snippet/type/isEmpty');
+var isString = require('tui-code-snippet/type/isString');
+var map = require('../util').map;
+
 var $ = require('jquery');
 var DEFAULT_VIEW_COUNT = 10,
   WHITE_SPACES = '[\\s]*';
-
-var isEmpty = snippet.isEmpty,
-  forEach = snippet.forEach,
-  map = snippet.map;
 
 var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
   rWhiteSpace = '/s+/g';
@@ -21,7 +24,7 @@ var rIsSpeicalCharacters = /[\\^$.*+?()[\]{}|]/,
  * @ignore
  * @constructor
  */
-var Result = snippet.defineClass(
+var Result = defineClass(
   /** @lends Result.prototype */ {
     init: function(autoCompleteObj, options) {
       this.autoCompleteObj = autoCompleteObj;
@@ -110,13 +113,13 @@ var Result = snippet.defineClass(
       var tmplValue = {},
         values = data.values || null;
 
-      if (snippet.isString(data)) {
+      if (isString(data)) {
         tmplValue[attrs[0]] = data;
 
         return tmplValue;
       }
 
-      forEach(attrs, function(attr, idx) {
+      forEachArray(attrs, function(attr, idx) {
         tmplValue[attr] = values[idx];
       });
       if (attrs.length < values.length) {
@@ -227,7 +230,7 @@ var Result = snippet.defineClass(
      * @private
      */
     _applyTemplate: function(tmplStr, dataObj) {
-      snippet.forEach(
+      forEachOwnProperties(
         dataObj,
         function(value, key) {
           if (key === 'subject') {
@@ -250,10 +253,10 @@ var Result = snippet.defineClass(
      * @private
      */
     _highlight: function(text) {
-      var queries = this.autoCompleteObj.queries,
-        returnStr;
+      var queries = this.autoCompleteObj.queries || [];
+      var returnStr;
 
-      snippet.forEach(
+      forEachArray(
         queries,
         function(query) {
           if (!returnStr) {

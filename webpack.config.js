@@ -48,12 +48,6 @@ module.exports = function(env, argv) {
       filename: FILENAME + '.js'
     },
     externals: {
-      'tui-code-snippet': {
-        commonjs: 'tui-code-snippet',
-        commonjs2: 'tui-code-snippet',
-        amd: 'tui-code-snippet',
-        root: ['tui', 'util']
-      },
       jquery: {
         commonjs: 'jquery',
         commonjs2: 'jquery',
