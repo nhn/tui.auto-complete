@@ -29,10 +29,10 @@ var requiredOptions = [
  * @param {Object} options
  * @param {Boolean} [options.usageStatistics=true] - Let us know the hostname. If you don't want to send the hostname, please set to false.
  * @example <caption>CommonJS</caption>
- * var AutoComplete = require('tui-auto-complete');
- * var autoComplete = new AutoComplete({'config': 'Default'});
+ * const AutoComplete = require('tui-auto-complete');
+ * const autoComplete = new AutoComplete({'config': 'Default'});
  * @example <caption>Global Namespace</caption>
- * var autoComplete = new tui.AutoComplete({"config" : "Default"});
+ * const autoComplete = new tui.AutoComplete({"config" : "Default"});
  * @example <caption>Arguments of AutoComplete Constructor</caption>
  * SAMPLE FILE: [AutoConfig.json]{@link https://github.com/nhn/tui.auto-complete/blob/master/src/js/autoComplete.js}
  */
