@@ -50,7 +50,7 @@ const options = {
 const instance = new AutoComplete(options);
 ```
 
-Or, include `tui-code-snippet.js` (**v1.5.0** or **later**) and then immediately write the options as follows:
+Or, include `tui-code-snippet.js` (**v2.1.0** or **later**) and then immediately write the options as follows:
 
 ```js
 tui.usageStatistics = false;
@@ -170,9 +170,9 @@ For more information about the API, please see [here](http://nhn.github.io/tui.a
 
 
 ## 🔩 Dependency
-* [tui-code-snippet](https://github.com/nhn/tui.code-snippet) >=1.5.0
-* [js-cookie](https://github.com/js-cookie/js-cookie) >=1.2.0 (If use 1.3.0 or more, You need to include the [JSON-js polyfill](https://github.com/douglascrockford/JSON-js))
-* [jquery](https://github.com/jquery/jquery) >=1.11.0
+* [tui-code-snippet](https://github.com/nhn/tui.code-snippet) >= 2.1.0
+* [js-cookie](https://github.com/js-cookie/js-cookie) >= 1.2.0 (If use 1.3.0 or more, You need to include the [JSON-js polyfill](https://github.com/douglascrockford/JSON-js))
+* [jquery](https://github.com/jquery/jquery) >= 1.11.0
 
 
 ## 🌏 Browser Support
