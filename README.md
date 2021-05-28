@@ -9,18 +9,33 @@
 
 
 ## 🚩 Table of Contents
-* [Collect statistics on the use of open source](#collect-statistics-on-the-use-of-open-source)
-* [Documents](#-documents)
-* [Features](#-features)
-* [Examples](#-examples)
-* [Install](#-install)
-* [Usage](#-usage)
-* [Dependency](#-dependency)
-* [Browser Support](#-browser-support)
-* [Pull Request Steps](#-pull-request-steps)
-* [Contributing](#-contributing)
-* [TOAST UI Family](#-toast-ui-family)
-* [License](#-license)
+
+- [Collect statistics on the use of open source](#collect-statistics-on-the-use-of-open-source)
+- [📙 Documents](#-documents)
+- [🎨 Features](#-features)
+- [🐾 Examples](#-examples)
+- [💾 Install](#-install)
+  - [Via Package Manager](#via-package-manager)
+    - [npm](#npm)
+    - [bower](#bower)
+  - [Via Contents Delivery Network (CDN)](#via-contents-delivery-network-cdn)
+  - [Download Source Files](#download-source-files)
+- [🔨 Usage](#-usage)
+  - [HTML](#html)
+  - [JavaScript](#javascript)
+    - [Using namespace in browser environment](#using-namespace-in-browser-environment)
+    - [Using module format in node environment](#using-module-format-in-node-environment)
+- [🔩 Dependency](#-dependency)
+- [🌏 Browser Support](#-browser-support)
+- [🔧 Pull Request Steps](#-pull-request-steps)
+  - [Setup](#setup)
+  - [Develop](#develop)
+    - [Run webpack-dev-server](#run-webpack-dev-server)
+    - [Run karma test](#run-karma-test)
+  - [Pull Request](#pull-request)
+- [💬 Contributing](#-contributing)
+- [🍞 TOAST UI Family](#-toast-ui-family)
+- [📜 License](#-license)
 
 
 ## Collect statistics on the use of open source
@@ -28,11 +43,11 @@
 TOAST UI AutoComplete applies Google Analytics (GA) to collect statistics on the use of open source, in order to identify how widely TOAST UI AutoComplete is used throughout the world. It also serves as important index to determine the future course of projects. location.hostname (e.g. > “ui.toast.com") is to be collected and the sole purpose is nothing but to measure statistics on the usage. To disable GA, use the following `usageStatistics` options when creating the instance.
 
 ```js
-var options = {
+const options = {
     ...
     usageStatistics: false
 }
-var instance = new AutoComplete(options);
+const instance = new AutoComplete(options);
 ```
 
 Or, include `tui-code-snippet.js` (**v1.5.0** or **later**) and then immediately write the options as follows:
@@ -131,12 +146,12 @@ To get the constructor function, you should import the module using one of the f
 
 #### Using namespace in browser environment
 ``` javascript
-var AutoComplete = tui.AutoComplete;
+const AutoComplete = tui.AutoComplete;
 ```
 
 #### Using module format in node environment
 ``` javascript
-var AutoComplete = require('tui-auto-complete'); /* CommonJS */
+const AutoComplete = require('tui-auto-complete'); /* CommonJS */
 ```
 
 ``` javascript
@@ -146,7 +161,7 @@ import {AutoComplete} from 'tui-auto-complete'; /* ES6 */
 You can create an instance with [options](https://github.com/nhn/tui.auto-complete/blob/production/examples/autoConfig.js) and call various APIs after creating an instance.
 
 ``` javascript
-var instance = new AutoComplete({ ... });
+const instance = new AutoComplete({ ... });
 
 instance.getValue();
 ```
