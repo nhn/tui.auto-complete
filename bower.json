@@ -15,7 +15,7 @@
     "src",
     "examples",
     "jsdoc.conf.json",
-    "karma.conf.js",
+    "jest.config.js",
     "package.json",
     "webpack.config.js"
   ],
