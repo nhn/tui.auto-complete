@@ -89,7 +89,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
   describe('usageStatistics', function() {
     beforeEach(function() {
-      jest.spyOn(snippet, 'sendHostname');
+      snippet.sendHostname = jest.fn();
     });
 
     it('should send hostname by default', function() {

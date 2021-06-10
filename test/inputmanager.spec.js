@@ -69,8 +69,8 @@ describe('InputManager', function() {
       eventMock = {
         stopPropagation: function() {}
       };
-
-    jest.spyOn(autocon, 'showResultList');
+      
+    autocon.showResultList = jest.fn();
 
     im1.setValue('asdf');
     im1.autoCompleteObj.isUse = true;
@@ -89,8 +89,8 @@ describe('InputManager', function() {
   it('자동완성 목록 사용하지 않을 경우 동작하지 않음.', function() {
     var autocon = im1.autoCompleteObj;
 
-    jest.spyOn(autocon, 'showResultList');
-    jest.spyOn(autocon, 'hideResultList');
+    autocon.showResultList = jest.fn();
+    autocon.hideResultList = jest.fn();
 
     im1.setValue('asdf');
     im1.autoCompleteObj.isUse = false;
@@ -104,7 +104,7 @@ describe('InputManager', function() {
   it('_onFocus, onWatch', function(done) {
     im1.$searchBox.val('focus');
 
-    jest.spyOn(im1, '_onWatch');
+    im1._onWatch = jest.fn();
 
     im1._onFocus();
 
@@ -116,7 +116,7 @@ describe('InputManager', function() {
   });
 
   it('onWatch', function() {
-    jest.spyOn(im1, '_onChange');
+    im1._onChange = jest.fn();
 
     im1.$searchBox.val('focus');
     im1._onWatch();
@@ -128,7 +128,7 @@ describe('InputManager', function() {
   });
 
   it('onWatch runned with resultManger moved flag', function() {
-    jest.spyOn(im1, '_onChange');
+    im1._onChange = jest.fn();
 
     im1.$searchBox.val('asdf');
     im1._onWatch();
