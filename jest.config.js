@@ -5,5 +5,5 @@ module.exports = {
   testMatch: ['<rootDir>/**/*.spec.js'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   clearMocks: true,
-  setupFilesAfterEnv: ['jest-extended', './test/setup-globals.js']
+  setupFilesAfterEnv: ['./test/setup-globals.js']
 };
