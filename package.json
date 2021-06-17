@@ -34,7 +34,6 @@
     "eslint-config-tui": "^2.2.0",
     "eslint-loader": "^3.0.0",
     "eslint-plugin-jest": "^24.3.6",
-    "istanbul-instrumenter-loader": "^1.0.0",
     "jest": "^27.0.4",
     "prettier": "^1.18.2",
     "tui-release-notes": "github:nhn/toast-ui.release-notes#v1.0.0",
