@@ -24,7 +24,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
         config: global.Default
       });
 
-      expect(A).toEqual(jasmine.any(Object));
+      expect(A).toEqual(expect.any(Object));
 
       // 객체 생성 판단
       resultManager = A.resultManager;
@@ -88,7 +88,7 @@ describe('자동완성 컴포넌트를 생성하고 기능을 테스트한다.',
 
   describe('usageStatistics', function() {
     beforeEach(function() {
-      spyOn(snippet, 'sendHostname');
+      snippet.sendHostname = jest.fn();
     });
 
     it('should send hostname by default', function() {
