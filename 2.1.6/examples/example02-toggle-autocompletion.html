@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="./css/tui-example-style.css" />
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <title>Autocomplete - On/Off the auto-completion</title>
+</head>
+<body>
+<div class="code-description">
+See the real services. <a href="http://www.fashiongo.net/" target="_blank">FashionGo</a>
+</div>
+<div class="sampleWarp code-html">
+    <div class="formWrap">
+    <!-- Form tag -->
+    <form id="ac_form1" method="get" action="http://www.1300k.com/shop/search/searchShop.html" onsubmit="">
+        <!-- Serachbox -->
+        <div class="inputBox">
+                <input class="inputBorder" id="ac_input1" type="text" name="q" autocomplete="off">
+                <img class="onoff" id="onoffBtn" src="img/btn_on.jpg" width="21" height="21">
+                <input type="hidden" id="org_query" name="org_query">
+            </div>
+
+        <!-- Search result-->
+        <div class="suggestBox" id="ac_view1" style="width:269px;">
+            <div class="baseBox">
+                <ul class="_resultBox" style="display:none;">
+                    <li><a href="#" onclick="return false;" title="">@txt@</a></li>
+                </ul>
+                <p id="onofftext" class="bottom" style="display:none;">Off the auto-completion</p>
+            </div>
+        </div>
+
+    </form>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/1.5.1/js.cookie.min.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
+<script type="text/javascript" src="autoConfig.js"></script>
+<script type="text/javascript" src="../dist/tui-auto-complete.js"></script>
+<script class="code-js">
+    // See the "examples/autoConfig.js" having configurations
+   new tui.AutoComplete({"config" : Default});
+</script>
+</body>
+
+
+
+</html>
