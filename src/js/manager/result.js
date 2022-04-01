@@ -1,6 +1,5 @@
 /**
  * @fileoverview Result is kind of managing module to draw auto complete result list from server and apply template.
- * @author  NHN FE dev Lab<dl_javascript@nhn.com>
  */
 var snippet = require('tui-code-snippet');
 var $ = require('jquery');

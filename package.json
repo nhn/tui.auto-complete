@@ -24,9 +24,10 @@
     "tui",
     "ui component",
     "auto-complete",
-    "auto complete"
+    "auto complete",
+    "nhn cloud"
   ],
-  "author": "NHN FE Development Lab <dl_javascript@nhn.com>",
+  "author": "NHN Cloud FE Development Lab <dl_javascript@nhn.com>",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^5.12.0",

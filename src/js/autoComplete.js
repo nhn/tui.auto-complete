@@ -1,6 +1,5 @@
 /**
  * @fileoverview Auto complete's Core element. All of auto complete objects belong with this object.
- * @author NHN FE Dev Lab. <dl_javascript@nhn.com>
  */
 var snippet = require('tui-code-snippet');
 var Cookies = require('js-cookie');
