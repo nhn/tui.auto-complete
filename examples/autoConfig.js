@@ -105,6 +105,9 @@ var Default = { // 설정용가능한 항목을 모두 설정한 config
     // 타이틀을 보일지 여부
     'useTitle': true,
 
+    // 캐시 사용 여부
+    'useCache': true,
+
     // 검색창을 감싸고 있는 form앨리먼트
     'formElement': '#ac_form1',
 

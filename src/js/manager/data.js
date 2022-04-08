@@ -21,7 +21,10 @@ var Data = snippet.defineClass(
     init: function(autoCompleteObj, options) {
       this.autoCompleteObj = autoCompleteObj;
       this.options = options;
+      this._cachedKeywords = {};
     },
+
+
 
     /**
      * Request data at api server use jsonp
@@ -38,6 +41,15 @@ var Data = snippet.defineClass(
         return;
       }
 
+      if(this.options.useCache && keyword in this._cachedKeywords) {
+        keyData = this._getCollectionData(this._cachedKeywords[keyword]);
+        acObj.setQueries(this._cachedKeywords[keyword].query);
+        acObj.setServerData(keyData);
+        acObj.clearReadyValue();
+
+        return;
+      }
+
       this.options.searchApi[SERACH_QUERY_IDENTIFIER] = keyword;
       $.ajax(this.options.searchUrl, {
         dataType: 'jsonp',
@@ -46,6 +58,9 @@ var Data = snippet.defineClass(
         type: 'get',
         success: $.proxy(function(dataObj) {
           try {
+            if(this.options.useCache) {
+              this._cachedKeywords[keyword] = dataObj;
+            }
             keyData = this._getCollectionData(dataObj);
             acObj.setQueries(dataObj.query);
             acObj.setServerData(keyData);
